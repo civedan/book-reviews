@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traction — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #171717;
+    --paper: #f2f2f0;
+    --cream: #e6e6e3;
+    --orange: #f07012;
+    --orange-light: #f5882e;
+    --orange-pale: #fde8cc;
+    --steel: #2e4a60;
+    --rust: #c43a1a;
+    --charcoal: #2a2a2a;
+    --muted: #6a6860;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── Hero — gear texture + orange glow ── */
+  .hero {
+    background: var(--ink);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Gear-tooth conic pattern (top-right) */
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -100px; top: -100px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      #2a2a2a 0deg 18deg,   #171717 18deg 30deg,
+      #2a2a2a 30deg 48deg,  #171717 48deg 60deg,
+      #2a2a2a 60deg 78deg,  #171717 78deg 90deg,
+      #2a2a2a 90deg 108deg, #171717 108deg 120deg,
+      #2a2a2a 120deg 138deg,#171717 138deg 150deg,
+      #2a2a2a 150deg 168deg,#171717 168deg 180deg,
+      #2a2a2a 180deg 198deg,#171717 198deg 210deg,
+      #2a2a2a 210deg 228deg,#171717 228deg 240deg,
+      #2a2a2a 240deg 258deg,#171717 258deg 270deg,
+      #2a2a2a 270deg 288deg,#171717 288deg 300deg,
+      #2a2a2a 300deg 318deg,#171717 318deg 330deg,
+      #2a2a2a 330deg 348deg,#171717 348deg 360deg
+    );
+    opacity: 0.55;
+  }
+  /* Orange radial glow */
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -20px; top: 10px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,112,18,0.22) 0%, transparent 70%);
+  }
+
+  .book-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 12px;
+    font-weight: 500;
+    position: relative; z-index: 1;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 44px);
+    color: #f2f2f0;
+    line-height: 1.12;
+    max-width: 540px;
+    position: relative; z-index: 1;
+  }
+  .hero h1 em { color: var(--orange-light); font-style: italic; }
+  .author {
+    margin-top: 14px;
+    color: rgba(242,242,240,0.5);
+    font-size: 13px;
+    letter-spacing: 1px;
+    position: relative; z-index: 1;
+  }
+  .author span { color: var(--orange); }
+  .hero-meta { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .meta-pill {
+    background: rgba(240,112,18,0.12);
+    border: 1px solid rgba(240,112,18,0.28);
+    color: var(--orange-light);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    display: flex;
+    background: var(--charcoal);
+    border-bottom: 2px solid rgba(240,112,18,0.2);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: rgba(242,242,240,0.45);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--orange); }
+  .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
+  .section-line { flex: 1; height: 1px; background: rgba(240,112,18,0.2); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid rgba(240,112,18,0.2);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--orange); }
+  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .summary-block {
+    background: white;
+    border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #282828;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--cream);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--charcoal);
+    color: var(--orange-light);
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    font-weight: 500;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card {
+    background: white;
+    border: 1px solid rgba(23,23,23,0.08);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(240,112,18,0.14); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num {
+    width: 32px; height: 32px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--orange); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body {
+    display: none;
+    padding: 14px 18px 18px 64px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #363636;
+    border-top: 1px solid rgba(240,112,18,0.1);
+  }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px;
+    background: rgba(240,112,18,0.07);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--steel);
+    font-weight: 500;
+  }
+
+  /* ── Framework / Method cards ── */
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .method-card {
+    background: white;
+    border: 1px solid rgba(240,112,18,0.15);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .method-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--steel); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+  .method-card .tag {
+    display: inline-block;
+    background: var(--steel);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  /* ── Code-style block ── */
+  .code-block {
+    background: var(--ink);
+    color: var(--orange-pale);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .code-block .comment { color: rgba(240,112,18,0.45); }
+  .code-block .keyword { color: var(--orange-light); }
+  .code-block .value { color: #8ec9c9; }
+
+  /* ── Verdict banner ── */
+  .verdict-banner {
+    background: linear-gradient(135deg, var(--ink) 0%, #2a1a0a 100%);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .verdict-banner::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      #2a2a2a 0deg 18deg,  #171717 18deg 30deg,
+      #2a2a2a 30deg 48deg, #171717 48deg 60deg,
+      #2a2a2a 60deg 78deg, #171717 78deg 90deg,
+      #2a2a2a 90deg 108deg,#171717 108deg 120deg,
+      #2a2a2a 120deg 138deg,#171717 138deg 150deg,
+      #2a2a2a 150deg 168deg,#171717 168deg 180deg,
+      #2a2a2a 180deg 198deg,#171717 198deg 210deg,
+      #2a2a2a 210deg 228deg,#171717 228deg 240deg,
+      #2a2a2a 240deg 258deg,#171717 258deg 270deg,
+      #2a2a2a 270deg 288deg,#171717 288deg 300deg,
+      #2a2a2a 300deg 318deg,#171717 318deg 330deg,
+      #2a2a2a 330deg 348deg,#171717 348deg 360deg
+    );
+    opacity: 0.35;
+  }
+  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--orange-light); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(242,242,240,0.6); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item {
+    text-align: center;
+    background: rgba(240,112,18,0.1);
+    border: 1px solid rgba(240,112,18,0.2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    min-width: 90px;
+  }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--orange-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(242,242,240,0.45); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid rgba(23,23,23,0.08);
+  }
+  .pro-list h4 { color: var(--steel); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--rust); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--steel); }
+  .con-list .dot { background: var(--rust); }
+
+  /* ── Quotes ── */
+  .quote-block {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .quote-block::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--orange);
+    position: absolute;
+    top: -8px; left: 16px;
+    line-height: 1;
+  }
+  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink); }
+  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+  /* ── Who cards ── */
+  .who-card {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: white;
+    border: 1px solid rgba(240,112,18,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  /* ── Six-component wheel ── */
+  .component-wheel {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .wheel-card {
+    background: white;
+    border: 1px solid rgba(240,112,18,0.18);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .wheel-num {
+    width: 36px; height: 36px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 auto 10px;
+  }
+  .wheel-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--steel); margin-bottom: 6px; }
+  .wheel-card p { font-size: 12px; line-height: 1.5; color: var(--muted); }
+
+  @media (max-width: 560px) {
+    .overview-grid, .method-grid, .pro-con-grid, .component-wheel { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero { padding: 36px 20px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="book-label">Book Review &amp; Reference Guide</div>
+  <h1><em>Traction</em> — Get a Grip on Your Business</h1>
+  <div class="author">by <span>Gino Wickman</span> &nbsp;·&nbsp; Published 2007 (Expanded Edition 2011)</div>
+  <div class="hero-meta">
+    <div class="meta-pill">Business Operations</div>
+    <div class="meta-pill">Leadership</div>
+    <div class="meta-pill">9 Chapters</div>
+    <div class="meta-pill">6 Components</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('framework', this)">The EOS Framework</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="panel active">
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core System</div>
+      <div class="stat-value">EOS</div>
+      <div class="stat-desc">Entrepreneurial Operating System — six interlocking components that run a business</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">Whole-Business OS</div>
+      <div class="stat-desc">A proven system to give entrepreneurs clarity, traction, and a healthy team</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Author Background</div>
+      <div class="stat-value">Gino Wickman</div>
+      <div class="stat-desc">Entrepreneur and business coach who built and sold his family's business, then codified his method</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Leadership Teams</div>
+      <div class="stat-desc">Entrepreneurs and their leadership teams running companies of 10–250 people</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Traction</strong> is Gino Wickman's definitive guide to the Entrepreneurial Operating System (EOS) — a complete, practical framework for running a small-to-midsize business. The central premise is that most entrepreneurs are struggling not because they lack a good idea or talent, but because they lack a disciplined system for translating vision into execution. EOS provides that system.</p>
+    <p>Wickman identifies six fundamental components every business must get right: Vision (does everyone see the same destination?), People (do you have the right people in the right seats?), Data (do you have objective numbers to tell you the truth?), Issues (do you solve problems openly and permanently?), Process (are your core workflows documented and consistently followed?), and Traction (do you have the discipline and accountability to actually execute?). Most companies are weak in three or four of these — and that weakness is the invisible ceiling on their growth.</p>
+    <p>The book is unusually honest and practical. Wickman doesn't theorise — he gives entrepreneurs concrete tools (the V/TO, the Accountability Chart, the Scorecard, IDS, Rocks, the Level 10 Meeting) that can be picked up and used immediately. The result is a business playbook that has been adopted by tens of thousands of companies worldwide, spawning an entire consulting industry around EOS implementation.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">🧭</div><div><strong>Vision without traction is hallucination.</strong> Having a clear direction means nothing if your team can't execute on it week over week, quarter over quarter.</div></div>
+  <div class="key-idea"><div class="icon">👥</div><div><strong>Right people, right seats.</strong> The most important people decision is not hiring talent — it's making sure every person shares your core values AND has the competency (GWC) for their specific role.</div></div>
+  <div class="key-idea"><div class="icon">📊</div><div><strong>Run your business on a handful of numbers.</strong> A weekly scorecard of 5–15 activity-based metrics gives you an objective, real-time pulse — eliminating gut-feel management and happy-ears syndrome.</div></div>
+  <div class="key-idea"><div class="icon">🪨</div><div><strong>Rocks are the most important things.</strong> Each quarter, every person on the leadership team commits to 3–7 specific priorities (Rocks). Everything else waits. Focus is the force multiplier.</div></div>
+  <div class="key-idea"><div class="icon">🔁</div><div><strong>IDS is your problem-solving engine.</strong> Identify, Discuss, Solve — most issues never get solved because teams either skip identification (treating symptoms) or skip to solutions before truly understanding the root cause.</div></div>
+  <div class="key-idea"><div class="icon">📋</div><div><strong>The Level 10 Meeting creates rhythm.</strong> A 90-minute weekly meeting with a fixed agenda keeps teams aligned, surfaces issues early, and creates the cadence of accountability that turns vision into reality.</div></div>
+</div>
+
+<!-- CHAPTERS -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Part I — The Foundation</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">The Entrepreneurial Operating System — Strengthening the Six Key Components</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Wickman opens by painting a picture most entrepreneurs immediately recognise: a company with unlimited potential being held back by chaos, unclear roles, inconsistent execution, and a leadership team that spends more time fighting fires than building the business. The culprit, he argues, isn't a lack of talent or vision — it's the absence of a true operating system.
+      <br><br>
+      This chapter introduces the EOS Model: a visual framework built around six components — Vision, People, Data, Issues, Process, and Traction — arranged in a circle to show how they are interdependent. Weaken one and it strains the others. Strengthen all six and the business runs with a clarity and momentum that most entrepreneurs only dream about.
+      <br><br>
+      Wickman is careful to position EOS not as a new management theory but as a practical system assembled from proven tools that have existed for decades. His contribution is integrating them into a coherent whole and making them accessible to the entrepreneurial world. He introduces the concept of the <strong>EOS Purity Score</strong> — a self-assessment tool that lets leadership teams rate their current strength across each component — and sets the stakes: most leadership teams score between 50–60% overall. The goal is 80%+.
+      <div class="ch-takeaway">EOS is not a theory — it's a complete operating system. Most companies are running at 50–60% of their potential because they've never deliberately strengthened all six components at once.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">Letting Go of the Vine — Mastering the Art of Delegating and Elevating</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Before diving into tools, Wickman addresses the human obstacle that stops most EOS implementations before they start: the entrepreneur's inability to let go. He uses the metaphor of swinging on a vine through a jungle — to grab the next vine, you must fully release the one you're on. Most entrepreneurs cling to their current vine (the control, the day-to-day involvement, the "I can do it better myself" mindset) even as the business outgrows them.
+      <br><br>
+      This chapter introduces what Wickman calls the <strong>four foundational beliefs</strong> a leader must hold to run on EOS: (1) build and maintain a true leadership team, (2) be open and honest with everyone, (3) clarify, simplify, and repeat, and (4) think and act like an owner, not a manager or employee. He also introduces the concept of the <strong>Visionary and Integrator</strong> — the two distinct leadership roles that every entrepreneurial company needs. The Visionary (typically the founder) generates ideas, energy, and relationships. The Integrator holds the leadership team accountable, runs the business day-to-day, and filters the Visionary's ideas through operational reality.
+      <br><br>
+      Wickman argues that most entrepreneurial companies have a great Visionary but are missing a true Integrator — and without one, the Visionary becomes the bottleneck. Learning to trust a great Integrator and step back is the hardest, highest-leverage thing most founders will ever do.
+      <div class="ch-takeaway">The Visionary/Integrator split is the most important structural decision in an entrepreneurial company. The founder must let go of operational control to unlock the next level of growth.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part II — The Six Components</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">The Vision Component — Do All Your People See the Same Thing?</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Vision is the first and most foundational component. Wickman's diagnosis is blunt: in most entrepreneurial companies, the vision lives only in the founder's head. The leadership team has a vague idea of direction. Employees have no idea. This disconnect is the single most common root cause of misalignment, wasted effort, and poor hiring decisions.
+      <br><br>
+      The tool for solving this is the <strong>V/TO (Vision/Traction Organizer)</strong> — a two-page document that captures everything important about the business in one place. It is structured around eight questions that every leadership team must answer together and clearly:
+      <br><br>
+      <strong>1. Core Values</strong> — What are the 3–7 values that define how you do business and that every employee must share? These are not aspirational — they describe who you already are at your best. Core values are used to hire, fire, review, and reward. They are the foundation of culture.
+      <br><br>
+      <strong>2. Core Focus</strong> — This has two parts: your purpose (why you exist beyond making money) and your niche (what you do better than anyone and for whom). Most companies try to serve everyone and therefore stand for nothing. Core focus forces a decision.
+      <br><br>
+      <strong>3. 10-Year Target</strong> — A single, specific, measurable destination point 10 years out. Not a mission statement — a real number or milestone. Something vivid enough to rally a team around and test decisions against.
+      <br><br>
+      <strong>4. Marketing Strategy</strong> — Defined as: your target market (who specifically is your customer?), your three uniques (the three things that make you different from every competitor), your proven process (how you deliver your product/service), and your guarantee. Together these define what you sell and to whom.
+      <br><br>
+      <strong>5. 3-Year Picture</strong> — A vivid, specific description of what the company looks like three years from now: revenue, profit, number of employees, geographic footprint, culture, physical space. Forces the leadership team to get concrete and aligned rather than drifting along.
+      <br><br>
+      <strong>6. 1-Year Plan</strong> — The three to seven most important things the company must accomplish in the next 12 months, plus annual revenue and profit targets. This is the bridge between the 3-year picture and the quarterly work.
+      <br><br>
+      <strong>7. Quarterly Rocks</strong> — The three to seven most important priorities for the business this quarter. These become the Rocks assigned to leadership team members.
+      <br><br>
+      <strong>8. Issues List</strong> — The obstacles and opportunities facing the company. Not to be solved here — just captured.
+      <br><br>
+      Once completed, the V/TO must be shared with every employee. Not buried in a drawer. It becomes the single source of truth for where the company is going and how it's getting there.
+      <div class="ch-takeaway">The V/TO is the solution to "everyone has a different idea of where we're headed." Eight questions, two pages, the entire business on paper. Share it with everyone.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">The People Component — Surrounding Yourself with Good People</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      People is the component most leaders think they're managing well — and aren't. Wickman argues that almost every people problem in business comes down to one of two root causes: either you have the wrong person in the organisation (they don't share your values), or you have the right person in the wrong seat (they lack the competency or capacity for their specific role). Getting both right for every seat on the leadership team is the entire chapter.
+      <br><br>
+      <strong>Right People — The People Analyzer:</strong> Wickman introduces a simple tool: list your core values down the left side of a spreadsheet. List every person in the company across the top. For each person, score them on each value: Plus (+), Minus (-), or Plus/Minus (+/-). A person who is right for your organisation is one who scores mostly pluses — someone who genuinely embodies what you stand for. A person with consistent minuses is a culture problem regardless of their skills, and every leader knows it. The People Analyzer makes the conversation objective rather than emotional.
+      <br><br>
+      <strong>Right Seats — GWC:</strong> For each seat (role), ask three questions about the person filling it: Do they <strong>Get it</strong> (do they intuitively understand the role — the culture, the pace, the priorities)? Do they <strong>Want it</strong> (do they genuinely want to do this work — not just the title or the money)? Do they have the <strong>Capacity to do it</strong> (the time, mental bandwidth, emotional capability, and skills)? A person must score yes on all three to be truly right for their seat. A single "no" means they're wrong for the role, even if they're great in other ways.
+      <br><br>
+      <strong>The Accountability Chart:</strong> Wickman introduces the Accountability Chart as a replacement for the traditional org chart. Where an org chart maps hierarchy and relationships, the Accountability Chart maps the five primary functions of the business — and assigns one person accountable for each. It answers: "Who is accountable for what?" at every level. Each seat has a clear role, clear accountabilities, and clear reporting lines. Building the Accountability Chart is often the most uncomfortable exercise for leadership teams — it surfaces gaps, overlaps, and sacred cows that have been silently dragging the company for years.
+      <br><br>
+      Wickman is emphatic: you cannot build a great business on the wrong people. No system, vision, or strategy overcomes a mediocre team. And having the wrong person in a seat — even a good person in the wrong seat — costs more in hidden drag than the discomfort of having the conversation.
+      <div class="ch-takeaway">Right People share your core values. Right Seats means they GWC (Get it, Want it, Capacity to do it) for their specific role. Both must be true. The Accountability Chart, not the org chart, defines who owns what.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">The Data Component — Safety in Numbers</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Most businesses are managed by gut feel, intuition, and anecdote. Someone says the month "feels good." A client seems satisfied. A rep reports the pipeline is "looking strong." Wickman calls this "happy ears" — the tendency to hear what you want to hear, especially when you're the boss and people want to please you. The Data component is the antidote: an objective, numbers-based weekly pulse that removes interpretation and tells the truth.
+      <br><br>
+      <strong>The Scorecard:</strong> Every business should have a weekly scorecard of 5–15 activity-based metrics — numbers that each leader or department owns and reports on every week. Critically, these must be <em>activity</em> numbers, not just results numbers. Results (revenue, profit, customer count) lag behind reality by weeks or months. Activity numbers (calls made, proposals sent, jobs completed, support tickets closed) are leading indicators that tell you now whether the business is on track. Each number has a weekly goal. Red means below goal. Green means on track.
+      <br><br>
+      The Scorecard creates a simple weekly discipline: look at the numbers together, identify anything that's off, and put it on the Issues List. No excuses, no explanations — just a flag to be addressed. Over time, this creates a culture of honesty and accountability where problems surface fast rather than festering.
+      <br><br>
+      <strong>The 5-5-5:</strong> Wickman recommends that every person on the leadership team own a handful of numbers — typically five — that they track and report weekly. This gives everyone on the team data ownership and prevents the "information asymmetry" that forms when only one person (usually the CEO) actually knows the numbers.
+      <br><br>
+      The deeper principle: what gets measured gets managed, but only if it's measured honestly, publicly, and consistently. A scorecard that's fudged or skipped defeats the entire purpose.
+      <div class="ch-takeaway">Build a weekly Scorecard of 5–15 activity-based numbers. Each has an owner and a weekly goal. Red means off-track — drop it on the Issues List. No gut-feel management. Let the numbers tell the truth.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">The Issues Component — Decide, Commit, Follow Through</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Issues are the obstacles, opportunities, and thorny decisions that every company faces. Most companies have the same issues on their list for months — or years — because they never actually solve them. They discuss them. They complain about them. They put them on next month's agenda. But they don't solve them. Wickman argues this chronic non-resolution is the single biggest drag on organisational performance.
+      <br><br>
+      The reason issues don't get solved, he explains, falls into one of three patterns: (1) the wrong people are in the room — either the decision-maker isn't present or someone is there who shouldn't be; (2) the root issue isn't identified — people address the symptom rather than the underlying cause; or (3) the team lacks the courage to say what needs to be said — they circle the issue rather than confronting it directly.
+      <br><br>
+      <strong>The IDS Framework — Identify, Discuss, Solve:</strong>
+      <br><br>
+      <em>Identify:</em> State the real issue, not the symptom. Ask "what's really going on here?" This step is harder than it sounds. Teams that skip straight to solutions are almost always solving the wrong problem.
+      <br><br>
+      <em>Discuss:</em> Say everything relevant — all the facts, opinions, concerns. This step has a natural endpoint: the moment everyone in the room has said everything they know. No more going in circles. No revisiting what's been said.
+      <br><br>
+      <em>Solve:</em> Make a decision that solves the root issue. Not a compromise. Not a "let's monitor it." A real solution, followed by a specific to-do: who is doing what by when.
+      <br><br>
+      <strong>Three Issues Lists:</strong> EOS maintains three separate issues lists — the company-level Issues List (on the V/TO), department-level issues lists, and individual to-do lists. Most issues belong at the lowest appropriate level. Only escalate what genuinely requires the leadership team.
+      <br><br>
+      The culture shift that IDS produces is profound. Teams that master it describe a sense of velocity — problems that used to linger for quarters get resolved in a single 90-minute meeting. Defensiveness drops because issues stop being personal — they're just things to solve.
+      <div class="ch-takeaway">IDS: Identify the real issue (not the symptom), Discuss it fully, then Solve it with a real decision and clear to-do. Teams that master this eliminate the chronic issues that drain energy and eat quarters.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">The Process Component — Finding Your Way</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Most entrepreneurial companies don't have documented processes — they have tribal knowledge. Things get done, results vary, and quality depends entirely on who's doing it that day. This is fine when the company is small and the founder is involved in everything. It becomes catastrophic as the business scales. The Process component is about building the rails that let everyone do things consistently and well, with or without the founder in the room.
+      <br><br>
+      Wickman identifies what he calls <strong>Core Processes</strong> — typically six to ten in any business. These are the major recurring workflows that define how the business runs: HR/People, Marketing, Sales, Operations/Delivery, Finance, and whatever is unique to your industry. Every company has these processes already — they just haven't been written down.
+      <br><br>
+      <strong>The 3-Step Process Documenter:</strong>
+      <br><br>
+      <em>Step 1 — Identify:</em> Name your 6–10 core processes. Give each a simple label. Don't overthink this.
+      <br><br>
+      <em>Step 2 — Document:</em> For each process, write 20% of the content that produces 80% of the results. Wickman is deliberate here: he is not asking for ISO-quality process manuals. He wants a one-to-three-page document per process — high level, clear, followable. The goal is a "how we do it here" document that any competent employee can read, understand, and follow.
+      <br><br>
+      <em>Step 3 — Followed by All:</em> Once documented and packaged, processes must actually be used. This means training everyone on them, enforcing them consistently, and updating them as the business evolves. A process that lives in a binder no one opens achieves nothing.
+      <br><br>
+      The deeper point: once your core processes are documented and followed, the business stops depending on individual heroics. You can hire, train, and scale without losing quality. You can take a vacation and the machine keeps running. That freedom — both operational and personal — is what the Process component ultimately delivers.
+      <div class="ch-takeaway">Identify your 6–10 core processes. Document the 20% that drives 80% of the results. Then make sure they're followed by all. Tribal knowledge is not a business — a documented process is.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">The Traction Component — From Ethereal to Real</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Traction is the final and most practically demanding component — the one that ties everything else together. Having great Vision, People, Data, Issue-solving discipline, and Processes is still not enough unless you have a system for executing consistently over time. Traction is that system. It has two tools: Rocks and the Meeting Pulse.
+      <br><br>
+      <strong>Rocks — 90-Day Priorities:</strong> The concept of Rocks comes from Stephen Covey's famous jar analogy — if you put sand (small tasks) in the jar first, there's no room for rocks (the most important things). You must place the rocks first. In EOS, Rocks are the three to seven most important things the business — and each individual on the leadership team — must accomplish in the next 90 days. Not projects that would be nice to finish. Not ongoing responsibilities. Rocks are specific, meaningful milestones with a defined start and end within the quarter.
+      <br><br>
+      At the start of every quarter (in a Quarterly Offsite), the leadership team sets company Rocks and individual Rocks. Every person is accountable for their Rocks and reports status — On Track or Off Track — at every weekly Level 10 Meeting. This creates the rhythm of quarterly execution that compounds over years into extraordinary progress.
+      <br><br>
+      <strong>The Meeting Pulse — Level 10 Meeting:</strong> Wickman identifies three meeting types in the EOS rhythm: the Annual Planning session (two days), the Quarterly Offsite (one day), and the weekly Level 10 Meeting (90 minutes). The Level 10 Meeting is the engine of Traction — the single weekly ritual that keeps the leadership team aligned, surfacing problems early and solving them fast.
+      <br><br>
+      The Level 10 Meeting has a fixed, non-negotiable agenda:
+      <br><br>
+      &nbsp;&nbsp; — <em>Segue (5 min):</em> Everyone shares one personal and one professional best from the past week. Starts the meeting with humanity and energy.
+      <br>&nbsp;&nbsp; — <em>Scorecard Review (5 min):</em> Each number reviewed. Anything off-track goes to Issues.
+      <br>&nbsp;&nbsp; — <em>Rock Review (5 min):</em> Each Rock reported as On Track or Off Track. No lengthy updates — just status.
+      <br>&nbsp;&nbsp; — <em>Customer/Employee Headlines (5 min):</em> Any major news about customers or team.
+      <br>&nbsp;&nbsp; — <em>To-Do List (5 min):</em> Review last week's to-dos. Done or Not Done. No excuses.
+      <br>&nbsp;&nbsp; — <em>IDS (60 min):</em> The core of the meeting. Work through the Issues List using the IDS method. The most important issues get solved. Every solved issue results in a to-do.
+      <br>&nbsp;&nbsp; — <em>Conclude (5 min):</em> Review new to-dos, rate the meeting 1–10.
+      <br><br>
+      The name "Level 10" comes from the goal: a meeting worth a 10 out of 10. Most leadership meetings score a 4 or 5 because they have no structure, no agenda, and no accountability. The Level 10 format changes that immediately.
+      <div class="ch-takeaway">Rocks are the 3–7 most important priorities for the quarter — not projects, not tasks, but real milestones. The Level 10 Meeting is the 90-minute weekly ritual that creates the cadence of accountability. Together, they are how vision becomes execution.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part III — Putting It All Together</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">The EOS Journey — Getting Started and Staying the Course</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The final chapter shifts from the "what" of EOS to the "how" of implementation. Wickman is direct: implementing EOS across an entire organisation takes two years. Not two months. Not six months. Two years. And most of the resistance comes not from employees — but from the leadership team itself.
+      <br><br>
+      He introduces the concept of the <strong>EOS Proven Process</strong> — the sequence in which to introduce each component and tool. The recommendation is to start with Vision (V/TO), then build the Accountability Chart, then introduce Rocks and the Level 10 Meeting, then add the Scorecard, and only then tackle Issues and Process in depth. The sequence matters because each component reinforces the next.
+      <br><br>
+      Wickman acknowledges the "two-year pain" — the period where a leadership team is learning to trust each other, say hard things, and hold one another accountable. This is uncomfortable. Long-standing unresolved tensions surface. Poor performers become visible. Sacred cow decisions get questioned. Teams that push through this discomfort emerge as high-functioning units. Teams that retreat from it stay stuck.
+      <br><br>
+      He also addresses the question of whether to self-implement or hire an EOS Implementer. His honest answer: self-implementation is possible but slower and harder. A good Implementer runs the quarterly and annual sessions, holds the team accountable, and provides an outside perspective that the Visionary and Integrator cannot provide for themselves. Many companies start self-implementing and eventually hire an Implementer when they plateau.
+      <br><br>
+      The closing message is one of compounding progress. Every quarter that a leadership team sets Rocks, meets weekly, resolves issues, and executes against the V/TO, they get stronger. Small disciplines applied consistently over two years produce organisations that are fundamentally different — clearer, calmer, more profitable, and more capable — than the chaos-managed businesses they used to be.
+      <div class="ch-takeaway">EOS takes two full years to truly embed. Start with the V/TO and Accountability Chart, add Rocks and L10 Meetings, and trust the compounding effect. The friction of the first year is the price of becoming a great team.</div>
+    </div>
+  </div>
+</div>
+
+<!-- EOS FRAMEWORK -->
+<div id="framework" class="panel">
+  <div class="section-header">
+    <h2>The Six Components of EOS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="component-wheel">
+    <div class="wheel-card">
+      <div class="wheel-num">1</div>
+      <h4>Vision</h4>
+      <p>Get everyone 100% on the same page about where the company is going and how to get there. Tool: the V/TO.</p>
+    </div>
+    <div class="wheel-card">
+      <div class="wheel-num">2</div>
+      <h4>People</h4>
+      <p>Right people (share core values) in right seats (GWC). Tool: the Accountability Chart + People Analyzer.</p>
+    </div>
+    <div class="wheel-card">
+      <div class="wheel-num">3</div>
+      <h4>Data</h4>
+      <p>A handful of weekly numbers that give an objective pulse on the business. Tool: the Scorecard.</p>
+    </div>
+    <div class="wheel-card">
+      <div class="wheel-num">4</div>
+      <h4>Issues</h4>
+      <p>Solve problems openly, honestly, and permanently. Tool: IDS (Identify, Discuss, Solve).</p>
+    </div>
+    <div class="wheel-card">
+      <div class="wheel-num">5</div>
+      <h4>Process</h4>
+      <p>Document and follow the core processes that define how the business runs. Tool: the 3-Step Process Documenter.</p>
+    </div>
+    <div class="wheel-card">
+      <div class="wheel-num">6</div>
+      <h4>Traction</h4>
+      <p>Bring discipline and accountability to execution. Tools: Rocks (90-day priorities) + Level 10 Meeting.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>The V/TO — Vision/Traction Organizer</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="code-block">
+    <span class="comment">// V/TO — two pages, eight questions, your entire business</span><br><br>
+    <span class="keyword">Core Values</span>     → <span class="value">3–7 behaviours that define your culture</span><br>
+    <span class="keyword">Core Focus</span>      → <span class="value">Purpose/Passion + Your niche</span><br>
+    <span class="keyword">10-Year Target</span>  → <span class="value">One specific, vivid destination a decade out</span><br>
+    <span class="keyword">Mktg Strategy</span>  → <span class="value">Target market + 3 Uniques + Proven Process + Guarantee</span><br><br>
+    <span class="keyword">3-Year Picture</span> → <span class="value">Revenue, profit, headcount, culture — concrete snapshot</span><br>
+    <span class="keyword">1-Year Plan</span>    → <span class="value">3–7 company priorities + annual revenue &amp; profit goals</span><br>
+    <span class="keyword">Quarterly Rocks</span>→ <span class="value">3–7 most important priorities this quarter</span><br>
+    <span class="keyword">Issues List</span>    → <span class="value">All obstacles and opportunities (solve in L10 meetings)</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Key Tools</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The Accountability Chart</h4>
+    <p>Not an org chart — a map of the five primary functions of the business, each with one accountable owner, clear role expectations, and three to seven accountabilities. Built top-down by the leadership team. Exposes every gap, overlap, and wrong-seat placement. Is updated whenever the business changes. This is the structural backbone of the People component.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The People Analyzer</h4>
+    <p>A simple grid: list your core values on the left, your people across the top. Score each person on each value: + (consistently lives it), +/- (inconsistent), or – (doesn't live it). Anyone with two or more minuses is a culture problem regardless of their skills. Anyone with all pluses but in the wrong seat needs to be repositioned. Makes hard conversations objective.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The Scorecard</h4>
+    <p>A weekly dashboard of 5–15 activity-based numbers. Each number has a weekly goal and an owner. Reported every week in the Level 10 Meeting. Anything off-track (red) goes directly to the Issues List — no excuses, no lengthy explanations. Replaces gut-feel management with objective, real-time data and creates a culture of honest self-reporting.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>IDS — Identify, Discuss, Solve</h4>
+    <p>The issue-solving framework at the heart of every Level 10 Meeting. Identify the real issue (ask "what's really going on?" — it's rarely what it appears). Discuss until everything relevant has been said (this step has a natural endpoint). Solve by making a real decision and assigning a specific to-do: who is doing what by when. Anything less is conversation, not resolution.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>Rocks — 90-Day Priorities</h4>
+    <p>The three to seven most important things the company and each leadership team member must accomplish this quarter. Not ongoing responsibilities — specific milestones with a clear end state. Set in a one-day Quarterly Offsite. Reported as On Track or Off Track every week. Completed Rocks accumulate into a track record of consistent execution that transforms the culture over 6–8 quarters.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>Level 10 Meeting — The Weekly Pulse</h4>
+    <p>A 90-minute meeting held at the same time every week with a fixed agenda: Segue (5 min) → Scorecard (5 min) → Rock Review (5 min) → Customer/Employee Headlines (5 min) → To-Do Review (5 min) → IDS on Issues (60 min) → Conclude + Rate the Meeting (5 min). The 60-minute IDS block is where real business gets done. Teams that run this consistently report it as the single most valuable hour of their week.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Concept</div>
+    <h4>Visionary &amp; Integrator</h4>
+    <p>The two core leadership roles in every entrepreneurial company. The Visionary creates, sells, and inspires — they are the source of big ideas, relationships, and culture. The Integrator leads the leadership team, filters the Visionary's ideas through operational reality, holds everyone accountable, and runs the day-to-day. Both are essential. Most companies have a Visionary and no true Integrator — which is why the Visionary becomes the ceiling.</p>
+  </div>
+</div>
+
+<!-- VERDICT -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.5 / 5</h3>
+    <p>One of the most practically useful business books ever written — a genuine operating system, not a motivational read</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Accessibility</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.8</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Completeness</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.0</div>
+        <div class="r-label">Originality</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Genuinely complete — covers every major dimension of running a business in one cohesive system</div></div>
+      <div class="list-item"><div class="dot"></div><div>Tools are immediately usable — V/TO, People Analyzer, Scorecard, L10 can all be implemented this week</div></div>
+      <div class="list-item"><div class="dot"></div><div>Wickman's tone is honest and direct — no corporate platitudes, no hedging</div></div>
+      <div class="list-item"><div class="dot"></div><div>Addresses both the structural AND the human/cultural challenges of building a leadership team</div></div>
+      <div class="list-item"><div class="dot"></div><div>Proven at scale — tens of thousands of companies have run EOS successfully</div></div>
+      <div class="list-item"><div class="dot"></div><div>The 90-day Rocks rhythm is elegant — long enough to matter, short enough to stay accountable</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Written primarily for 10–250 person companies — solo operators or enterprise may find limited direct applicability</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some repetition and case-study padding — the core framework could be conveyed in half the pages</div></div>
+      <div class="list-item"><div class="dot"></div><div>Underplays the difficulty of the "two-year pain" — implementation is genuinely hard even when you know the tools</div></div>
+      <div class="list-item"><div class="dot"></div><div>Light on financial management beyond simple scorecards — deeper CFO-level guidance is elsewhere</div></div>
+      <div class="list-item"><div class="dot"></div><div>The "Visionary/Integrator" framing can feel oversimplified for companies with more complex org dynamics</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Entrepreneurs and founders</strong> who feel like they're running faster and getting further behind — classic plateau symptoms that EOS directly addresses</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Leadership team members</strong> who sense their team has unclear roles, poor meeting habits, or the same issues cycling endlessly without resolution</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Operations leaders</strong> looking for a proven framework to systemise and scale a business that currently depends on individual heroics</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Business owners frustrated by people problems</strong> — the People component and Accountability Chart alone are worth the read</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Solopreneurs or very early-stage founders</strong> may find EOS premature — the framework requires a leadership team to truly function</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Large enterprise managers</strong> will find the scale and context doesn't map cleanly to their environment</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Quotes</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>Vision without traction is merely hallucination.</p>
+    <div class="attr">— Gino Wickman</div>
+  </div>
+
+  <div class="quote-block">
+    <p>You must surround yourself with great people. The rule is simple: you cannot build a great company without great people. And you cannot have great people without getting the right people in the right seats.</p>
+    <div class="attr">— Gino Wickman</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Complexity is the enemy of execution. The simpler you make things, the more powerful the result.</p>
+    <div class="attr">— Gino Wickman</div>
+  </div>
+
+  <div class="quote-block">
+    <p>When you're running a company, the most dangerous thing you can do is nothing. The second most dangerous thing is trying to do everything at once.</p>
+    <div class="attr">— Gino Wickman</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>The single most transformative idea in <em>Traction</em> is deceptively simple: <strong>clarity of accountability is the foundation of everything else.</strong> Most entrepreneurial companies operate with fuzzy roles, overlapping responsibilities, and an unspoken understanding that the founder will fill whatever gaps exist. This feels manageable — until it isn't. The Accountability Chart forces the single most important question in business: <em>who owns this?</em> Not "who is involved" or "who should we loop in" — but who is the one person accountable for this function, these outcomes, this seat. Once every seat has a real owner who GWCs it, every other EOS tool — Rocks, Scorecards, IDS — suddenly has somewhere to land. Without it, they float. That shift alone is worth the two-year journey.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p><strong>Traction</strong> is not a book you read once and put on a shelf. It is a reference manual for running a business. Wickman's central insight is that entrepreneurial chaos is not inevitable — it is the predictable result of operating without a system. EOS is that system: six components, a handful of powerful tools, and a two-year commitment to embedding them into how your leadership team thinks and works.</p>
+    <p>The book works because it attacks the root causes of entrepreneurial dysfunction, not the symptoms. The V/TO solves misalignment. The Accountability Chart solves unclear ownership. The Scorecard solves gut-feel management. IDS solves the chronic issues that never get resolved. The Process documentation solves dependency on individual knowledge. And Rocks plus the Level 10 Meeting solve the gap between intention and execution that kills most business strategies.</p>
+    <p>What makes EOS powerful is not that any single tool is revolutionary — most are assembled from prior work by Covey, Collins, Gerber, and others. What Wickman achieves is integration: a coherent, reinforcing system where every component supports every other. You can't have great Traction without clear Vision. You can't solve Issues well if the wrong People are in the room. You can't hold people accountable without Data. The six components are not a checklist — they are a flywheel.</p>
+    <p>The honest summary: if you are running a company of 10–250 people and it sometimes feels like you're building the plane while flying it, <em>Traction</em> is the closest thing to an instruction manual that exists. The tools are real, the timeline is honest, and the results — for teams willing to do the work — are transformational.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
