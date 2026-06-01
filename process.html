@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process! — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #171717;
+    --paper: #f2f2f0;
+    --cream: #e6e6e3;
+    --orange: #f07012;
+    --orange-light: #f5882e;
+    --orange-pale: #fde8cc;
+    --steel: #2e4a60;
+    --rust: #c43a1a;
+    --charcoal: #2a2a2a;
+    --muted: #6a6860;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--ink);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -80px; top: -80px;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      #2a2a2a 0deg 18deg,   #171717 18deg 30deg,
+      #2a2a2a 30deg 48deg,  #171717 48deg 60deg,
+      #2a2a2a 60deg 78deg,  #171717 78deg 90deg,
+      #2a2a2a 90deg 108deg, #171717 108deg 120deg,
+      #2a2a2a 120deg 138deg,#171717 138deg 150deg,
+      #2a2a2a 150deg 168deg,#171717 168deg 180deg,
+      #2a2a2a 180deg 198deg,#171717 198deg 210deg,
+      #2a2a2a 210deg 228deg,#171717 228deg 240deg,
+      #2a2a2a 240deg 258deg,#171717 258deg 270deg,
+      #2a2a2a 270deg 288deg,#171717 288deg 300deg,
+      #2a2a2a 300deg 318deg,#171717 318deg 330deg,
+      #2a2a2a 330deg 348deg,#171717 348deg 360deg
+    );
+    opacity: 0.5;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -10px; top: 20px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(240,112,18,0.25) 0%, transparent 70%);
+  }
+
+  .book-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 12px;
+    font-weight: 500;
+    position: relative; z-index: 1;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 44px);
+    color: #f2f2f0;
+    line-height: 1.12;
+    max-width: 560px;
+    position: relative; z-index: 1;
+  }
+  .hero h1 em { color: var(--orange-light); font-style: italic; }
+  .author {
+    margin-top: 14px;
+    color: rgba(242,242,240,0.5);
+    font-size: 13px;
+    letter-spacing: 1px;
+    position: relative; z-index: 1;
+  }
+  .author span { color: var(--orange); }
+  .hero-meta { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .meta-pill {
+    background: rgba(240,112,18,0.12);
+    border: 1px solid rgba(240,112,18,0.28);
+    color: var(--orange-light);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── Back link ── */
+  .back-bar {
+    background: var(--charcoal);
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+  }
+  .back-link {
+    color: rgba(242,242,240,0.45);
+    font-size: 12px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--orange); }
+  .back-link span { margin-right: 6px; }
+
+  /* ── Tabs ── */
+  .tabs {
+    display: flex;
+    background: var(--charcoal);
+    border-bottom: 2px solid rgba(240,112,18,0.2);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: rgba(242,242,240,0.45);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--orange); }
+  .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
+  .section-line { flex: 1; height: 1px; background: rgba(240,112,18,0.2); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid rgba(240,112,18,0.2);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--orange); }
+  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .summary-block {
+    background: white;
+    border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #282828;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--cream);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--charcoal);
+    color: var(--orange-light);
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    font-weight: 500;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card {
+    background: white;
+    border: 1px solid rgba(23,23,23,0.08);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(240,112,18,0.14); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num {
+    width: 32px; height: 32px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--orange); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body {
+    display: none;
+    padding: 14px 18px 18px 64px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #363636;
+    border-top: 1px solid rgba(240,112,18,0.1);
+  }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px;
+    background: rgba(240,112,18,0.07);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--steel);
+    font-weight: 500;
+  }
+
+  /* ── Framework cards ── */
+  .method-card {
+    background: white;
+    border: 1px solid rgba(240,112,18,0.15);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .method-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--steel); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+  .method-card .tag {
+    display: inline-block;
+    background: var(--steel);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  /* ── Three-step flow ── */
+  .step-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .step-card {
+    background: white;
+    border: 1px solid rgba(240,112,18,0.18);
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+  }
+  .step-num {
+    width: 40px; height: 40px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 auto 12px;
+  }
+  .step-card h4 { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--steel); margin-bottom: 8px; }
+  .step-card p { font-size: 12px; line-height: 1.55; color: var(--muted); }
+  .step-arrow {
+    position: absolute;
+    right: -10px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--orange);
+    z-index: 1;
+  }
+
+  /* ── Core processes grid ── */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .process-tile {
+    background: var(--cream);
+    border: 1px solid rgba(240,112,18,0.18);
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .process-tile .p-icon { font-size: 22px; margin-bottom: 8px; }
+  .process-tile h4 { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--steel); margin-bottom: 4px; }
+  .process-tile p { font-size: 11px; color: var(--muted); line-height: 1.45; }
+
+  /* ── Code-style block ── */
+  .code-block {
+    background: var(--ink);
+    color: var(--orange-pale);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .code-block .comment { color: rgba(240,112,18,0.45); }
+  .code-block .keyword { color: var(--orange-light); }
+  .code-block .value { color: #8ec9c9; }
+
+  /* ── Verdict banner ── */
+  .verdict-banner {
+    background: linear-gradient(135deg, var(--ink) 0%, #2a1a0a 100%);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .verdict-banner::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      #2a2a2a 0deg 18deg,  #171717 18deg 30deg,
+      #2a2a2a 30deg 48deg, #171717 48deg 60deg,
+      #2a2a2a 60deg 78deg, #171717 78deg 90deg,
+      #2a2a2a 90deg 108deg,#171717 108deg 120deg,
+      #2a2a2a 120deg 138deg,#171717 138deg 150deg,
+      #2a2a2a 150deg 168deg,#171717 168deg 180deg,
+      #2a2a2a 180deg 198deg,#171717 198deg 210deg,
+      #2a2a2a 210deg 228deg,#171717 228deg 240deg,
+      #2a2a2a 240deg 258deg,#171717 258deg 270deg,
+      #2a2a2a 270deg 288deg,#171717 288deg 300deg,
+      #2a2a2a 300deg 318deg,#171717 318deg 330deg,
+      #2a2a2a 330deg 348deg,#171717 348deg 360deg
+    );
+    opacity: 0.35;
+  }
+  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--orange-light); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(242,242,240,0.6); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item {
+    text-align: center;
+    background: rgba(240,112,18,0.1);
+    border: 1px solid rgba(240,112,18,0.2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    min-width: 90px;
+  }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--orange-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(242,242,240,0.45); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid rgba(23,23,23,0.08);
+  }
+  .pro-list h4 { color: var(--steel); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--rust); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--steel); }
+  .con-list .dot { background: var(--rust); }
+
+  /* ── Quotes ── */
+  .quote-block {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .quote-block::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--orange);
+    position: absolute;
+    top: -8px; left: 16px;
+    line-height: 1;
+  }
+  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink); }
+  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+  /* ── Who cards ── */
+  .who-card {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: white;
+    border: 1px solid rgba(240,112,18,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  /* ── EOS Library notice ── */
+  .eos-notice {
+    background: rgba(46,74,96,0.07);
+    border: 1px solid rgba(46,74,96,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--steel);
+    line-height: 1.6;
+  }
+  .eos-notice strong { display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .step-flow, .process-grid { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero { padding: 36px 20px 28px; }
+    .step-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="book-label">Book Review &amp; Reference Guide · EOS Mastery Series</div>
+  <h1><em>Process!</em> — How Discipline and Consistency Will Set You and Your Business Free</h1>
+  <div class="author">by <span>Mike Paton</span> &amp; <span>Lisa González</span> &nbsp;·&nbsp; Published 2022</div>
+  <div class="hero-meta">
+    <div class="meta-pill">Business Operations</div>
+    <div class="meta-pill">EOS / Traction Library</div>
+    <div class="meta-pill">Process Component</div>
+    <div class="meta-pill">3-Step Framework</div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('framework', this)">The Framework</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="panel active">
+
+  <div class="eos-notice">
+    <strong>Part of the Traction Library</strong>
+    <em>Process!</em> is one of the EOS Mastery Series books — a focused deep-dive into the Process component of the Entrepreneurial Operating System. Read alongside <a href="traction.html" style="color: var(--orange);">Traction</a> for the full EOS picture.
+  </div>
+
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core Focus</div>
+      <div class="stat-value">EOS Process</div>
+      <div class="stat-desc">The fifth of six EOS components — the one most often underinvested in, and the one that unlocks real scalability</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">Freedom Through Discipline</div>
+      <div class="stat-desc">Documenting and following your core processes doesn't cage you — it liberates you from firefighting and key-person dependency</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Primary Tool</div>
+      <div class="stat-value">3-Step Documenter</div>
+      <div class="stat-desc">Identify your core processes → Document them at the right level → Package and roll them out so they're Followed By All</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Ops Leaders &amp; Founders</div>
+      <div class="stat-desc">Anyone running an EOS company who has avoided the Process component — or tried it and given up too soon</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Process!</strong> tackles what Gino Wickman described as the most underutilised component of the Entrepreneurial Operating System. Most leadership teams running EOS understand the idea of the Process component — document your core workflows, get everyone to follow them — but they treat it as an administrative chore rather than a strategic lever. Paton and González set out to change that perception entirely.</p>
+    <p>The authors' central argument is counterintuitive: the discipline of codifying how your business works is not a constraint on creativity or growth — it is the mechanism that produces both. When your core processes are documented and genuinely followed by every team member, you stop being the bottleneck. Onboarding becomes faster. Quality becomes consistent. The business can scale beyond the knowledge stored in a handful of people's heads. You get your time back.</p>
+    <p>Paton and González cut through the most common objection head-on: "our business is too complex and dynamic to document." Their response is to reframe what documentation means. You are not writing an ISO manual. You are capturing the 20% of steps that produce 80% of the right results — a handful of essential, high-level waypoints that give any team member a reliable map. The rest is judgment. The 3-Step Process Documenter shows exactly how to do that, and how to get the process out of your head and into practice across the whole organisation.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">🗺️</div><div><strong>Most businesses run on tribal knowledge, not documented process.</strong> Everything lives in people's heads — which means consistency is accidental, onboarding is slow, and the departure of one key person can break the company.</div></div>
+  <div class="key-idea"><div class="icon">📋</div><div><strong>You probably have 6–10 core processes — not 60.</strong> The biggest mistake is trying to document everything. Identify the handful of processes that define how your business creates and delivers value, and start there.</div></div>
+  <div class="key-idea"><div class="icon">⚡</div><div><strong>The 20/80 rule applied to documentation.</strong> You don't need a 40-step procedure manual. Capture the 20% of the process that drives 80% of the right outcome — the essential waypoints every person needs to know and follow.</div></div>
+  <div class="key-idea"><div class="icon">🤝</div><div><strong>FBA — Followed By All — is the standard, not just documentation.</strong> A process that exists in a binder no one reads is worthless. The goal is consistent execution by every team member, every time. That requires training, accountability, and leadership modelling.</div></div>
+  <div class="key-idea"><div class="icon">🔓</div><div><strong>Process is the path to the owner's freedom.</strong> When your business can run consistently without you in the room for every decision, you have achieved what most entrepreneurs actually want — a company, not a job.</div></div>
+  <div class="key-idea"><div class="icon">🔗</div><div><strong>Process connects directly to the other five EOS components.</strong> Good processes make your Scorecard numbers more meaningful, your Rocks more achievable, your Issues easier to solve at the root, and your People more effective in their seats.</div></div>
+</div>
+
+<!-- CHAPTERS -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Part I — The Case for Process</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">Why Process? The Hidden Cost of Running on Tribal Knowledge</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Paton and González open with a scenario every entrepreneur recognises: a key employee leaves, and suddenly no one knows how to handle their responsibilities. Orders slip. Quality dips. The founder is back in the weeds. This is not a people problem — it is a process problem.
+      <br><br>
+      The chapter builds the case that most growing businesses are running on tribal knowledge — unwritten, uncodified, locked inside the heads of a small number of people. That works fine when you're small and everyone can see everything. But it becomes a ceiling as you grow. Consistency suffers, because every person does things differently. Onboarding suffers, because there's nothing to hand new people. Scalability suffers, because the owner or the expert must be consulted on everything.
+      <br><br>
+      The authors are careful not to make this feel like a lecture. They acknowledge that most EOS companies have avoided the Process component — not because they're lazy, but because it feels daunting, abstract, or beneath the leadership team's pay grade. This chapter's job is to reframe that: process work is leadership work, because it's the work that ultimately sets the leader free.
+      <div class="ch-takeaway">Tribal knowledge feels efficient until someone leaves or the business tries to scale. Process documentation is not bureaucracy — it is the foundation of a company that can outlast any individual.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">The Process Component — Where It Fits in the EOS Model</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This chapter situates the Process component precisely within the broader EOS model. Paton — a veteran EOS Implementer who co-authored this with González — makes a key observation: most leadership teams who run EOS score themselves highest on Vision and People, and lowest on Process and Data. Yet Process is the component most directly linked to the consistency, scalability, and freedom the owner is actually looking for.
+      <br><br>
+      The authors define the Process component with precision: it is the discipline of identifying, documenting, simplifying, and getting the entire organisation to consistently follow the small number of core processes that define how the business operates. Nothing more, nothing less. It is not about documenting every possible task. It is about establishing repeatable, teachable ways of doing the most important things.
+      <br><br>
+      A key insight here is that the Process component connects to every other EOS component. When processes are clear, the Scorecard becomes more meaningful (you're measuring the right activities). Rocks get done more reliably (there's a process for how to execute). Issues in the IDS session often trace back to process breakdowns. And new People can be onboarded faster when there's a documented way of working to hand them. Process is not isolated — it is the connective tissue of the operating system.
+      <div class="ch-takeaway">Process is the component that operationalises everything else. Weak processes mean the other five EOS components operate on a shaky foundation — strong processes amplify the impact of all of them.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">The Freedom Formula — How Discipline Produces Liberation</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The chapter that most directly attacks the emotional resistance to process work. The most common objection Paton and González hear from entrepreneurs is some version of: "I didn't start this business to write procedures manuals." The freedom formula is their response.
+      <br><br>
+      Their argument: the entrepreneur who refuses to document processes is not operating freely — they are trapped. Every day they spend answering the same questions, solving the same problems, being the single point of failure for the same decisions is a day they are not doing what only they can do. Real freedom — the ability to focus on growth, strategy, and vision — requires that the operational layer of the business can run without constant intervention.
+      <br><br>
+      The book draws on Michael Gerber's E-Myth insight but extends it: you are not just building systems so the business can run; you are building systems so the right people can run them. The documented process plus the right person in the right seat equals a business that can grow without the owner being the ceiling. That is the freedom formula: <strong>Process + People = Freedom</strong>.
+      <br><br>
+      The chapter also addresses the "our business is unique" objection. Every business has some creative, dynamic, judgment-intensive work — and that's fine. Process doesn't replace judgment; it handles the repeatable parts so that the people making judgments have more time and bandwidth to make them well.
+      <div class="ch-takeaway">Discipline in process doesn't restrict freedom — it creates it. The owner who refuses to document processes is not free; they are the single point of failure in every important workflow in their business.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part II — The 3-Step Process Documenter</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">Step 1 — Identify Your Core Processes</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The first practical step of the 3-Step Process Documenter: before you document anything, you need to agree on which processes you're actually documenting. Most leadership teams get this wrong by either going too broad (trying to capture every workflow in the business) or too narrow (only documenting one department's processes).
+      <br><br>
+      Paton and González define "core processes" as the 6–10 processes that together define how your business creates and delivers value. Most companies have variations on the same set: HR/People, Marketing, Sales, Operations/Fulfilment, Accounting/Finance, and Customer Retention. The names and specific contents vary enormously, but the structure — a small, defined set that covers the end-to-end value chain — is consistent.
+      <br><br>
+      The identification exercise is a leadership team activity, not a solo project. Everyone in the room names the processes they believe are core, and the team works toward alignment. This step often surfaces surprising disagreements — what one person thinks is a core process, another sees as a sub-step of something else. Resolving those disagreements is itself valuable, because it forces the leadership team to align on how the business fundamentally works before they start writing anything down.
+      <br><br>
+      A practical tool introduced here is the Core Process Identifier: a simple facilitated exercise where leadership team members independently list what they believe are the company's core processes, then compare lists and consolidate toward a mutually agreed set. The goal is to leave the session with a confirmed list of 6–10 named processes and an owner assigned to each.
+      <div class="ch-takeaway">Name your core processes before you document anything. Six to ten is the right number for most companies — enough to cover how value is created and delivered, few enough to actually complete.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">Step 2 — Document Your Core Processes (The Right Way)</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The most substantive chapter in the book, and the one most directly responsible for breaking the "I don't know where to start" paralysis that kills most process documentation efforts.
+      <br><br>
+      The authors introduce the 20/80 rule for documentation: you are not writing an exhaustive procedure manual. You are capturing the 20% of steps that produce 80% of the right outcomes. This means a documented process might have as few as 7–10 high-level steps — enough to orient anyone who's new to it, enforce consistency on the things that really matter, and give managers something to hold people accountable to. It does not mean 40 sub-bullets with screenshots and decision trees for every possible edge case.
+      <br><br>
+      The documentation session itself is facilitated, not solo. The process owner gathers the 3–4 people who actually do the work — not just the manager, but the practitioner — and facilitates a conversation: "Walk me through how we actually do this, start to finish." What comes out is the real process, not the idealised version. Often the most important discovery is the gap between what leadership thinks the process is and what frontline staff actually do.
+      <br><br>
+      Paton and González are deliberate about format: keep it simple. A one-page document with a clear name, a purpose statement, the owner's name, the high-level steps, and any critical decision points. Not a 20-page operations manual. The simpler the document, the more likely it is to be read, trained on, and followed. Complexity is the enemy of adoption.
+      <div class="ch-takeaway">Document the 20% of steps that drive 80% of the right results — not everything. A one-page process document that gets followed beats a 20-page manual that sits in a drawer.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">Step 3 — Package and Roll Out Your Processes</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Documentation is not the finish line — it is the starting line. This is the chapter most process initiatives skip, and it is why most process initiatives fail. A document no one knows about, can find, or has been trained on is worthless.
+      <br><br>
+      Packaging means presenting your processes in a format that the whole organisation can access and use. That might be a simple shared drive structure, a process handbook, or a tool like Trainual or Process Street — the authors are tool-agnostic, but they are firm that the format must be accessible, navigable, and actually used by the people who do the work. A process binder on the owner's shelf does not count.
+      <br><br>
+      Rolling out means training. Not a one-time all-hands announcement, but genuine individual training: walking each person through the processes relevant to their role, explaining the why behind each step, and getting confirmation of understanding. This step is where leadership commitment shows. If the leadership team skips training or treats it as someone else's job, the organisation will treat the processes as optional — because that's the signal they've been sent.
+      <br><br>
+      The chapter introduces the concept of "Process Champions" — designating a specific person in each area who owns the ongoing accuracy and training of their area's processes. This distributes the load and creates accountability for processes being kept current as the business evolves.
+      <div class="ch-takeaway">Documentation without roll-out is shelf-ware. Assign a Process Champion, train every relevant team member, and put the processes somewhere they can actually find and use them.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part III — Making It Stick</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Followed By All — The FBA Standard</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The chapter that elevates Process from a documentation project to a cultural standard. FBA — Followed By All — is the EOS benchmark for the Process component. It doesn't mean followed by most people most of the time. It means every relevant team member follows the documented process every time — and any deviation is identified, discussed, and either corrected or used to improve the documented process.
+      <br><br>
+      Paton and González are direct about why FBA is hard: because leadership often doesn't model it. When the founder routinely skips steps, takes shortcuts, or says "I know the process but in this case I'm going to do it differently," they signal to the entire organisation that the process is optional. FBA starts with the leadership team committing to follow their own processes — not because they're below the leader's pay grade, but because their consistent example is what makes the standard believable.
+      <br><br>
+      The chapter addresses the "we hire talented people who don't need process" objection directly. Talented people benefit from process — it frees them from spending mental energy on the repeatable parts of their role, so they can focus their creativity and judgment where it actually matters. The best surgeons follow surgical checklists. The best pilots follow pre-flight procedures. Process doesn't diminish competence; it provides the reliable foundation that lets competence shine.
+      <br><br>
+      Accountability for process adherence is built into the EOS rhythm: Scorecard items can measure process compliance, IDS sessions surface process breakdowns as issues, and quarterly performance conversations include process adherence as a real metric. FBA is not aspirational — it is tracked.
+      <div class="ch-takeaway">FBA means every person, every time — not mostly, not when convenient. Leadership modelling is the single most important variable in whether FBA becomes real or remains a poster on a wall.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">Process and Onboarding — Your Fastest Path to Consistent Team Performance</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      One of the most immediately tangible payoffs of the Process component: a dramatically better onboarding experience for new team members. When core processes are documented and accessible, you can hand a new person a structured, reliable introduction to how the organisation works — rather than relying on whoever has time to mentor them that week.
+      <br><br>
+      Paton and González describe the difference in concrete terms: in a company without documented processes, a new hire's quality depends almost entirely on the quality and availability of whoever onboards them. In a company with documented processes, the baseline is established before the person arrives. The mentor's job shifts from "teach them everything from scratch" to "confirm they understand the documented way, and help them develop judgment within it."
+      <br><br>
+      The chapter also covers ongoing process training — not just for new hires, but as a continuous practice. Processes evolve as the business grows, and documented processes must be kept current. Annual process reviews (built into the EOS annual planning rhythm) ensure that what's documented reflects how things are actually done, rather than how they were done two years ago.
+      <br><br>
+      There's a practical section on using processes for performance management: when someone isn't meeting expectations, the first question should be "are they following the process?" If the answer is no, the conversation is about accountability. If the answer is yes and performance is still poor, the conversation is about whether the process itself is broken — not just the person.
+      <div class="ch-takeaway">Documented processes transform onboarding from a lottery into a system. New hires can be productive faster, mentors spend less time, and quality is consistent from day one rather than gradually learned.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">Common Pitfalls and How to Overcome Them</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The most candid chapter in the book — an honest catalogue of the ways process initiatives fail, drawn from Paton's years as an EOS Implementer working with hundreds of companies. The five most common pitfalls, each with a concrete remedy:
+      <br><br>
+      <strong>1. Boiling the ocean.</strong> Teams try to document everything at once, get overwhelmed, and abandon the project. Fix: identify your 6–10 core processes, pick the two most urgent ones, and document those first. Done beats perfect.
+      <br><br>
+      <strong>2. Perfectionism.</strong> Endless revision cycles because someone can always think of an edge case that isn't covered. Fix: apply the 20/80 rule firmly. If you're debating step 23 of a 25-step process, you've already gone too deep. Ship it.
+      <br><br>
+      <strong>3. Documentation without roll-out.</strong> Documents get created and filed; no one is trained, no one knows where to find them. Fix: the roll-out phase is non-negotiable. Assign a date, assign a trainer, track completion.
+      <br><br>
+      <strong>4. Leadership non-compliance.</strong> Leaders exempt themselves from following the processes they've created. Fix: leaders go first. The leadership team commits publicly to following the documented processes and models it visibly.
+      <br><br>
+      <strong>5. Letting processes go stale.</strong> A documented process from 18 months ago that no longer reflects reality is worse than no process — it breeds cynicism. Fix: assign ownership, schedule annual reviews, and update processes through the IDS system whenever a deviation reveals an improvement.
+      <div class="ch-takeaway">The biggest process killer is perfectionism followed by abandonment. Start with two core processes, apply the 20/80 rule ruthlessly, roll them out with real training, and keep them current. That cycle, repeated six times, builds a process-driven culture.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">10</div>
+      <div class="ch-title">The Long Game — Process as a Competitive Advantage</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The closing chapter zooms out from the mechanics to the strategic picture. Paton and González make an argument that few business books make explicitly: documented, consistently followed processes are a genuine competitive advantage — not just an operational nicety.
+      <br><br>
+      Their reasoning: a company that runs on well-documented, consistently followed processes can do three things its competitors cannot. First, it can scale without proportional increases in management overhead — because the process does much of the supervisory work. Second, it can acquire and integrate talent faster — because onboarding is systematic, not ad-hoc. Third, it can improve continuously — because when processes are explicit, failures and inefficiencies become visible and fixable rather than invisible and endemic.
+      <br><br>
+      The chapter connects back to the EOS annual planning rhythm: process improvement should be a standing agenda item in the annual plan, with specific Rocks each year to strengthen the most underdeveloped core processes. Over 2–3 years, a company that takes this seriously develops a process maturity that is genuinely hard to replicate.
+      <br><br>
+      The final pages return to the freedom theme: the most satisfying outcome of a fully process-driven company is not efficiency metrics or onboarding speed. It is that the owner can take a two-week holiday and nothing breaks. That is not a small thing. For most entrepreneurs, it is exactly why they started the business in the first place.
+      <div class="ch-takeaway">A company that consistently runs on documented processes has a compounding advantage over time: faster scaling, better talent absorption, and continuous improvement that competitors operating on tribal knowledge simply cannot match.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FRAMEWORK -->
+<div id="framework" class="panel">
+
+  <div class="section-header">
+    <h2>The 3-Step Process Documenter</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="step-flow">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h4>Identify</h4>
+      <p>Name your 6–10 core processes as a leadership team. Assign an owner to each. Agree on scope before anyone writes a single step.</p>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h4>Document</h4>
+      <p>Capture the 20% of steps that drive 80% of the right outcomes. Keep it to one page per process. Involve the people who actually do the work.</p>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h4>Package &amp; Roll Out</h4>
+      <p>Make processes accessible. Train every relevant team member. Assign Process Champions. Build review cycles to keep documents current.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>The 6–10 Typical Core Processes</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="process-grid">
+    <div class="process-tile">
+      <div class="p-icon">👥</div>
+      <h4>HR / People</h4>
+      <p>Hiring, onboarding, performance reviews, offboarding — the full employee lifecycle</p>
+    </div>
+    <div class="process-tile">
+      <div class="p-icon">📣</div>
+      <h4>Marketing</h4>
+      <p>How leads are generated, campaigns launched, and brand maintained</p>
+    </div>
+    <div class="process-tile">
+      <div class="p-icon">🤝</div>
+      <h4>Sales</h4>
+      <p>How prospects are qualified, proposals built, and deals closed</p>
+    </div>
+    <div class="process-tile">
+      <div class="p-icon">⚙️</div>
+      <h4>Operations / Fulfilment</h4>
+      <p>How the product or service is created, delivered, and quality-controlled</p>
+    </div>
+    <div class="process-tile">
+      <div class="p-icon">💰</div>
+      <h4>Accounting / Finance</h4>
+      <p>Invoicing, collections, payroll, reporting, and cash management rhythms</p>
+    </div>
+    <div class="process-tile">
+      <div class="p-icon">❤️</div>
+      <h4>Customer Retention</h4>
+      <p>How relationships are maintained, issues resolved, and renewals secured</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>The 20/80 Documentation Rule</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="code-block">
+    <span class="comment">// What you're documenting — and what you're not</span><br><br>
+    <span class="keyword">DO document:</span>   <span class="value">High-level steps every team member must follow</span><br>
+    <span class="keyword">DO document:</span>   <span class="value">Critical decision points and who owns them</span><br>
+    <span class="keyword">DO document:</span>   <span class="value">Handoff points between people or teams</span><br>
+    <span class="keyword">DO document:</span>   <span class="value">Non-obvious steps that cause errors when skipped</span><br><br>
+    <span class="keyword">DON'T document:</span> <span class="value">Every possible edge case or exception</span><br>
+    <span class="keyword">DON'T document:</span> <span class="value">Basic tasks any competent hire can figure out</span><br>
+    <span class="keyword">DON'T document:</span> <span class="value">Steps that change so frequently they'll be wrong tomorrow</span><br><br>
+    <span class="comment">// Target: 7–12 steps per process, one page, high-level</span><br>
+    <span class="comment">// Rule: if your document is over 2 pages, you've gone too deep</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Key Concepts &amp; Tools</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Standard</div>
+    <h4>FBA — Followed By All</h4>
+    <p>The EOS benchmark for the Process component. Not "mostly followed by most people" — every relevant team member follows the documented process every time. Deviations are surfaced and used either to correct behaviour or to improve the documented process. FBA starts with the leadership team visibly modelling process adherence. When the leader skips steps, everyone watches and learns that the process is optional.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Role</div>
+    <h4>Process Champion</h4>
+    <p>A designated owner for each core process — responsible for keeping the documentation accurate, training new team members, and raising the alarm when the documented process diverges from reality. Process Champions are not a separate department; they are the most senior practitioner in each process area. Ownership without a name attached is no ownership at all.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Exercise</div>
+    <h4>Core Process Identifier</h4>
+    <p>A facilitated leadership team exercise for Step 1 of the 3-Step Documenter. Each person independently lists the core processes they believe run the business, then the team compares lists and consolidates toward 6–10 agreed names. The conflicts and overlaps that surface in this exercise are themselves valuable — they reveal misalignment in how the leadership team understands the business at a fundamental level. Resolving them before documentation begins prevents far worse confusion later.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Concept</div>
+    <h4>The Freedom Formula: Process + People = Freedom</h4>
+    <p>The book's central thesis stated as a formula. The entrepreneur who has the right people in the right seats (EOS People component) AND well-documented processes those people consistently follow is no longer the bottleneck in their own company. Operational decisions can be made without them. Quality is consistent without them. The business can grow without them scaling proportionally. That is the freedom most entrepreneurs are actually looking for when they start a company — and process is the mechanism that delivers it.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Integration</div>
+    <h4>Process in the EOS Rhythm</h4>
+    <p>Process work is not a one-time project — it integrates into the standard EOS quarterly and annual cadence. Process breakdowns become IDS issues in the Level 10 Meeting. Process improvement Rocks are set each quarter. Annual planning includes a dedicated review of which core processes need strengthening in the coming year. The Process component is kept alive by the same accountability structures that drive every other part of EOS.</p>
+  </div>
+</div>
+
+<!-- VERDICT -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.2 / 5</h3>
+    <p>A focused, no-fluff guide to the EOS component most companies skip — essential reading for any leadership team serious about scalability</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Accessibility</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.8</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">3.8</div>
+        <div class="r-label">Breadth</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.0</div>
+        <div class="r-label">Originality</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Directly addresses the most common EOS implementation gap — the component teams avoid because they don't know how to start</div></div>
+      <div class="list-item"><div class="dot"></div><div>The 20/80 documentation rule is genuinely liberating — it removes the perfectionism that kills most process projects before they start</div></div>
+      <div class="list-item"><div class="dot"></div><div>The 3-Step framework is immediately actionable — a leadership team can start Step 1 the same week they finish the book</div></div>
+      <div class="list-item"><div class="dot"></div><div>Excellent on the human side — FBA, leadership modelling, and the Freedom Formula address the cultural and emotional barriers, not just the mechanical ones</div></div>
+      <div class="list-item"><div class="dot"></div><div>Short and well-structured — reads in an afternoon, yields a clear action plan</div></div>
+      <div class="list-item"><div class="dot"></div><div>Strong on pitfalls — the common failure modes chapter alone will save most teams months of wasted effort</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Scope is intentionally narrow — this is one component of EOS, not a standalone business system; requires Traction for full context</div></div>
+      <div class="list-item"><div class="dot"></div><div>Relatively light on complex process scenarios — heavily service-business oriented; manufacturers or highly regulated industries may need supplementary material</div></div>
+      <div class="list-item"><div class="dot"></div><div>The FBA standard is clearly right but the book doesn't fully grapple with the political difficulty of enforcing process adherence across different personality types and tenures</div></div>
+      <div class="list-item"><div class="dot"></div><div>Limited tooling guidance — the book is tool-agnostic (intentionally), but readers wanting specific software recommendations will need to look elsewhere</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some overlap with the Process chapter in Traction — readers of both will cover similar ground, though Process! goes substantially deeper</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>EOS leadership teams</strong> who have been running the system for 1–2+ years but have avoided or stalled on the Process component — this book is specifically written for you</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Operations leaders and COOs</strong> responsible for making the business run consistently — the 3-Step Documenter gives you a defensible, leadership-team-approved methodology to work with</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Founders feeling like the single point of failure</strong> in their own company — if you're answering the same questions every week, this book diagnoses why and prescribes the fix</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone scaling a team quickly</strong> who needs onboarding to be faster and more consistent — documented core processes are the foundation of a reliable onboarding system</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Non-EOS companies</strong> can still extract significant value from the 3-Step Documenter and FBA standard, but will miss some context — read Traction alongside it</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Very early-stage founders</strong> (pre-product-market fit) — the book's advice is sound but premature; come back when you have repeatable processes worth documenting</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Quotes</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>Discipline is not the enemy of freedom. It is the path to it.</p>
+    <div class="attr">— Mike Paton &amp; Lisa González, Process!</div>
+  </div>
+
+  <div class="quote-block">
+    <p>A process that lives in someone's head is not a process — it's a single point of failure with a heartbeat.</p>
+    <div class="attr">— Mike Paton &amp; Lisa González, Process!</div>
+  </div>
+
+  <div class="quote-block">
+    <p>You don't need to document everything. You need to document the twenty percent of steps that prevent eighty percent of the mistakes, inconsistencies, and reinvented wheels that are quietly costing you time, money, and trust.</p>
+    <div class="attr">— Mike Paton &amp; Lisa González, Process!</div>
+  </div>
+
+  <div class="quote-block">
+    <p>FBA is not a nice-to-have. It's the whole game. A documented process that isn't followed is worse than no process at all — it tells your team that documentation is theatre.</p>
+    <div class="attr">— Mike Paton &amp; Lisa González, Process!</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>The most transformative idea in <em>Process!</em> is the reframe of what "process discipline" actually means for an entrepreneur. Most founders hear "document your processes" and picture themselves trapped in a bureaucratic cage of their own construction — writing manuals no one reads, enforcing rules that stifle the creativity that made the company good in the first place. Paton and González dismantle this picture completely.</p>
+    <p>The truth is the inverse: <strong>the undocumented business is the cage.</strong> When your core processes live only in people's heads, you — the owner — are the only person who can make most important decisions. Every day, you are answering questions that a documented process would have answered for you. Every time a key person leaves, institutional knowledge walks out with them. Every quarter you delay documenting your processes is another quarter where your business is fragile, inconsistent, and dependent on you being available and correct at all times.</p>
+    <p>The freedom formula — Process + People = Freedom — is not a slogan. It is the logical conclusion of what happens when you stop being the single point of knowledge in your own company. That shift, more than any other, is what allows a business to scale without the owner becoming the ceiling. And it starts not with a massive documentation project, but with a single afternoon of the leadership team naming their six to ten core processes. That first step, modest as it sounds, is the beginning of getting the business out of your head and into the world.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p><strong>Process!</strong> is exactly what it needs to be: a tight, practical, no-fluff guide to the EOS component that most leadership teams quietly dread. Paton and González understand why the Process component stays undone — the combination of perceived complexity, perfectionism, and the sense that it's administrative rather than strategic — and they dismantle every one of those objections with precision.</p>
+    <p>The 3-Step Process Documenter is the right tool, at the right level of abstraction. The 20/80 rule removes the perfectionism trap. The FBA standard sets a clear bar that isn't aspirational but operational. And the Freedom Formula reframes the entire exercise from "something we should probably get around to" to "the single most important structural thing we can do to make this business scalable and survivable."</p>
+    <p>The book's limitations are real but acceptable given its scope. It is deliberately focused — one component of a six-component system — and readers without the Traction context will need to read that book alongside it. It is also lightly tooled, leaving software choices entirely to the reader. But neither of these is a meaningful criticism of what the book sets out to do.</p>
+    <p>The honest summary: if your EOS company has been stalling on the Process component — if it's been on the quarterly agenda for two years and never actually happened — read this book, then run the Core Process Identifier exercise at your next quarterly. Six months later, you'll wonder why you waited.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
