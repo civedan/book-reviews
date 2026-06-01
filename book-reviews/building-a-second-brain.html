@@ -33,6 +33,9 @@
     padding: 48px 40px 36px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 32px;
   }
   .hero::before {
     content: '';
@@ -42,6 +45,22 @@
     border-radius: 50%;
     background: radial-gradient(circle, rgba(200,137,58,0.18) 0%, transparent 70%);
   }
+  .hero-text { flex: 1; }
+  .book-cover-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .book-cover-wrap img {
+    width: 110px;
+    border-radius: 4px;
+    transform: rotate(-8deg);
+    box-shadow: -4px 6px 20px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 480px) { .book-cover-wrap { display: none; } }
   .book-label {
     font-size: 10px;
     letter-spacing: 3px;
@@ -306,14 +325,19 @@
 <body>
 
 <div class="hero">
-  <div class="book-label">Book Review &amp; Reference Guide</div>
-  <h1>Building a <em>Second Brain</em></h1>
-  <div class="author">by <span>Tiago Forte</span> &nbsp;·&nbsp; Published 2022</div>
-  <div class="hero-meta">
-    <div class="meta-pill">Productivity</div>
-    <div class="meta-pill">Knowledge Management</div>
-    <div class="meta-pill">12 Chapters</div>
-    <div class="meta-pill">4 Parts</div>
+  <div class="hero-text">
+    <div class="book-label">Book Review &amp; Reference Guide</div>
+    <h1>Building a <em>Second Brain</em></h1>
+    <div class="author">by <span>Tiago Forte</span> &nbsp;·&nbsp; Published 2022</div>
+    <div class="hero-meta">
+      <div class="meta-pill">Productivity</div>
+      <div class="meta-pill">Knowledge Management</div>
+      <div class="meta-pill">12 Chapters</div>
+      <div class="meta-pill">4 Parts</div>
+    </div>
+  </div>
+  <div class="book-cover-wrap">
+    <img src="images/building-a-second-brain-cover.jpg" alt="Building a Second Brain book cover">
   </div>
 </div>
 
