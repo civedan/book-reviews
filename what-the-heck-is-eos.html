@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What the Heck Is EOS? — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --orange:      #E87020;
+    --orange-dark: #C45500;
+    --orange-deep: #A84000;
+    --orange-pale: #FFF0E0;
+    --orange-dim:  rgba(232,112,32,0.12);
+    --ink:         #111111;
+    --white:       #ffffff;
+    --cream:       #FAF5EF;
+    --muted:       #5a5040;
+    --steel:       #2e4a60;
+    --rust:        #c43a1a;
+    --border:      rgba(232,112,32,0.20);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ─────────────────────────────────────────────
+     HERO — bold orange canvas, speech bubble, stick figure
+  ───────────────────────────────────────────── */
+  .hero {
+    background: var(--orange);
+    padding: 44px 40px 40px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    border-bottom: 4px solid var(--orange-dark);
+  }
+
+  /* Subtle dark vignette at edges */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(0,0,0,0.12) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-text {
+    flex: 1;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Speech bubble box — the central motif from the cover */
+  .speech-bubble-box {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 22px 26px 20px;
+    margin-bottom: 8px;
+    position: relative;
+    display: inline-block;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  /* Speech bubble tail pointing down-right */
+  .speech-bubble-box::after {
+    content: '';
+    position: absolute;
+    bottom: -18px;
+    left: 48px;
+    border-width: 18px 18px 0 0;
+    border-style: solid;
+    border-color: var(--white) transparent transparent transparent;
+    filter: drop-shadow(0 3px 3px rgba(0,0,0,0.1));
+  }
+
+  .bubble-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+    font-weight: 600;
+    border-bottom: 1.5px solid var(--border);
+    padding-bottom: 8px;
+  }
+
+  .hero h1 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(22px, 4vw, 36px);
+    color: var(--ink);
+    line-height: 1.1;
+    font-weight: 600;
+  }
+  .hero h1 .eos-word {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6.5vw, 60px);
+    font-weight: 700;
+    color: var(--ink);
+    display: block;
+    line-height: 1.0;
+    letter-spacing: -1px;
+  }
+  .hero h1 .q-mark {
+    color: var(--orange);
+  }
+
+  .hero-subtitle {
+    margin-top: 26px;
+    color: rgba(255,255,255,0.92);
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+    max-width: 440px;
+  }
+  .author {
+    margin-top: 10px;
+    color: rgba(255,255,255,0.70);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .author span { color: var(--white); font-weight: 600; }
+
+  .hero-meta { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+  .meta-pill {
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.90);
+    border-radius: 20px;
+    padding: 5px 13px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Right side: stick figure + cover */
+  .hero-right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .stick-figure-wrap {
+    opacity: 0.90;
+    margin-bottom: 8px;
+  }
+  .stick-figure-wrap svg {
+    width: 56px;
+    height: auto;
+  }
+
+  .book-cover-wrap img {
+    width: 110px;
+    border-radius: 4px;
+    transform: rotate(5deg);
+    box-shadow: -4px 8px 28px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 560px) {
+    .hero-right { display: none; }
+    .speech-bubble-box { max-width: 100%; }
+  }
+
+  /* ── Back bar ── */
+  .back-bar {
+    background: var(--white);
+    padding: 10px 32px;
+    border-bottom: 1px solid #e8e0d5;
+    display: flex;
+    align-items: center;
+  }
+  .back-link {
+    color: var(--muted);
+    font-size: 12px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--orange); }
+
+  /* ── Tabs ── */
+  .tabs {
+    display: flex;
+    background: var(--white);
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--orange); }
+  .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 56px; max-width: 900px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 26px; }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--orange); line-height: 1.2; }
+  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+
+  .summary-block {
+    background: var(--white);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    line-height: 1.78;
+    color: #2a2218;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  /* Traction Library notice */
+  .library-notice {
+    background: var(--orange-dim);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .library-notice strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .key-idea {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--white);
+    border: 1px solid #ece6dc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--orange);
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    font-weight: 600;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card {
+    background: var(--white);
+    border: 1px solid #e8e0d5;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(232,112,32,0.12); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num {
+    width: 32px; height: 32px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--orange); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body {
+    display: none;
+    padding: 14px 18px 18px 64px;
+    font-size: 13.5px;
+    line-height: 1.72;
+    color: #362a1a;
+    border-top: 1px solid #f0e8dc;
+  }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px;
+    background: var(--orange-dim);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--orange-dark);
+    font-weight: 500;
+  }
+
+  /* ── Six Components wheel / grid ── */
+  .six-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .comp-tile {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .comp-tile:hover { border-color: var(--orange); box-shadow: 0 2px 12px var(--orange-dim); }
+  .comp-tile .c-icon { font-size: 24px; margin-bottom: 8px; }
+  .comp-tile h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--ink); margin-bottom: 5px; }
+  .comp-tile p { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+  .comp-tile .comp-num {
+    position: absolute;
+    top: 8px; right: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Tool cards ── */
+  .tool-card {
+    background: var(--white);
+    border: 1px solid #e8e0d5;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .tool-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--steel); margin-bottom: 8px; }
+  .tool-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+  .tool-card .tag {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ── Meeting rhythm ── */
+  .rhythm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .rhythm-card {
+    background: var(--white);
+    border: 1px solid #e8e0d5;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .rhythm-freq {
+    background: var(--orange);
+    color: white;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+    flex-shrink: 0;
+    min-width: 60px;
+  }
+  .rhythm-card h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .rhythm-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── Verdict banner ── */
+  .verdict-banner {
+    background: linear-gradient(135deg, var(--ink) 0%, #3a1a00 100%);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .verdict-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at  8% 25%, var(--orange) 0%, var(--orange) 18px, transparent 19px),
+      radial-gradient(circle at 92% 70%, var(--orange) 0%, var(--orange) 22px, transparent 23px),
+      radial-gradient(circle at 88% 18%, var(--orange) 0%, var(--orange) 12px, transparent 13px),
+      radial-gradient(circle at 12% 82%, var(--orange) 0%, var(--orange) 14px, transparent 15px),
+      radial-gradient(circle at 50% 5%,  var(--orange) 0%, var(--orange) 10px, transparent 11px);
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--orange); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(255,255,255,0.55); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item {
+    text-align: center;
+    background: rgba(232,112,32,0.14);
+    border: 1px solid rgba(232,112,32,0.28);
+    border-radius: 8px;
+    padding: 10px 16px;
+    min-width: 90px;
+  }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--orange); }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #e8e0d5;
+  }
+  .pro-list h4 { color: var(--steel); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--rust); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--steel); }
+  .con-list .dot { background: var(--rust); }
+
+  /* ── Quotes ── */
+  .quote-block {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    position: relative;
+    border-left: 3px solid var(--orange);
+  }
+  .quote-block::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--orange);
+    position: absolute;
+    top: -8px; left: 16px;
+    line-height: 1;
+    opacity: 0.5;
+  }
+  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink); }
+  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+  /* ── Who cards ── */
+  .who-card {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--white);
+    border: 1px solid #e8e0d5;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+  .who-card:hover { border-color: var(--orange); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  /* ── Orange divider ── */
+  .dot-divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 30px 0 20px;
+  }
+  .dot-divider span {
+    width: 10px; height: 10px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot-divider span:nth-child(2) { opacity: 0.5; width: 7px; height: 7px; }
+  .dot-divider span:nth-child(3) { opacity: 0.25; width: 5px; height: 5px; }
+
+  /* ── IDS visual ── */
+  .ids-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .ids-step {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+  }
+  .ids-letter {
+    width: 48px; height: 48px;
+    background: var(--orange);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 auto 10px;
+    font-family: 'Playfair Display', serif;
+  }
+  .ids-step h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--ink); margin-bottom: 6px; }
+  .ids-step p { font-size: 11.5px; line-height: 1.5; color: var(--muted); }
+  .ids-arrow {
+    position: absolute;
+    right: -10px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--orange);
+    z-index: 1;
+    font-weight: 700;
+  }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .six-grid, .rhythm-grid, .ids-flow { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 48px; }
+    .hero { padding: 32px 20px 28px; }
+    .ids-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     HERO — orange canvas, speech bubble, stick figure
+════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-text">
+    <!-- Speech bubble — mirrors cover -->
+    <div class="speech-bubble-box">
+      <div class="bubble-eyebrow">Book Review · Part of the Traction Library</div>
+      <h1>
+        What the Heck Is
+        <span class="eos-word">EOS<span class="q-mark">?</span></span>
+      </h1>
+    </div>
+
+    <div class="hero-subtitle">A Complete Guide for Employees in Companies Running on EOS</div>
+    <div class="author">by <span>Gino Wickman</span> &amp; <span>Tom Bouwer</span> &nbsp;·&nbsp; Published 2017</div>
+    <div class="hero-meta">
+      <div class="meta-pill">Business Operations</div>
+      <div class="meta-pill">EOS / Traction Library</div>
+      <div class="meta-pill">Employee Companion</div>
+      <div class="meta-pill">6 Components</div>
+    </div>
+  </div>
+
+  <!-- Stick figure + cover -->
+  <div class="hero-right">
+    <!-- Stick figure SVG matching cover illustration -->
+    <div class="stick-figure-wrap">
+      <svg viewBox="0 0 60 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Head -->
+        <circle cx="30" cy="16" r="13" stroke="#111" stroke-width="3.5" fill="none"/>
+        <!-- Body -->
+        <line x1="30" y1="29" x2="30" y2="85" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Left arm - raised up -->
+        <line x1="30" y1="45" x2="6" y2="22" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Right arm - at side -->
+        <line x1="30" y1="50" x2="54" y2="65" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Left leg -->
+        <line x1="30" y1="85" x2="10" y2="128" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Right leg -->
+        <line x1="30" y1="85" x2="48" y2="128" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Left foot -->
+        <line x1="10" y1="128" x2="2" y2="136" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Right foot -->
+        <line x1="48" y1="128" x2="56" y2="136" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="book-cover-wrap">
+      <img src="WthiEOS.jpg" alt="What the Heck Is EOS? book cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link">← Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('framework', this)">The 6 Components</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════════ -->
+<div id="overview" class="panel active">
+
+  <div class="library-notice">
+    <strong>Part of the Traction Library</strong>
+    <em>What the Heck Is EOS?</em> is the employee companion to Gino Wickman's flagship <a href="traction.html" style="color:var(--orange);">Traction</a>. Where Traction is written for leaders implementing EOS, this book is written for the people who work inside those companies — answering the questions employees are often too afraid to ask.
+  </div>
+
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Primary Audience</div>
+      <div class="stat-value">Employees</div>
+      <div class="stat-desc">The first EOS book written explicitly for non-leadership — the people who experience EOS from the inside but rarely get a seat at the implementation table</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Question</div>
+      <div class="stat-value">"What does this mean for me?"</div>
+      <div class="stat-desc">Every EOS concept is explained through an employee lens — not how to implement it, but how to navigate it, participate in it, and benefit from it</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Core Framework</div>
+      <div class="stat-value">The Six Components</div>
+      <div class="stat-desc">Vision · People · Data · Issues · Process · Traction — explained without jargon, with clear examples of what each component looks like from the floor</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">New EOS Converts</div>
+      <div class="stat-desc">Companies just rolling out EOS, employees confused by the new language and meeting structures, and managers bridging leadership and team</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p>When a company adopts EOS, the leadership team typically spends months learning the system — reading Traction, working with an Implementer, attending quarterly sessions. Their team members, meanwhile, suddenly find themselves in Level 10 Meetings, being asked about their Rocks, or discovering their role has changed because of something called an Accountability Chart. Nobody explained it to them. That gap is what this book fills.</p>
+    <p>Wickman and Bouwer — who is himself an EOS employee, not a leader — take every core EOS concept and translate it from the implementation language of Traction into the lived experience of an employee. What is the V/TO and why does it matter to me? What does my Scorecard number actually mean? What am I supposed to do in an IDS session? Why did my company reorganise around an Accountability Chart instead of an org chart? This book answers all of it, plainly and with a consistent "what's in it for you" orientation.</p>
+    <p>The result is a book that operates as both an onboarding tool and a confidence builder. Employees who read it understand not just the mechanics of EOS but the logic beneath them — why the system is designed the way it is, and how participating fully in it makes their own working life better, not just the company's bottom line. The book's consistent message is that EOS isn't something being done <em>to</em> employees — it is something they are invited to participate in and benefit from, if they understand it well enough to engage.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">❓</div><div><strong>Most EOS rollouts leave employees confused.</strong> Leadership gets the training; employees get the meeting changes and the new terminology without the context. This book is the missing briefing — the one that answers the questions people are thinking but don't feel safe asking.</div></div>
+  <div class="key-idea"><div class="icon">🏛️</div><div><strong>EOS is built on six components, not one framework.</strong> Vision, People, Data, Issues, Process, and Traction each address a different dimension of a healthy business. Understanding all six — even at a surface level — lets employees see how their daily work connects to the whole.</div></div>
+  <div class="key-idea"><div class="icon">🎯</div><div><strong>Rocks are not just leadership goals.</strong> Every employee can and should have Rocks — 90-day priorities that create personal accountability and clarity. Understanding the Rocks system transforms quarterly planning from something that happens to you into something you actively own.</div></div>
+  <div class="key-idea"><div class="icon">📊</div><div><strong>The Scorecard is about clarity, not surveillance.</strong> Having a number you own every week sounds stressful — but it is actually liberating. It removes ambiguity about whether you're doing well. You know. Your manager knows. The conversation becomes specific and productive.</div></div>
+  <div class="key-idea"><div class="icon">🗣️</div><div><strong>IDS is the most underused gift EOS gives employees.</strong> Identify, Discuss, Solve — the structured approach to resolving issues — gives every team member a legitimate, productive channel to raise problems and see them resolved. It is the opposite of a complaint culture; it is a solution culture.</div></div>
+  <div class="key-idea"><div class="icon">🤝</div><div><strong>The Accountability Chart defines role expectations, not headcount.</strong> The AC replaces vague org-chart boxes with clearly defined seats, each with specific responsibilities. For employees, this is a contract: here is what your seat requires of you, explicitly, with no room for "I didn't know that was my job."</div></div>
+  <div class="key-idea"><div class="icon">💡</div><div><strong>EOS works best when everyone participates, not just the leadership team.</strong> A leadership team running EOS in isolation is a ceiling. When employees understand and engage with the system — bringing real issues to IDS, owning their Scorecard numbers, protecting their Rocks — the whole company performs at a different level.</div></div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     CHAPTERS
+════════════════════════════════════════════ -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Part One — Setting the Stage</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">Why EOS? Understanding What Your Company Is Trying to Do</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The opening chapter does something deceptively simple: it explains to an employee why their company chose EOS in the first place. Most employees hear about EOS through an announcement — "we're implementing a new operating system" — without any context for what problem it's solving. Wickman and Bouwer fill that gap immediately.
+      <br><br>
+      The explanation is grounded in a picture that resonates with most experienced employees: a company that has grown past the point where the founder's intuition can manage everything, but hasn't yet built the systems to replace that intuition with reliable, consistent execution. Meetings run long and produce nothing. Everyone is busy but the right things aren't getting done. The same problems surface quarter after quarter. People are unclear about their priorities. The company is stuck.
+      <br><br>
+      EOS, the authors explain, is a response to exactly this condition. It is not a new strategy or a culture change initiative — it is a practical operating system that gives everyone in the organisation the tools, rhythms, and clarity to actually execute on whatever the strategy is. The chapter closes by framing the rest of the book: the six components of EOS are not abstract concepts for the leadership team to worry about. They are things that will directly affect how you work, what you're accountable for, and how your success is measured. Understanding them is in your interest.
+      <div class="ch-takeaway">Your company didn't choose EOS arbitrarily — it chose it because something was broken or stuck, and it needed a system. Understanding that context changes how you experience everything that follows.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">The Six Components — The Map of the System</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      A high-level orientation chapter that introduces all six EOS components — Vision, People, Data, Issues, Process, and Traction — in plain language. This is the map before the journey. Rather than diving deep into any one component, Wickman and Bouwer establish how they relate to one another and why the system requires all six working together.
+      <br><br>
+      The authors use the metaphor of a car: the engine might be powerful (great strategy), but without good tyres (people in the right seats), good instruments (data), clear steering (process), and a real destination (vision), it doesn't get anywhere reliably. Each component is necessary; none is sufficient on its own. An organisation that is brilliant at Vision but weak on Data is flying blind. One that has great Process but poor Issues resolution keeps running the same problems through the same broken machine.
+      <br><br>
+      For employees, the six-component view is particularly clarifying because it reveals that EOS is not primarily a top-down management system. It is a shared operating reality. When all six components are functioning, everyone — regardless of level — has clarity about where the company is going, whether they're in the right role, how their performance is measured, how problems get solved, how work gets done, and what their near-term priorities are. The chapter ends with a promise: subsequent chapters will explore each component through the lens of what it means for you as an employee.
+      <div class="ch-takeaway">EOS is not six separate ideas — it is one system with six interlocking parts. Weakness in any one of them reduces the effectiveness of all the others. Your job is to understand how each part affects your work.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Two — The Six Components Through an Employee Lens</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">Vision — Where Are We Going, and Does My Work Connect?</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The Vision chapter has a clarifying premise: knowing where your company is going is not a luxury reserved for the leadership team. It is practical information that changes how you make hundreds of daily decisions. When you understand the company's 10-Year Target, its three-year picture, and its one-year plan, your instinct about priorities — which task to do first, which request to prioritise, which tradeoff to make — becomes more reliably correct.
+      <br><br>
+      Wickman and Bouwer walk through the V/TO (Vision/Traction Organizer) and explain its components in employee-relevant terms. The Core Values section is not a poster on the wall — it is the behavioural standard the company is genuinely trying to enforce in hiring, performance management, and team culture. The Core Focus (Purpose and Niche) is why the company exists and what it's uniquely good at — understanding it helps employees recognise which work to protect and which to question. The 10-Year Target gives everyone a shared horizon to orient toward.
+      <br><br>
+      The chapter makes a point that often surprises employees: the V/TO is a living document that the leadership team reviews quarterly and annually. It changes as the company learns and adjusts. Employees who understand this don't experience strategic shifts as arbitrary chaos — they see them as a functioning company responding intelligently to new information.
+      <div class="ch-takeaway">You don't need to build the V/TO — but you should know what's in it. Understanding the company's Core Values, Core Focus, and near-term targets makes you a far more effective contributor than someone who just executes their task list.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">People — The Right People in the Right Seats</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The People chapter in EOS revolves around two diagnostic questions — "right people" (cultural fit) and "right seats" (role fit) — and this chapter translates both into what they mean for an employee. The "right people" test is whether you Get It (understand the culture and how to operate within it), Want It (are motivated by the work), and have the Capacity to Do It (have the skills, time, and energy to perform). The "right seat" test is whether the role you're in is one where your skills and strengths are genuinely needed and deployed effectively.
+      <br><br>
+      The Accountability Chart is introduced here as the successor to the traditional org chart. The AC doesn't just show who reports to whom — it shows what each seat is responsible for. Each seat has a clear set of Roles (specific accountabilities), and every employee can see exactly what their seat requires of them. For employees, this is a significant shift: ambiguity about "whose job is that" disappears. If it's in your seat's responsibilities, it's yours. If it's not, you can flag it without drama.
+      <br><br>
+      Wickman and Bouwer are candid about the harder implication: the People component means that not everyone who is a "good person" belongs in their current seat. Sometimes people are in seats that don't match their skills, and EOS surfaces that. The authors handle this with genuine empathy — being in the wrong seat is not a character flaw. But it is a problem that EOS will make visible rather than ignore, and employees who understand this process are far better positioned to navigate it than those who experience it as a surprise.
+      <div class="ch-takeaway">The Accountability Chart is not bureaucracy — it is clarity. Knowing exactly what your seat requires of you (and what it doesn't) removes ambiguity and makes performance conversations specific, fair, and productive.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">Data — Your Number, Your Ownership</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The Data component is where many employees feel the most exposed when EOS is introduced. Having a Scorecard number you're responsible for every week feels, at first, like surveillance — as if management has found a new way to watch you. Wickman and Bouwer spend this chapter dismantling that reaction and replacing it with a more accurate framing.
+      <br><br>
+      The Scorecard, they explain, is a collection of activity-level leading indicators — the numbers that predict whether the company is healthy before outcomes become visible. These are not the same as lagging financial results. They are the weekly signals that say "is the machine running well right now?" For employees, owning a Scorecard number is not about being watched; it is about having clarity. You know, before anyone tells you, whether you're performing well. You can course-correct before a quarterly review turns into a difficult conversation.
+      <br><br>
+      The chapter explains how Scorecard numbers are set (collaboratively, tied to activity the employee actually controls), what it means when a number is red (a conversation, not a judgement), and how the Scorecard connects to accountability: when you consistently hit your number, you earn autonomy. When you don't, the system surfaces it early and honestly, in a structured context, rather than letting it accumulate into a crisis.
+      <br><br>
+      For employees with measurables that feel arbitrary or disconnected from their real work, the chapter offers guidance: the right response is to raise that through IDS, not ignore it. A bad measurable is a solvable problem within EOS, and surfacing it is exactly what the system is designed for.
+      <div class="ch-takeaway">Your Scorecard number is not surveillance — it is clarity. When you own a meaningful number you control, ambiguity about your performance disappears. That is not threatening; it is fair.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">Issues — The IDS Method and Your Right to Raise Problems</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The Issues component may be the most immediately liberating aspect of EOS for employees. Most workplace cultures have a deep ambivalence about problem-raising: employees are notionally encouraged to "speak up," but the practical reality is that raising issues often leads to being labelled negative, being handed more work, or simply being ignored. EOS replaces that ambiguity with a structured, legitimate process.
+      <br><br>
+      IDS — Identify, Discuss, Solve — is the three-step sequence that governs how issues are handled in Level 10 Meetings and in the company generally. Identify means being precise about what the actual problem is (not the symptom — the root cause). Discuss means giving the issue the airtime it deserves with the right people in the room. Solve means arriving at a specific, actionable resolution — a to-do, a decision, or a Rock — that someone owns and commits to completing.
+      <br><br>
+      For employees, the chapter makes a key point: IDS only works if the Issues List is populated with real issues. The leadership team cannot solve problems they don't know about, and the Issues List is the formal mechanism for surfacing anything that is slowing the company down. Raising an issue — a broken process, a customer complaint, a team conflict, a resource gap — is not complaining. It is participating in the system as designed. The authors explicitly position raising issues as a high-value employee behaviour, not an inconvenience.
+      <div class="ch-takeaway">IDS gives every employee a legitimate, structured channel to raise problems and see them resolved. Using it is not complaining — it is exactly what the system is designed for. The Issues List is only as good as what employees put on it.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Process — Why Consistency Is a Gift, Not a Cage</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The Process component chapter builds the case for documented, consistently followed processes from an employee perspective — which turns out to be simpler and more immediately tangible than the leadership perspective. For an employee, the question isn't "why should we document processes?" — it is "why is it so hard to do my job when there's no documented process to follow?"
+      <br><br>
+      Wickman and Bouwer ground the chapter in a scenario employees recognise immediately: the new hire who gets four different answers from four different people about how something is done. Or the veteran employee who is constantly interrupted because they are the only one who knows how the key workflow operates. Or the team that reinvents the same solution every quarter because the last time it was solved, no one wrote it down.
+      <br><br>
+      The chapter introduces the FBA standard — Followed By All — and explains why it matters as much from below as from above. When the leadership team follows its own documented processes, it signals that the processes are real, not advisory. When individual team members follow their area's documented processes consistently, it removes the variability that makes quality unreliable and onboarding slow. For employees, FBA is less about compliance than about the social contract: the process was designed to produce the right result. Following it — and raising issues when it doesn't — is how employees help the company improve.
+      <div class="ch-takeaway">A documented process that everyone follows means you're not reinventing the wheel, making it up, or guessing. It means you know what "good" looks like — and so does everyone else. That consistency benefits you as much as it benefits the company.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">Traction — Rocks, Meetings, and How Work Actually Gets Done</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The final component chapter is, in many ways, the most operationally significant for employees, because the Traction component is where strategy becomes daily work. Traction has two primary tools: Rocks and the Meeting Pulse, anchored by the Level 10 Meeting.
+      <br><br>
+      Rocks are 90-day priorities — the three to five most important things a person or team commits to completing in a quarter. The chapter explains how to set a good Rock (specific, completable in 90 days, outcome-oriented), how to distinguish a Rock from a regular task or an ongoing responsibility, and how Rocks are tracked in the Level 10 Meeting. For employees setting their own Rocks for the first time, this chapter provides a practical template: the Rock should answer "what does 'done' look like?" If you can't answer that question clearly, it's not a Rock yet — it's a goal waiting to be refined.
+      <br><br>
+      The Level 10 Meeting is then explained in detail: its fixed agenda, its strict time discipline, and the reason it operates the way it does. Employees who resent the meeting's rigidity (no tangents, no extended discussions, everything that needs time goes to IDS) often change their minds when they understand the design logic. The L10 is not a rigid meeting for rigidity's sake — it is a high-signal, no-waste check-in designed to surface problems fast and solve them in the same session.
+      <div class="ch-takeaway">Rocks turn the company's 90-day plan into personal accountability. If you have a Rock, you own a piece of the quarter's most important work. The Level 10 Meeting is the weekly pulse that keeps that accountability real rather than aspirational.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Three — Your Role in an EOS Company</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">What EOS Asks of You — and What It Gives Back</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The penultimate chapter makes the book's central argument explicit: EOS is not something that happens to employees. It is a system that employees can choose to participate in, and the degree to which they participate determines how much they benefit from it. This chapter maps the exchange clearly — what EOS requires of an employee, and what it delivers in return.
+      <br><br>
+      What it requires: genuine engagement with the V/TO and the company's direction; showing up to Level 10 Meetings prepared and participating in IDS rather than sitting passively; owning a Scorecard number with honesty rather than gaming it; setting real Rocks that represent meaningful commitments rather than easy wins; following documented processes consistently and raising issues when they're broken.
+      <br><br>
+      What it delivers: clarity about your role and your priorities; a predictable, structured meeting rhythm that replaces ad-hoc interruptions and unproductive meetings; a legitimate channel to raise problems and see them resolved; visibility into how your work connects to the company's goals; and a performance culture that rewards results over politics. For employees who have worked in companies where advancement was murky, where priorities were constantly shifting, or where problems were raised and quietly buried — this is a meaningful shift.
+      <br><br>
+      Wickman and Bouwer close the chapter with a direct statement: EOS doesn't guarantee that every company that uses it is a great place to work. It guarantees clarity and accountability. What leadership does with that clarity is their responsibility. But an employee who understands the system and participates fully is in the best possible position to contribute, to grow, and to be recognised for doing both.
+      <div class="ch-takeaway">EOS is an opt-in culture, even when it's company-wide. The employees who engage fully — with their Rocks, their numbers, the IDS process — get far more out of it than those who comply minimally. Full participation is what converts the system from bureaucracy into actual leverage.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">10</div>
+      <div class="ch-title">Making EOS Work for You — Practical Steps from Day One</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The closing chapter is a practical guide for an employee at any stage of their company's EOS journey — whether EOS was just announced, has been running for a year, or is so embedded it feels like the natural order of things. Wickman and Bouwer offer a sequenced set of actions: start by reading the V/TO if it's available; understand your seat's specific accountabilities in the Accountability Chart; learn your Scorecard number and what it measures; identify any issues in your area that belong on the Issues List and bring them to your next L10; and if your company is at the stage of setting individual Rocks, set one that genuinely matters.
+      <br><br>
+      The chapter also addresses the employee who feels sceptical about EOS — who has seen management initiatives come and go and is waiting for this one to pass, too. The authors don't dismiss that scepticism. They acknowledge that EOS depends on leadership commitment, and that a half-implemented EOS (where the leadership team talks about Rocks but never actually holds anyone accountable for them) delivers half the value. But they point out that the employee's best response to an imperfect implementation is not disengagement — it is to use the system's own tools to raise the gap as an issue and push for fuller adoption.
+      <br><br>
+      The book ends simply: EOS is a system built on the idea that everyone in the organisation deserves clarity — about where the company is going, about what their role requires, about how they're performing, and about how problems get solved. That clarity belongs to employees as much as it belongs to leadership. This book exists to make sure you can claim it.
+      <div class="ch-takeaway">You don't have to wait for leadership to give you EOS. Start where you are: read the V/TO, own your number, bring your Issues, set a real Rock. The system rewards those who engage with it at every level.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     FRAMEWORK — THE SIX COMPONENTS
+════════════════════════════════════════════ -->
+<div id="framework" class="panel">
+
+  <div class="section-header">
+    <h2>The Six Components of EOS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="six-grid">
+    <div class="comp-tile">
+      <div class="comp-num">01</div>
+      <div class="c-icon">🔭</div>
+      <h4>Vision</h4>
+      <p>Everyone in the organisation sees the same destination — Core Values, Core Focus, 10-Year Target, 3-Year Picture, 1-Year Plan, and Quarterly Rocks</p>
+    </div>
+    <div class="comp-tile">
+      <div class="comp-num">02</div>
+      <div class="c-icon">👥</div>
+      <h4>People</h4>
+      <p>Right people in right seats — the GWC test (Get it, Want it, Capacity to do it) and the Accountability Chart that makes every role explicit</p>
+    </div>
+    <div class="comp-tile">
+      <div class="comp-num">03</div>
+      <div class="c-icon">📊</div>
+      <h4>Data</h4>
+      <p>A Scorecard of weekly activity-level leading indicators — removing subjective judgement and giving everyone a clear, honest pulse on performance</p>
+    </div>
+    <div class="comp-tile">
+      <div class="comp-num">04</div>
+      <div class="c-icon">🔍</div>
+      <h4>Issues</h4>
+      <p>A structured list of obstacles and opportunities, resolved through IDS (Identify, Discuss, Solve) — turning problems into actions in every meeting</p>
+    </div>
+    <div class="comp-tile">
+      <div class="comp-num">05</div>
+      <div class="c-icon">⚙️</div>
+      <h4>Process</h4>
+      <p>Core processes documented and Followed By All — consistent execution that doesn't depend on a specific person's knowledge or availability</p>
+    </div>
+    <div class="comp-tile">
+      <div class="comp-num">06</div>
+      <div class="c-icon">🚀</div>
+      <h4>Traction</h4>
+      <p>Rocks (90-day priorities) and the Meeting Pulse (Level 10 Meetings) — the execution engine that keeps strategy connected to daily work</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>IDS — The Issues Engine</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="ids-flow">
+    <div class="ids-step">
+      <div class="ids-letter">I</div>
+      <h4>Identify</h4>
+      <p>State the real issue — not the symptom. What is the actual root cause slowing you down?</p>
+      <div class="ids-arrow">›</div>
+    </div>
+    <div class="ids-step">
+      <div class="ids-letter">D</div>
+      <h4>Discuss</h4>
+      <p>Give it airtime. Get all perspectives on the table with the right people. No hidden agendas.</p>
+      <div class="ids-arrow">›</div>
+    </div>
+    <div class="ids-step">
+      <div class="ids-letter">S</div>
+      <h4>Solve</h4>
+      <p>Reach a concrete decision: a to-do, a Rock, a policy. Someone owns it, with a due date.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>The EOS Meeting Rhythm</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="rhythm-grid">
+    <div class="rhythm-card">
+      <div class="rhythm-freq">Weekly</div>
+      <div>
+        <h4>Level 10 Meeting</h4>
+        <p>90-minute fixed agenda: Scorecard review, Rock check, customer/employee headlines, to-do review, IDS. Designed to surface and solve issues fast.</p>
+      </div>
+    </div>
+    <div class="rhythm-card">
+      <div class="rhythm-freq">Quarterly</div>
+      <div>
+        <h4>Quarterly Session</h4>
+        <p>Leadership team steps back to review the quarter, close old Rocks, set new Rocks, and solve the highest-priority issues for the next 90 days.</p>
+      </div>
+    </div>
+    <div class="rhythm-card">
+      <div class="rhythm-freq">Annual</div>
+      <div>
+        <h4>Annual Planning</h4>
+        <p>Full V/TO review — update the 3-Year Picture, set the 1-Year Plan, align on one-year priorities and the Rocks that make the year plan real.</p>
+      </div>
+    </div>
+    <div class="rhythm-card">
+      <div class="rhythm-freq">As Needed</div>
+      <div>
+        <h4>Same-Page Meeting</h4>
+        <p>A focused session between two people with unresolved tension or misalignment — a tool for clearing the air before small issues become cultural problems.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>Key EOS Tools — Employee Edition</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tool-card">
+    <div class="tag">Tool</div>
+    <h4>V/TO — Vision/Traction Organizer</h4>
+    <p>A two-page document that captures the entirety of the company's vision and how it will be executed. It includes Core Values, Core Focus (Purpose and Niche), the 10-Year Target, 3-Year Picture, 1-Year Plan, Quarterly Rocks, Issues list, and the Marketing Strategy. For employees, the most important sections are the Core Values (the behavioural standards) and the 1-Year Plan and Rocks (what the company is actually trying to accomplish right now). When you understand the V/TO, your daily priorities become calibrated to something real.</p>
+  </div>
+
+  <div class="tool-card">
+    <div class="tag">Tool</div>
+    <h4>Accountability Chart</h4>
+    <p>The EOS replacement for the traditional org chart. Rather than showing reporting lines and headcounts, the AC shows seats — and each seat has clearly defined accountabilities (what specific functions belong there). Every employee has a seat, and every seat has explicit responsibilities. This eliminates the grey zones where work falls through, and replaces the common "I didn't know that was my job" with a clear, agreed answer. The AC also reveals who owns each function across the whole organisation, which is essential context for understanding who to involve in any given issue or decision.</p>
+  </div>
+
+  <div class="tool-card">
+    <div class="tag">Tool</div>
+    <h4>Rocks</h4>
+    <p>A Rock is a 90-day priority — a specific, meaningful, completable commitment that represents one of the three to five most important things a person or team will accomplish this quarter. The name comes from the prioritisation metaphor: if you fill a jar with big rocks first, you can still fit gravel, sand, and water around them. If you start with the small stuff, the big rocks never fit. Setting good Rocks requires discipline: they must be specific ("Hire two support reps by October 31" rather than "improve staffing"), achievable in 90 days, and genuinely among the most important priorities — not a list of everything you're already doing.</p>
+  </div>
+
+  <div class="tool-card">
+    <div class="tag">Tool</div>
+    <h4>Scorecard</h4>
+    <p>A weekly one-page report of 5–15 activity-level metrics — leading indicators, not lagging results. Each number has an owner and a weekly target (green or red). The Scorecard is reviewed in the Level 10 Meeting every week: anything red goes to the Issues List for IDS. The power of the Scorecard is its timeliness: it shows you whether the machine is working this week, not whether it worked last quarter. For employees, a well-designed Scorecard measurable is a gift — it removes ambiguity about performance and creates a single, shared definition of "on track."</p>
+  </div>
+
+  <div class="tool-card">
+    <div class="tag">Standard</div>
+    <h4>GWC — Get It, Want It, Capacity to Do It</h4>
+    <p>The three-question diagnostic EOS uses to assess whether someone is in the right seat. "Get it" means they truly understand the culture, the role, and how to operate effectively within the company. "Want it" means they are genuinely motivated to do this work — not just tolerating it or going through the motions. "Capacity to do it" means they have the skills, time, knowledge, and energy the role actually requires. A "no" on any one of these three means the person is not in the right seat — which is a solvable problem that EOS surfaces rather than ignores.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     VERDICT
+════════════════════════════════════════════ -->
+<div id="verdict" class="panel">
+
+  <div class="verdict-banner">
+    <h3>⭐ 4.4 / 5</h3>
+    <p>The missing half of the EOS conversation — essential reading for every employee in a company running on Traction</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">5.0</div>
+        <div class="r-label">Clarity</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.8</div>
+        <div class="r-label">Relevance</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">3.0</div>
+        <div class="r-label">Depth</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Fills a genuine gap — the employee perspective on EOS has never been properly addressed in the Traction library, and it is genuinely needed</div></div>
+      <div class="list-item"><div class="dot"></div><div>Exceptionally clear and accessible — Wickman and Bouwer write for someone who has never heard of EOS, and every concept lands cleanly</div></div>
+      <div class="list-item"><div class="dot"></div><div>Consistently reframes EOS from something done to employees into something they participate in and benefit from — this shift in framing matters enormously for adoption</div></div>
+      <div class="list-item"><div class="dot"></div><div>The IDS chapter is outstanding — it legitimises problem-raising as employee participation, not complaint, which is a culture-changing idea in many organisations</div></div>
+      <div class="list-item"><div class="dot"></div><div>Short enough to be read before an onboarding session or EOS launch — it respects the reader's time</div></div>
+      <div class="list-item"><div class="dot"></div><div>Bouwer's employee co-authorship gives it genuine credibility — this is not a leader explaining what employees should feel about EOS; it is someone who has lived it from the inside</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Depth is intentionally limited — this is a primer, not a reference. Employees who want to go deep on any single component will need Traction or the EOS Mastery Series</div></div>
+      <div class="list-item"><div class="dot"></div><div>Assumes good-faith EOS implementation — the book doesn't fully grapple with what happens when leaders talk EOS but don't actually hold anyone accountable</div></div>
+      <div class="list-item"><div class="dot"></div><div>Relatively optimistic in its framing — some employees in dysfunctional EOS implementations may find it doesn't match their experience at all</div></div>
+      <div class="list-item"><div class="dot"></div><div>Could say more about navigating EOS when you're not in the leadership team but have concerns about how it's being applied — the power-dynamic dimension is underexplored</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some repetition with Traction for readers who've already worked through the parent book — though the employee-lens framing usually makes familiar material feel fresh</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Any employee in a company that has just adopted or announced EOS</strong> — this is the orientation guide that should be handed out alongside the launch, not a supplementary resource for the motivated few</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Managers and team leads who need to explain EOS to their teams</strong> — this book gives them the language and the framing to translate what leadership has been doing in those quarterly sessions</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Employees who have been running EOS for a year but still feel like outsiders</strong> — the GWC diagnostic, the Accountability Chart explainer, and the IDS chapter often unlock participation for people who've been going through the motions</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Founders and leaders who want to give their team a foundation</strong> — assigning this book before the first company-wide EOS meeting dramatically improves participation quality</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Leaders who want to go deep on EOS implementation</strong> — read Traction instead; this book is deliberately surface-level and employee-oriented</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Solo founders or very early-stage teams</strong> — the book's scenarios presuppose a multi-person team with functional EOS meeting rhythms already in place</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Quotes</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>EOS isn't something being done to you. It's a system you're being invited to participate in — and the more fully you do, the more you get out of it.</p>
+    <div class="attr">— Gino Wickman &amp; Tom Bouwer, What the Heck Is EOS?</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Most employees experience EOS as a series of unexplained changes. New meetings, new vocabulary, new accountability. This book is the explanation they deserved from the start.</p>
+    <div class="attr">— Gino Wickman &amp; Tom Bouwer, What the Heck Is EOS?</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Having a number you own every week sounds like surveillance. It is actually the opposite — it is the clearest signal you will ever get about whether you are doing your job well. You don't have to wonder. You know.</p>
+    <div class="attr">— Gino Wickman &amp; Tom Bouwer, What the Heck Is EOS?</div>
+  </div>
+
+  <div class="quote-block">
+    <p>The Issues List is only as good as what employees put on it. Raising a real issue is not complaining. It is the highest-value thing you can do in a meeting — surfacing something that is slowing the company down and giving the team the chance to fix it.</p>
+    <div class="attr">— Gino Wickman &amp; Tom Bouwer, What the Heck Is EOS?</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="summary-block">
+    <p>The most important idea in this book is also the simplest: EOS doesn't belong exclusively to the leadership team. When a company implements EOS, the leadership team typically gets months of education, coaching, and facilitation — and their employees get an announcement and a new meeting structure. The result is that the people most affected by EOS day-to-day are the ones least equipped to engage with it. This book exists to close that gap, and in doing so it makes a quiet but significant argument about how operating systems should be shared within organisations.</p>
+    <p>The insight that has the most practical weight is the reframing of employee participation as the limiting factor in EOS effectiveness. A leadership team can implement EOS perfectly — meeting rhythms, quarterly sessions, a clean V/TO, disciplined IDS — and still find that the system doesn't fully deliver its promise if the broader team is passive. The Scorecard measures are gamed or ignored. The Issues List contains only safe, small problems. Rocks are set pro forma and forgotten by week six. The culture that EOS is trying to build — accountability, clarity, honesty about problems — requires every person in the organisation to actually show up to it.</p>
+    <p><strong>What the Heck Is EOS?</strong> argues, gently but clearly, that the way to get employees to show up is to explain the system honestly: here is what it is, here is why it works, here is what it asks of you, and here is what you get back. That kind of transparency about a management system is rarer than it should be. Most companies introduce EOS with the assumption that the benefits will be self-evident once employees experience them. This book suggests a different assumption: employees deserve to understand the system they're participating in before they're expected to believe in it. That understanding — more than any single tool or meeting or Rock — is what turns EOS from a leadership project into a company culture.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>What the Heck Is EOS?</strong> is a short, clear, and overdue addition to the Traction library. Every company that has adopted EOS and given employees Level 10 Meetings without giving them this book first has made an avoidable mistake. The gap between what leadership understands about EOS and what the broader team understands is the single biggest implementation failure mode — and this book is the antidote.</p>
+    <p>The co-authorship of Tom Bouwer — who navigated EOS as an employee rather than a leader — gives the book its most valuable quality: the consistent, honest "what does this mean for me?" perspective that Traction, for all its brilliance, cannot provide. Where Traction teaches leaders to design the system, this book teaches employees to live inside it well. Both perspectives are necessary. Together, the two books give an EOS company its full operating manual — one for the cockpit, one for the crew.</p>
+    <p>The limitations are real: this is a primer, not a deep reference, and its optimistic framing does not account for imperfect implementations. But those limitations are inherent to the book's purpose. It is not trying to be comprehensive. It is trying to close the information gap between leaders who understand EOS and employees who don't — and at that goal, it succeeds cleanly. If you work in an EOS company, this is not optional reading. It is the context that makes everything else make sense.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
