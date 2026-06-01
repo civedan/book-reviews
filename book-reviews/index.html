@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dan's Book Library</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ink: #1a1208; --paper: #f5f0e8; --cream: #ede8d8;
+    --amber: #c8893a; --amber-light: #e8a84a;
+    --teal: #2a6b6e; --muted: #6b6050;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+  .hero { background: var(--ink); padding: 48px 40px 40px; }
+  .hero-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 48px); color: #f5f0e8; line-height: 1.15; }
+  .hero h1 em { color: var(--amber-light); font-style: italic; }
+  .hero p { color: var(--muted); font-size: 14px; margin-top: 12px; max-width: 480px; line-height: 1.6; }
+  .hero-stats { display: flex; gap: 32px; margin-top: 24px; }
+  .hero-stat .num { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--amber-light); }
+  .hero-stat .lbl { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .controls { padding: 20px 40px; background: var(--cream); border-bottom: 1px solid rgba(200,137,58,0.15); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .filter-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid rgba(200,137,58,0.3); background: transparent; color: var(--muted); font-size: 12px; cursor: pointer; letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .filter-btn:hover, .filter-btn.active { background: var(--amber); border-color: var(--amber); color: white; }
+  .grid-container { padding: 32px 40px 60px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .book-card { background: white; border: 1px solid rgba(26,18,8,0.08); border-radius: 12px; padding: 24px; text-decoration: none; color: inherit; display: block; transition: all 0.2s; position: relative; overflow: hidden; }
+  .book-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--amber); transform: scaleX(0); transform-origin: left; transition: transform 0.25s; }
+  .book-card:hover { box-shadow: 0 8px 28px rgba(200,137,58,0.14); transform: translateY(-2px); }
+  .book-card:hover::before { transform: scaleX(1); }
+  .card-genre { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .genre-tag { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); background: rgba(42,107,110,0.08); border-radius: 10px; padding: 3px 10px; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 20px; line-height: 1.25; margin-bottom: 6px; }
+  .card-author { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 14px; }
+  .card-verdict { font-size: 13px; color: #3a3020; line-height: 1.55; margin-bottom: 16px; font-style: italic; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .card-rating { font-family: 'Playfair Display', serif; color: var(--amber); font-size: 16px; }
+  .card-arrow { color: var(--amber); font-size: 18px; }
+  .empty-state { text-align: center; padding: 80px 20px; color: var(--muted); }
+  .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 8px; }
+  @media (max-width: 560px) {
+    .hero { padding: 36px 20px 32px; }
+    .controls { padding: 16px 20px; }
+    .grid-container { padding: 20px 20px 40px; }
+    .hero-stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">📚 Personal Library</div>
+  <h1>Dan's <em>Book Reviews</em></h1>
+  <p>A curated collection of notes, summaries, and reflections on books I've read.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="num" id="book-count">0</div>
+      <div class="lbl">Books Reviewed</div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="filter-btn active" onclick="filterBooks('all', this)">All</button>
+</div>
+
+<div class="grid-container">
+  <div class="grid" id="book-grid"></div>
+</div>
+
+<script>
+  const books = [
+    {
+      title: "Building a Second Brain",
+      author: "Tiago Forte",
+      year: "2022",
+      slug: "building-a-second-brain",
+      genres: ["Productivity", "Knowledge Management"],
+      rating: 4.5,
+      verdict: "A landmark framework for capturing and organising knowledge — essential reading for anyone who works with ideas."
+    }
+  ];
+
+  function renderCards(filter) {
+    const grid = document.getElementById('book-grid');
+    const filtered = filter === 'all' ? books : books.filter(b => b.genres.includes(filter));
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="empty-state"><h3>No books in this category yet</h3><p>More reviews coming soon.</p></div>';
+      return;
+    }
+    grid.innerHTML = filtered.map(b => `
+      <a href="${b.slug}.html" class="book-card" data-genres="${b.genres.join(',')}">
+        <div class="card-genre">${b.genres.map(g => `<span class="genre-tag">${g}</span>`).join('')}</div>
+        <div class="card-title">${b.title}</div>
+        <div class="card-author">by ${b.author} · ${b.year}</div>
+        <div class="card-verdict">${b.verdict}</div>
+        <div class="card-footer">
+          <div class="card-rating">⭐ ${b.rating} / 5</div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+    `).join('');
+  }
+
+  function buildFilters() {
+    const all = new Set(books.flatMap(b => b.genres));
+    const controls = document.querySelector('.controls');
+    all.forEach(g => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.textContent = g;
+      btn.onclick = function() { filterBooks(g, this); };
+      controls.appendChild(btn);
+    });
+  }
+
+  function filterBooks(filter, el) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    renderCards(filter);
+  }
+
+  document.getElementById('book-count').textContent = books.length;
+  buildFilters();
+  renderCards('all');
+</script>
+</body>
+</html>
