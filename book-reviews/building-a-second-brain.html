@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building a Second Brain — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #1a1208;
+    --paper: #f5f0e8;
+    --cream: #ede8d8;
+    --amber: #c8893a;
+    --amber-light: #e8a84a;
+    --amber-pale: #f5deb3;
+    --teal: #2a6b6e;
+    --rust: #8b3a2a;
+    --muted: #6b6050;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: var(--ink);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,137,58,0.18) 0%, transparent 70%);
+  }
+  .book-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    color: #f5f0e8;
+    line-height: 1.15;
+    max-width: 520px;
+  }
+  .hero h1 em { color: var(--amber-light); font-style: italic; }
+  .author { margin-top: 14px; color: var(--muted); font-size: 13px; letter-spacing: 1px; }
+  .author span { color: var(--amber); }
+  .hero-meta { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .meta-pill {
+    background: rgba(200,137,58,0.12);
+    border: 1px solid rgba(200,137,58,0.25);
+    color: var(--amber-light);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .tabs {
+    display: flex;
+    background: var(--cream);
+    border-bottom: 2px solid rgba(200,137,58,0.15);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--amber); }
+  .tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
+  .section-line { flex: 1; height: 1px; background: rgba(200,137,58,0.2); }
+
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid rgba(200,137,58,0.2);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--amber); }
+  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .summary-block {
+    background: white;
+    border-left: 3px solid var(--amber);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #2a2215;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--cream);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  .part-header {
+    background: var(--ink);
+    color: var(--amber-light);
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    font-weight: 500;
+  }
+
+  .chapter-card {
+    background: white;
+    border: 1px solid rgba(26,18,8,0.08);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(200,137,58,0.12); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num {
+    width: 32px; height: 32px;
+    background: var(--amber);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--amber); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body {
+    display: none;
+    padding: 14px 18px 18px 64px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #3a3020;
+    border-top: 1px solid rgba(200,137,58,0.1);
+  }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px;
+    background: rgba(200,137,58,0.08);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .method-card {
+    background: white;
+    border: 1px solid rgba(200,137,58,0.15);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .method-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--teal); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+  .method-card .tag {
+    display: inline-block;
+    background: var(--teal);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .code-block {
+    background: var(--ink);
+    color: var(--amber-pale);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .code-block .comment { color: rgba(200,137,58,0.5); }
+  .code-block .keyword { color: var(--amber-light); }
+  .code-block .value { color: #8ec9c9; }
+
+  .verdict-banner {
+    background: linear-gradient(135deg, var(--ink) 0%, #2a1f0a 100%);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--amber-light); margin-bottom: 6px; }
+  .verdict-banner p { color: rgba(245,240,232,0.65); font-size: 13px; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+  .rating-item {
+    text-align: center;
+    background: rgba(200,137,58,0.1);
+    border: 1px solid rgba(200,137,58,0.2);
+    border-radius: 8px;
+    padding: 10px 16px;
+    min-width: 90px;
+  }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--amber-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(245,240,232,0.5); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid rgba(26,18,8,0.08);
+  }
+  .pro-list h4 { color: var(--teal); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--rust); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--teal); }
+  .con-list .dot { background: var(--rust); }
+
+  .quote-block {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .quote-block::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--amber);
+    position: absolute;
+    top: -8px; left: 16px;
+    line-height: 1;
+  }
+  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink); }
+  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+  .who-card {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: white;
+    border: 1px solid rgba(200,137,58,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .method-grid, .pro-con-grid { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero { padding: 36px 20px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="book-label">Book Review &amp; Reference Guide</div>
+  <h1>Building a <em>Second Brain</em></h1>
+  <div class="author">by <span>Tiago Forte</span> &nbsp;·&nbsp; Published 2022</div>
+  <div class="hero-meta">
+    <div class="meta-pill">Productivity</div>
+    <div class="meta-pill">Knowledge Management</div>
+    <div class="meta-pill">12 Chapters</div>
+    <div class="meta-pill">4 Parts</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('method', this)">The Method</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="panel active">
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core System</div>
+      <div class="stat-value">CODE + PARA</div>
+      <div class="stat-desc">Two interlocking frameworks for capture &amp; organization</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">Digital PKM</div>
+      <div class="stat-desc">Personal Knowledge Management that reduces cognitive load</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Author Background</div>
+      <div class="stat-value">Tiago Forte</div>
+      <div class="stat-desc">Productivity coach, creator of the "Building a Second Brain" course</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Knowledge Workers</div>
+      <div class="stat-desc">Writers, researchers, creators drowning in information</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Building a Second Brain</strong> is Tiago Forte's definitive guide to creating a personal knowledge management (PKM) system using digital tools. The central premise is that our biological brains are not designed to store, organize, and retrieve the enormous volume of information we encounter in the modern world — but technology can serve as an external "second brain" that handles this for us.</p>
+    <p>Forte argues that most people are failing to leverage the notes, ideas, articles, and insights they consume every day. Rather than letting knowledge evaporate, he presents a methodology — built around two core frameworks (CODE and PARA) — to capture, organize, distill, and express information in ways that fuel creativity, productivity, and meaningful work.</p>
+    <p>The book is equal parts philosophy and practical system. Forte weaves in neuroscience, design thinking, and personal narrative to make the case that a well-maintained digital notebook isn't just a productivity tool — it's a creative partner, a memory prosthetic, and ultimately, an extension of your thinking self.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">🧠</div><div><strong>Your brain is for having ideas, not storing them.</strong> Offload the remembering so you can focus on connecting, creating, and executing.</div></div>
+  <div class="key-idea"><div class="icon">♻️</div><div><strong>Information has a lifecycle.</strong> Capture → Organize → Distill → Express. Each stage transforms raw input into useful, shareable output.</div></div>
+  <div class="key-idea"><div class="icon">📂</div><div><strong>Organize by actionability, not by topic.</strong> PARA (Projects, Areas, Resources, Archive) is organized around your life, not a library taxonomy.</div></div>
+  <div class="key-idea"><div class="icon">✏️</div><div><strong>Progressive Summarization beats exhaustive note-taking.</strong> Layer highlights over time so the most important insights rise to the top.</div></div>
+  <div class="key-idea"><div class="icon">🎨</div><div><strong>You are a curator, not a collector.</strong> Save less, but save what resonates. Capture what's surprising, useful, or personally meaningful.</div></div>
+  <div class="key-idea"><div class="icon">🌊</div><div><strong>Intermediate Packets.</strong> Break creative work into small, reusable components so you're never starting from zero.</div></div>
+</div>
+
+<!-- CHAPTERS -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Part I — The Foundation: Understanding What's Possible</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">Where It All Started</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Forte opens with his personal story of chronic illness — a mysterious condition that left him unable to rely on his own memory. This forced him to externalise everything, leading to the discovery that writing things down and building external systems wasn't a crutch, but a superpower. The chapter establishes the emotional hook: our dependence on our biological brain to hold everything is fragile, stressful, and unnecessary. The Second Brain isn't about being smarter — it's about being more intentional.
+      <div class="ch-takeaway">Your note-taking system should be a relief — not another source of anxiety. Start from self-compassion, not productivity guilt.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">What Is a Second Brain?</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Forte defines the Second Brain concept: a personal, digital system for capturing and connecting ideas, insights, and information. He distinguishes it from simple note-taking or bookmarking. The Second Brain is dynamic — it grows, evolves, and feeds back into your creative work. He introduces the concept of PKM (Personal Knowledge Management) and makes the case that professional success in the information age requires intentional curation of what you know.
+      <div class="ch-takeaway">A Second Brain is not a filing cabinet — it's a living system that actively supports your thinking and creative output.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">How a Second Brain Works</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This chapter introduces the CODE framework — <strong>Capture, Organize, Distill, Express</strong> — as the core operating system of the Second Brain. Forte walks through each stage at a high level, explaining how information flows from the world into your system, gets sorted, refined, and eventually becomes output (writing, presentations, decisions, conversations). He frames this as a creative flywheel: the more you put in and the more you use it, the more valuable it becomes.
+      <div class="ch-takeaway">CODE is the heartbeat: Capture → Organize → Distill → Express. Every piece of information should eventually serve a project or goal.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part II — The Method: The Four Steps of CODE</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">Capture — Keep What Resonates</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The "C" of CODE. Forte tackles the first question: what's worth saving? His answer: whatever <em>resonates</em>. Not what seems objectively important, but what surprises you, contradicts your assumptions, or sparks your curiosity. He introduces saving for your "future self" — asking not "is this useful?" but "will future-me be glad to have this?" He also introduces the <strong>Capture Toolkit</strong>: a lightweight set of apps and habits (read-it-later apps, highlighters, voice memos) for frictionlessly getting ideas into your system.
+      <div class="ch-takeaway">Capture what resonates — not what's comprehensive. The filter is your intuition, not a checklist.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">Organize — Save for Actionability</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The "O" of CODE. Forte introduces the <strong>PARA system</strong> — the organizational backbone of the Second Brain. PARA stands for: <strong>Projects</strong> (active, deadline-driven), <strong>Areas</strong> (ongoing responsibilities with no end date), <strong>Resources</strong> (topics of interest for future reference), and <strong>Archive</strong> (inactive items from the other three). The key insight is that PARA is organized by <em>actionability</em>, not topic. The question isn't "what category does this belong to?" but "how will I use this?"
+      <div class="ch-takeaway">PARA = Projects, Areas, Resources, Archive. Organize by how actionable something is, not what it's about.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">Distill — Find the Essence</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The "D" of CODE. This chapter introduces <strong>Progressive Summarization</strong> — Forte's signature technique for extracting the most valuable insights from saved notes over time. The process works in four layers: save the original passage → bold the most important sentences → highlight the most important of those → write a brief executive summary at the top. This creates a "discoverable" note — one where future-you can quickly scan and understand the essence without re-reading everything.
+      <div class="ch-takeaway">Progressive Summarization = layer bolding and highlighting over time, so the key insights float to the top without re-reading everything.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Express — Show Your Work</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The "E" of CODE. The final step — turning accumulated knowledge into concrete output. Forte introduces two important concepts. First, <strong>Intermediate Packets (IPs)</strong> — small, discrete units of work (outlines, drafts, slides, research summaries) that can be assembled, recycled, and reused across projects. Second, he emphasises "working with the garage door up" — sharing work in progress, not just polished final products. Expression is the feedback loop that makes the whole system richer.
+      <div class="ch-takeaway">Create Intermediate Packets — small reusable chunks — so you're always building on past work, never starting from scratch.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part III — The Shift: Making Things Happen</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">The Art of Creative Execution</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Forte moves from system to psychology. This chapter tackles the creative process itself — specifically, why creative work often gets stuck and how a Second Brain solves that. He introduces the concept of <strong>Archipelago of Ideas</strong>: rather than starting with a blank page, you begin creative projects by gathering existing notes and ideas into a loose collection, then connecting them. He also introduces <strong>Hemingway Bridges</strong> — ending work sessions by writing a few sentences about where you'll pick up next, so future-you doesn't have to reconstruct your thinking from scratch.
+      <div class="ch-takeaway">Never start from blank. Use your Second Brain to assemble an "archipelago of ideas" before creating — lower the activation energy of creative work.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">The Essential Habits of Digital Organizers</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      A practical chapter on the maintenance routines that keep a Second Brain alive and useful. Forte introduces <strong>Project Checklists</strong> (what to do when starting and closing a project), <strong>Weekly Reviews</strong> (a 20–30 min weekly habit to process inbox, update PARA, and set intentions), and <strong>Monthly Reviews</strong> (bigger picture: are your projects aligned with your goals?). He frames these not as burdens but as the minimal viable maintenance required to keep the system functioning. He also covers how to avoid over-organizing — "just-in-time" organization beats "just-in-case."
+      <div class="ch-takeaway">Weekly and monthly reviews are the heartbeat of the system. Without them, even a great setup decays into clutter.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">10</div>
+      <div class="ch-title">The Path of Self-Expression</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      A more philosophical chapter. Forte zooms out to ask: why does all this matter? His answer is that knowledge management ultimately serves self-expression — the ability to contribute your unique perspective, voice, and ideas to the world. He argues that most people have far more to offer than they realise, but they're held back by poor systems and fear. The Second Brain is, at its core, a system for discovering and articulating your authentic voice. He also addresses "I'm not creative" — arguing that creativity is a skill developed through consistent capture, connection, and expression.
+      <div class="ch-takeaway">Your Second Brain is ultimately about self-expression — helping you find, develop, and share your unique point of view.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part IV — The Future</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">11</div>
+      <div class="ch-title">The Eleventh Hour</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Forte addresses a common experience: many people build great systems but still feel the crunch of deadlines and creative pressure. This chapter reframes that experience — the "eleventh hour" feeling isn't a failure, it's often when your Second Brain does its best work. Under pressure, you're forced to be decisive: you stop curating and start creating. He argues that constraints and deadlines are productive forces, not enemies. The Second Brain doesn't eliminate pressure — it ensures you have rich raw material to work with when it arrives.
+      <div class="ch-takeaway">Deadlines are productive. Your Second Brain ensures that when pressure arrives, you have a rich body of material to draw on — not a blank page.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">12</div>
+      <div class="ch-title">The Promise of a Second Brain</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The closing chapter is a vision of what's possible when a Second Brain becomes truly integrated into your life. Forte describes a future where knowledge workers don't lose ideas, don't start from scratch, and don't feel overwhelmed by information. He also broadens the lens — collective Second Brains (teams, communities, generations sharing knowledge) could transform how organizations and societies learn and innovate. The chapter ends with an invitation: start small, stay consistent, and trust that the system will compound over time.
+      <div class="ch-takeaway">Start small. The system compounds. What begins as a personal habit can evolve into a life-changing practice — and eventually, a collective intelligence.</div>
+    </div>
+  </div>
+</div>
+
+<!-- METHOD -->
+<div id="method" class="panel">
+  <div class="section-header">
+    <h2>The CODE Framework</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-grid">
+    <div class="method-card">
+      <div class="tag">C</div>
+      <h4>Capture</h4>
+      <p>Save what resonates — ideas, quotes, insights, passages — using a lightweight toolkit of tools. Filter by intuition, not comprehensiveness.</p>
+    </div>
+    <div class="method-card">
+      <div class="tag">O</div>
+      <h4>Organize</h4>
+      <p>Sort captured material into PARA (Projects, Areas, Resources, Archive). Ask "how will I use this?" not "what category is this?"</p>
+    </div>
+    <div class="method-card">
+      <div class="tag">D</div>
+      <h4>Distill</h4>
+      <p>Apply Progressive Summarization — layer bolding and highlighting over time so key insights surface quickly when you need them.</p>
+    </div>
+    <div class="method-card">
+      <div class="tag">E</div>
+      <h4>Express</h4>
+      <p>Create Intermediate Packets and share work in progress. Expression is the output that makes the whole system worthwhile.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The PARA System</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="code-block">
+    <span class="comment">// PARA — organized by actionability, not topic</span><br><br>
+    <span class="keyword">Projects</span>   → <span class="value">Active work with a deadline &amp; goal</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">e.g. "Write Q3 report", "Launch website"</span><br><br>
+    <span class="keyword">Areas</span>      → <span class="value">Ongoing responsibilities (no end date)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">e.g. "Health", "Finances", "Parenting"</span><br><br>
+    <span class="keyword">Resources</span>  → <span class="value">Topics of interest for future use</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">e.g. "Design systems", "Sleep research"</span><br><br>
+    <span class="keyword">Archive</span>    → <span class="value">Inactive items from the above 3</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">e.g. Completed projects, old interests</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Key Techniques</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Technique</div>
+    <h4>Progressive Summarization</h4>
+    <p>Layer 1: Save the passage. Layer 2: Bold the most important sentences. Layer 3: Highlight the most important of those. Layer 4 (optional): Write a brief summary at the top. Each layer is applied only when you revisit a note — not upfront. The goal is a "discoverable" note you can skim in 30 seconds.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Technique</div>
+    <h4>Intermediate Packets (IPs)</h4>
+    <p>Break creative work into small, discrete deliverables: an outline, a research summary, a slide deck, a draft section. These can be reused, shared, combined, and recombined across projects. IPs reduce the terror of the blank page and let you make progress incrementally.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Technique</div>
+    <h4>Archipelago of Ideas</h4>
+    <p>Before creating anything, spend time collecting relevant notes and ideas into a temporary collection. Connect the islands. Let a structure emerge organically before you start drafting. This lowers activation energy dramatically.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Technique</div>
+    <h4>Hemingway Bridge</h4>
+    <p>End every creative work session by writing a few sentences: "Where am I? What's the next step? What's the open question?" This means future-you can pick up exactly where you left off — no warm-up time lost.</p>
+  </div>
+</div>
+
+<!-- VERDICT -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.2 / 5</h3>
+    <p>A landmark book in the PKM space — accessible, inspiring, and practical</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Accessibility</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.0</div>
+        <div class="r-label">Depth</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">3.8</div>
+        <div class="r-label">Originality</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Warm, personal writing style — motivating without being preachy</div></div>
+      <div class="list-item"><div class="dot"></div><div>CODE and PARA are genuinely elegant, memorable frameworks</div></div>
+      <div class="list-item"><div class="dot"></div><div>Progressive Summarization is an original, powerful technique</div></div>
+      <div class="list-item"><div class="dot"></div><div>Tool-agnostic — works with Notion, Obsidian, Evernote, Bear, or any notes app</div></div>
+      <div class="list-item"><div class="dot"></div><div>Addresses psychology of creativity, not just logistics</div></div>
+      <div class="list-item"><div class="dot"></div><div>Excellent accessible entry point for PKM beginners</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Experienced PKM practitioners may find limited novelty</div></div>
+      <div class="list-item"><div class="dot"></div><div>PARA can feel oversimplified for complex knowledge domains</div></div>
+      <div class="list-item"><div class="dot"></div><div>Light on actual tool setup and practical workflows</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some repetition across chapters — concepts restated multiple times</div></div>
+      <div class="list-item"><div class="dot"></div><div>Doesn't address networked/linked thinking (Zettelkasten) deeply</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Knowledge workers and professionals</strong> who feel overwhelmed by information and need a system to manage it</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Writers, researchers, and content creators</strong> who want to build a rich repository to draw from</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Students</strong> who want their notes to actually be useful beyond exam time</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>PKM beginners</strong> looking for a clear, accessible entry point</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Advanced PKM practitioners</strong> (Roam/Obsidian power users) may want to skip to specific chapters</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Quotes</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>Your mind is for having ideas, not holding them.</p>
+    <div class="attr">— David Allen (cited by Forte as a foundational influence)</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Every time you take a note, you are investing in your future self.</p>
+    <div class="attr">— Tiago Forte</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Information is food for thought — and like food, it needs to be consumed, not just collected.</p>
+    <div class="attr">— Tiago Forte</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>The single most transformative idea in the book is the shift from <strong>organizing by topic</strong> to <strong>organizing by actionability</strong>. Most people build digital filing systems that mirror how a library works — categories, subjects, tags. Forte's PARA system instead asks: "What am I working on right now, and how does this serve that?" It's the difference between a reference archive and a working cockpit. That reframe alone is worth the read.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
