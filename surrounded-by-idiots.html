@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surrounded by Idiots — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:       #1a1a1a;
+    --paper:     #ffffff;
+    --cream:     #f8f7f4;
+    --muted:     #6b6b6b;
+    --border:    rgba(0,0,0,0.09);
+
+    /* The four behavior colors */
+    --red:    #d1382b;   /* Dominance    */
+    --yellow: #e3a712;   /* Influence    */
+    --green:  #3f8f4c;   /* Steadiness   */
+    --blue:   #2c6a9e;   /* Compliance   */
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HERO (styled after the book's own cover art) ── */
+  .hero {
+    background: #f2ecdc;
+    border-bottom: 1px solid var(--border);
+    padding: 44px 40px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+      var(--red)    0%   25%,
+      var(--yellow) 25%  50%,
+      var(--green)  50%  75%,
+      var(--blue)   75%  100%
+    );
+  }
+
+  .cover-badge {
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6b5f4a;
+    margin-bottom: 14px;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(30px, 6.5vw, 52px);
+    line-height: 1.08;
+    color: #171310;
+    margin: 0 auto 20px;
+  }
+
+  .cover-dots { display: flex; justify-content: center; gap: 50px; margin-bottom: 10px; }
+  .cover-dots span { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+  .cover-figures {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    margin: 0 auto 22px;
+  }
+  .cover-figures svg { width: 46px; height: 128px; display: block; }
+  .cover-figures .fig-red    { color: var(--red); }
+  .cover-figures .fig-yellow { color: var(--yellow); }
+  .cover-figures .fig-green  { color: var(--green); }
+  .cover-figures .fig-blue   { color: var(--blue); }
+
+  .hero-subtitle {
+    font-size: 13px;
+    color: #4a4436;
+    max-width: 460px;
+    line-height: 1.6;
+    margin: 0 auto 18px;
+  }
+  .author-line {
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    color: #171310;
+    font-weight: 500;
+    margin-bottom: 22px;
+  }
+  .author-line strong { font-weight: 700; }
+
+  .hero-meta { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .meta-pill {
+    border: 1px solid rgba(0,0,0,0.14);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #4a4436;
+    background: rgba(255,255,255,0.5);
+  }
+  @media (max-width: 480px) {
+    .cover-figures svg { width: 36px; height: 100px; }
+    .cover-dots { gap: 30px; }
+  }
+
+  /* ── TYPE COLOUR BAND ── */
+  .type-band {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .type-band::-webkit-scrollbar { display: none; }
+  .type-chip {
+    flex: 1;
+    min-width: 130px;
+    padding: 14px 16px 12px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .type-chip .sub { display: block; font-size: 10px; opacity: 0.8; margin-top: 2px; letter-spacing: 0.5px; }
+  .chip-red    { background: var(--red); }
+  .chip-yellow { background: var(--yellow); }
+  .chip-green  { background: var(--green); }
+  .chip-blue   { background: var(--blue); }
+
+  /* ── TABS ── */
+  .tabs {
+    display: flex;
+    background: var(--cream);
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+  /* ── PANELS ── */
+  .panel { display: none; padding: 32px 32px 56px; max-width: 900px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── OVERVIEW ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
+  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .summary-block {
+    background: var(--cream);
+    border-left: 3px solid var(--ink);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: #1a1a1a;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--cream);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── QUADRANT MODEL ── */
+  .quadrant {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+    max-width: 460px;
+    margin: 0 auto 12px;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .quad-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    padding: 10px;
+  }
+  .quad-cell .qname { font-size: 20px; font-weight: 700; }
+  .quad-cell .qtag { font-family: 'DM Sans', sans-serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.85; margin-top: 4px; }
+  .quad-yellow { background: var(--yellow); }
+  .quad-red    { background: var(--red); }
+  .quad-green  { background: var(--green); }
+  .quad-blue   { background: var(--blue); }
+  .quadrant-axis { display: flex; justify-content: space-between; max-width: 460px; margin: 0 auto 4px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .quadrant-caption { text-align: center; font-size: 12px; color: var(--muted); max-width: 460px; margin: 6px auto 28px; line-height: 1.6; }
+
+  /* ── TYPE CARDS ── */
+  .type-card {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+  .type-card-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+  }
+  .type-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .type-card-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    flex: 1;
+  }
+  .type-alias {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .type-arrow { font-size: 16px; transition: transform 0.25s; color: var(--muted); }
+  .type-card.open .type-arrow { transform: rotate(90deg); }
+  .type-card-body {
+    display: none;
+    padding: 18px 20px 22px;
+    border-top: 1px solid var(--border);
+    background: var(--paper);
+  }
+  .type-card.open .type-card-body { display: block; }
+  .type-card-body p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #2a2a2a;
+    margin-bottom: 12px;
+  }
+  .type-trait-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+    margin-bottom: 14px;
+  }
+  .type-trait-list li {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: #fff;
+  }
+  .facet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .facet {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .facet .flabel { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .facet .fval { font-size: 13px; line-height: 1.55; color: #2a2a2a; }
+  @media (max-width: 600px) { .facet-grid { grid-template-columns: 1fr; } }
+
+  /* ── COMBINATIONS TAB ── */
+  .combo-intro { font-size: 14px; line-height: 1.8; color: #2a2a2a; margin-bottom: 20px; }
+  .combo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+  @media (max-width: 600px) { .combo-grid { grid-template-columns: 1fr; } }
+  .combo-card {
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .combo-head {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 8px;
+  }
+  .combo-head .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .combo-head span.name { font-family: 'Playfair Display', serif; font-size: 15px; }
+  .combo-body { padding: 14px 16px 16px; background: var(--cream); }
+  .combo-body p { font-size: 13px; line-height: 1.7; color: #2a2a2a; }
+  .combo-tag { display: inline-block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 12px; margin-bottom: 8px; }
+  .tag-adjacent { background: rgba(63,143,76,0.14); color: #2d6b37; }
+  .tag-opposite { background: rgba(209,56,43,0.12); color: #a52a1e; }
+
+  .combo-table-wrap { overflow-x: auto; margin-bottom: 28px; }
+  .combo-table { width: 100%; border-collapse: collapse; min-width: 520px; }
+  .combo-table th, .combo-table td { border: 1px solid var(--border); padding: 10px 12px; font-size: 12.5px; text-align: left; vertical-align: top; }
+  .combo-table th { background: var(--cream); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .combo-table td.self { background: repeating-linear-gradient(45deg, #f1f1f1, #f1f1f1 4px, #fafafa 4px, #fafafa 8px); color: var(--muted); font-style: italic; }
+
+  /* ── KEY IDEAS TAB ── */
+  .idea-card {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+  .idea-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+  .idea-card p { font-size: 13.5px; line-height: 1.7; color: #3a3a3a; }
+
+  /* ── VERDICT TAB ── */
+  .verdict-banner {
+    background: var(--ink);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+  .verdict-banner h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .verdict-banner p { color: rgba(255,255,255,0.55); font-size: 13px; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+  .rating-item {
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 12px 18px;
+    min-width: 100px;
+  }
+  .rating-item .r-score { font-size: 22px; font-weight: 700; color: #ffffff; }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-top: 3px; text-transform: uppercase; }
+
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .pro-list h4, .con-list h4 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .pro-list h4 { color: var(--green); }
+  .con-list h4 { color: var(--red); }
+  .pro-list li, .con-list li {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #2a2a2a;
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 8px;
+    list-style: none;
+  }
+  .pro-list li::before { content: '+'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .con-list li::before { content: '−'; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+
+  .who-for {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+  .who-for h4 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .who-for p { font-size: 14px; line-height: 1.75; color: #2a2a2a; }
+
+  .back-link {
+    display: inline-block;
+    margin: 32px 32px 0;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--ink); }
+  .back-link::before { content: '← '; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 36px 20px 44px; }
+    .panel { padding: 20px 20px 48px; }
+    .overview-grid, .pro-con-grid, .facet-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">Library</a>
+
+<!-- HERO — recreates the book's own cover: cream background, lowercase wordmark, four colored figures -->
+<div class="hero">
+  <div class="cover-badge">Over One Million Copies Sold</div>
+  <div class="cover-title">surrounded<br>by idiots</div>
+
+  <div class="cover-dots">
+    <span style="background:var(--red)"></span>
+    <span style="background:var(--yellow)"></span>
+    <span style="background:var(--green)"></span>
+    <span style="background:var(--blue)"></span>
+  </div>
+
+  <div class="cover-figures" aria-hidden="true">
+    <!-- Red: arms crossed -->
+    <svg class="fig-red" viewBox="0 0 60 160" fill="currentColor">
+      <circle cx="30" cy="17" r="15"/>
+      <path d="M14 39 C14 33 21 33 30 33 C39 33 46 33 46 39 L44 90 L16 90 Z"/>
+      <path d="M17 46 L43 66 L39 76 L15 56 Z"/>
+      <path d="M43 46 L17 66 L21 76 L45 56 Z"/>
+      <rect x="16" y="90" width="12" height="62" rx="5"/>
+      <rect x="32" y="90" width="12" height="62" rx="5"/>
+    </svg>
+    <!-- Yellow: dress silhouette, hand on hip -->
+    <svg class="fig-yellow" viewBox="0 0 60 160" fill="currentColor">
+      <circle cx="30" cy="17" r="15"/>
+      <path d="M19 39 C19 33 23 33 30 33 C37 33 41 33 41 39 L51 128 C51 138 42 141 30 141 C18 141 9 138 9 128 Z"/>
+      <path d="M41 44 C48 50 50 60 47 70 L41 66 Z"/>
+    </svg>
+    <!-- Green: relaxed stance -->
+    <svg class="fig-green" viewBox="0 0 60 160" fill="currentColor">
+      <circle cx="30" cy="17" r="15"/>
+      <path d="M14 39 C14 33 21 33 30 33 C39 33 46 33 46 39 L44 90 L16 90 Z"/>
+      <path d="M13 42 C9 52 8 66 10 78 L18 76 C16 65 17 53 20 44 Z"/>
+      <path d="M47 42 C51 52 52 66 50 78 L42 76 C44 65 43 53 40 44 Z"/>
+      <rect x="16" y="90" width="12" height="62" rx="5"/>
+      <rect x="32" y="90" width="12" height="62" rx="5"/>
+    </svg>
+    <!-- Blue: arms crossed -->
+    <svg class="fig-blue" viewBox="0 0 60 160" fill="currentColor">
+      <circle cx="30" cy="17" r="15"/>
+      <path d="M14 39 C14 33 21 33 30 33 C39 33 46 33 46 39 L44 90 L16 90 Z"/>
+      <path d="M17 46 L43 66 L39 76 L15 56 Z"/>
+      <path d="M43 46 L17 66 L21 76 L45 56 Z"/>
+      <rect x="16" y="90" width="12" height="62" rx="5"/>
+      <rect x="32" y="90" width="12" height="62" rx="5"/>
+    </svg>
+  </div>
+
+  <p class="hero-subtitle">The Four Types of Human Behavior and How to Effectively Communicate with Each in Business (and in Life)</p>
+  <p class="author-line">thomas erikson</p>
+  <div class="hero-meta">
+    <span class="meta-pill">Psychology</span>
+    <span class="meta-pill">Communication</span>
+    <span class="meta-pill">Self-Help</span>
+    <span class="meta-pill">4.0 / 5</span>
+  </div>
+</div>
+
+<!-- TYPE BAND -->
+<div class="type-band">
+  <div class="type-chip chip-red">Red<span class="sub">Dominance</span></div>
+  <div class="type-chip chip-yellow">Yellow<span class="sub">Influence</span></div>
+  <div class="type-chip chip-green">Green<span class="sub">Steadiness</span></div>
+  <div class="type-chip chip-blue">Blue<span class="sub">Compliance</span></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('overview', this)">Overview</div>
+  <div class="tab" onclick="switchTab('types', this)">The Four Types</div>
+  <div class="tab" onclick="switchTab('combos', this)">Type Combinations</div>
+  <div class="tab" onclick="switchTab('ideas', this)">Key Ideas</div>
+  <div class="tab" onclick="switchTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- OVERVIEW PANEL -->
+<div class="panel active" id="panel-overview">
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core Argument</div>
+      <div class="stat-value">Behavior is legible</div>
+      <div class="stat-desc">Most conflict isn't personal — it's two incompatible behavior styles colliding without either side recognizing the pattern.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Model</div>
+      <div class="stat-value">DISA / DISC, popularized</div>
+      <div class="stat-desc">Erikson repackages the decades-old four-color behavioral model (rooted in William Moulton Marston's DISC theory) into a plain-language, workplace-ready framework.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Types Covered</div>
+      <div class="stat-value">4 colors, endless blends</div>
+      <div class="stat-desc">Red, Yellow, Green, Blue — almost nobody is a pure color; most people are a primary color plus a strong secondary.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Dan's Read</div>
+      <div class="stat-value">★★★★☆ 4.0</div>
+      <div class="stat-desc">Simple to the point of oversimplification, but the framework is sticky — I've used it in real meetings within a week of finishing it.</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>The Thesis in Plain English</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="summary-block">
+    <p>Thomas Erikson's central claim is that the "idiots" who frustrate us at work and at home aren't actually stupid — they're just operating on a different behavioral operating system than we are, and neither side has the vocabulary to notice it. He sorts human behavior into four colors along two axes: how much someone leads with emotion versus fact, and how much someone leads with pace/extroversion versus caution/introversion. The result is a 2x2 grid — Red, Yellow, Green, Blue — that gives ordinary people a fast, memorable shorthand for "why does this person drive me crazy."</p>
+    <p>The book's real argument isn't "here are four boxes to sort people into." It's that everyone is a mix — a dominant color plus a supporting one — and that most everyday friction comes from misreading someone else's color and communicating with them the way you'd want to be communicated with, rather than the way they actually process information. A Red wants the bottom line in ten seconds; a Blue wants the supporting data before they'll trust the bottom line at all. Neither is wrong. They're just incompatible defaults, colliding.</p>
+    <p>Erikson is a communications consultant, not an academic, and the book reads that way — anecdote-driven, breezy, occasionally glib about how confidently you can diagnose a stranger's color from a five-minute meeting. But the underlying model (DISC/DISA) has real psychological pedigree, and the practical payoff — a shared, simple language for talking about behavioral friction on a team — is genuinely useful even if you take the specific claims with a grain of salt.</p>
+  </div>
+
+  <div class="section-header">
+    <h2>The Four-Color Model at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quadrant-axis"><span>← People-focused</span><span>Task-focused →</span></div>
+  <div class="quadrant">
+    <div class="quad-cell quad-yellow"><div class="qname">Yellow</div><div class="qtag">Fast + People</div></div>
+    <div class="quad-cell quad-red"><div class="qname">Red</div><div class="qtag">Fast + Task</div></div>
+    <div class="quad-cell quad-green"><div class="qname">Green</div><div class="qtag">Slow + People</div></div>
+    <div class="quad-cell quad-blue"><div class="qname">Blue</div><div class="qtag">Slow + Task</div></div>
+  </div>
+  <div class="quadrant-caption">Top row = extroverted, fast-paced, quick to speak and act. Bottom row = introverted, slow-paced, quick to think before speaking. Left column = decisions driven by people and feelings. Right column = decisions driven by tasks and facts. Every person is a blend, usually of one top-row/bottom-row color and one adjacent left/right neighbor.</div>
+
+  <div class="section-header">
+    <h2>Why I Read It</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea">
+    <div class="icon">🗣️</div>
+    <div>I wanted a shared vocabulary for talking about communication friction on the leadership team without it turning into a personality contest or a blame session.</div>
+  </div>
+  <div class="key-idea">
+    <div class="icon">⚡</div>
+    <div>It's a fast, practical read — a plane-ride book, not a textbook — and it's been referenced enough in business circles that I wanted the source material rather than the secondhand version.</div>
+  </div>
+  <div class="key-idea">
+    <div class="icon">🧩</div>
+    <div>Curious whether a pop-psychology bestseller built on a 90-year-old academic model (DISC) actually holds up, or whether it's just astrology for the office. Landed somewhere in the middle — see the Verdict tab.</div>
+  </div>
+</div>
+
+<!-- TYPES PANEL -->
+<div class="panel" id="panel-types">
+  <div class="section-header">
+    <h2>The Four Types, In Depth</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <!-- RED -->
+  <div class="type-card" id="tc-red" onclick="toggleType('tc-red')">
+    <div class="type-card-header">
+      <div class="type-dot" style="background:var(--red)"></div>
+      <h3 style="color:var(--red)">Red — Dominance</h3>
+      <span class="type-alias">"The Doer"</span>
+      <span class="type-arrow">›</span>
+    </div>
+    <div class="type-card-body">
+      <p>Reds are decisive, direct, and allergic to wasted time. They lead with action, want control of the outcome, and treat compromise as something to be extracted from a negotiation, not offered freely. In a meeting, a Red wants the conclusion first and the reasoning only if they ask for it. They're competitive by default — even small talk can feel like a contest — and they measure people by results, not effort or intention.</p>
+      <p>Under pressure, the Red's edge sharpens into something harsher: blunt becomes tactless, decisive becomes dictatorial, confident becomes dismissive of anyone who hesitates. Erikson's sharpest observation about Reds is that they genuinely don't notice they've steamrolled someone — they experience themselves as simply moving the situation forward, and they're often the last to know a room has gone quiet around them.</p>
+      <ul class="type-trait-list">
+        <li style="background:var(--red)">Decisive</li>
+        <li style="background:var(--red)">Direct</li>
+        <li style="background:var(--red)">Competitive</li>
+        <li style="background:var(--red)">Impatient</li>
+        <li style="background:var(--red)">Results-driven</li>
+      </ul>
+      <div class="facet-grid">
+        <div class="facet"><div class="flabel">Motivated By</div><div class="fval">Control, challenge, visible results</div></div>
+        <div class="facet"><div class="flabel">Afraid Of</div><div class="fval">Losing control, being taken advantage of</div></div>
+        <div class="facet"><div class="flabel">Wants From You</div><div class="fval">The bottom line first, options second, no rambling</div></div>
+        <div class="facet"><div class="flabel">Under Stress</div><div class="fval">Becomes autocratic, cuts people off, escalates conflict to force a resolution</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- YELLOW -->
+  <div class="type-card" id="tc-yellow" onclick="toggleType('tc-yellow')">
+    <div class="type-card-header">
+      <div class="type-dot" style="background:var(--yellow)"></div>
+      <h3 style="color:var(--yellow)">Yellow — Influence</h3>
+      <span class="type-alias">"The Inspirer"</span>
+      <span class="type-arrow">›</span>
+    </div>
+    <div class="type-card-body">
+      <p>Yellows run on enthusiasm and social energy. They're the people who make meetings fun, sell the vision before the plan exists, and can talk to anyone about anything. Optimism is their default lens — Yellows underestimate how long things take and overestimate how well things will go, and they mean it every time. They crave recognition and interaction; a task done well but unnoticed barely registers as a win to a Yellow.</p>
+      <p>The cost of all that energy is follow-through. Yellows are easily distracted by the next exciting idea, chronically disorganized about the boring logistics, and prone to over-promising because saying "no" to an enthusiastic ask feels like letting people down. Under stress they become chaotic and avoidant — talking their way around a problem rather than through it, and deflecting blame when the good mood curdles into panic.</p>
+      <ul class="type-trait-list">
+        <li style="background:var(--yellow)">Enthusiastic</li>
+        <li style="background:var(--yellow)">Persuasive</li>
+        <li style="background:var(--yellow)">Spontaneous</li>
+        <li style="background:var(--yellow)">Optimistic</li>
+        <li style="background:var(--yellow)">Disorganized</li>
+      </ul>
+      <div class="facet-grid">
+        <div class="facet"><div class="flabel">Motivated By</div><div class="fval">Recognition, social approval, fun</div></div>
+        <div class="facet"><div class="flabel">Afraid Of</div><div class="fval">Being ignored, social rejection, loss of status</div></div>
+        <div class="facet"><div class="flabel">Wants From You</div><div class="fval">Warmth, enthusiasm, room to talk it out before deciding</div></div>
+        <div class="facet"><div class="flabel">Under Stress</div><div class="fval">Becomes scattered, over-promises to smooth tension, avoids hard truths</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GREEN -->
+  <div class="type-card" id="tc-green" onclick="toggleType('tc-green')">
+    <div class="type-card-header">
+      <div class="type-dot" style="background:var(--green)"></div>
+      <h3 style="color:var(--green)">Green — Steadiness</h3>
+      <span class="type-alias">"The Supporter"</span>
+      <span class="type-arrow">›</span>
+    </div>
+    <div class="type-card-body">
+      <p>Greens are the calm center of most teams — patient, loyal, and genuinely good listeners. They value harmony over being right and stability over speed, which makes them the people others go to when they need to vent without being fixed at. Greens are dependable in a way that's easy to take for granted precisely because they rarely complain about being taken for granted.</p>
+      <p>Their conflict-avoidance is also their biggest liability. Greens will absorb friction rather than raise it, agree in the room and resist quietly afterward, and take far longer than other types to commit to a decision because change itself feels threatening to their sense of stability. Erikson notes that Greens are the type most likely to be steamrolled by a Red and most likely to quietly resent it for years without ever saying so. Under real pressure they don't explode — they withdraw, going stubborn and passive rather than loud.</p>
+      <ul class="type-trait-list">
+        <li style="background:var(--green)">Patient</li>
+        <li style="background:var(--green)">Loyal</li>
+        <li style="background:var(--green)">Empathetic</li>
+        <li style="background:var(--green)">Conflict-averse</li>
+        <li style="background:var(--green)">Dependable</li>
+      </ul>
+      <div class="facet-grid">
+        <div class="facet"><div class="flabel">Motivated By</div><div class="fval">Stability, cooperation, genuine appreciation</div></div>
+        <div class="facet"><div class="flabel">Afraid Of</div><div class="fval">Conflict, sudden change, loss of security</div></div>
+        <div class="facet"><div class="flabel">Wants From You</div><div class="fval">A calm pace, sincerity, time to process before deciding</div></div>
+        <div class="facet"><div class="flabel">Under Stress</div><div class="fval">Withdraws, goes quiet and passive-resistant, stops volunteering opinions</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLUE -->
+  <div class="type-card" id="tc-blue" onclick="toggleType('tc-blue')">
+    <div class="type-card-header">
+      <div class="type-dot" style="background:var(--blue)"></div>
+      <h3 style="color:var(--blue)">Blue — Compliance</h3>
+      <span class="type-alias">"The Analyst"</span>
+      <span class="type-arrow">›</span>
+    </div>
+    <div class="type-card-body">
+      <p>Blues lead with facts, precision, and structure. They want to see the data before they'll trust the conclusion, they catch the error everyone else missed, and they'd rather be quietly correct than loudly popular. Order isn't a preference for a Blue — it's how they feel safe. A well-documented process, a clean spreadsheet, a plan with no loose ends: that's a Blue's version of a good day.</p>
+      <p>The flip side is a low tolerance for ambiguity and an even lower tolerance for being wrong in public. Blues can tip into analysis paralysis, over-editing a decision long past the point of diminishing returns, and their instinct to point out flaws — meant constructively — often lands as cold or overly critical to warmer types. Under stress they don't get loud; they get withholding, retreating into more analysis as a way of avoiding a decision they can't yet guarantee is correct.</p>
+      <ul class="type-trait-list">
+        <li style="background:var(--blue)">Analytical</li>
+        <li style="background:var(--blue)">Precise</li>
+        <li style="background:var(--blue)">Systematic</li>
+        <li style="background:var(--blue)">Cautious</li>
+        <li style="background:var(--blue)">Reserved</li>
+      </ul>
+      <div class="facet-grid">
+        <div class="facet"><div class="flabel">Motivated By</div><div class="fval">Accuracy, quality, order, being demonstrably right</div></div>
+        <div class="facet"><div class="flabel">Afraid Of</div><div class="fval">Being wrong, public criticism of their work, chaos</div></div>
+        <div class="facet"><div class="flabel">Wants From You</div><div class="fval">Detail in writing, advance notice, no surprises</div></div>
+        <div class="facet"><div class="flabel">Under Stress</div><div class="fval">Becomes withholding and overly critical, stalls on decisions to avoid being wrong</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMBINATIONS PANEL -->
+<div class="panel" id="panel-combos">
+  <div class="section-header">
+    <h2>How the Colors Combine</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p class="combo-intro">Almost nobody is a pure color. Erikson's practical point is that most people carry a dominant color plus a strong secondary — and which secondary you carry matters more for predicting friction than the primary color alone. The two axes from the Overview tab explain why: colors that sit <strong>next to each other</strong> on the grid share one dimension (pace or focus) and tend to blend smoothly. Colors that sit <strong>diagonally opposite</strong> share nothing, and those are the pairings that generate the most persistent, hardest-to-diagnose conflict.</p>
+
+  <div class="combo-grid">
+    <div class="combo-card">
+      <div class="combo-head"><div class="dot" style="background:var(--red)"></div><div class="dot" style="background:var(--yellow)"></div><span class="name">Red + Yellow</span></div>
+      <div class="combo-body">
+        <span class="combo-tag tag-adjacent">Adjacent — shares pace</span>
+        <p>Both fast, both extroverted, both comfortable making quick calls out loud. The friction is focus: Red wants the result, Yellow wants the experience of getting there to be fun and social. A Red-heavy team can feel like it's always winning and never celebrating; a Yellow-heavy one can feel fun but directionless. Together they're a strong "get it moving and get people excited" combination.</p>
+      </div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-head"><div class="dot" style="background:var(--yellow)"></div><div class="dot" style="background:var(--green)"></div><span class="name">Yellow + Green</span></div>
+      <div class="combo-body">
+        <span class="combo-tag tag-adjacent">Adjacent — shares focus</span>
+        <p>Both people-focused, both warm, both prioritizing the relationship over the task. The friction is pace: Yellow wants to move fast and talk it through now, Green wants to slow down and process before committing. This is usually the most naturally likable combination in a room — high trust, low aggression — but it can struggle to actually finish things without a Red or Blue pushing the timeline.</p>
+      </div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-head"><div class="dot" style="background:var(--green)"></div><div class="dot" style="background:var(--blue)"></div><span class="name">Green + Blue</span></div>
+      <div class="combo-body">
+        <span class="combo-tag tag-adjacent">Adjacent — shares pace</span>
+        <p>Both introverted, both slow and deliberate, both wary of surprises. The friction is focus: Green wants harmony among people, Blue wants correctness in the work. This pairing produces careful, well-documented, low-drama outcomes — and can be maddeningly slow to a Red or Yellow waiting on a decision.</p>
+      </div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-head"><div class="dot" style="background:var(--blue)"></div><div class="dot" style="background:var(--red)"></div><span class="name">Blue + Red</span></div>
+      <div class="combo-body">
+        <span class="combo-tag tag-adjacent">Adjacent — shares focus</span>
+        <p>Both task-focused, both impatient with people who prioritize feelings over facts. The friction is pace: Blue wants to verify before acting, Red wants to act now and verify later. This combination sets a high, unforgiving bar for quality and speed at the same time — productive, but exhausting for anyone on the team who isn't also task-driven.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>The Diagonal Clashes</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="combo-grid">
+    <div class="combo-card">
+      <div class="combo-head"><div class="dot" style="background:var(--red)"></div><div class="dot" style="background:var(--green)"></div><span class="name">Red vs. Green</span></div>
+      <div class="combo-body">
+        <span class="combo-tag tag-opposite">Opposite — shares nothing</span>
+        <p>The book's textbook example of mutual incomprehension. Red wants to decide now and move; Green needs time and consensus before committing to anything. Red reads Green's caution as weakness or foot-dragging; Green reads Red's speed as reckless and disrespectful of the people affected. Left unmanaged, Red simply overrides Green — who won't fight back in the room, but disengages afterward.</p>
+      </div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-head"><div class="dot" style="background:var(--yellow)"></div><div class="dot" style="background:var(--blue)"></div><span class="name">Yellow vs. Blue</span></div>
+      <div class="combo-body">
+        <span class="combo-tag tag-opposite">Opposite — shares nothing</span>
+        <p>The other diagonal, and just as combustible. Yellow wants to talk it out, riff on possibilities, and trust the vibe in the room; Blue wants the details in writing, in advance, with no ambiguity. Blue experiences Yellow as unserious and unreliable; Yellow experiences Blue as cold, nitpicky, and joyless. Each is functioning perfectly well by their own logic — which is exactly why the conflict is so hard to resolve without a shared vocabulary for what's happening.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Quick-Reference Combination Matrix</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="combo-table-wrap">
+    <table class="combo-table">
+      <tr>
+        <th></th>
+        <th style="color:var(--red)">Red</th>
+        <th style="color:var(--yellow)">Yellow</th>
+        <th style="color:var(--green)">Green</th>
+        <th style="color:var(--blue)">Blue</th>
+      </tr>
+      <tr>
+        <th style="color:var(--red)">Red</th>
+        <td class="self">Two Reds compete for control of the room</td>
+        <td>Fast &amp; loud — high energy, low follow-through unless someone tracks details</td>
+        <td>Red drives, Green absorbs — sustainable only if Red checks in</td>
+        <td>High standards from both directions — productive but relentless</td>
+      </tr>
+      <tr>
+        <th style="color:var(--yellow)">Yellow</th>
+        <td>Fast &amp; loud — high energy, low follow-through unless someone tracks details</td>
+        <td class="self">Two Yellows have a great time and lose track of the deadline</td>
+        <td>Warm and easy — the most naturally comfortable pairing</td>
+        <td>Vibe vs. rigor — Yellow feels judged, Blue feels ignored</td>
+      </tr>
+      <tr>
+        <th style="color:var(--green)">Green</th>
+        <td>Red drives, Green absorbs — sustainable only if Red checks in</td>
+        <td>Warm and easy — the most naturally comfortable pairing</td>
+        <td class="self">Two Greens keep the peace but may never actually decide</td>
+        <td>Careful and quiet — thorough, but slow to launch anything</td>
+      </tr>
+      <tr>
+        <th style="color:var(--blue)">Blue</th>
+        <td>High standards from both directions — productive but relentless</td>
+        <td>Vibe vs. rigor — Yellow feels judged, Blue feels ignored</td>
+        <td>Careful and quiet — thorough, but slow to launch anything</td>
+        <td class="self">Two Blues produce an extremely well-documented stalemate</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="who-for">
+    <h4>The Practical Takeaway</h4>
+    <p>Erikson's advice for every one of these pairings boils down to the same move: adapt your delivery to the other person's color, not your own. Give a Red the headline first. Give a Yellow room to talk before asking for a decision. Give a Green time and a calm tone before pushing for commitment. Give a Blue the supporting detail in writing before you ask them to trust a conclusion. None of it requires changing who you are — it just requires noticing which color you're talking to.</p>
+  </div>
+</div>
+
+<!-- KEY IDEAS PANEL -->
+<div class="panel" id="panel-ideas">
+  <div class="section-header">
+    <h2>Five Ideas Worth Carrying</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="idea-card">
+    <h4>1. Most Conflict Is a Translation Problem, Not a Character Problem</h4>
+    <p>The book's most durable reframe: the colleague who drives you crazy usually isn't malicious or incompetent — they're speaking a different behavioral language. A Red isn't rude on purpose; a Green isn't weak on purpose; a Blue isn't cold on purpose; a Yellow isn't flaky on purpose. Naming the pattern turns "this person is impossible" into "this person needs the message delivered differently," which is a solvable problem.</p>
+  </div>
+
+  <div class="idea-card">
+    <h4>2. Adapt Your Delivery, Not Your Substance</h4>
+    <p>Erikson is emphatic that color-awareness isn't about changing what you say — it's about changing how you package it for the listener. The same proposal pitched as "here's the bottom line" (for a Red), "here's why this is exciting" (for a Yellow), "here's how this keeps things stable for the team" (for a Green), and "here's the data behind it" (for a Blue) is the same proposal landing four different ways.</p>
+  </div>
+
+  <div class="idea-card">
+    <h4>3. Everyone Has a Stress Color That's Uglier Than Their Baseline</h4>
+    <p>Each type's stress behavior is a distorted, less flattering version of its calm behavior — Red's directness becomes aggression, Yellow's optimism becomes denial, Green's patience becomes passive withdrawal, Blue's precision becomes paralyzing criticism. Recognizing someone's stress version doesn't excuse it, but it explains it, and it tells you what they actually need in that moment (space, structure, reassurance, or a straight answer).</p>
+  </div>
+
+  <div class="idea-card">
+    <h4>4. The Secondary Color Often Explains More Than the Primary</h4>
+    <p>Two people who share a dominant color can still clash hard if their secondary colors differ — a Red-Blue and a Red-Yellow will both lead with decisiveness but disagree sharply about how much verification is enough before acting. The book's practical advice is to stop asking "what's their color" and start asking "what's their blend," which is a more accurate and more forgiving lens.</p>
+  </div>
+
+  <div class="idea-card">
+    <h4>5. Self-Awareness Is the Actual Prerequisite</h4>
+    <p>The framework is only useful if you can honestly place yourself on it first. Erikson's running joke — that everyone recognizes their coworkers in these descriptions before they recognize themselves — is the book's real challenge: most people are quicker to diagnose the "idiot" across the table than to notice their own default color is exactly as inconvenient to somebody else.</p>
+  </div>
+</div>
+
+<!-- VERDICT PANEL -->
+<div class="panel" id="panel-verdict">
+  <div class="section-header">
+    <h2>Final Verdict</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="verdict-banner">
+    <h3>★★★★☆ 4.0 / 5</h3>
+    <p>Oversimplified as psychology, genuinely useful as a shared team vocabulary.</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">3</div>
+        <div class="r-label">Scientific Rigor</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">5</div>
+        <div class="r-label">Readability</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Actionability</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4</div>
+        <div class="r-label">Lasting Value</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>What Works</h4>
+      <ul>
+        <li>The four colors are genuinely easy to remember and apply the same day</li>
+        <li>The combinations framing (adjacent vs. diagonal) explains recurring team conflicts better than "personality clash"</li>
+        <li>Short, anecdote-driven chapters make it a fast, practical read</li>
+        <li>Gives teams a neutral, blame-free shorthand for behavioral friction</li>
+        <li>The "adapt delivery, not substance" advice is immediately usable in real meetings</li>
+      </ul>
+    </div>
+    <div class="con-list">
+      <h4>What Doesn't</h4>
+      <ul>
+        <li>Presents a 90-year-old, not-fully-validated model (DISC) with more scientific confidence than it's earned</li>
+        <li>Leans hard on stereotype-flavored anecdotes rather than data</li>
+        <li>Encourages snap-judging strangers' colors, which is fun but not rigorous</li>
+        <li>Real people are messier than any four-color grid — the book undersells how much the model breaks down under nuance</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="who-for">
+    <h4>Who Should Read This</h4>
+    <p>Anyone managing a team with visible, recurring communication friction — especially leadership teams that keep having the same argument in different clothes. Best treated as a conversation-starter and a shared vocabulary, not a diagnostic instrument. Pair it with something more rigorous (actual DISC assessments, or research-grounded material) if you want the model to hold up under real scrutiny.</p>
+  </div>
+
+  <div class="who-for">
+    <h4>One Sentence</h4>
+    <p><em>A breezy, sticky framework for naming why your coworkers drive you crazy — thin on science, strong on immediate, practical usefulness.</em></p>
+  </div>
+</div>
+
+<script>
+  function switchTab(id, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+  function toggleType(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+</script>
+</body>
+</html>
