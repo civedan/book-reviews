@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dare to Lead — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #182635;
+    --paper: #f4efe1;
+    --cream: #eae1cb;
+    --teal: #2b7a76;
+    --teal-light: #46a39c;
+    --teal-pale: #cde7e3;
+    --navy: #1f3a52;
+    --gold: #c8983a;
+    --gold-light: #e0b45c;
+    --rust: #b4432f;
+    --muted: #5c6660;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #182635 0%, #1f3a52 55%, #2b7a76 100%);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,152,58,0.20) 0%, transparent 70%);
+  }
+  .hero-text { flex: 1; position: relative; z-index: 1; }
+  .book-cover-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .book-cover-wrap img {
+    width: 110px;
+    border-radius: 4px;
+    transform: rotate(-6deg);
+    box-shadow: -4px 6px 20px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 480px) { .book-cover-wrap { display: none; } }
+  .book-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    color: #f4efe1;
+    line-height: 1.15;
+    max-width: 540px;
+  }
+  .hero h1 em { color: var(--gold-light); font-style: italic; }
+  .author { margin-top: 14px; color: rgba(244,239,225,0.7); font-size: 13px; letter-spacing: 1px; }
+  .author span { color: var(--gold-light); }
+  .hero-meta { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .meta-pill {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.28);
+    color: #f4efe1;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .tabs {
+    display: flex;
+    background: var(--cream);
+    border-bottom: 2px solid rgba(43,122,118,0.25);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--teal); }
+  .tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
+  .section-line { flex: 1; height: 1px; background: rgba(43,122,118,0.25); }
+
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid rgba(43,122,118,0.25);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--teal); }
+  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .summary-block {
+    background: white;
+    border-left: 3px solid var(--teal);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #1a2c28;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: var(--cream);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  .part-header {
+    background: var(--navy);
+    color: var(--gold-light);
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    font-weight: 500;
+  }
+
+  .chapter-card {
+    background: white;
+    border: 1px solid rgba(24,38,53,0.08);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(43,122,118,0.16); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--teal); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body {
+    display: none;
+    padding: 14px 18px 18px 64px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #263a35;
+    border-top: 1px solid rgba(43,122,118,0.15);
+  }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px;
+    background: rgba(43,122,118,0.08);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .method-card {
+    background: white;
+    border: 1px solid rgba(43,122,118,0.2);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .method-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--teal); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+  .method-card .tag {
+    display: inline-block;
+    background: var(--teal);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .code-block {
+    background: var(--ink);
+    color: #dff0ed;
+    border-radius: 8px;
+    padding: 20px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .code-block .comment { color: rgba(200,152,58,0.6); }
+  .code-block .keyword { color: var(--gold-light); }
+  .code-block .value { color: #7fd6cc; }
+
+  .component-wheel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .wheel-card {
+    background: white;
+    border: 1px solid rgba(43,122,118,0.2);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .wheel-num {
+    width: 36px; height: 36px;
+    background: var(--teal);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 auto 10px;
+  }
+  .wheel-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--navy); margin-bottom: 6px; }
+  .wheel-card p { font-size: 12px; line-height: 1.5; color: var(--muted); }
+
+  .verdict-banner {
+    background: linear-gradient(135deg, #182635 0%, #1f3a52 100%);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--gold-light); margin-bottom: 6px; }
+  .verdict-banner p { color: rgba(244,239,225,0.75); font-size: 13px; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+  .rating-item {
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 8px;
+    padding: 10px 16px;
+    min-width: 90px;
+  }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--gold-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(244,239,225,0.6); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid rgba(24,38,53,0.08);
+  }
+  .pro-list h4 { color: var(--teal); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--rust); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--teal); }
+  .con-list .dot { background: var(--rust); }
+
+  .quote-block {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .quote-block::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--teal);
+    position: absolute;
+    top: -8px; left: 16px;
+    line-height: 1;
+  }
+  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink); }
+  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+  .who-card {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: white;
+    border: 1px solid rgba(43,122,118,0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  .sketchnote-wrap {
+    background: white;
+    border: 1px solid rgba(43,122,118,0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .sketchnote-wrap img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid rgba(24,38,53,0.1);
+  }
+  .sketchnote-wrap .caption {
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px 12px;
+    background: white;
+    border: 1px solid rgba(43,122,118,0.2);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    font-size: 12.5px;
+    color: var(--navy);
+  }
+  .values-grid .core {
+    color: var(--teal);
+    font-weight: 700;
+  }
+  .source-note {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .source-note a { color: var(--teal); }
+
+  @media (max-width: 560px) {
+    .overview-grid, .method-grid, .pro-con-grid, .component-wheel { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .panel { padding: 20px 16px 40px; }
+    .hero { padding: 36px 20px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-text">
+    <div class="book-label">Book Review &amp; Reference Guide</div>
+    <h1><em>Dare to Lead</em> — Brave Work. Tough Conversations. Whole Hearts.</h1>
+    <div class="author">by <span>Brené Brown</span> &nbsp;·&nbsp; Published 2018</div>
+    <div class="hero-meta">
+      <div class="meta-pill">Leadership</div>
+      <div class="meta-pill">Vulnerability &amp; Courage</div>
+      <div class="meta-pill">4 Skill Sets</div>
+      <div class="meta-pill">4 Parts</div>
+    </div>
+  </div>
+  <div class="book-cover-wrap">
+    <img src="images/dare-to-lead-cover.webp" alt="Dare to Lead book cover">
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Parts</div>
+  <div class="tab" onclick="showTab('framework', this)">The Framework</div>
+  <div class="tab" onclick="showTab('sketchnote', this)">Sketchnote &amp; Values</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="panel active">
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core Premise</div>
+      <div class="stat-value">Courage Is Teachable</div>
+      <div class="stat-desc">Daring leadership is a collection of four skill sets that can be learned, measured, and observed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">Whole-Hearted Leadership</div>
+      <div class="stat-desc">Vulnerability isn't weakness — it's the birthplace of courage, connection, and innovation at work</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Author Background</div>
+      <div class="stat-value">Brené Brown</div>
+      <div class="stat-desc">Research professor at the University of Houston; two decades studying courage, shame, and vulnerability</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Leaders at Any Level</div>
+      <div class="stat-desc">Anyone responsible for people, potential, or culture — title optional</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Dare to Lead</strong> is Brené Brown's application of two decades of shame, vulnerability, and courage research to the specific challenge of leadership. Built on new data gathered directly from leaders and organizations (in addition to the foundational research behind <em>Daring Greatly</em> and <em>Rising Strong</em>), the book answers the question Brown says she's asked more than any other by executives and managers worldwide: "How do I cultivate braver, more daring leaders, and how do I embed the value of courage in my organization's culture?"</p>
+    <p>Her answer rejects the idea that courage is an innate trait some people have and others don't. Instead, she defines <strong>daring leadership as a collection of four skill sets</strong> — Rumbling with Vulnerability, Living into Our Values, Braving Trust, and Learning to Rise — that are entirely teachable, observable, and measurable. Each skill set gets its own part of the book, its own tools, and its own vocabulary that leaders can bring back to their teams immediately.</p>
+    <p>What makes the book distinct from typical leadership literature is its refusal to separate the "soft" emotional work from the "hard" business of leading. Brown argues that armor — cynicism, perfectionism, being the knower, numbing out, leading from hurt instead of heart — is the single biggest driver of disengaged teams, broken trust, and failed culture change. The book is, at its core, a case for vulnerability as a leadership competency, not a liability.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">🛡️</div><div><strong>Vulnerability is not weakness.</strong> It's the most accurate measure of courage Brown's research has found — the willingness to show up and be seen when you can't control the outcome.</div></div>
+  <div class="key-idea"><div class="icon">🧭</div><div><strong>Values only count when they're practiced.</strong> Pick two, not ten — and define exactly what behaviors support them and what behaviors betray them.</div></div>
+  <div class="key-idea"><div class="icon">🤝</div><div><strong>Trust is built and broken in small moments.</strong> The BRAVING framework turns an abstract idea into seven concrete, discussable behaviors.</div></div>
+  <div class="key-idea"><div class="icon">🔥</div><div><strong>Rising from failure is a skill, not a personality trait.</strong> The Reckoning, the Rumble, and the Revolution turn setbacks into leadership capital.</div></div>
+  <div class="key-idea"><div class="icon">⚔️</div><div><strong>Armor is the enemy of connection.</strong> Perfectionism, cynicism, being right, and leading from hurt all protect the leader — at the cost of the team.</div></div>
+  <div class="key-idea"><div class="icon">🗣️</div><div><strong>Clear is kind. Unclear is unkind.</strong> Avoiding a hard conversation to spare someone's feelings almost always causes more harm than the conversation itself.</div></div>
+</div>
+
+<!-- CHAPTERS / PARTS -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Part One — Rumbling with Vulnerability</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">The Moment and the Myths of Vulnerability</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Brown opens with the moment that shaped the book: standing backstage before addressing a room of Fortune 500 executives, she realizes that the question leaders ask her most isn't about efficiency or strategy — it's about courage and culture. That question becomes the spine of the book, backed by a fresh, seven-year research initiative conducted specifically with leaders, in addition to her earlier shame and vulnerability research.
+      <br><br>
+      Before she can talk about daring leadership, she has to dismantle four myths that keep leaders from engaging with vulnerability honestly: <strong>(1) Vulnerability is weakness.</strong> Her data says the opposite — it's the most accurate measure of courage she's found. <strong>(2) "I don't do vulnerability."</strong> Impossible — everyone faces uncertainty, risk, and emotional exposure daily; the only real choice is how you engage with it. <strong>(3) Vulnerability means oversharing.</strong> Vulnerability isn't the same as disclosure — boundaries and discernment still matter. <strong>(4) "I can engineer the discomfort out of the system."</strong> You can't. The only way to lead well is through discomfort, not around it.
+      <div class="ch-takeaway">Vulnerability isn't winning or losing — it's having the courage to show up when you can't control the outcome. Leaders who try to eliminate uncertainty and emotional exposure from their teams eliminate connection and innovation along with it.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">The Call to Courage — Four Skill Sets, Not a Personality Trait</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Brown's most important reframe: courage is not a fixed trait some people have and others don't — it's a collection of four skill sets that are teachable, observable, and measurable: <strong>Rumbling with Vulnerability, Living into Our Values, Braving Trust,</strong> and <strong>Learning to Rise.</strong> All four are interdependent; practicing one strengthens the others, and neglecting one weakens the whole set. She describes this as a spiral of skill-building rather than a linear checklist.
+      <br><br>
+      She also broadens the definition of "leader" beyond title or org chart position: a leader is anyone who takes responsibility for finding the potential in people and processes, and who has the courage to develop that potential. This is why the book speaks equally to first-time managers, individual contributors, and CEOs. Brown introduces the <strong>Daring Leadership Assessment</strong>, the diagnostic tool she uses with organizations to identify where a leader or team is strong and where they're avoiding the work across the four skill sets.
+      <div class="ch-takeaway">Courage is a practice, not a personality. The four skill sets — Rumbling with Vulnerability, Living into Our Values, Braving Trust, Learning to Rise — can be taught, coached, and measured like any other leadership competency.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">Armored Leadership vs. Daring Leadership</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      One of the book's most quoted sections: a long, paired list contrasting the self-protective behaviors of "armored" leadership against the vulnerability-rooted behaviors of "daring" leadership. Examples include: being a knower and needing to always be right, versus being a learner and wanting to get it right; leading for compliance and control, versus cultivating commitment and shared purpose; weaponizing fear and uncertainty, versus acknowledging fear and normalizing uncertainty; leading from hurt, versus leading from heart; rewarding exhaustion as a status symbol and tying self-worth to productivity, versus modeling and supporting rest, play, and recovery; using power over people, versus using power with, power to, and power within; hiding behind cynicism, versus practicing gratitude and celebration; being a hero and rescuing, versus cultivating self-awareness and expecting it of others.
+      <br><br>
+      Brown is careful to frame this not as a shame exercise — everyone slips into armor sometimes, herself included — but as a diagnostic. Naming the pattern is what makes it interruptible. Teams that adopt this list as shared language report being able to call out armored behavior ("that sounded like leading from hurt") without it becoming a personal attack.
+      <div class="ch-takeaway">Armor protects the leader at the cost of the team. The goal isn't to eliminate armor overnight — it's to be able to recognize it in the moment and consciously choose the daring alternative.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Two — Living Into Our Values</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">Values Clarification — Picking Your Two Core Values</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Brown provides the exercise at the center of the book: from a master list of over 100 values (the same Dare to Lead Values List published on her website — reproduced in full in the "Sketchnote &amp; Values" tab of this review), identify your <strong>two</strong> most important core values — not ten, not five. Two.
+      <br><br>
+      The insistence on two is deliberate: a long list of values is really just a wish list of things that sound admirable. Only two forces genuine prioritization and gives you something you can actually use as a filter for hard decisions — who to hire, what to say no to, how to handle a conflict. Once chosen, each value has to be defined in concrete terms, not left as an inspirational word on a wall.
+      <div class="ch-takeaway">A value you can't define in behavioral terms isn't a value — it's a slogan. Two well-defined values will change more decisions than ten vague ones.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">Operationalizing Values — From Aspiration to Behavior</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Having picked a value, Brown walks through operationalizing it in three parts: (1) define what the value means to you in one clear sentence, (2) name three specific behaviors that support the value, and (3) name two or three "shadow" behaviors — the ones that masquerade as the value but actually betray it. Perfectionism, for instance, often disguises itself as the shadow of "excellence"; "fitting in" is frequently the shadow of "belonging."
+      <br><br>
+      This chapter draws on Brown's supplementary resource, <em>Operationalizing Your Values: A Reference List of Behaviors</em>, which gives leaders language to turn an abstract value like "integrity" or "accountability" into something that can be modeled, coached, and used in direct feedback — e.g., "when you interrupted Maria in that meeting, that fell outside our value of respect; can we talk about what happened?" Unlived values are merely <em>aspirational</em>; only practiced values are real. Brown calls the gap between the two "the delta," and argues it's where trust erodes fastest.
+      <div class="ch-takeaway">Values become real only when they're specific enough to coach against. If you can't point to the exact behavior that violated a value, the value isn't operational yet.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Three — Braving Trust</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">The Anatomy of Trust — The BRAVING Inventory</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Trust is one of the most talked-about and least defined concepts in leadership. Brown fixes that with <strong>BRAVING</strong> — seven concrete, discussable elements: <strong>Boundaries</strong> (you respect mine, and you ask when you're not sure where they are), <strong>Reliability</strong> (you do what you say, and you don't overpromise), <strong>Accountability</strong> (you own mistakes, apologize, and make amends), <strong>Vault</strong> (you keep what's shared with you confidential — including other people's stories), <strong>Integrity</strong> (you choose courage over comfort, right over easy), <strong>Non-judgment</strong> (I can ask for what I need without being judged for it), and <strong>Generosity</strong> (you extend the most generous interpretation to my intentions and actions).
+      <br><br>
+      Brown revisits the "marble jar" metaphor from her earlier work: trust isn't built through grand gestures, it's built one marble at a time — small moments where someone shows up, keeps a confidence, or follows through. The <strong>BRAVING Inventory</strong> becomes a practical tool leaders use in one-on-ones and team conversations, asking: which of the seven elements is hardest for me to practice? Which is hardest for me to ask of others?
+      <div class="ch-takeaway">Trust stops being a vague feeling and becomes seven specific, coachable behaviors. Naming the exact element that's missing turns a trust problem into a solvable conversation.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Self-Trust and the Story I'm Telling Myself</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Brown applies BRAVING inward. Self-trust is built the same way as trust with others — by keeping promises to yourself, holding your own boundaries, and being accountable to yourself when you fall short. Leaders who don't trust themselves outsource their confidence to external validation, which makes them far more reactive to criticism and far more likely to armor up.
+      <br><br>
+      She introduces a rumble tool that has become one of the book's most widely adopted phrases: <strong>"the story I'm telling myself is ___."</strong> When triggered by an ambiguous interaction — a curt email, a meeting you weren't invited to — naming the story explicitly, out loud, before reacting slows the emotional hijack and opens space for curiosity instead of assumption. Brown also references the "SFD" (shitty first draft) idea — the first story your brain generates under stress is rarely accurate, and treating it as a draft rather than a fact is what keeps a leader from acting on it prematurely.
+      <div class="ch-takeaway">Most conflict starts with an unverified story, not a fact. Saying "the story I'm telling myself is ___" out loud is the fastest way to turn an assumption into a conversation.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Four — Learning to Rise</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">The Rising Strong Process — Reckoning, Rumble, Revolution</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Brown reintroduces the three-part Rising Strong process (from her earlier book of the same name) specifically for leadership setbacks. <strong>The Reckoning:</strong> notice you've been emotionally hooked by something — a failed launch, a hard piece of feedback, a public misstep — and get curious about the feeling instead of pushing it away or numbing it. <strong>The Rumble:</strong> get rigorously honest about the story you're making up about the situation, the other people involved, and yourself, and interrogate that story for accuracy rather than accepting it at face value. <strong>The Revolution:</strong> use what the rumble reveals to write a braver, more accurate ending, and change how you show up going forward.
+      <br><br>
+      Brown frames failure and setbacks not as things to avoid or minimize, but as the raw material daring leadership is made from — leaders who can't rise from a hard moment can't lead through one either. This chapter positions "learning to rise" as a repeatable skill rather than a one-time act of resilience.
+      <div class="ch-takeaway">You can't skip the Rumble and go straight to the lesson. Rising strong requires getting honest about the story first — the growth comes from interrogating it, not from rushing past it.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">Integration — Turning Failure into Leadership Capital</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The closing part is about embedding all four skill sets into the daily rhythms of a team, not treating them as a one-time workshop. Brown emphasizes normalizing "rumbles" as a routine practice, and building shared vocabulary — "that's a story," "can we rumble on this," "what's the boundary here" — so that vulnerability, values, and trust become part of ordinary team conversation rather than a special, uncomfortable event.
+      <br><br>
+      Psychological safety, she argues, isn't built through a single offsite or trust fall — it's built through the accumulated repetition of small, brave moments: naming a story before it curdles into resentment, giving feedback tied to an operationalized value, admitting a mistake and making amends. The book closes on the idea that daring leadership isn't a destination you arrive at — it's a daily practice of choosing courage over comfort, over and over, especially when it's inconvenient.
+      <div class="ch-takeaway">Daring leadership isn't a program you finish — it's a set of habits a team maintains together. The shared vocabulary from all four skill sets is what makes the practice stick after the book is closed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FRAMEWORK -->
+<div id="framework" class="panel">
+  <div class="section-header">
+    <h2>The Four Skill Sets of Courage</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="component-wheel">
+    <div class="wheel-card">
+      <div class="wheel-num">1</div>
+      <h4>Rumbling with Vulnerability</h4>
+      <p>A discussion, conversation, or meeting defined by a commitment to lean into vulnerability, stay curious, and be honest about the stories we're telling ourselves.</p>
+    </div>
+    <div class="wheel-card">
+      <div class="wheel-num">2</div>
+      <h4>Living into Our Values</h4>
+      <p>Identifying, operationalizing, and practicing the values that are most important to us — not as aspirations, but as day-to-day behaviors.</p>
+    </div>
+    <div class="wheel-card">
+      <div class="wheel-num">3</div>
+      <h4>Braving Trust</h4>
+      <p>Creating trust with others and ourselves using the seven concrete elements of BRAVING — built in small moments, one marble at a time.</p>
+    </div>
+    <div class="wheel-card">
+      <div class="wheel-num">4</div>
+      <h4>Learning to Rise</h4>
+      <p>Developing the resilience and skills necessary to get back up after falling down, and to use setbacks as leadership capital.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>BRAVING — The Anatomy of Trust</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="code-block">
+    <span class="comment">// BRAVING — seven elements, used with others and with yourself</span><br><br>
+    <span class="keyword">Boundaries</span>     → <span class="value">You respect mine; you ask when unclear; you can say no</span><br>
+    <span class="keyword">Reliability</span>    → <span class="value">You do what you say; you don't overpromise</span><br>
+    <span class="keyword">Accountability</span> → <span class="value">You own mistakes, apologize, and make amends</span><br>
+    <span class="keyword">Vault</span>          → <span class="value">What's shared with you stays confidential — including others' stories</span><br>
+    <span class="keyword">Integrity</span>      → <span class="value">You choose courage over comfort, right over easy or fun</span><br>
+    <span class="keyword">Non-judgment</span>   → <span class="value">I can ask for what I need without being judged for it</span><br>
+    <span class="keyword">Generosity</span>     → <span class="value">You extend the most generous interpretation to my intent</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Armored vs. Daring Leadership</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="con-list">
+      <h4>Armored Leadership</h4>
+      <div class="list-item"><div class="dot"></div><div>Being a knower and needing to always be right</div></div>
+      <div class="list-item"><div class="dot"></div><div>Leading for compliance and control</div></div>
+      <div class="list-item"><div class="dot"></div><div>Weaponizing fear and uncertainty</div></div>
+      <div class="list-item"><div class="dot"></div><div>Leading from hurt</div></div>
+      <div class="list-item"><div class="dot"></div><div>Rewarding exhaustion as a status symbol</div></div>
+      <div class="list-item"><div class="dot"></div><div>Using power over people</div></div>
+      <div class="list-item"><div class="dot"></div><div>Hiding behind cynicism</div></div>
+    </div>
+    <div class="pro-list">
+      <h4>Daring Leadership</h4>
+      <div class="list-item"><div class="dot"></div><div>Being a learner who wants to get it right</div></div>
+      <div class="list-item"><div class="dot"></div><div>Cultivating commitment and shared purpose</div></div>
+      <div class="list-item"><div class="dot"></div><div>Acknowledging fear and normalizing uncertainty</div></div>
+      <div class="list-item"><div class="dot"></div><div>Leading from heart</div></div>
+      <div class="list-item"><div class="dot"></div><div>Modeling and supporting rest, play, and recovery</div></div>
+      <div class="list-item"><div class="dot"></div><div>Using power with, power to, and power within</div></div>
+      <div class="list-item"><div class="dot"></div><div>Practicing gratitude and celebration</div></div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>The Rising Strong Process</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Step 1</div>
+    <h4>The Reckoning</h4>
+    <p>Notice you've been emotionally hooked by something — a failure, hard feedback, a public misstep — and get curious about the feeling rather than pushing it away or numbing it.</p>
+  </div>
+  <div class="method-card">
+    <div class="tag">Step 2</div>
+    <h4>The Rumble</h4>
+    <p>Get rigorously honest about the story you're making up about the situation, the people involved, and yourself. Interrogate that story for accuracy instead of accepting it at face value.</p>
+  </div>
+  <div class="method-card">
+    <div class="tag">Step 3</div>
+    <h4>The Revolution</h4>
+    <p>Use what the rumble reveals to write a braver, more accurate ending — and change how you engage going forward. This is where the lesson gets integrated into how you lead.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <h2>Key Tools</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The Daring Leadership Assessment</h4>
+    <p>Brown's diagnostic instrument for measuring a leader's or team's strength across all four skill sets — used to identify where the real growth edges are, rather than guessing.</p>
+  </div>
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>"The Story I'm Telling Myself Is ___"</h4>
+    <p>A rumble starter for defusing hidden assumptions. Naming the unverified story out loud — before reacting to it — slows the emotional hijack and turns an assumption into a conversation.</p>
+  </div>
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>Operationalizing Values</h4>
+    <p>For each core value: one sentence defining it, three behaviors that support it, two or three "shadow" behaviors that betray it while disguised as the value itself.</p>
+  </div>
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The BRAVING Inventory</h4>
+    <p>A structured self- and team-assessment: which of the seven trust elements is hardest for me to practice? Which is hardest for me to ask of others? Used in 1:1s and team retros.</p>
+  </div>
+</div>
+
+<!-- SKETCHNOTE & VALUES -->
+<div id="sketchnote" class="panel">
+  <div class="section-header">
+    <h2>Reader's Sketchnote</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="sketchnote-wrap">
+    <img src="images/dare-to-lead-infographic.jpeg" alt="Hand-drawn sketchnote summarizing Dare to Lead, mapping courage, curiosity, values, empathy, self-compassion, safety, trust, and rising strong">
+    <div class="caption">A hand-drawn sketchnote capturing the book's core map: <strong>Courage</strong> at the center, branching into <strong>Values</strong>, <strong>Curiosity</strong>, <strong>Empathy &amp; Self-Compassion</strong>, <strong>Safety</strong>, and <strong>Trust</strong> — feeding into <strong>Rising Strong</strong> and <strong>Showing Resilience</strong>. It's a useful one-page companion to the chapter breakdown above: the four skill sets aren't sequential steps so much as interlocking supports for a single capacity — the courage to be seen.</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Official Dare to Lead Values List</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="summary-block">
+    <p>Brown's instruction: read through the full list below and pick your <strong>two</strong> most important core values — not ten. These become the filter you run hard decisions, hiring calls, and hard conversations through. The full list is reproduced here from Brené Brown's official resource.</p>
+  </div>
+
+  <div class="values-grid">
+    <div>Accountability</div><div>Diversity</div><div>Inclusion</div><div>Recognition</div>
+    <div>Achievement</div><div>Environment</div><div>Independence</div><div>Reliability</div>
+    <div>Adaptability</div><div>Efficiency</div><div>Initiative</div><div>Resourcefulness</div>
+    <div>Adventure</div><div>Equality</div><div>Integrity</div><div>Respect</div>
+    <div>Altruism</div><div>Ethics</div><div>Intuition</div><div>Responsibility</div>
+    <div>Ambition</div><div>Excellence</div><div>Job security</div><div>Risk-taking</div>
+    <div>Authenticity</div><div>Fairness</div><div>Joy</div><div>Safety</div>
+    <div>Balance</div><div>Faith</div><div>Justice</div><div>Security</div>
+    <div>Beauty</div><div>Family</div><div>Kindness</div><div>Self-discipline</div>
+    <div>Being the best</div><div>Financial stability</div><div>Knowledge</div><div>Self-expression</div>
+    <div>Belonging</div><div>Forgiveness</div><div>Leadership</div><div>Self-respect</div>
+    <div>Career</div><div>Freedom</div><div>Learning</div><div>Serenity</div>
+    <div>Caring</div><div>Friendship</div><div>Legacy</div><div>Service</div>
+    <div>Collaboration</div><div>Fun</div><div>Leisure</div><div>Simplicity</div>
+    <div>Commitment</div><div>Future generations</div><div>Love</div><div>Spirituality</div>
+    <div>Community</div><div>Generosity</div><div>Loyalty</div><div>Sportsmanship</div>
+    <div>Compassion</div><div>Giving back</div><div>Making a difference</div><div>Stewardship</div>
+    <div>Competence</div><div>Grace</div><div>Nature</div><div>Success</div>
+    <div>Confidence</div><div>Gratitude</div><div>Openness</div><div>Teamwork</div>
+    <div>Connection</div><div>Growth</div><div>Optimism</div><div>Thrift</div>
+    <div>Contentment</div><div>Harmony</div><div>Order</div><div>Time</div>
+    <div>Contribution</div><div>Health</div><div>Parenting</div><div>Tradition</div>
+    <div>Cooperation</div><div>Home</div><div>Patience</div><div>Travel</div>
+    <div>Courage</div><div>Honesty</div><div>Patriotism</div><div>Trust</div>
+    <div>Creativity</div><div>Hope</div><div>Peace</div><div>Truth</div>
+    <div>Curiosity</div><div>Humility</div><div>Perseverance</div><div>Understanding</div>
+    <div>Dignity</div><div>Humor</div><div>Personal fulfillment</div><div>Uniqueness</div>
+    <div></div><div></div><div>Power</div><div>Usefulness</div>
+    <div></div><div></div><div>Pride</div><div>Vision</div>
+    <div></div><div></div><div></div><div>Vulnerability</div>
+    <div></div><div></div><div></div><div>Wealth</div>
+    <div></div><div></div><div></div><div>Well-being</div>
+    <div></div><div></div><div></div><div>Wholeheartedness</div>
+    <div></div><div></div><div></div><div>Wisdom</div>
+  </div>
+
+  <div class="source-note">Source: <a href="https://brenebrown.com/resources/dare-to-lead-list-of-values/" target="_blank" rel="noopener">brenebrown.com — Dare to Lead | List of Values</a>. Related resources on her site worth pairing with this list: <a href="https://brenebrown.com/resources/operationalizing-your-values-reference-list-of-behaviors/" target="_blank" rel="noopener">Operationalizing Your Values: A Reference List of Behaviors</a>, <a href="https://brenebrown.com/resources/the-braving-inventory/" target="_blank" rel="noopener">The BRAVING Inventory</a>, and the <a href="https://brenebrown.com/resources/dare-to-lead-read-along-workbook/" target="_blank" rel="noopener">Dare to Lead Read-Along Workbook</a>.</div>
+</div>
+
+<!-- VERDICT -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.6 / 5</h3>
+    <p>The most practically actionable of Brown's books — vulnerability research translated directly into leadership behavior</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Accessibility</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.7</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.6</div>
+        <div class="r-label">Depth</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.3</div>
+        <div class="r-label">Originality</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Every concept comes with a usable tool — the BRAVING Inventory, "the story I'm telling myself," operationalized values — not just a mindset shift</div></div>
+      <div class="list-item"><div class="dot"></div><div>Grounded in genuine, extensive qualitative and quantitative research rather than anecdote alone</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Armored vs. Daring Leadership list gives teams shared vocabulary to name behavior without personal attack</div></div>
+      <div class="list-item"><div class="dot"></div><div>Bridges "soft skills" and hard business outcomes — trust, retention, innovation — more convincingly than most leadership books attempt</div></div>
+      <div class="list-item"><div class="dot"></div><div>Brown's voice is warm and self-implicating; she uses her own armored moments as examples, which lowers defensiveness</div></div>
+      <div class="list-item"><div class="dot"></div><div>Free companion resources (values list, workbook, BRAVING inventory) extend the book well past the final page</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Builds directly on <em>Daring Greatly</em> and <em>Rising Strong</em> — readers new to Brown may want the emotional-literacy foundation those books provide first</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some sections repeat concepts across multiple chapters, echoing her earlier books</div></div>
+      <div class="list-item"><div class="dot"></div><div>Vocabulary-heavy ("rumble," "SFD," "delta") — teams need real buy-in to adopt the language without it feeling gimmicky</div></div>
+      <div class="list-item"><div class="dot"></div><div>Light on how to apply this in highly hierarchical, low-trust, or crisis-driven organizational cultures where psychological safety is scarce</div></div>
+      <div class="list-item"><div class="dot"></div><div>The four skill sets are presented as equally weighted, but rumbling with vulnerability arguably underlies and gates progress on the other three</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Managers and executives</strong> who sense their team is compliant but not committed — classic symptoms of armored, control-based leadership</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>New leaders</strong> looking for a concrete vocabulary for trust, values, and feedback rather than vague advice to "be authentic"</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>HR and culture leaders</strong> designing values work or trust-building programs — the operationalized-values method is directly usable</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone recovering from a public failure or setback at work</strong> — the Rising Strong process is a genuinely useful recovery framework</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting hard operational systems</strong> (like EOS or OKRs) will find this book addresses culture and trust, not process or execution mechanics</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Skeptics of vulnerability language</strong> in a corporate context may need to sit with the ideas rather than dismiss the terminology on first pass</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Quotes</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>Vulnerability is not weakness; it's our greatest measure of courage.</p>
+    <div class="attr">— Brené Brown</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Clear is kind. Unclear is unkind.</p>
+    <div class="attr">— Brené Brown</div>
+  </div>
+
+  <div class="quote-block">
+    <p>You can choose courage, or you can choose comfort. You cannot choose both.</p>
+    <div class="attr">— Brené Brown</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Daring leaders who live into their values are never silent about hard things.</p>
+    <div class="attr">— Brené Brown</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Courage is contagious. Every time we choose courage, we make everyone around us a little better and the world a little braver.</p>
+    <div class="attr">— Brené Brown</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>The single most transformative idea in <em>Dare to Lead</em> is that <strong>vulnerability and armor are the actual, hidden variables behind almost every leadership failure people misdiagnose as something else.</strong> A team that "lacks alignment" often actually has a leader avoiding a hard, values-based conversation. A "trust problem" is almost always one of the seven specific BRAVING elements, quietly broken and never named. A leader who "can't take feedback" is usually armored — leading from hurt rather than heart, protecting themselves from a vulnerability they haven't learned to metabolize. Once you have the vocabulary — rumble, delta, shadow value, marble jar — you start seeing armor everywhere, including in yourself, and that visibility is the entire unlock. You cannot fix what you can't name.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p><strong>Dare to Lead</strong> takes Brené Brown's shame and vulnerability research — developed over two decades and popularized in <em>Daring Greatly</em> and <em>Rising Strong</em> — and translates it directly into the daily mechanics of leading people. Its central claim is disarmingly simple: courage is not a personality trait, it's a set of four learnable skills, and the biggest obstacle to practicing them is the armor leaders unconsciously put on to protect themselves from feeling exposed.</p>
+    <p>The book earns its length by giving every abstract idea a concrete tool. Vulnerability becomes rumbling — with named rumble starters like "the story I'm telling myself is ___." Values become two words, defined in one sentence, backed by three supporting behaviors and named shadow behaviors. Trust becomes BRAVING — seven elements specific enough to coach against. Resilience becomes the Reckoning, the Rumble, and the Revolution — a repeatable process rather than a personality trait some people have and others don't.</p>
+    <p>What elevates this above a typical "soft skills" leadership book is Brown's insistence that none of this is optional or secondary to "real" business results. Her research ties armored leadership directly to disengagement, attrition, and stalled innovation — and daring leadership directly to the opposite. The Armored vs. Daring Leadership list alone, brought into a single team meeting, tends to generate more honest self-recognition than most 360-degree reviews.</p>
+    <p>The honest summary: if you lead people — officially or not — and you've ever sensed that your team is compliant but not truly committed, or that hard conversations keep getting avoided until they explode, <em>Dare to Lead</em> gives you the vocabulary and the tools to name what's actually happening and change it. It asks more of a leader emotionally than most leadership books dare to, and that's exactly the point.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
