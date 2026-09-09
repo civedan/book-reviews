@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Switch — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:          #0e1c24;
+    --paper:        #ffffff;
+    --cream:        #eaf6fb;
+    --blue:         #1f8fc4;
+    --blue-light:   #4db6e6;
+    --blue-dark:    #146a91;
+    --blue-deep:    #0b3850;
+    --blue-pale:    #d7eef7;
+    --blue-dim:     rgba(31,143,196,0.10);
+    --red:          #e1402c;
+    --red-light:    #ee7862;
+    --red-dim:      rgba(225,64,44,0.14);
+    --metal:        #cfc9b8;
+    --rust:         #a9793a;
+    --muted:        #587687;
+    --border:       rgba(31,143,196,0.20);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ─────────────────────────────────────────────
+     HERO — sky-blue canvas, switch-plate motif, cover
+  ───────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 34px);
+    pointer-events: none;
+  }
+
+  /* Scattered switch-plate + screw motif, echoing the cover's toggle */
+  .hero-motif {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.55;
+  }
+  .hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+
+  .book-cover-wrap {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
+  .book-cover-wrap img {
+    width: 128px;
+    border-radius: 4px;
+    transform: rotate(-6deg);
+    box-shadow: -6px 10px 26px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  .book-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red-light);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4.5vw, 42px);
+    color: #ffffff;
+    line-height: 1.12;
+    max-width: 580px;
+  }
+  .hero h1 em { color: var(--red-light); font-style: normal; font-weight: 700; }
+  .author {
+    margin-top: 14px;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .author span { color: var(--red-light); font-weight: 600; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .meta-pill {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(225,64,44,0.45);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ── Back bar ── */
+  .back-bar {
+    background: var(--cream);
+    padding: 10px 32px;
+    border-bottom: 1px solid rgba(31,143,196,0.15);
+    display: flex;
+    align-items: center;
+  }
+  .back-link {
+    color: var(--muted);
+    font-size: 12px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--blue); }
+  .back-link span { margin-right: 6px; }
+
+  /* ── Tabs ── */
+  .tabs {
+    display: flex;
+    background: var(--cream);
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--blue); }
+  .tab.active { color: var(--blue-dark); border-bottom-color: var(--red); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--blue-dark); }
+  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .summary-block {
+    background: var(--cream);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #1c2c33;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: white;
+    border: 1px solid #e2f1f8;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--blue);
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    font-weight: 700;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card {
+    background: white;
+    border: 1px solid #e2f1f8;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(31,143,196,0.14); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num {
+    width: 32px; height: 32px;
+    background: var(--blue);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ch-num.intro { background: var(--red); color: white; }
+  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--blue); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body {
+    display: none;
+    padding: 14px 18px 18px 64px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #263a44;
+    border-top: 1px solid #f0f9fc;
+  }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px;
+    background: var(--blue-dim);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--blue-dark);
+    font-weight: 600;
+  }
+  .ch-tool {
+    margin-top: 8px;
+    background: var(--red-dim);
+    border-left: 3px solid var(--red);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #7a2c1e;
+  }
+  .ch-tool strong { color: #5a1f14; }
+
+  /* ── Framework cards ── */
+  .method-card {
+    background: white;
+    border: 1px solid #e2f1f8;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .method-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--blue-deep); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+  .method-card .tag {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ── Rider / Elephant / Path grid ── */
+  .rep-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .rep-tile {
+    background: white;
+    border: 1px solid #e2f1f8;
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .rep-tile:hover { border-color: var(--blue); box-shadow: 0 2px 10px var(--blue-dim); }
+  .rep-tile .r-emoji { font-size: 30px; margin-bottom: 10px; }
+  .rep-tile h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--ink); margin-bottom: 6px; }
+  .rep-tile p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── Nine Moves flow ── */
+  .moves-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+  .move-card { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 16px 12px; text-align: center; }
+  .move-card.rider { border-color: rgba(31,143,196,0.35); }
+  .move-card.elephant { border-color: rgba(225,64,44,0.35); }
+  .move-card.path { border-color: rgba(169,121,58,0.35); }
+  .move-num { width: 26px; height: 26px; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; margin: 0 auto 10px; }
+  .move-card.rider .move-num { background: var(--blue); }
+  .move-card.elephant .move-num { background: var(--red); }
+  .move-card.path .move-num { background: var(--rust); }
+  .move-card h4 { font-family: 'Playfair Display', serif; font-size: 13.5px; color: var(--ink); margin-bottom: 6px; }
+  .move-card p { font-size: 10.5px; line-height: 1.5; color: var(--muted); }
+
+  /* ── Code-style block ── */
+  .code-block {
+    background: var(--ink);
+    color: var(--blue-pale);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .code-block .comment { color: rgba(238,120,98,0.65); }
+  .code-block .keyword { color: var(--red-light); }
+  .code-block .value { color: #8fd0e9; }
+
+  /* ── Toolkit page list ── */
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: white;
+    border: 1px solid #e2f1f8;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #263a44;
+  }
+  .toolkit-item .t-ic { font-size: 14px; flex-shrink: 0; }
+  @media (max-width: 560px) { .toolkit-list { grid-template-columns: 1fr; } }
+
+  /* ── Verdict banner ── */
+  .verdict-banner {
+    background: linear-gradient(135deg, var(--blue-deep) 0%, #0a1414 100%);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .verdict-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at  5% 20%, var(--red) 0%, var(--red) 10px, transparent 11px),
+      radial-gradient(circle at 95% 75%, var(--red) 0%, var(--red) 13px, transparent 14px),
+      radial-gradient(circle at 90% 15%, var(--red) 0%, var(--red) 7px, transparent 8px),
+      radial-gradient(circle at 10% 85%, var(--red) 0%, var(--red) 9px, transparent 10px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--red-light); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(255,255,255,0.65); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item {
+    text-align: center;
+    background: rgba(225,64,44,0.14);
+    border: 1px solid rgba(225,64,44,0.35);
+    border-radius: 8px;
+    padding: 10px 16px;
+    min-width: 90px;
+  }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--red-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #e2f1f8;
+  }
+  .pro-list h4 { color: var(--blue-dark); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--rust); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--blue); }
+  .con-list .dot { background: var(--rust); }
+
+  /* ── Quotes ── */
+  .quote-block {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    position: relative;
+    border-left: 3px solid var(--blue);
+  }
+  .quote-block::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--blue);
+    position: absolute;
+    top: -8px; left: 16px;
+    line-height: 1;
+  }
+  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink); }
+  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+  /* ── Who cards ── */
+  .who-card {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: white;
+    border: 1px solid #e2f1f8;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+  .who-card:hover { border-color: var(--blue); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .rep-grid, .moves-grid, .toolkit-list { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero { padding: 36px 20px 28px; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     HERO — blue canvas + switch-plate motif + cover
+════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-motif">
+    <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- faint switch plates scattered like the cover's layered red bars -->
+      <rect x="30" y="26" width="70" height="16" rx="2" fill="#ffffff" opacity="0.10" transform="rotate(-4 65 34)"/>
+      <rect x="120" y="150" width="60" height="14" rx="2" fill="#e1402c" opacity="0.18" transform="rotate(3 150 157)"/>
+      <rect x="620" y="30" width="80" height="16" rx="2" fill="#e1402c" opacity="0.16" transform="rotate(-3 660 38)"/>
+      <rect x="700" y="150" width="55" height="13" rx="2" fill="#ffffff" opacity="0.10" transform="rotate(4 727 156)"/>
+      <rect x="380" y="18" width="50" height="12" rx="2" fill="#ffffff" opacity="0.08"/>
+      <!-- screws -->
+      <circle cx="200" cy="60" r="7" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.22"/>
+      <line x1="195" y1="60" x2="205" y2="60" stroke="#ffffff" stroke-width="1.5" opacity="0.22"/>
+      <circle cx="560" cy="190" r="6" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.2"/>
+      <line x1="556" y1="190" x2="564" y2="190" stroke="#ffffff" stroke-width="1.5" opacity="0.2"/>
+      <!-- toggle switch outline, large, faint, right side -->
+      <g opacity="0.14" transform="translate(730,20)">
+        <rect x="0" y="0" width="40" height="90" rx="6" fill="none" stroke="#ffffff" stroke-width="2"/>
+        <rect x="8" y="8" width="24" height="42" rx="10" fill="#ffffff"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-text">
+    <div class="book-label">Book Review &amp; Field Guide · Change Management Classic</div>
+    <h1>Switch — How to <em>Change Things</em> When Change Is Hard</h1>
+    <div class="author">by <span>Chip Heath &amp; Dan Heath</span> &nbsp;·&nbsp; Crown Business &nbsp;·&nbsp; #1 New York Times Bestseller</div>
+    <div class="hero-meta">
+      <div class="meta-pill">Change Management</div>
+      <div class="meta-pill">Behavioral Psychology</div>
+      <div class="meta-pill">Leadership</div>
+      <div class="meta-pill">#1 NYT Bestseller</div>
+    </div>
+  </div>
+
+  <div class="book-cover-wrap">
+    <img src="images/Switch-cover.jpg" alt="Switch book cover">
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('framework', this)">Framework &amp; Toolkit</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════════ -->
+<div id="overview" class="panel active">
+
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core Focus</div>
+      <div class="stat-value">Making Change Actually Happen</div>
+      <div class="stat-desc">Why change efforts that rely purely on willpower, strategy decks, or grand vision statements so often stall — and what actually moves people and organizations from one behavior to another</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">Direct the Rider, Motivate the Elephant, Shape the Path</div>
+      <div class="stat-desc">A three-part framework, borrowed from psychology, that explains every successful (and failed) change effort the Heaths could find</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Primary Tools</div>
+      <div class="stat-value">Nine Concrete Moves</div>
+      <div class="stat-desc">Bright Spots, scripted critical moves, destination postcards, emotional framing, shrinking the change, growth mindset, environment tweaks, habits, and social proof</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Anyone Trying to Change Behavior</div>
+      <div class="stat-desc">New leaders driving change in a fresh role, managers, parents, and individuals working on personal change — the framework scales from a single habit to an entire organization</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Switch</strong> opens with a puzzle: why do so many change efforts — personal, organizational, societal — fail, even when the people involved are smart, well-intentioned, and genuinely want the change to happen? Chip and Dan Heath's answer borrows a metaphor from psychologist Jonathan Haidt: our minds contain a rational <strong>Rider</strong> holding the reins of an emotional <strong>Elephant</strong>, both of them moving down a <strong>Path</strong> that is the surrounding environment. The Rider can plan and analyze, but is small compared to the Elephant and prone to overthinking. The Elephant supplies the energy and emotion that gets anything done, but resists anything that feels effortful, risky, or unfamiliar. And the Path — the situation itself — can make a behavior easy or nearly impossible regardless of what Rider or Elephant want.</p>
+    <p>Most change efforts fail, the Heaths argue, because they only address one of these three. A brilliant strategic plan speaks only to the Rider and gets no traction because the Elephant never buys in emotionally. A rousing, inspiring speech fires up the Elephant but gives the Rider no concrete next step, so momentum dissipates within days. And even a motivated Rider and an inspired Elephant will struggle if the Path itself — the office layout, the default settings, the surrounding culture — is quietly working against the desired behavior. The book's organizing insight is that durable change requires working on all three simultaneously, and it structures itself around nine specific, repeatable techniques for doing exactly that — three for the Rider, three for the Elephant, three for the Path.</p>
+    <p>What sets <em>Switch</em> apart from typical change-management books is its refusal to stay abstract. Nearly every technique is illustrated with a real case — a public-health campaign, a struggling manufacturing plant, a malnourished village in Vietnam, a hospital purchasing department — chosen specifically because it shows the framework working in a messy, real-world setting rather than a tidy hypothetical. The result reads less like a theory of change and more like a field manual: pick the lever that's stuck, apply the matching technique, and move forward.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">🐘</div><div><strong>You are simultaneously a Rider and an Elephant.</strong> The rational, analytical part of you sits atop a much larger emotional, instinctive part. Change fails when you address only one of the two.</div></div>
+  <div class="key-idea"><div class="icon">🔍</div><div><strong>What looks like a people problem is often a situation problem.</strong> Before blaming laziness or resistance, ask what about the environment is making the wrong behavior easy and the right behavior hard.</div></div>
+  <div class="key-idea"><div class="icon">🔋</div><div><strong>What looks like laziness is often exhaustion.</strong> Self-control is a depletable resource — the Elephant runs out of willpower over the course of a day, which is why change efforts that demand constant vigilance collapse by Thursday.</div></div>
+  <div class="key-idea"><div class="icon">🧭</div><div><strong>What looks like resistance is often a lack of clarity.</strong> Ambiguous goals ("be more proactive," "improve communication") paralyze the Rider, who will default to the familiar rather than guess at what's actually wanted.</div></div>
+  <div class="key-idea"><div class="icon">🌟</div><div><strong>Look for what's already working.</strong> Instead of exhaustively diagnosing what's broken, find the "bright spots" — the places the desired behavior is already happening — and clone them.</div></div>
+  <div class="key-idea"><div class="icon">📉</div><div><strong>Shrink the change until it stops looking scary.</strong> Big, vague goals overwhelm the Elephant. Breaking them into small, achievable first steps builds the momentum that later carries bigger changes.</div></div>
+  <div class="key-idea"><div class="icon">🛤️</div><div><strong>Tweak the Path before you try to tweak the person.</strong> Small environmental changes — smaller plates, easier defaults, removed friction — often outperform any amount of exhortation or training.</div></div>
+  <div class="key-idea"><div class="icon">🐑</div><div><strong>Behavior is contagious.</strong> People take enormous behavioral cues from what they believe everyone else around them is already doing — for better or worse.</div></div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     CHAPTERS
+════════════════════════════════════════════ -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Introduction — Three Surprises About Change</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">I</div>
+      <div class="ch-title">Three Surprises About Change</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The Heaths open with three counterintuitive findings from behavioral research that reframe how change should be approached. First, <strong>what looks like a people problem is often a situation problem</strong> — illustrated with Brian Wansink's movie-theater popcorn studies, where moviegoers ate significantly more stale popcorn simply because they were handed a larger bucket, regardless of how hungry or health-conscious they were. The environment, not the person's character, drove the behavior.
+      <br><br>
+      Second, <strong>what looks like laziness is often exhaustion.</strong> Drawing on Roy Baumeister's research on "ego depletion" — including the famous radish-and-cookie experiment, where participants forced to resist fresh-baked cookies in favor of radishes gave up far sooner on an unrelated, unsolvable puzzle afterward — the book establishes that self-control draws from a single, limited daily reserve. Change efforts that require constant willpower are fighting a resource that runs out by the afternoon.
+      <br><br>
+      Third, <strong>what looks like resistance is often a lack of clarity.</strong> The chapter introduces the "1% or Less" milk campaign, a real public-health effort that got double-digit percentages of a community to switch from whole or 2% milk to 1% or skim — not by lecturing about health in the abstract, but by giving people one crisp, concrete behavior to adopt. From these three surprises, the book builds its central metaphor: the Rider (rational mind), the Elephant (emotional mind), and the Path (the situation) — and the promise that any change effort can be diagnosed by asking which of the three is actually stuck.
+      <div class="ch-takeaway">Before assuming a change problem is about motivation or character, check the situation, the fatigue level, and the clarity of the ask — most stalled changes trace back to one of these three, not to stubbornness.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Rider/Elephant/Path metaphor · The Three Surprises diagnostic lens</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part One — Direct the Rider</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">Find the Bright Spots</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The Rider's instinct when facing a problem is to diagnose it exhaustively — what's wrong, why, whose fault is it. The Heaths argue this instinct, however reasonable it sounds, often produces analysis paralysis and demoralizing conclusions without ever pointing toward a solution. The alternative is to look for "bright spots" — instances where the desired outcome is already happening, against the odds — and figure out what's different about them.
+      <br><br>
+      The chapter's anchor story is Jerry Sternin's work fighting child malnutrition in 1990s Vietnam. Rather than importing outside solutions or studying the causes of malnutrition in the abstract, Sternin's team went village to village looking for unusually well-nourished children in otherwise poor families. They found a handful of "positively deviant" mothers who were feeding their children smaller, more frequent meals and mixing in tiny shrimp, crabs, and sweet-potato greens that other families considered low-status or inappropriate for children. Because these practices already existed locally, using local ingredients other families could afford, teaching them to other mothers produced rapid, sustained improvement — with no imported resources at all.
+      <br><br>
+      The chapter generalizes the lesson: bright-spot thinking works because it points toward proven, already-functioning solutions rather than untested theories, and because it's motivating rather than deflating — instead of a list of what's broken, people get a specific example of success to emulate.
+      <div class="ch-takeaway">Instead of starting with "what's wrong and how do we fix it," start with "where is this already working, even a little, and how do we do more of that?"</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Positive Deviance framework · Bright-Spot Diagnostic Questions</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">Script the Critical Moves</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Even highly motivated people flounder when a change is described only as a broad goal — "eat healthier," "communicate better," "be more strategic." The Rider, faced with ambiguity, tends to freeze or default to whatever's familiar, which looks like resistance but is actually a request for direction that never got answered.
+      <br><br>
+      The chapter's core technique is turning vague aspirations into a script: specific, concrete instructions for exactly what to do in a given moment. The "1% or Less" milk campaign returns here as the model case — rather than asking people to generally "eat healthier," organizers gave one crisp instruction (switch to 1% or skim milk) and made the case with a single vivid fact: a family switching from whole to 1% milk saves the equivalent of a stick of butter's worth of saturated fat per gallon. One instruction, easy to remember, easy to act on immediately.
+      <br><br>
+      The chapter also examines how larger organizational changes can be scripted at the level of "critical moves" — the few specific decisions or actions, out of many possible ones, that matter disproportionately. Rather than trying to specify every step of a large change, leaders who identify and script just the critical moves give the Rider clear direction while still leaving room for judgment on everything else.
+      <div class="ch-takeaway">Don't set a destination and expect the Rider to improvise the route — remove the ambiguity by scripting the specific first moves. Clarity is a form of kindness, not micromanagement.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The "1% or Less" Campaign case study · Critical Moves Scripting</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">Point to the Destination</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Scripting the next move solves for the short term, but the Rider also needs a compelling long-term destination to sustain effort once the novelty wears off. This chapter introduces the "destination postcard" — a vivid, specific image of what success will look and feel like, held up as the reason the day-to-day scripted moves matter.
+      <br><br>
+      The Heaths are careful to distinguish a good destination postcard from a vague mission statement. A postcard is concrete and visualizable — a specific scene, a specific milestone, a specific moment of arrival — rather than an abstract value like "excellence" or "innovation" that different people will interpret in different, sometimes conflicting, ways. The chapter also warns against "black-and-white" goals that sound inspiring but are functionally useless because they're either impossible to fail (too vague) or impossible to succeed at (unrealistically absolute) — the trick is finding a destination specific enough to be vivid but achievable enough to be credible.
+      <br><br>
+      The chapter closes by tying destination-setting back to the bright spots and scripted moves from the first two chapters: a good change communication names a specific destination, points to proof that it's reachable (the bright spot), and gives the very next step (the critical move) — all three working on the Rider together rather than any one alone.
+      <div class="ch-takeaway">A destination has to be vivid enough to picture and specific enough to know when you've arrived — abstractions like "be more innovative" give the Rider nothing to aim at or measure against.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Destination Postcard · Avoiding Black-and-White Goals</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Two — Motivate the Elephant</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">Find the Feeling</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Knowledge alone rarely moves the Elephant. This chapter leans on John Kotter's research (from <em>The Heart of Change</em>) showing that successful change efforts follow a "see-feel-change" pattern far more often than an "analyze-think-change" pattern — people change their behavior mainly when they're shown something that makes them <em>feel</em> differently, not when they're handed a more persuasive spreadsheet.
+      <br><br>
+      The signature example is a hospital purchasing story: a manager trying to convince executives to consolidate wildly inefficient, fragmented supplies purchasing didn't write a report. He had every type of surgical glove the hospital bought — dozens of different kinds, at dozens of different negotiated prices — laid out on a long conference table, each tagged with its price. Executives who had shrugged off spreadsheets for months were visibly startled walking past the table, and the purchasing overhaul that followed happened fast. Seeing the scale of the problem physically produced an emotional jolt no report had managed.
+      <br><br>
+      The chapter draws a broader lesson for change agents: manufacture moments that let people feel the problem or the opportunity directly — through demonstration, story, or direct exposure — rather than assuming that sufficiently rigorous analysis will eventually persuade on its own. The Elephant responds to what it experiences, not what it's told.
+      <div class="ch-takeaway">Analysis rarely produces the emotional jolt that drives action. If you want people to change, find a way to let them see and feel the problem directly, not just read about it.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Kotter's See-Feel-Change model · The Surgical Gloves case study</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">Shrink the Change</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Large, ambitious changes intimidate the Elephant, which reacts to anything that feels overwhelming with avoidance rather than effort. This chapter's answer is to shrink the change into a first step so small it feels almost trivial to attempt — building early momentum that later fuels bigger progress, drawing on Karl Weick's research on the psychological power of small, visible wins.
+      <br><br>
+      The book illustrates this with people overwhelmed by household clutter or chaos being coached to tackle just five minutes of cleanup in a single room rather than the whole house — an approach popularized by home-organizing programs built specifically around "baby steps" small enough that failure feels almost impossible. The small win doesn't just clean one room; it demonstrates to the Elephant, through direct experience, that progress is achievable, which is precisely the emotional evidence needed to attempt the next, slightly bigger step.
+      <br><br>
+      The chapter connects this to the earlier "1% or Less" example in a new light: the campaign's genius wasn't just clarity for the Rider, but also how small and non-threatening the ask felt to the Elephant — shifting from whole milk to 1% is nearly imperceptible day to day, compared to the vague, intimidating goal of "eating healthier."
+      <div class="ch-takeaway">When a change feels too big, the Elephant won't even start. Break it into a step small enough to feel almost effortless, bank the resulting sense of progress, and use it as fuel for the next step.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Karl Weick's Small Wins research · Baby-Steps Shrinking Technique</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">Grow Your People</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This chapter argues that identity and mindset, not just incentives, determine how the Elephant responds to a demand for change. Drawing on Carol Dweck's research on fixed versus growth mindsets, the Heaths show that people who believe ability and character are malleable — capable of growing through effort — respond to setbacks and challenges very differently than people who believe traits are fixed and any failure is a verdict on their basic worth.
+      <br><br>
+      The practical implication is that cultivating a growth mindset in the people you're asking to change is itself a change-management technique: praising effort and process rather than innate talent, framing setbacks as information rather than indictments, and explicitly communicating that struggle is a normal part of getting better at something new. People who see themselves as capable of growth take on harder challenges and recover faster from failure — exactly the resilience a sustained change effort requires from the Elephant.
+      <br><br>
+      The chapter also revisits Brasilata, a Brazilian recycling and can-manufacturing company that gave every employee the identity of "inventor" and built a formal program for submitting and rewarding new ideas — thousands of adopted employee suggestions followed, driven less by financial incentive than by employees internalizing a new identity that made continuous improvement feel like who they were, not just what they were told to do.
+      <div class="ch-takeaway">People with a growth mindset treat setbacks as information rather than as proof they can't change. Cultivating that mindset — through how you frame effort, failure, and identity — is itself a lever for change.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Carol Dweck's Growth Mindset research · The Brasilata "Everyone Is an Inventor" case study</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Three — Shape the Path</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Tweak the Environment</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This chapter returns to the Introduction's first surprise — what looks like a people problem is often a situation problem — and makes it the foundation of Path-based change: rather than trying to strengthen willpower or motivation, change the environment so the desired behavior becomes the easy, default option.
+      <br><br>
+      Brian Wansink's food-behavior research anchors the chapter: giving moviegoers smaller popcorn buckets, or cafeteria diners smaller plates, measurably reduced how much they ate — without any change in stated motivation, willpower, or nutrition knowledge. Similarly, redesigning a cafeteria to put fruit at eye level and push less healthy options further away and harder to reach shifted what people chose, simply by changing which option required the least effort to take.
+      <br><br>
+      The chapter's broader argument is that environment design is chronically underused compared to persuasion and incentives, even though it's often more reliable — you don't have to win an argument with the Elephant if the Path itself already makes the right choice the path of least resistance. The chapter urges change agents to audit the physical, digital, and procedural environment for friction points before assuming the problem is a matter of insufficient motivation.
+      <div class="ch-takeaway">Before trying to motivate people harder, look at the environment: what would happen if you simply made the desired behavior the default, easiest option, and the undesired behavior slightly harder?</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Wansink's Portion-Size research · Environmental Friction Audit</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">Build Habits</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Once the environment supports the right behavior, the next step is making that behavior automatic, so it no longer draws on the Elephant's limited willpower every single time. This chapter centers on Peter Gollwitzer's research on "implementation intentions" — simple if-then plans of the form "When situation X arises, I will do behavior Y" — which have been shown across many studies to sharply increase follow-through on everything from voting to flu shots to exercise, compared to a general intention alone.
+      <br><br>
+      The mechanism, the Heaths explain, is that implementation intentions pre-load the decision: instead of relying on in-the-moment willpower to notice a choice point and choose correctly, the decision has already been made in advance and simply triggers automatically when the situation occurs. This converts a behavior that would otherwise compete for scarce self-control into something closer to habit, which requires almost none.
+      <br><br>
+      The chapter frames habit-building as the natural companion to Path-shaping from the previous chapter: a supportive environment removes friction, and a triggered habit removes the need for a fresh decision every time — together, the two make a new behavior close to automatic, which is exactly what's needed once the initial burst of motivation from earlier chapters inevitably fades.
+      <div class="ch-takeaway">Willpower is a poor long-term engine for change. Convert the desired behavior into a pre-decided, triggered habit ("when X happens, I do Y") so it no longer requires a fresh decision — or fresh willpower — every time.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Gollwitzer's Implementation Intentions research · The "When X, I Will Y" Trigger Format</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">Rally the Herd</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The final Path lever is social: behavior is contagious, and people take strong cues from what they believe everyone around them is already doing, often more strongly than they respond to facts or appeals to self-interest. This chapter shows how visible, credible signals about others' behavior can shift an individual's behavior faster than persuasion aimed directly at them.
+      <br><br>
+      The clearest illustration is the hotel towel-reuse research (building on Robert Cialdini's work on social proof): a standard sign asking guests to reuse towels for environmental reasons produced modest results, but a sign stating that the majority of guests staying in that specific room had reused their towels produced significantly higher reuse rates — the specific, local social proof outperformed the generic environmental appeal by a wide margin.
+      <br><br>
+      The chapter argues that change agents chronically underuse this lever because they assume people act on their own values and calculations, when in practice much of behavior — especially under uncertainty — is herd behavior, consciously or not. Making the desired behavior visible, and making it clear that "people like you" are already doing it, can spread a change faster than any individual appeal to logic or emotion.
+      <div class="ch-takeaway">People look to others to decide how to behave, especially when uncertain. Make the desired behavior visible and frame it as something others "like them" are already doing — social proof spreads change faster than persuasion aimed at individuals.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Cialdini's Social Proof research · The Hotel Towel-Reuse Studies</div>
+    </div>
+  </div>
+
+  <div class="part-header">Closing — Bringing It All Together</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">10</div>
+      <div class="ch-title">Keep the Switch Going</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The closing chapter steps back from the nine individual techniques to give a diagnostic framework for using them together: when a change effort stalls, the fastest way forward is to ask which of the three levers — Rider, Elephant, or Path — is actually the bottleneck, rather than assuming more of the same push (usually more persuasion, aimed at the Rider) will eventually work.
+      <br><br>
+      A change that looks like stubborn resistance might really be an unclear ask (Rider: script the critical move), a change that looks like apathy might really be emotional disengagement (Elephant: find the feeling or shrink the change), and a change that looks like a motivation problem might really be an environment quietly working against the desired behavior (Path: tweak the environment or build the habit). The chapter's nine-technique grid functions as a troubleshooting checklist — when progress stalls, work through the grid rather than escalating pressure on whichever lever you already tried.
+      <br><br>
+      The book closes by widening the lens: the same three-part framework that explains organizational change also explains personal change and even large-scale social change, because in every case the same basic architecture — a rational side, an emotional side, and a shaping environment — is at work. The Heaths' parting argument is that successful change is rarely about finding more willpower or a better argument; it's about correctly diagnosing which of the three levers is stuck, and pulling that one.
+      <div class="ch-takeaway">When a change stalls, resist the urge to simply push harder on the same lever. Diagnose whether the real blockage is the Rider (clarity), the Elephant (motivation), or the Path (environment) — and apply the matching technique.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Nine-Technique Diagnostic Grid · Rider/Elephant/Path Troubleshooting</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     FRAMEWORK & TOOLKIT
+════════════════════════════════════════════ -->
+<div id="framework" class="panel">
+
+  <div class="section-header">
+    <h2>The Rider, the Elephant &amp; the Path</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6;">The book's foundational metaphor, borrowed from psychologist Jonathan Haidt. Every change effort is really three simultaneous efforts, and most failures trace back to addressing only one.</p>
+
+  <div class="rep-grid">
+    <div class="rep-tile">
+      <div class="r-emoji">🧑‍✈️</div>
+      <h4>The Rider</h4>
+      <p>The rational, analytical mind. Can plan and reason, but is small relative to the Elephant and prone to overanalyzing until it stalls.</p>
+    </div>
+    <div class="rep-tile">
+      <div class="r-emoji">🐘</div>
+      <h4>The Elephant</h4>
+      <p>The emotional, instinctive mind. Supplies the energy for any action, but resists anything that feels effortful, risky, or unfamiliar.</p>
+    </div>
+    <div class="rep-tile">
+      <div class="r-emoji">🛤️</div>
+      <h4>The Path</h4>
+      <p>The surrounding situation and environment. Can make a behavior nearly automatic, or nearly impossible, regardless of what Rider and Elephant want.</p>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>The Nine Moves</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6;">Three concrete techniques for each lever — the working toolkit of the entire book.</p>
+
+  <div class="moves-grid">
+    <div class="move-card rider"><div class="move-num">1</div><h4>Find the Bright Spots</h4><p>Clone what's already working instead of diagnosing what's broken</p></div>
+    <div class="move-card rider"><div class="move-num">2</div><h4>Script the Critical Moves</h4><p>Replace ambiguous goals with specific, concrete instructions</p></div>
+    <div class="move-card rider"><div class="move-num">3</div><h4>Point to the Destination</h4><p>Give a vivid, specific picture of what success looks like</p></div>
+    <div class="move-card elephant"><div class="move-num">4</div><h4>Find the Feeling</h4><p>Make people see and feel the problem, not just analyze it</p></div>
+    <div class="move-card elephant"><div class="move-num">5</div><h4>Shrink the Change</h4><p>Break intimidating goals into a first step that feels almost effortless</p></div>
+    <div class="move-card elephant"><div class="move-num">6</div><h4>Grow Your People</h4><p>Cultivate a growth mindset and an identity that welcomes the change</p></div>
+    <div class="move-card path"><div class="move-num">7</div><h4>Tweak the Environment</h4><p>Make the right behavior the easy, default option</p></div>
+    <div class="move-card path"><div class="move-num">8</div><h4>Build Habits</h4><p>Pre-load decisions with if-then triggers so willpower isn't required</p></div>
+    <div class="move-card path"><div class="move-num">9</div><h4>Rally the Herd</h4><p>Show people that others like them are already changing</p></div>
+  </div>
+
+  <div class="section-header">
+    <h2>Stalled? Run the Diagnostic</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="code-block">
+    <span class="comment">// When a change effort stalls, work through this before pushing harder</span><br><br>
+    <span class="keyword">Rider check:</span>    <span class="value">Is the goal specific enough to act on today, or still an abstraction?</span><br>
+    <span class="keyword">Elephant check:</span> <span class="value">Has anyone actually felt the problem, or only read about it?</span><br>
+    <span class="keyword">Path check:</span>      <span class="value">Does the environment make the new behavior the easy option, or the hard one?</span><br><br>
+    <span class="comment">// Whichever answer is weakest is usually the real bottleneck — pull that lever first</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Key Concepts &amp; Tools</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Model</div>
+    <h4>Positive Deviance / Bright Spots</h4>
+    <p>Rather than importing outside solutions or exhaustively diagnosing failure, look for the people or teams already achieving the desired outcome against the odds, and study what's genuinely different about what they're doing. Popularized by Jerry Sternin's malnutrition work in Vietnam; generalizes to almost any change effort where success already exists somewhere in the system.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Research</div>
+    <h4>Ego Depletion</h4>
+    <p>Roy Baumeister's finding that self-control draws from a single, limited daily reserve — resisting temptation or making difficult decisions in one area leaves less willpower available for the next. Explains why change efforts that rely on sustained willpower tend to collapse after the first burst of enthusiasm fades.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>Implementation Intentions ("When X, I Will Y")</h4>
+    <p>Peter Gollwitzer's research-backed technique of pre-committing to a specific action triggered by a specific situation, rather than relying on a general intention. Converts a behavior that would otherwise require willpower in the moment into something closer to an automatic response.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Research</div>
+    <h4>Growth Mindset</h4>
+    <p>Carol Dweck's distinction between believing traits and abilities are fixed versus malleable through effort. People with a growth mindset treat setbacks as information and take on harder challenges — a mindset that can be deliberately cultivated through how effort and failure are framed and praised.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Research</div>
+    <h4>Social Proof</h4>
+    <p>Robert Cialdini's finding that people take strong behavioral cues from what they believe others around them are already doing — often more powerful than direct appeals to logic or self-interest, especially under uncertainty. Best activated with specific, local, credible evidence rather than generic claims.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Quick-Reference Toolkit</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div class="t-ic">🌟</div><div><strong>Bright-Spot Scan</strong> — where in your team or org is the desired behavior already happening?</div></div>
+    <div class="toolkit-item"><div class="t-ic">📝</div><div><strong>Critical-Move Script</strong> — turn one vague goal into a single concrete next action</div></div>
+    <div class="toolkit-item"><div class="t-ic">🖼️</div><div><strong>Destination Postcard</strong> — describe the specific, vivid scene that means success</div></div>
+    <div class="toolkit-item"><div class="t-ic">👀</div><div><strong>See-Feel-Change Moment</strong> — a demonstration that makes the problem felt, not just known</div></div>
+    <div class="toolkit-item"><div class="t-ic">🐣</div><div><strong>Shrink-the-Change Step</strong> — the smallest possible first version of the ask</div></div>
+    <div class="toolkit-item"><div class="t-ic">🌱</div><div><strong>Growth-Mindset Framing</strong> — praise effort and process, treat setbacks as data</div></div>
+    <div class="toolkit-item"><div class="t-ic">🧹</div><div><strong>Environment Friction Audit</strong> — what makes the wrong behavior easy right now?</div></div>
+    <div class="toolkit-item"><div class="t-ic">⏱️</div><div><strong>If-Then Trigger</strong> — "When X happens, I will do Y" for the new behavior</div></div>
+    <div class="toolkit-item"><div class="t-ic">🐑</div><div><strong>Social-Proof Signal</strong> — specific, local evidence that "people like this" are already changing</div></div>
+    <div class="toolkit-item"><div class="t-ic">🩺</div><div><strong>Stalled-Change Diagnostic</strong> — Rider, Elephant, or Path — which lever is actually stuck?</div></div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     VERDICT
+════════════════════════════════════════════ -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.7 / 5</h3>
+    <p>The clearest, most usable model of behavior change available — a small metaphor that turns into nine repeatable, real-world techniques</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.8</div>
+        <div class="r-label">Accessibility</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.7</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Breadth</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.6</div>
+        <div class="r-label">Originality</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>The Rider/Elephant/Path metaphor is genuinely sticky — easy to remember, easy to explain to others, and useful as a shared vocabulary across a team</div></div>
+      <div class="list-item"><div class="dot"></div><div>Every technique is grounded in real, citable research or a real case study, not just intuition or anecdote dressed up as science</div></div>
+      <div class="list-item"><div class="dot"></div><div>Works as a diagnostic, not just a checklist — the nine-technique grid tells you where to look when a change effort has already stalled</div></div>
+      <div class="list-item"><div class="dot"></div><div>Scales cleanly from personal habits to team behavior to large organizational or societal change without needing a different framework at each level</div></div>
+      <div class="list-item"><div class="dot"></div><div>Genuinely short and readable for how much ground it covers — no filler chapters, each one adds a distinct, usable technique</div></div>
+      <div class="list-item"><div class="dot"></div><div>Balances the emotional and rational sides of change management better than most books, which tend to over-invest in one or the other</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Case studies skew toward clean, successful examples — the book says less about what happens when all three levers are pulled correctly and the change still fails</div></div>
+      <div class="list-item"><div class="dot"></div><div>Light on how to sequence the nine techniques when several levers are stuck simultaneously, which is common in real organizational change</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some of the research cited (ego depletion in particular) has faced replication challenges since the book's 2010 publication, though the practical guidance built on it still holds up reasonably well</div></div>
+      <div class="list-item"><div class="dot"></div><div>Offers little on managing change across long time horizons — most examples resolve within weeks or months, not the multi-year change programs many organizations actually face</div></div>
+      <div class="list-item"><div class="dot"></div><div>Assumes a fairly cooperative starting environment; says less about change in the presence of active political opposition or entrenched incentive conflicts</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone stepping into a new role who needs to change how a team or process works</strong> — the Rider/Elephant/Path lens is an efficient way to diagnose why an existing behavior persists before trying to change it.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Managers and team leads</strong> trying to shift a specific team behavior — the nine techniques translate directly into meeting agendas, onboarding scripts, and process redesigns.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone leading a change initiative that has already stalled</strong> — the closing chapter's diagnostic grid is built exactly for figuring out which lever is actually stuck.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Individuals working on a personal habit or behavior change</strong> — the framework and all nine techniques apply just as directly to one person as to a large organization.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting deep academic rigor</strong> should treat the cited research as a starting point rather than the final word — some studies (notably on ego depletion) have been contested since publication.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Leaders facing active political resistance or conflicting incentives</strong>, rather than simple inertia, will need to supplement this book with material more focused on power and stakeholder management.</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Lines</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>What looks like a people problem is often a situation problem.</p>
+    <div class="attr">— Chip Heath &amp; Dan Heath, Switch</div>
+  </div>
+
+  <div class="quote-block">
+    <p>What looks like laziness is often exhaustion.</p>
+    <div class="attr">— Chip Heath &amp; Dan Heath, Switch</div>
+  </div>
+
+  <div class="quote-block">
+    <p>What looks like resistance is often a lack of clarity.</p>
+    <div class="attr">— Chip Heath &amp; Dan Heath, Switch</div>
+  </div>
+
+  <div class="quote-block">
+    <p>To make progress, direct the Rider, motivate the Elephant, and shape the Path.</p>
+    <div class="attr">— Chip Heath &amp; Dan Heath, Switch</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>If the book has one idea worth carrying into a new role above all others, it's the three-way diagnostic itself: when a change effort stalls, the instinct is almost always to push harder on whatever you already tried — more persuasion, more inspiration, more pressure. <em>Switch</em>'s deepest contribution is training you to stop and ask which of the three levers is actually stuck. A team that "won't get on board" may not need a better argument (Rider) or more enthusiasm (Elephant) at all — it may simply be stuck in an environment (Path) that quietly rewards the old behavior and punishes the new one.</p>
+    <p>This reframing matters enormously for anyone new to a role and eager to make an early mark. The natural instinct in a new job is to lead with vision and persuasion — a compelling case for why change is needed. <em>Switch</em>'s evidence suggests that's necessary but rarely sufficient: without a scripted first move, a felt (not just understood) reason to care, and an environment that makes the new behavior the path of least resistance, even the most persuasive case for change will stall within weeks.</p>
+    <p>The practical discipline this creates is a habit of diagnosis before action: before assuming people are resistant, lazy, or set in their ways, check whether the ask is actually clear, whether anyone has genuinely felt the stakes, and whether the surrounding environment is quietly working against the very behavior being requested.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p><strong>Switch</strong> earns its status as a modern change-management classic by doing something surprisingly rare: turning a genuinely simple metaphor into a genuinely comprehensive, evidence-backed toolkit, without either oversimplifying the psychology or burying the reader in academic caveats. The Rider, Elephant, and Path aren't just a memorable device — they map cleanly onto real, well-studied psychological mechanisms, and each of the book's nine techniques gives a specific lever to pull rather than a vague principle to admire.</p>
+    <p>The book's greatest practical value is as a diagnostic instrument, not just an inspirational read. Most change-management writing tells you why change matters or how change generally works; <em>Switch</em> instead gives you a specific set of questions to ask about a specific stalled change in front of you right now — is this a Rider problem, an Elephant problem, or a Path problem — and a matching technique for whichever answer comes back.</p>
+    <p>For a new leader trying to move a team or process in a new direction, the highest-leverage habit to take from this book is resisting the urge to simply repeat and intensify whatever approach isn't working. If persuasion isn't landing, the fix is rarely a better argument — it's more likely a missing script, an unfelt stake, or an environment quietly pulling in the opposite direction. Reading the book once for the full model, then returning to the nine-technique grid whenever a specific change effort stalls, is exactly how it's meant to be used.</p>
+    <p>The honest recommendation: read it early in any new role where you expect to drive change, before you've committed to a change strategy that only speaks to one of the three levers. It's short enough to read in a weekend and durable enough to keep referencing for years — most of its value comes not from the first read but from the habit of running the diagnostic every time a change effort you're leading starts to stall.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
