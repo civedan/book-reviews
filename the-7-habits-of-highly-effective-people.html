@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 7 Habits of Highly Effective People — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:        #1c4a56;
+    --ink-deep:   #0f2e37;
+    --ink-light:  #2f6c7a;
+    --ink-dim:    rgba(28,74,86,0.09);
+    --paper:      #ffffff;
+    --cream:      #faf6ec;
+    --coral:      #e2543f;
+    --coral-dark: #c23f2b;
+    --coral-dim:  rgba(226,84,63,0.12);
+    --gold:       #b3872f;
+    --gold-light: #d1a24f;
+    --gold-dark:  #8a6620;
+    --gold-dim:   rgba(179,135,47,0.14);
+    --gold-pale:  #f5ebd6;
+    --muted:      #5f6e70;
+    --border:     rgba(28,74,86,0.20);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink-deep);
+    min-height: 100vh;
+  }
+
+  /* ─────────────────────────────────────────────
+     HERO — white canvas, coral banner + gold band + double-rule motif
+  ───────────────────────────────────────────── */
+  .hero {
+    background: #ffffff;
+    padding: 0 0 0 0;
+    position: relative;
+    overflow: hidden;
+    border-top: 6px solid var(--coral);
+  }
+  .hero-inner {
+    padding: 40px 40px 36px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .hero-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(28,74,86,0.04) 0px, rgba(28,74,86,0.04) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(90deg, rgba(28,74,86,0.04) 0px, rgba(28,74,86,0.04) 1px, transparent 1px, transparent 34px);
+    pointer-events: none;
+  }
+
+  /* Concentric-circle + double-rule motif, echoing the cover's rules and the book's own "Circle of Influence" */
+  .hero-motif {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.9;
+  }
+  .hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img {
+    width: 128px;
+    border-radius: 4px;
+    border: 1px solid #f0ece0;
+    transform: rotate(-6deg);
+    box-shadow: -6px 10px 26px rgba(15,46,55,0.24);
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  .book-label {
+    display: inline-block;
+    background: var(--coral);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4.5vw, 40px);
+    color: var(--ink);
+    line-height: 1.14;
+    max-width: 600px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink-dim);
+    display: inline-block;
+  }
+  .hero h1 em { color: var(--coral); font-style: normal; font-weight: 700; }
+  .author {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .author span { color: var(--ink); font-weight: 600; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .meta-pill {
+    background: var(--gold-dim);
+    border: 1px solid rgba(179,135,47,0.45);
+    color: var(--gold-dark);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ── Back bar ── */
+  .back-bar {
+    background: var(--cream);
+    padding: 10px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+  }
+  .back-link {
+    color: var(--muted);
+    font-size: 12px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--ink); }
+  .back-link span { margin-right: 6px; }
+
+  /* ── Tabs ── */
+  .tabs {
+    display: flex;
+    background: var(--cream);
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--coral); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--ink); }
+  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .summary-block {
+    background: var(--cream);
+    border-left: 3px solid var(--coral);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #22383e;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+    background: white;
+    border: 1px solid #eee6d3;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--ink);
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    font-weight: 700;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card {
+    background: white;
+    border: 1px solid #eee6d3;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(28,74,86,0.12); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num {
+    width: 32px; height: 32px;
+    background: var(--ink);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ch-num.intro { background: var(--coral); color: #fff; }
+  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--coral); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body {
+    display: none;
+    padding: 14px 18px 18px 64px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #263a3c;
+    border-top: 1px solid #f7f2e4;
+  }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px;
+    background: var(--gold-dim);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: var(--gold-dark);
+    font-weight: 600;
+  }
+  .ch-tool {
+    margin-top: 8px;
+    background: var(--ink-dim);
+    border-left: 3px solid var(--ink);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--ink-deep);
+  }
+  .ch-tool strong { color: var(--ink); }
+
+  /* ── Framework cards ── */
+  .method-card {
+    background: white;
+    border: 1px solid #eee6d3;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+  }
+  .method-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--ink); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+  .method-card .tag {
+    display: inline-block;
+    background: var(--ink);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ── Reactive vs. Proactive comparison ── */
+  .compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .compare-col { border-radius: 12px; padding: 18px 20px; }
+  .compare-col.reactive { background: var(--coral-dim); border: 1.5px solid rgba(226,84,63,0.35); }
+  .compare-col.proactive { background: var(--ink-dim); border: 1.5px solid rgba(28,74,86,0.35); }
+  .compare-col h4 { font-family: 'Playfair Display', serif; font-size: 16px; margin-bottom: 12px; }
+  .compare-col.reactive h4 { color: var(--coral-dark); }
+  .compare-col.proactive h4 { color: var(--ink); }
+  .compare-row { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; line-height: 1.55; margin-bottom: 9px; color: #33403f; }
+  .compare-row .c-ic { flex-shrink: 0; margin-top: 1px; }
+  @media (max-width: 560px) { .compare-wrap { grid-template-columns: 1fr; } }
+
+  /* ── Maturity Continuum triad ── */
+  .triad-wrap { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 28px; }
+  .triad-col { border-radius: 12px; padding: 16px 18px; text-align: center; }
+  .triad-col.dependence { background: var(--coral-dim); border: 1.5px solid rgba(226,84,63,0.3); }
+  .triad-col.independence { background: var(--ink-dim); border: 1.5px solid rgba(28,74,86,0.3); }
+  .triad-col.interdependence { background: var(--gold-dim); border: 1.5px solid rgba(179,135,47,0.4); }
+  .triad-col .t-word { font-family: 'Playfair Display', serif; font-size: 17px; margin-bottom: 6px; }
+  .triad-col.dependence .t-word { color: var(--coral-dark); }
+  .triad-col.independence .t-word { color: var(--ink); }
+  .triad-col.interdependence .t-word { color: var(--gold-dark); }
+  .triad-col .t-lang { font-size: 12px; font-style: italic; color: var(--muted); margin-bottom: 8px; }
+  .triad-col .t-desc { font-size: 11.5px; line-height: 1.5; color: #33403f; }
+  .triad-arrow { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 20px; }
+  @media (max-width: 700px) { .triad-wrap { grid-template-columns: 1fr; } .triad-arrow { display: none; } }
+
+  /* ── Code-style block ── */
+  .code-block {
+    background: var(--ink-deep);
+    color: var(--gold-pale);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .code-block .comment { color: rgba(209,162,79,0.55); }
+  .code-block .keyword { color: var(--gold-light); }
+  .code-block .value { color: #f0e2c2; }
+
+  /* ── Circle of Influence diagram ── */
+  .circle-diagram-wrap { display: flex; align-items: center; justify-content: center; padding: 20px 0 8px; margin-bottom: 8px; }
+  .circle-diagram-wrap svg { max-width: 340px; width: 100%; height: auto; }
+
+  /* ── Time Management Matrix ── */
+  .quadrant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+  .quadrant { border-radius: 10px; padding: 14px 16px; }
+  .quadrant .q-num { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+  .quadrant .q-title { font-family: 'Playfair Display', serif; font-size: 14px; margin-bottom: 6px; }
+  .quadrant .q-desc { font-size: 11.5px; line-height: 1.55; }
+  .quadrant.q1 { background: var(--coral-dim); border: 1.5px solid rgba(226,84,63,0.35); }
+  .quadrant.q1 .q-num, .quadrant.q1 .q-title { color: var(--coral-dark); }
+  .quadrant.q2 { background: var(--gold-dim); border: 2px solid var(--gold); }
+  .quadrant.q2 .q-num, .quadrant.q2 .q-title { color: var(--gold-dark); }
+  .quadrant.q3 { background: #f4f4f2; border: 1.5px solid #dcdcd6; }
+  .quadrant.q3 .q-num, .quadrant.q3 .q-title { color: #6b6b64; }
+  .quadrant.q4 { background: #f4f4f2; border: 1.5px solid #dcdcd6; }
+  .quadrant.q4 .q-num, .quadrant.q4 .q-title { color: #6b6b64; }
+  .quadrant .q-desc { color: #33403f; }
+  @media (max-width: 560px) { .quadrant-grid { grid-template-columns: 1fr; } }
+
+  /* ── Toolkit page list ── */
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    background: white;
+    border: 1px solid #eee6d3;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #263a3c;
+  }
+  .toolkit-item .t-ic { font-size: 14px; flex-shrink: 0; }
+  @media (max-width: 560px) { .toolkit-list { grid-template-columns: 1fr; } }
+
+  /* ── Verdict banner ── */
+  .verdict-banner {
+    background: linear-gradient(135deg, var(--ink-deep) 0%, #071b21 100%);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .verdict-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at  5% 20%, var(--gold) 0%, var(--gold) 10px, transparent 11px),
+      radial-gradient(circle at 95% 75%, var(--gold) 0%, var(--gold) 13px, transparent 14px),
+      radial-gradient(circle at 90% 15%, var(--coral) 0%, var(--coral) 7px, transparent 8px),
+      radial-gradient(circle at 10% 85%, var(--coral) 0%, var(--coral) 9px, transparent 10px);
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--gold-light); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(255,255,255,0.72); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item {
+    text-align: center;
+    background: rgba(179,135,47,0.16);
+    border: 1px solid rgba(209,162,79,0.35);
+    border-radius: 8px;
+    padding: 10px 16px;
+    min-width: 90px;
+  }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--gold-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list {
+    background: white;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid #eee6d3;
+  }
+  .pro-list h4 { color: var(--ink); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--coral-dark); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--ink); }
+  .con-list .dot { background: var(--coral); }
+
+  /* ── Quotes ── */
+  .quote-block {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    position: relative;
+    border-left: 3px solid var(--gold);
+  }
+  .quote-block::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--gold);
+    position: absolute;
+    top: -8px; left: 16px;
+    line-height: 1;
+  }
+  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink-deep); }
+  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+  /* ── Who cards ── */
+  .who-card {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: white;
+    border: 1px solid #eee6d3;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    transition: border-color 0.2s;
+  }
+  .who-card:hover { border-color: var(--gold); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .toolkit-list { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero-inner { padding: 32px 20px 28px; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     HERO — white canvas + coral banner + gold band motif + cover
+════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-motif">
+      <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- Circle of Influence / Circle of Concern echo, upper right -->
+        <circle cx="700" cy="60" r="70" fill="none" stroke="#e2543f" stroke-width="1.5" opacity="0.14"/>
+        <circle cx="700" cy="60" r="34" fill="none" stroke="#1c4a56" stroke-width="1.5" opacity="0.18"/>
+        <!-- double-rule motif, echoing the cover's underlines -->
+        <line x1="560" y1="150" x2="760" y2="150" stroke="#b3872f" stroke-width="1.5" opacity="0.2"/>
+        <line x1="560" y1="156" x2="760" y2="156" stroke="#b3872f" stroke-width="1.5" opacity="0.2"/>
+        <!-- scattered small dots, lower left, echoing gold band texture -->
+        <circle cx="60" cy="190" r="4" fill="#b3872f" opacity="0.2"/>
+        <circle cx="90" cy="200" r="6" fill="#b3872f" opacity="0.16"/>
+        <circle cx="130" cy="185" r="3" fill="#e2543f" opacity="0.2"/>
+      </svg>
+    </div>
+
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Field Guide · Foreword by Jim Collins</div>
+      <h1><em>The 7 Habits</em> of Highly Effective People</h1>
+      <div class="author">by <span>Stephen R. Covey</span> &nbsp;·&nbsp; Updated with fresh insights by Sean Covey &nbsp;·&nbsp; Free Press</div>
+      <div class="hero-meta">
+        <div class="meta-pill">Self-Help</div>
+        <div class="meta-pill">Personal Development</div>
+        <div class="meta-pill">Leadership</div>
+        <div class="meta-pill">40+ Million Copies Sold</div>
+      </div>
+    </div>
+
+    <div class="book-cover-wrap">
+      <img src="images/7-habits-cover.jpg" alt="The 7 Habits of Highly Effective People book cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('framework', this)">Framework &amp; Toolkit</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════════ -->
+<div id="overview" class="panel active">
+
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core Focus</div>
+      <div class="stat-value">Character Ethic Over Personality Ethic</div>
+      <div class="stat-desc">Lasting effectiveness is built on foundational principles of character — integrity, humility, fairness — not on quick technique or image management</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">Change Moves From the Inside Out</div>
+      <div class="stat-desc">A sequential progression from Dependence to Independence to Interdependence, built one habit at a time on a foundation of private victory before public victory</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Primary Tools</div>
+      <div class="stat-value">Maturity Continuum · P/PC Balance · Circle of Influence · Four Quadrants</div>
+      <div class="stat-desc">A small set of durable mental models that recur throughout the book and are designed to be applied for a lifetime, not just read once</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Anyone Seeking Durable Personal &amp; Interpersonal Change</div>
+      <div class="stat-desc">Individuals, leaders, and families looking for a principle-based operating system rather than another shortcut or productivity trick</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>The 7 Habits of Highly Effective People</strong> opens with a diagnosis: Stephen Covey, after decades of studying success literature, noticed that material written before roughly 1930 centered on what he calls the <strong>Character Ethic</strong> — integrity, humility, courage, patience, and other foundational qualities — while most modern success literature had shifted to a <strong>Personality Ethic</strong>, built on techniques, image management, and quick fixes for influencing others. His central claim is that Personality Ethic advice can create bursts of short-term influence, but collapses under sustained testing, because it tries to change surface behavior without addressing the character actually producing it.</p>
+    <p>From that diagnosis, Covey builds a complete architecture. The seven habits are not a random list of good practices — they follow a deliberate sequence mapped onto what he calls the <strong>Maturity Continuum</strong>: Dependence (relying on others), Independence (relying on yourself), and Interdependence (combining your effort with others to achieve more than either could alone). Habits 1–3 produce a <strong>Private Victory</strong> that moves a person from dependence to independence; Habits 4–6 produce a <strong>Public Victory</strong> that moves a person from independence to interdependence; Habit 7 renews the entire system so it doesn't erode over time.</p>
+    <p>The book's method is deliberately "inside-out": rather than trying to change circumstances, other people, or your image, real effectiveness starts with examining and changing your own paradigms — the mental maps through which you interpret everything. Covey pairs this philosophy with concrete, repeatable tools (a Personal Mission Statement, the Emotional Bank Account, the Time Management Matrix, empathic listening) that turn the underlying principles into daily, practicable habits rather than abstract ideals.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">🧭</div><div><strong>Character Ethic over Personality Ethic.</strong> Durable effectiveness is rooted in foundational principles of character, not in techniques for managing how you appear to others.</div></div>
+  <div class="key-idea"><div class="icon">🥚</div><div><strong>Effectiveness requires the P/PC Balance.</strong> Sustainable results (Production) require simultaneously maintaining the asset that produces them (Production Capability) — sacrifice one for the other and both eventually suffer.</div></div>
+  <div class="key-idea"><div class="icon">🪜</div><div><strong>The Maturity Continuum: Dependence → Independence → Interdependence.</strong> The seven habits follow this exact sequence — private victory has to precede public victory.</div></div>
+  <div class="key-idea"><div class="icon">🔄</div><div><strong>Change is Inside-Out.</strong> Real change starts with examining and shifting your own paradigms, not with changing other people or your circumstances first.</div></div>
+  <div class="key-idea"><div class="icon">🎯</div><div><strong>A habit sits at the intersection of Knowledge, Skill, and Desire.</strong> Knowing what to do, knowing how to do it, and wanting to do it must all be present before a behavior becomes truly habitual.</div></div>
+  <div class="key-idea"><div class="icon">🏦</div><div><strong>The Emotional Bank Account.</strong> Trust in any relationship works like a bank balance — built through consistent small deposits, drawn down by careless withdrawals.</div></div>
+  <div class="key-idea"><div class="icon">🔵</div><div><strong>Circle of Concern vs. Circle of Influence.</strong> Proactive people spend their energy inside what they can actually affect, which causes that circle to expand over time.</div></div>
+  <div class="key-idea"><div class="icon">🌿</div><div><strong>Renewal (Sharpening the Saw) sustains everything else.</strong> The other six habits run on a finite personal capacity — physical, mental, social/emotional, and spiritual — that has to be deliberately renewed or the whole system degrades.</div></div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     CHAPTERS
+════════════════════════════════════════════ -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Front Matter</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">F</div>
+      <div class="ch-title">Foreword by Jim Collins</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Jim Collins, author of <em>Good to Great</em> and <em>Built to Last</em>, frames the book's staying power by arguing that Covey's real achievement wasn't inventing new self-help techniques but restoring timeless principles to a genre that had drifted toward personality tricks and quick fixes. Collins, describing his own initial skepticism as a hard-nosed researcher, explains that respect grew once he saw how directly principle-centered thinking mapped onto what actually made great companies and great leaders durable rather than merely successful in the short term.
+      <br><br>
+      He frames the book less as a self-help manual and more as a philosophy of effectiveness grounded in unchanging natural laws — comparable to laws of physics in that you can violate them, but you cannot escape the consequences of doing so, no matter how skilled your technique.
+      <div class="ch-takeaway">Collins situates the book's power in shifting the entire self-improvement conversation from "how do I appear effective" to "how do I become effective" — a distinction he found directly mirrored in his own research on enduring organizations.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Principles as Natural Law · Character vs. Reputation</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">I</div>
+      <div class="ch-title">Introduction</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Covey opens by describing his own turning point: after decades of studying success literature, he noticed a stark divide between material written before and after roughly 1930. Earlier material centered on the <strong>Character Ethic</strong> — integrity, humility, courage, patience — as the foundation of effectiveness. Since then, most popular success literature shifted to the <strong>Personality Ethic</strong> — techniques, skills, and image management for influencing others. Covey argues Personality Ethic advice can produce short bursts of influence but collapses under real testing, particularly in long-term relationships, because it tries to change surface behavior without addressing the character generating that behavior.
+      <br><br>
+      He introduces the concept of <strong>paradigms</strong> — the mental maps through which people interpret everything — and argues the most significant breakthroughs in effectiveness come not from working harder within an existing paradigm, but from a genuine paradigm shift: seeing a situation, problem, or relationship in a fundamentally different way. The introduction closes by defining a "habit" as the intersection of knowledge (what to do and why), skill (how to do it), and desire (wanting to do it) — all three are required before an ability becomes truly habitual rather than an occasional effort.
+      <div class="ch-takeaway">Lasting effectiveness is character-based, not technique-based, and real change usually requires a paradigm shift in how a situation is seen — not just more effort within the old way of seeing it.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Character Ethic vs. Personality Ethic · Habit = Knowledge × Skill × Desire</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part One — Paradigms and Principles</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">Inside-Out</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Covey introduces "Inside-Out" as both the book's central methodology and a direct challenge to how most people approach change. The outside-in approach assumes the problem is "out there" — other people, circumstances, the environment — and that the solution is to change conditions or techniques used on others. The inside-out approach insists private victories over yourself must precede public victories with others: you cannot talk your way out of problems you behaved your way into.
+      <br><br>
+      He illustrates this with an anecdote about his own strained relationship with his son during a period of preoccupation with public image — trying to alter techniques and reactions toward the boy yielded nothing until Covey examined and changed his own underlying paradigm of him. The chapter also introduces <strong>principles</strong> as objective, external "natural laws" of human effectiveness — fairness, honesty, integrity, human dignity — that operate whether or not people recognize or follow them, in the same way gravity applies regardless of belief.
+      <div class="ch-takeaway">Real change starts with the person doing the changing, not the people or circumstances around them — private victory always has to precede public victory.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Inside-Out Approach · Principles as Natural Laws</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">The Seven Habits — An Overview</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This chapter lays out the architecture for the rest of the book. Covey defines effectiveness itself using the fable of the goose that laid the golden eggs: sustainable results (the golden eggs, or <strong>Production</strong>) require simultaneously maintaining the asset that produces them (the goose, or <strong>Production Capability</strong>). Most short-term-focused approaches sacrifice PC for a burst of P — burning out relationships, health, or equipment to hit an immediate target — a violation of the <strong>P/PC Balance</strong>.
+      <br><br>
+      He then maps the seven habits onto the <strong>Maturity Continuum</strong>, a three-stage progression: Dependence (you need others to get what you want), Independence (you get what you want through your own effort), and Interdependence (you combine your own effort with others to achieve far more than either could alone). Habits 1–3 constitute the <strong>Private Victory</strong> and move a person from dependence to independence. Habits 4–6 constitute the <strong>Public Victory</strong> and move a person from independence to interdependence. Habit 7 surrounds and renews all the others.
+      <div class="ch-takeaway">The seven habits aren't a random list — they follow a deliberate sequence from dependence through independence to interdependence, and skipping the private-victory habits undermines the public ones.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The P/PC Balance (Golden Goose) · The Maturity Continuum</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Two — Private Victory</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">Habit 1 — Be Proactive: Principles of Personal Vision</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Covey defines proactivity as more than taking initiative — it's taking full responsibility for your own responses, built on the idea that between any stimulus and your response lies the freedom to choose. He draws on Viktor Frankl, who preserved this freedom to choose his own attitude even in a concentration camp, as extreme proof that circumstance does not dictate response.
+      <br><br>
+      The chapter contrasts reactive language ("that's just the way I am," "he makes me so mad," "I have to") with proactive language ("I choose," "I prefer," "let's look at alternatives"), arguing the words habitually used reveal and reinforce which paradigm a person is actually operating from. Covey introduces the <strong>Circle of Concern</strong> (everything you care about) and, nested inside it, the smaller <strong>Circle of Influence</strong> (the subset you can actually do something about). Proactive people invest energy inside the Circle of Influence, which causes it to expand over time; reactive people focus on the Circle of Concern — blaming weather, other people, and circumstance — which causes their Circle of Influence to shrink.
+      <div class="ch-takeaway">You are not responsible for the stimulus, but you are always responsible for your response — and where you choose to focus your energy determines whether your capacity to affect your life grows or shrinks.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Circle of Concern vs. Circle of Influence · Reactive vs. Proactive Language · The Stimulus-Response Gap</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">Habit 2 — Begin with the End in Mind: Principles of Personal Leadership</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This habit rests on the idea that everything is created twice — first as a mental blueprint, then as a physical reality, whether that's a house, a business, or a life. Covey's central exercise asks the reader to imagine attending their own funeral and to listen for what they would want said about them by family, friends, and colleagues — a way to clarify the character and contributions that actually matter, rather than drifting through life on scripts absorbed unconsciously from family, culture, or circumstance.
+      <br><br>
+      The chapter's central tool is the <strong>Personal Mission Statement</strong> — a written articulation of the principles and roles by which a person chooses to live, functioning as a personal constitution against which daily decisions can be measured, so the person is centered on unchanging principles rather than shifting moods, circumstances, or other people's opinions.
+      <div class="ch-takeaway">If you don't consciously define the end you're working toward, you'll unconsciously live out a script written by parents, culture, or circumstance — a Personal Mission Statement makes that end deliberate.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Personal Mission Statement · The Funeral Visualization Exercise · Center-of-Life Analysis</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">Habit 3 — Put First Things First: Principles of Personal Management</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Habit 3 is the practical, day-to-day fulfillment of Habit 2 — the discipline of actually executing the vision. Its central tool is the <strong>Time Management Matrix</strong>, sorting all activity into four quadrants by Urgency and Importance: Quadrant I (Urgent &amp; Important — crises, deadlines), Quadrant II (Not Urgent but Important — prevention, relationship building, planning, renewal), Quadrant III (Urgent but Not Important — interruptions and other people's priorities disguised as urgent), and Quadrant IV (Not Urgent &amp; Not Important — pure time-wasters).
+      <br><br>
+      Covey's core argument is that effective people spend as much time as possible in Quadrant II, because that is where nearly all the activities live that prevent future Quadrant I crises and build genuine long-term capability — yet Quadrant II has no inherent urgency pushing it onto the calendar, so it takes deliberate weekly planning to protect. The chapter walks through a shift from daily to-do lists toward weekly role-based planning: identifying key roles (parent, professional, community member), setting one or two important Quadrant II goals per role each week, then scheduling the week around those "big rocks" first.
+      <div class="ch-takeaway">What gets scheduled is what gets done — effectiveness comes from protecting time for important-but-not-urgent Quadrant II work before the calendar fills with everything else.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Time Management Matrix (Four Quadrants) · Weekly Role-Based Planning · "Big Rocks First" Scheduling</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Three — Public Victory</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">Paradigms of Interdependence</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This transitional chapter reframes the move from Private to Public Victory around a central image: the <strong>Emotional Bank Account</strong>, a metaphor for the level of trust built up in any relationship. Deposits — courtesy, honesty, kept commitments, clarifying expectations, small kindnesses — increase the account's reserve, while withdrawals — discourtesy, broken promises, disrespect — draw it down. When the balance is high, communication is easy and mistakes are forgiven quickly; when it's low or overdrawn, even well-meant words are misread and relationships become brittle.
+      <br><br>
+      Covey stresses that public victory genuinely is not possible without the private victory established in Habits 1–3, because independence of character is the raw material interdependent relationships are built from — attempting Habits 4–6 as pure technique without that private foundation produces manipulation rather than real cooperation.
+      <div class="ch-takeaway">Interdependence isn't a step down from independence — it's a step up that requires it. And relationships run on the Emotional Bank Account: deposits before withdrawals, always.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Emotional Bank Account · Six Major Deposits (understanding, small kindnesses, keeping commitments, clarifying expectations, personal integrity, sincere apology)</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Habit 4 — Think Win/Win: Principles of Interpersonal Leadership</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Covey lays out six possible paradigms of human interaction: Win/Win, Win/Lose, Lose/Win, Lose/Lose, Win (pursuing your own win regardless of others), and Win/Win or No Deal. He argues Win/Lose and Lose/Win are the default modes most people are conditioned into — competitive, scarcity-based thinking, or people-pleasing — while Win/Win is the only paradigm sustainable in relationships you'll continue to depend on. He distinguishes true Win/Win from compromise, which merely splits the difference rather than searching for a better third alternative.
+      <br><br>
+      <strong>Win/Win or No Deal</strong> — the willingness to walk away from an agreement if a genuinely mutual solution can't be found — is what keeps Win/Win honest rather than becoming disguised Lose/Win. The chapter names an <strong>Abundance Mentality</strong> (belief there's plenty for everyone) as the psychological prerequisite for Win/Win, contrasted with the far more common <strong>Scarcity Mentality</strong>, in which any gain for someone else is unconsciously felt as a loss for you.
+      <div class="ch-takeaway">Win/Win isn't about being nice or splitting differences — it's a disciplined search for mutually beneficial solutions, backed by a genuine willingness to walk away rather than settle for a disguised Lose/Win.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Six Paradigms of Human Interaction · Abundance vs. Scarcity Mentality · Win/Win Agreements framework</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">Habit 5 — Seek First to Understand, Then to Be Understood: Principles of Empathic Communication</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Covey identifies this as perhaps the single most important habit for interpersonal effectiveness, and the one people are most likely to violate reflexively, because most people listen with intent to reply rather than to understand — filtering everything through autobiographical responses like evaluating, probing, advising, or interpreting from their own frame of reference. He introduces <strong>empathic listening</strong> as the alternative: listening to genuinely understand another person's frame of reference and feelings, not simply hearing words or agreeing with conclusions.
+      <br><br>
+      Only after someone feels genuinely understood are they psychologically ready to consider another perspective — reversing the order causes the other person to feel unheard and become defensive, closing off the very influence the first speaker was hoping to gain. Once genuine understanding has been established, Covey turns to the "then to be understood" half: presenting your own point of view clearly, specifically, and visually, using the classical rhetorical sequence of ethos (credibility), pathos (empathic feeling), and logos (logic) — in that order.
+      <div class="ch-takeaway">Diagnose before you prescribe. Most influence attempts fail not because the argument is weak, but because the other person never felt understood in the first place.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Empathic Listening · The Four Autobiographical Responses (evaluate, probe, advise, interpret) · Ethos–Pathos–Logos sequencing</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">Habit 6 — Synergize: Principles of Creative Cooperation</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Synergy is the state where the whole becomes greater than the sum of its parts — 1 + 1 producing 3 or more, rather than 2. Covey positions it as the natural payoff of practicing Habits 1–5 together: valuing differences (rather than merely tolerating them) becomes the raw material for solutions neither party could have designed alone.
+      <br><br>
+      He contrasts synergistic communication — genuinely open to a "third alternative" better than either party's original position — against compromise, where both sides settle for less than they wanted, and against defensive communication, which shuts down exploration entirely. Examples range from nature (an ecosystem's interdependent diversity) to negotiation and family conflict, showing that the greater the authentic difference between two people's perspectives, the greater the potential synergy — provided both parties have enough emotional and communication skill, built in Habits 1–5, to explore that difference safely rather than treating it as a threat.
+      <div class="ch-takeaway">Differences aren't obstacles to work around on the way to agreement — they're the raw material of a third, better alternative neither side saw coming, if you're skilled enough to explore them safely.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Third Alternative · High-Trust Communication Continuum · Valuing vs. Tolerating Differences</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Four — Renewal</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">10</div>
+      <div class="ch-title">Habit 7 — Sharpen the Saw: Principles of Balanced Self-Renewal</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The final habit surrounds all the others, representing renewal of the four fundamental dimensions of human nature: <strong>Physical</strong> (exercise, nutrition, stress management), <strong>Spiritual</strong> (values clarification, study, meditation or reflection), <strong>Mental</strong> (reading, planning, writing, continuing education), and <strong>Social/Emotional</strong> (service, empathy, synergy, security through principle-centered living rather than external validation).
+      <br><br>
+      Covey uses the fable of the woodcutter too busy sawing to stop and sharpen his dull saw as the chapter's frame: without deliberate, regular renewal in all four dimensions, effectiveness inevitably erodes even for someone who has mastered Habits 1–6, because those habits are all exercised through the same finite physical, mental, and emotional capacity that renewal maintains. Renewal is itself Quadrant II activity — never urgent, always important — and neglecting any one of the four dimensions eventually undermines the other three.
+      <div class="ch-takeaway">The seven habits aren't a one-time achievement; they run on a finite personal capacity that has to be deliberately renewed across all four dimensions, or the whole system degrades.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Four Dimensions of Renewal (Physical, Mental, Social/Emotional, Spiritual) · The Woodcutter Parable</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">11</div>
+      <div class="ch-title">Inside-Out Again</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The closing chapter returns to the book's founding claim — real change moves from the inside out — and applies it one level up, from individuals to families and organizations. Covey argues the same principles (proactivity, shared vision, Win/Win agreements, empathic communication, synergy, renewal) that transform an individual also transform a marriage, a family, or a company culture, provided change again starts with people willing to be an example rather than waiting for the system around them to change first.
+      <br><br>
+      He closes with the idea of becoming a <strong>"transition person"</strong> — someone who deliberately interrupts the passing of unhealthy patterns (dependency, abuse, unhealthy conflict styles) from one generation to the next, absorbing the damage rather than passing it on, precisely because Habit 1's proactive freedom to choose a response makes that interruption possible for anyone willing to do the private, character-level work the whole book has been describing.
+      <div class="ch-takeaway">The same inside-out principle that starts a personal transformation is what's needed to transform a family or organization — and one person, committed to being a "transition person," can break an unhealthy pattern rather than passing it down.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Transition Person concept · Principle-Centered Leadership applied to families &amp; organizations</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     FRAMEWORK & TOOLKIT
+════════════════════════════════════════════ -->
+<div id="framework" class="panel">
+
+  <div class="section-header">
+    <h2>The Maturity Continuum</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6;">The spine the entire book is built on. Habits 1–3 move you left to right across the first arrow; Habits 4–6 move you across the second.</p>
+
+  <div class="triad-wrap">
+    <div class="triad-col dependence">
+      <div class="t-word">Dependence</div>
+      <div class="t-lang">"You take care of me."</div>
+      <div class="t-desc">You need others to get what you want. Private Victory (Habits 1–3) moves you out of this stage.</div>
+    </div>
+    <div class="triad-col independence">
+      <div class="t-word">Independence</div>
+      <div class="t-lang">"I am responsible. I am self-reliant."</div>
+      <div class="t-desc">You get what you want through your own effort. The goal of Habits 1–3, and the launch point for Habits 4–6.</div>
+    </div>
+    <div class="triad-col interdependence">
+      <div class="t-word">Interdependence</div>
+      <div class="t-lang">"We can do it. We can cooperate."</div>
+      <div class="t-desc">You combine your own effort with others' to achieve far more than either could alone. Public Victory (Habits 4–6).</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Production vs. Production Capability</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="code-block">
+    <span class="comment">// The Golden Goose fable — effectiveness requires balancing both</span><br><br>
+    <span class="keyword">P  (Production):</span>  <span class="value">the golden eggs — results, output, what you're chasing</span><br>
+    <span class="keyword">PC (Prod. Capability):</span> <span class="value">the goose — the asset that produces those results</span><br><br>
+    <span class="comment">// Sacrifice PC to squeeze out more P, and the eggs eventually stop</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Circle of Concern vs. Circle of Influence</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:8px; line-height:1.6;">Proactive people focus their energy inside the inner circle — which causes it to expand. Reactive people focus on the outer circle — blame, circumstance, other people — which causes it to shrink.</p>
+
+  <div class="circle-diagram-wrap">
+    <svg viewBox="0 0 340 240" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="170" cy="110" r="100" fill="rgba(226,84,63,0.06)" stroke="#e2543f" stroke-width="2"/>
+      <circle cx="170" cy="110" r="52" fill="rgba(28,74,86,0.08)" stroke="#1c4a56" stroke-width="2"/>
+      <text x="170" y="24" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="11" letter-spacing="1.5" fill="#c23f2b" font-weight="700">CIRCLE OF CONCERN</text>
+      <text x="170" y="72" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="10" letter-spacing="1.5" fill="#1c4a56" font-weight="700">CIRCLE OF</text>
+      <text x="170" y="86" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="10" letter-spacing="1.5" fill="#1c4a56" font-weight="700">INFLUENCE</text>
+      <text x="170" y="112" text-anchor="middle" font-family="'Playfair Display', serif" font-size="12" fill="#0f2e37">what you can</text>
+      <text x="170" y="128" text-anchor="middle" font-family="'Playfair Display', serif" font-size="12" fill="#0f2e37">actually affect</text>
+    </svg>
+  </div>
+  <p style="font-size:11.5px; color:var(--muted); text-align:center; margin-top:-4px; margin-bottom:8px;">The outer ring is everything you care about — proactive energy stays inside the inner ring.</p>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Reactive vs. Proactive Language</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="compare-wrap">
+    <div class="compare-col reactive">
+      <h4>⛈️ Reactive</h4>
+      <div class="compare-row"><span class="c-ic">•</span><div>"There's nothing I can do."</div></div>
+      <div class="compare-row"><span class="c-ic">•</span><div>"That's just the way I am."</div></div>
+      <div class="compare-row"><span class="c-ic">•</span><div>"He makes me so mad."</div></div>
+      <div class="compare-row"><span class="c-ic">•</span><div>"I have to do that."</div></div>
+      <div class="compare-row"><span class="c-ic">•</span><div>"I can't."</div></div>
+    </div>
+    <div class="compare-col proactive">
+      <h4>☀️ Proactive</h4>
+      <div class="compare-row"><span class="c-ic">•</span><div>"Let's look at our alternatives."</div></div>
+      <div class="compare-row"><span class="c-ic">•</span><div>"I can choose a different approach."</div></div>
+      <div class="compare-row"><span class="c-ic">•</span><div>"I control my own feelings."</div></div>
+      <div class="compare-row"><span class="c-ic">•</span><div>"I will choose an appropriate response."</div></div>
+      <div class="compare-row"><span class="c-ic">•</span><div>"I choose."</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>The Time Management Matrix</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6;">Effective people spend as much time as possible in Quadrant II — it has no built-in urgency, so protecting it requires deliberate weekly planning.</p>
+
+  <div class="quadrant-grid">
+    <div class="quadrant q1">
+      <div class="q-num">Quadrant I</div>
+      <div class="q-title">Urgent &amp; Important</div>
+      <div class="q-desc">Crises, deadlines, pressing problems — necessary, but living here permanently causes burnout.</div>
+    </div>
+    <div class="quadrant q2">
+      <div class="q-num">Quadrant II ★</div>
+      <div class="q-title">Not Urgent, Important</div>
+      <div class="q-desc">Planning, prevention, relationship building, renewal — the quadrant of true effectiveness. Protect this deliberately.</div>
+    </div>
+    <div class="quadrant q3">
+      <div class="q-num">Quadrant III</div>
+      <div class="q-title">Urgent, Not Important</div>
+      <div class="q-desc">Interruptions and other people's priorities disguised as urgent — feels productive, rarely is.</div>
+    </div>
+    <div class="quadrant q4">
+      <div class="q-num">Quadrant IV</div>
+      <div class="q-title">Not Urgent, Not Important</div>
+      <div class="q-desc">Pure time-wasters — minimize, but don't eliminate entirely; some downtime belongs here too.</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Key Concepts &amp; Tools</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The Emotional Bank Account</h4>
+    <p>Trust in any relationship works like a bank balance. Deposits — courtesy, kept commitments, clarifying expectations, small kindnesses, sincere apologies — build reserve; withdrawals — broken promises, disrespect, disloyalty — draw it down. A high balance makes communication forgiving; a low one makes it brittle.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The Personal Mission Statement</h4>
+    <p>A written articulation of the principles and roles by which you choose to live, functioning as a personal constitution against which daily decisions can be measured — the practical output of Habit 2's "begin with the end in mind."</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Framework</div>
+    <h4>Win/Win or No Deal</h4>
+    <p>Of six possible interaction paradigms (Win/Win, Win/Lose, Lose/Win, Lose/Lose, Win, Win/Win or No Deal), only Win/Win is sustainable in ongoing relationships. The willingness to walk away — No Deal — is what keeps Win/Win honest rather than becoming a disguised Lose/Win.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Method</div>
+    <h4>Empathic Listening</h4>
+    <p>Listening to genuinely understand another person's frame of reference and feelings, not simply to reply. The prerequisite for being heard yourself — most influence attempts fail because the other person never felt understood first.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Concept</div>
+    <h4>Synergy &amp; the Third Alternative</h4>
+    <p>The state where 1 + 1 produces 3 or more. Genuine differences between people, explored with enough trust and skill, become raw material for a solution better than either party's original position — distinct from compromise, where both sides simply settle for less.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Quick-Reference Toolkit</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div class="t-ic">🔵</div><div><strong>Focus on Your Circle of Influence</strong> — spend energy on what you can actually affect, not what you merely worry about</div></div>
+    <div class="toolkit-item"><div class="t-ic">📜</div><div><strong>Write a Personal Mission Statement</strong> — define the principles and roles you're actually living toward</div></div>
+    <div class="toolkit-item"><div class="t-ic">🪨</div><div><strong>Schedule "Big Rocks" First</strong> — plan the week around Quadrant II priorities before anything else fills the calendar</div></div>
+    <div class="toolkit-item"><div class="t-ic">🏦</div><div><strong>Make Emotional Bank Account Deposits</strong> — courtesy, kept commitments, clarified expectations, sincere apologies</div></div>
+    <div class="toolkit-item"><div class="t-ic">🤝</div><div><strong>Negotiate Win/Win Agreements</strong> — desired results, guidelines, resources, accountability, consequences</div></div>
+    <div class="toolkit-item"><div class="t-ic">👂</div><div><strong>Seek First to Understand</strong> — diagnose before you prescribe, every time</div></div>
+    <div class="toolkit-item"><div class="t-ic">🌱</div><div><strong>Look for a Third Alternative</strong> — don't settle for compromise when real synergy is available</div></div>
+    <div class="toolkit-item"><div class="t-ic">🔧</div><div><strong>Sharpen the Saw Weekly</strong> — renew Physical, Mental, Social/Emotional, and Spiritual dimensions on purpose</div></div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     VERDICT
+════════════════════════════════════════════ -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.8 / 5</h3>
+    <p>The foundational operating system for personal effectiveness — a principle-based architecture that has outlasted nearly every trend built to replace it</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.6</div>
+        <div class="r-label">Accessibility</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.9</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.8</div>
+        <div class="r-label">Depth</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">5.0</div>
+        <div class="r-label">Timelessness</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>A genuinely complete architecture — every habit has a clear place in a sequence, rather than a loose grab-bag of tips</div></div>
+      <div class="list-item"><div class="dot"></div><div>The tools (Emotional Bank Account, Circle of Influence, Four Quadrants) are immediately usable and durable enough to reach for decades later</div></div>
+      <div class="list-item"><div class="dot"></div><div>Grounds effectiveness in character and principle rather than image and technique — a distinction that has aged remarkably well</div></div>
+      <div class="list-item"><div class="dot"></div><div>Equally applicable to individuals, teams, marriages, and organizations without needing separate frameworks for each</div></div>
+      <div class="list-item"><div class="dot"></div><div>Habit 5 (Seek First to Understand) alone reshapes how conflict and disagreement get handled, in any relationship</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Dense and repetitive in places — some sections restate the same point with a new example rather than adding new ground</div></div>
+      <div class="list-item"><div class="dot"></div><div>Written from a distinctly American, corporate, mid-to-late-20th-century vantage point; some examples feel dated</div></div>
+      <div class="list-item"><div class="dot"></div><div>Says relatively little about genuine structural or systemic barriers — the framework can be misread as implying personal effort alone overcomes any constraint</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Personal Mission Statement exercise is powerful but can feel abstract without a concrete process to actually draft one</div></div>
+      <div class="list-item"><div class="dot"></div><div>Requires real discipline to move from "I understand this intellectually" to actually rebuilding daily habits around it</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone building or rebuilding a personal operating system</strong> — the Maturity Continuum gives a clear map for where to start and what comes next.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Managers and leaders</strong> — Habit 4 (Win/Win) and Habit 5 (empathic listening) directly reshape negotiation, feedback, and team culture.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone feeling perpetually reactive or overwhelmed</strong> — the Circle of Influence and Time Management Matrix are the most immediately practical antidotes in the book.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Couples and families</strong> — the Emotional Bank Account and synergy chapters apply directly to marriage and parenting, not just the workplace.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting a quick read</strong> should know this is a dense, principle-heavy book meant to be revisited, not skimmed once.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers facing genuine structural barriers</strong> should treat the framework as a way to maximize your own effectiveness within real constraints — not as a claim that mindset alone erases them.</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Lines</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>Begin with the end in mind.</p>
+    <div class="attr">— Stephen R. Covey, The 7 Habits of Highly Effective People</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Seek first to understand, then to be understood.</p>
+    <div class="attr">— Stephen R. Covey, The 7 Habits of Highly Effective People</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Sharpen the saw.</p>
+    <div class="attr">— Stephen R. Covey, The 7 Habits of Highly Effective People</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Live out of your imagination, not your history.</p>
+    <div class="attr">— Stephen R. Covey, The 7 Habits of Highly Effective People</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>If the book has one idea worth carrying forward above all others, it's the inside-out principle itself: effectiveness with other people, circumstances, and outcomes is never won by working directly on those things first — it's won by working on your own character and paradigms, which then changes how you show up everywhere else. Trying to fix a relationship, a team, or a result from the outside in produces temporary technique at best and resentment at worst.</p>
+    <p>This is what makes the Emotional Bank Account and the Circle of Influence so durable as tools — both redirect attention back to the one variable you actually control: your own behavior and where you choose to spend your energy. Everything else in the book, from Win/Win to synergy to renewal, is really an elaboration of that same single move, applied to a different domain.</p>
+    <p>What keeps this from being just a feel-good platitude is the sequencing: Covey is explicit that private victory has to come before public victory. Skipping straight to "communication techniques" or "negotiation tactics" without doing the private, character-level work underneath produces exactly the kind of hollow, technique-only effectiveness the book opens by diagnosing and rejecting.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p><strong>The 7 Habits of Highly Effective People</strong> earns its status as the foundational text of modern personal-effectiveness literature by doing something most books in the category don't: building a genuinely complete, sequenced architecture rather than a collection of loosely related tips. Every habit has an explicit place in the Maturity Continuum, and the book is disciplined about insisting the sequence matters — you cannot skip private victory and expect public victory to hold.</p>
+    <p>Its greatest strength is durability. Decades after publication, the Emotional Bank Account, the Circle of Influence, the Four Quadrants, and "seek first to understand" remain in active daily use across business, education, and personal life — a rare outcome for a self-help framework, and strong evidence the underlying principles were never really trend-dependent to begin with.</p>
+    <p>The honest caveat is that this is a dense book that rewards re-reading far more than a single pass. Some sections feel repetitive, some examples read as dated, and the framework says relatively little about structural constraints outside an individual's control. Read it as a durable operating system to be revisited over years, not a technique to apply once and move past.</p>
+    <p>The practical recommendation: read the whole book once for the full architecture, then keep the Four Quadrants and the Emotional Bank Account close at hand for daily use. The real value isn't in agreeing intellectually that the habits sound right — it's in actually writing the Personal Mission Statement, actually protecting Quadrant II time, and actually listening to understand before being understood, which is exactly the discipline the entire book is built to install.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
