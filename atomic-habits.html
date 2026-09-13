@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atomic Habits — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=DM+Sans:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:        #1c1a15;
+    --ink-deep:   #0c0b08;
+    --ink-light:  #423d33;
+    --ink-dim:    rgba(28,26,21,0.06);
+    --paper:      #fbf7ee;
+    --cream:      #f4ecdb;
+    --amber:      #c9862f;
+    --amber-dark: #9c6421;
+    --amber-dim:  rgba(201,134,47,0.14);
+    --amber-light:#e0ab63;
+    --gray:       #948d7c;
+    --gray-dark:  #625b4b;
+    --border:     rgba(28,26,21,0.13);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink-deep);
+    min-height: 100vh;
+  }
+
+  /* ─────────────────────────────────────────────
+     HERO — cream cover canvas, amber dot-matrix motif, tilted cover art
+  ───────────────────────────────────────────── */
+  .hero {
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .bestseller-bar {
+    padding: 8px 40px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner {
+    padding: 40px 40px 44px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  /* Dot-matrix motif, echoing the halftone lettering on the cover */
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img {
+    width: 132px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+    transform: rotate(5deg);
+    box-shadow: 8px 12px 26px rgba(28,26,21,0.22);
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  .book-label {
+    display: inline-block;
+    background: var(--ink-deep);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .hero h1 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 900;
+    font-size: clamp(32px, 6vw, 54px);
+    color: var(--ink-deep);
+    line-height: 1.0;
+    max-width: 600px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 em { color: var(--amber-dark); font-style: normal; font-weight: 500; display: block; font-size: 0.34em; letter-spacing: 0; margin-top: 14px; max-width: 480px; font-family: 'Fraunces', serif; font-style: italic; }
+  .author {
+    margin-top: 18px;
+    color: var(--gray-dark);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  .author span { color: var(--ink-deep); font-weight: 700; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+  .meta-pill {
+    background: var(--ink-deep);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .badge-seal {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--amber-light), var(--amber-dark) 78%);
+    color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; font-weight: 800; letter-spacing: 0.3px; line-height: 1.05;
+    box-shadow: 0 3px 10px rgba(156,100,33,0.35);
+    flex-shrink: 0;
+  }
+  .badge-seal .b-top { font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-seal .b-mid { font-size: 13px; margin: 1px 0; }
+  .badge-seal .b-bot { font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── Back bar ── */
+  .back-bar { background: var(--cream); padding: 10px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+  .back-link { color: var(--gray-dark); font-size: 12px; text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+  .back-link:hover { color: var(--ink); }
+  .back-link span { margin-right: 6px; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; background: var(--cream); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    color: var(--gray-dark); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all 0.2s;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--amber); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 21px; color: var(--ink); letter-spacing: 0.1px; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--amber-dark); margin-bottom: 6px; font-weight: 700; }
+  .stat-value { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 16.5px; color: var(--ink); letter-spacing: 0.1px; }
+  .stat-desc { font-size: 12px; color: var(--gray-dark); margin-top: 4px; }
+
+  .summary-block {
+    background: var(--cream); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; padding: 20px 22px;
+    margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: #221f19;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: white; border: 1px solid #eee3d1;
+    border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--ink-deep); color: #ffffff; padding: 10px 18px; border-radius: 6px; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 12px; margin-top: 24px; font-weight: 700;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card { background: white; border: 1px solid #eee3d1; border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(28,26,21,0.10); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num { width: 32px; height: 32px; background: var(--ink-deep); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .ch-num.intro { background: var(--amber-dark); color: #fff; }
+  .ch-title { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 15px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--amber-dark); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body { display: none; padding: 14px 18px 18px 64px; font-size: 13.5px; line-height: 1.7; color: #292520; border-top: 1px solid #f6efe0; }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px; background: var(--amber-dim); border-left: 3px solid var(--amber); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12.5px; color: var(--amber-dark); font-weight: 700;
+  }
+  .ch-tool {
+    margin-top: 8px; background: var(--ink-dim); border-left: 3px solid var(--ink); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12px; color: var(--ink-deep);
+  }
+  .ch-tool strong { color: var(--ink); }
+
+  /* ── Framework cards ── */
+  .method-card { background: white; border: 1px solid #eee3d1; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+  .method-card h4 { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--gray-dark); }
+  .method-card .tag {
+    display: inline-block; background: var(--ink-deep); color: white; font-size: 10px; letter-spacing: 1px; padding: 3px 9px;
+    border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 700;
+  }
+
+  /* ── Habit Loop (steps) ── */
+  .steps-wrap { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; flex-wrap: wrap; }
+  .step-card { flex: 1; min-width: 150px; background: var(--cream); border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 12px; text-align: center; }
+  .step-card .s-num { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber-dark); font-weight: 700; margin-bottom: 6px; }
+  .step-card .s-title { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+  .step-card .s-desc { font-size: 11.5px; line-height: 1.5; color: var(--gray-dark); }
+  .step-arrow { display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 16px; }
+  @media (max-width: 760px) { .steps-wrap { flex-direction: column; } .step-arrow { display: none; } }
+
+  /* ── Code-style block (Two-Minute Rule) ── */
+  .code-block { background: var(--ink-deep); color: #f2e9d8; border-radius: 8px; padding: 20px; font-family: monospace; font-size: 13px; line-height: 1.9; margin-bottom: 16px; }
+  .code-block .comment { color: rgba(201,134,47,0.65); }
+  .code-block .keyword { color: var(--amber-light); }
+  .code-block .value { color: #f5efe2; }
+
+  /* ── Toolkit page list ── */
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item { display: flex; gap: 10px; align-items: flex-start; background: white; border: 1px solid #eee3d1; border-radius: 8px; padding: 10px 12px; font-size: 12px; line-height: 1.5; color: #292520; }
+  .toolkit-item .t-ic { font-size: 14px; flex-shrink: 0; }
+  @media (max-width: 560px) { .toolkit-list { grid-template-columns: 1fr; } }
+
+  /* ── Verdict banner ── */
+  .verdict-banner { background: linear-gradient(135deg, var(--ink-deep) 0%, #2a1c08 100%); border-radius: 12px; padding: 28px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden; }
+  .verdict-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at  5% 20%, var(--amber) 0%, var(--amber) 3px, transparent 4px) 0 0/26px 26px,
+      radial-gradient(circle at 95% 75%, var(--amber) 0%, var(--amber) 12px, transparent 13px),
+      radial-gradient(circle at 90% 15%, #ffffff 0%, #ffffff 5px, transparent 6px),
+      radial-gradient(circle at 10% 85%, #ffffff 0%, #ffffff 7px, transparent 8px);
+    opacity: 0.16; pointer-events: none;
+  }
+  .verdict-banner h3 { font-family: 'DM Sans', sans-serif; font-weight: 900; font-size: 30px; color: var(--amber-light); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(255,255,255,0.78); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item { text-align: center; background: rgba(201,134,47,0.18); border: 1px solid rgba(201,134,47,0.4); border-radius: 8px; padding: 10px 16px; min-width: 90px; }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--amber-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list { background: white; border-radius: 10px; padding: 16px 18px; border: 1px solid #eee3d1; }
+  .pro-list h4 { color: var(--ink); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--amber-dark); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--gray-dark); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--ink); }
+  .con-list .dot { background: var(--amber); }
+
+  /* ── Quotes ── */
+  .quote-block { background: var(--cream); border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; position: relative; border-left: 3px solid var(--amber); }
+  .quote-block::before {
+    content: '\201C'; font-family: 'Fraunces', serif; font-size: 60px; color: var(--amber); position: absolute; top: -8px; left: 16px; line-height: 1;
+  }
+  .quote-block p { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 16px; line-height: 1.5; padding-left: 10px; margin-top: 16px; color: var(--ink-deep); }
+  .quote-block .attr { font-size: 11px; color: var(--gray-dark); margin-top: 8px; text-align: right; font-family: 'DM Sans', sans-serif; font-style: normal; }
+
+  /* ── Who cards ── */
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid #eee3d1; border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.6; transition: border-color 0.2s; }
+  .who-card:hover { border-color: var(--amber); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .toolkit-list { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero-inner { padding: 28px 20px 28px; flex-wrap: wrap; }
+    .bestseller-bar { padding: 8px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     HERO — cream cover canvas + amber dot-matrix motif + cover art
+════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="bestseller-bar">New York Times Bestseller</div>
+  <div class="hero-inner">
+    <div class="hero-motif">
+      <svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- upper-right dot scatter, echoing the halftone lettering -->
+        <g fill="#c9862f" opacity="0.5">
+          <circle cx="742" cy="46" r="2.4"/><circle cx="760" cy="62" r="1.6"/><circle cx="722" cy="66" r="1.4"/>
+          <circle cx="778" cy="40" r="1.8"/><circle cx="700" cy="30" r="1.2"/><circle cx="754" cy="80" r="1.3"/>
+          <circle cx="788" cy="70" r="1.5"/><circle cx="710" cy="52" r="1.1"/><circle cx="766" cy="24" r="1.3"/>
+        </g>
+        <!-- lower-left dot scatter -->
+        <g fill="#c9862f" opacity="0.4">
+          <circle cx="40" cy="214" r="2.2"/><circle cx="58" cy="230" r="1.5"/><circle cx="22" cy="232" r="1.3"/>
+          <circle cx="70" cy="198" r="1.6"/><circle cx="14" cy="200" r="1.1"/><circle cx="50" cy="248" r="1.2"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Field Guide</div>
+      <h1>Atomic Habits<em>An Easy &amp; Proven Way to Build Good Habits &amp; Break Bad Ones</em></h1>
+      <div class="author">by <span>James Clear</span> &nbsp;·&nbsp; Over 25 Million Copies Sold &nbsp;·&nbsp; Avery / Penguin Random House</div>
+      <div class="hero-meta">
+        <div class="meta-pill">Habit Formation</div>
+        <div class="meta-pill">Productivity</div>
+        <div class="meta-pill">Behavioral Psychology</div>
+        <div class="meta-pill">2018</div>
+        <div class="badge-seal"><div class="b-top">Over</div><div class="b-mid">25M</div><div class="b-bot">Copies Sold</div></div>
+      </div>
+    </div>
+
+    <div class="book-cover-wrap">
+      <img src="images/atomic-habits-cover.jpg" alt="Atomic Habits book cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('framework', this)">Framework &amp; Toolkit</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════════ -->
+<div id="overview" class="panel active">
+
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core Focus</div>
+      <div class="stat-value">Tiny, Systematic Improvements That Compound</div>
+      <div class="stat-desc">A practical system for building good habits and breaking bad ones through 1% changes, not heroic overhauls</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">Lasting Change Through Identity, Not Willpower</div>
+      <div class="stat-desc">Real behavior change is identity change — habits are how you cast repeated votes for the person you want to become</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Primary Framework</div>
+      <div class="stat-value">The Habit Loop &amp; The Four Laws of Behavior Change</div>
+      <div class="stat-desc">Cue, Craving, Response, Reward — and how to make each one work for you instead of against you</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Anyone Who's Tried and Failed to "Just Have More Discipline"</div>
+      <div class="stat-desc">Readers who want a systems-based, science-grounded alternative to motivation and willpower</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Atomic Habits</strong> opens with James Clear's own story: a serious baseball injury in high school that nearly ended his athletic career, and the slow, boring, unglamorous rebuild — small physical and academic habits, repeated daily — that eventually made him a starting player and, later, a Dean's List student. That personal arc frames the book's central argument: transformative results rarely come from one big change. They come from the accumulated weight of tiny, consistent habits — what Clear calls being "1% better every day," a rate of improvement so small it's invisible in the moment but compounds into a completely different trajectory over months and years.</p>
+    <p>The book's engine is the <strong>habit loop</strong> — cue, craving, response, reward — borrowed and extended from behavioral psychology, and its practical translation into the <strong>Four Laws of Behavior Change</strong>: make it obvious, make it attractive, make it easy, and make it satisfying. Every chapter builds toward concrete tactics for each law (and its inverse, for breaking bad habits), from habit stacking and implementation intentions to environment design, temptation bundling, and the Two-Minute Rule.</p>
+    <p>Underneath the tactics sits a deeper claim: habits aren't just things you do, they're evidence of who you believe yourself to be. Clear argues the most durable way to change behavior is to change identity first — to become "the type of person who doesn't miss workouts" rather than someone chasing a single outcome — because outcome-based goals fade once achieved, but identity-based habits persist. The result is less a motivational pep talk than an operating manual: precise, research-backed, and built entirely around systems you can actually run every day.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">📈</div><div><strong>1% better every day.</strong> Marginal, unglamorous improvements compound into remarkable results over time — the same way tiny declines compound into remarkable failure.</div></div>
+  <div class="key-idea"><div class="icon">🔁</div><div><strong>The Habit Loop.</strong> Every habit runs on the same four-stage cycle — Cue, Craving, Response, Reward — and each stage is a lever you can deliberately engineer.</div></div>
+  <div class="key-idea"><div class="icon">🪪</div><div><strong>Identity-based habits.</strong> The most durable change starts with "who do I want to become," not "what do I want to achieve" — every habit is a vote for a type of person.</div></div>
+  <div class="key-idea"><div class="icon">👁️</div><div><strong>The Four Laws of Behavior Change.</strong> Make it obvious, make it attractive, make it easy, make it satisfying — and invert each one to break a bad habit instead.</div></div>
+  <div class="key-idea"><div class="icon">🧱</div><div><strong>Habit stacking.</strong> New habits stick fastest when anchored to an existing one: "After [current habit], I will [new habit]."</div></div>
+  <div class="key-idea"><div class="icon">🏡</div><div><strong>Environment over willpower.</strong> People with great "self-control" tend to spend less time in tempting situations — design your surroundings so good choices need no willpower at all.</div></div>
+  <div class="key-idea"><div class="icon">⏱️</div><div><strong>Immediate rewards.</strong> Behavior followed by immediate satisfaction gets repeated; behavior followed by immediate cost gets avoided — even when the true payoff is years away.</div></div>
+  <div class="key-idea"><div class="icon">🌊</div><div><strong>The Plateau of Latent Potential.</strong> Results often lag effort for a long, discouraging stretch before a breakthrough — most people quit right before the curve bends upward.</div></div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     CHAPTERS
+════════════════════════════════════════════ -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Front Matter</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">I</div>
+      <div class="ch-title">Introduction: My Story</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear recounts being struck in the face by a swinging baseball bat as a teenager, suffering a shattered skull and severe injuries that sidelined him from sports entirely. Rather than a dramatic comeback, his recovery was built from small, boring habits — better sleep, tidying his dorm room, tiny gym improvements — repeated daily over years, which eventually carried him to a starting spot on his college team and later a career studying habit formation.
+      <br><br>
+      He uses his own trajectory to introduce the book's founding claim: it wasn't one big change that turned his life around, it was the compounding effect of small, consistent habits nobody else noticed. This sets up the book's central promise — that tiny, systematic improvements, not heroic transformations, are the actual mechanism behind remarkable long-term results.
+      <div class="ch-takeaway">Remarkable outcomes are rarely the product of one big moment — they're the visible result of small habits compounding quietly for a long time beforehand.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Habits as the compound interest of self-improvement</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part One — The Fundamentals: Why Tiny Changes Make a Big Difference</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">The Surprising Power of Atomic Habits</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear opens with British Cycling's transformation under Dave Brailsford, who took a historically underperforming national team to Olympic and Tour de France dominance not through one breakthrough but through the "aggregation of marginal gains" — redesigning bike seats, having riders sleep on their own pillows, testing massage gels, all improved by roughly 1%. No single change mattered much; together, they compounded into total dominance within a few years.
+      <br><br>
+      He formalizes this with the math of compounding: improving 1% daily compounds to roughly 37 times better over a year, while declining 1% daily compounds to near zero — meaning habits function less like single choices and more like a system of automatic compounding, for better or worse. The chapter also distinguishes habits (the compound interest of self-improvement) from goals (single, one-off outcomes), setting up the book's core focus on <strong>systems</strong> over goals.
+      <div class="ch-takeaway">Improvement is rarely dramatic in the moment — it's the compounding of tiny, repeated 1% gains (or losses) that produces dramatically different outcomes over time.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> The Aggregation of Marginal Gains · Habits as Compound Interest</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">How Your Habits Shape Your Identity (and Vice Versa)</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear introduces three layers of behavior change, arranged like an onion: <strong>outcomes</strong> (what you get), <strong>processes</strong> (what you do), and <strong>identity</strong> (what you believe). Most people focus change efforts on outcomes ("I want to lose 20 pounds") or processes ("I'll follow this workout plan"), but he argues the deepest, most durable layer is identity — the beliefs, assumptions, and self-image that quietly drive every process and outcome above them.
+      <br><br>
+      His central mechanism: "every action you take is a vote for the type of person you wish to become." No single vote transforms your identity, but a consistent pattern of votes eventually becomes undeniable evidence of who you are — which is why identity-based habits ("I am someone who doesn't miss workouts") tend to outlast outcome-based goals ("I want to run a marathon") once the original motivation fades.
+      <div class="ch-takeaway">The most durable habit change starts with identity, not outcomes — decide who you want to be first, then let small daily habits provide the evidence.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Outcomes vs. Processes vs. Identity · "Every action is a vote"</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">How to Build Better Habits in 4 Simple Steps</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear lays out the neuroscience-grounded <strong>habit loop</strong>: a <strong>cue</strong> triggers a <strong>craving</strong>, which motivates a <strong>response</strong>, which delivers a <strong>reward</strong> — and that reward, in turn, teaches the brain to notice the cue again next time. He walks through how this loop underlies everything from checking a phone to brushing teeth, arguing the loop itself is morally neutral; it's equally capable of producing good or bad habits depending on what's attached to it.
+      <br><br>
+      This sets up the book's practical spine: the <strong>Four Laws of Behavior Change</strong> — make it obvious (cue), make it attractive (craving), make it easy (response), make it satisfying (reward) — as a direct, actionable translation of the four-stage loop, with each law invertible to break a bad habit instead of build a good one.
+      <div class="ch-takeaway">Every habit, good or bad, runs on the same four-stage loop. Learn to deliberately engineer each stage and you can build or break almost any habit.</div>
+      <div class="ch-tool"><strong>Key framework:</strong> The Habit Loop (Cue → Craving → Response → Reward) · Preview of the Four Laws</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Two — The 1st Law: Make It Obvious</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">The Man Who Didn't Look Right</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear opens with a story of paramedics trained to notice subtle, unconscious cues — like a man who "didn't look right" — long before symptoms became obvious, illustrating how much behavior runs on cues we've stopped consciously noticing. Most habits, he argues, become so automatic that the cues triggering them fade entirely from awareness, which makes change hard: you can't fix a habit loop you can't see.
+      <br><br>
+      He introduces the <strong>Habits Scorecard</strong> — listing your daily habits and labeling each "+", "–", or "=" for good, bad, or neutral — as a tool for rebuilding awareness without judgment, paired with the Japanese train conductors' technique of "pointing-and-calling" (physically pointing at and verbally naming a cue) to force cues back into conscious attention.
+      <div class="ch-takeaway">You can't change a habit you're not aware of. Awareness — not motivation — is always the first step, and it has to come before any of the Four Laws can work.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Habits Scorecard · Pointing-and-Calling</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">The Best Way to Start a New Habit</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear presents research showing that people who make a specific plan for when and where a behavior will happen are dramatically more likely to follow through than people who merely intend to. This produces the <strong>implementation intention</strong> formula — "I will [BEHAVIOR] at [TIME] in [LOCATION]" — which converts a vague intention into an unambiguous, obvious cue.
+      <br><br>
+      He extends this into <strong>habit stacking</strong>: "After [CURRENT HABIT], I will [NEW HABIT]," which anchors a new behavior to an existing, already-automatic one rather than relying on time or willpower alone. Because the current habit is already deeply cued, the new one inherits that same automaticity far faster than it would on its own.
+      <div class="ch-takeaway">Vague intentions rarely survive contact with a busy day. Naming the exact time, place, and anchor habit turns "I should" into something your environment actually reminds you to do.</div>
+      <div class="ch-tool"><strong>Key formula:</strong> Implementation Intentions · Habit Stacking ("After [X], I will [Y]")</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">Motivation Is Overrated; Environment Often Matters More</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear argues that context, not willpower, is the real driver of most behavior — the same person will make different choices in different rooms, because each environment carries its own set of cues. He cites research on hospital patients quitting smoking after surgery: the change in environment, not extra willpower, disrupted the old cue-response chain entirely.
+      <br><br>
+      From this he derives a practical design principle: make the cues of good habits obvious and visible in your space (fruit on the counter, a book on the pillow), and make the cues of bad habits invisible or absent (phone in another room, remote control's batteries removed). Redesigning environment, he argues, is a one-time investment that pays off every single day afterward, unlike willpower, which has to be re-spent constantly.
+      <div class="ch-takeaway">You don't need more willpower — you need an environment where the good choice is the obvious one and the bad choice barely shows up as an option.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Environment Design · Context as the Cue</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">The Secret to Self-Control</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear examines research on people considered to have exceptional self-discipline and finds they typically aren't resisting temptation more successfully — they're structuring their lives to encounter far less of it in the first place. Willpower, in this framing, is a short-term coping strategy, not a durable long-term trait to be strengthened through sheer effort.
+      <br><br>
+      He argues cue removal beats cue resistance: once a habit is cued, the craving it produces is difficult to fight in the moment, so the highest-leverage move is to prevent the cue from appearing at all — the inversion of the 1st Law for breaking bad habits, "make it invisible."
+      <div class="ch-takeaway">People with great self-control aren't superhuman resisters — they simply spend less time around temptation. Removing the cue is easier than fighting the craving.</div>
+      <div class="ch-tool"><strong>Key inversion:</strong> 1st Law, Reversed — Make It Invisible</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Three — The 2nd Law: Make It Attractive</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">How to Make a Habit Irresistible</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear explains that dopamine spikes not just when we receive a reward, but in anticipation of one — meaning the craving itself, not the outcome, is often what drives behavior, which is why anticipated pleasure can be engineered deliberately. He introduces <strong>temptation bundling</strong>: pairing an action you want to do with one you need to do, so the craving for the former transfers onto the latter.
+      <br><br>
+      A concrete example — only allowing yourself a favorite show while on the treadmill — shows how bundling can make an otherwise unattractive habit genuinely craved. This becomes the practical core of the 2nd Law: engineer the anticipation, not just the eventual payoff.
+      <div class="ch-takeaway">Cravings, not rewards, drive behavior in the moment. Bundle a habit you need with something you already want, and the craving for one attaches itself to the other.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Temptation Bundling</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">The Role of Family and Friends in Shaping Your Habits</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear argues humans are deeply social creatures who imitate three groups above all: <strong>the close</strong> (family and friends), <strong>the many</strong> (the tribe or culture around us), and <strong>the powerful</strong> (people with status we admire). Habits that align with a group's normal behavior are automatically more attractive, because belonging is one of the strongest human cravings there is.
+      <br><br>
+      The practical implication: joining or building a culture where your desired behavior is the normal behavior is one of the fastest ways to make a habit attractive — surrounding yourself with people for whom the habit is already the default removes the need to rely on individual willpower at all.
+      <div class="ch-takeaway">You're far more likely to adopt a habit that's already normal within a group you belong to or admire — culture is a shortcut past willpower entirely.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Imitating the Close, the Many, and the Powerful</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">10</div>
+      <div class="ch-title">How to Find and Fix the Causes of Your Bad Habits</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear argues every habit is ultimately driven by an underlying craving rather than the surface action itself — you don't crave a cigarette, you crave the relief or ritual associated with it — so lasting change requires identifying and reframing that deeper craving, not just resisting the visible behavior. He shows how the same action can be made more or less attractive purely by shifting the internal narrative around it.
+      <br><br>
+      A recurring example is reframing exercise from an obligation or punishment into a celebration of physical ability, which changes the anticipated feeling attached to the cue and makes the habit genuinely more attractive without changing the behavior itself. This is the deliberate practice of the 2nd Law: change the association, and the craving follows.
+      <div class="ch-takeaway">Every habit is chasing an underlying craving, not the surface behavior. Reframe what a habit represents to you, and its attractiveness changes with it.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Reframing the Underlying Craving · Motivation Ritual</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Four — The 3rd Law: Make It Easy</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">11</div>
+      <div class="ch-title">Walk Slowly, but Never Backward</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear dismantles the popular "21 days to form a habit" myth, citing research that automaticity actually takes anywhere from about 18 to over 250 days depending on the behavior and the person — meaning the specific number matters far less than showing up consistently regardless of how long it takes. He argues repetitions, not the passage of time itself, are what wire a habit into automaticity.
+      <br><br>
+      The chapter's title captures its core message: consistency, even slow consistency, beats occasional intensity followed by giving up. Missing a habit once is an accident; missing it twice is the start of a new, worse habit — protecting the streak matters more than any single session.
+      <div class="ch-takeaway">There's no magic number of days to build a habit — what matters is never missing twice in a row. Slow, unbroken consistency beats sporadic intensity every time.</div>
+      <div class="ch-tool"><strong>Key rule:</strong> Never Miss Twice</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">12</div>
+      <div class="ch-title">The Law of Least Effort</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear formally introduces the <strong>Law of Least Effort</strong>: humans are wired to default to whichever behavior requires the least amount of work, which means the real design task is reducing the friction of good habits and increasing the friction of bad ones, not relying on discipline to override convenience.
+      <br><br>
+      He gives concrete tactics — laying out gym clothes the night before, pre-chopping vegetables, keeping a guitar on a stand instead of in its case — arguing that even small reductions in the number of steps between you and a habit meaningfully change whether it happens. He calls this "priming the environment" for future action, turning the easiest available option into the one you actually want.
+      <div class="ch-takeaway">Willpower rarely beats convenience. Reduce the friction of good habits and add friction to bad ones, and behavior tends to follow the path you've engineered.</div>
+      <div class="ch-tool"><strong>Key law:</strong> The Law of Least Effort · Priming the Environment</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">13</div>
+      <div class="ch-title">How to Stop Procrastinating by Using the Two-Minute Rule</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear introduces the <strong>Two-Minute Rule</strong>: scale any new habit down to something that takes two minutes or less — "read before bed" becomes "read one page," "run three miles" becomes "put on my running shoes." The goal isn't to accomplish much in two minutes; it's to master the crucial first step of simply showing up.
+      <br><br>
+      He distinguishes "gateway habits" (the easy entry point) from full mastery of a behavior, arguing that once showing up becomes automatic, scaling difficulty back up is comparatively easy — but skipping straight to an ambitious version of a habit usually collapses under its own difficulty before automaticity ever forms.
+      <div class="ch-takeaway">Master the act of showing up before worrying about performing well. A habit scaled down to two minutes is a habit that actually survives a bad day.</div>
+      <div class="ch-tool"><strong>Key rule:</strong> The Two-Minute Rule · Gateway Habits</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">14</div>
+      <div class="ch-title">How to Make Good Habits Inevitable and Bad Habits Impossible</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear introduces <strong>commitment devices</strong> — decisions made in the present that lock in a future behavior, removing the need for in-the-moment willpower entirely. Examples include automatic 401(k) contributions, freezing a credit card in a block of ice, or using an app that blocks distracting sites at a scheduled time.
+      <br><br>
+      He extends this to technology and one-time actions with lasting effects — automating a habit once (an automatic transfer, a pre-scheduled appointment) so it repeats without further decisions required, effectively making a good habit close to inevitable and a bad one close to impossible without extra effort to circumvent the barrier.
+      <div class="ch-takeaway">The best commitments are made once, in advance, before willpower is needed at all — automate a choice today and you won't have to keep re-deciding it tomorrow.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Commitment Devices · One-Time Actions</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Five — The 4th Law: Make It Satisfying</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">15</div>
+      <div class="ch-title">The Cardinal Rule of Behavior Change</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear states the chapter's title as literally as possible: <strong>what is rewarded is repeated, and what is punished is avoided</strong>. The problem is that most good habits (saving money, exercising) pay off only in the distant future, while most bad habits (junk food, procrastination) reward instantly — meaning the brain's preference for immediate feedback works against long-term interests by default.
+      <br><br>
+      His fix: attach a small, immediate reward to a good habit (even something as simple as tracking a win) so the behavior feels satisfying in the moment, not just eventually — bridging the gap between doing the habit and its real, delayed payoff.
+      <div class="ch-takeaway">Behavior followed by an immediate reward gets repeated, even if the "real" reward is years away. Manufacture a small, instant payoff for every good habit you want to keep.</div>
+      <div class="ch-tool"><strong>Key rule:</strong> What Is Rewarded Is Repeated</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">16</div>
+      <div class="ch-title">How to Stick with Good Habits Every Day</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear champions <strong>habit tracking</strong> as a deceptively powerful tool: the simple act of marking an X on a calendar for each day a habit is completed provides visual, immediate proof of progress, which is itself satisfying and self-reinforcing — echoing Jerry Seinfeld's famous "don't break the chain" method for writing jokes daily.
+      <br><br>
+      He cautions against two failure modes: letting tracking itself become the goal (gaming the metric rather than doing the habit), and abandoning the whole system after one missed day, rather than simply resuming immediately. Tracking works best as a small satisfying layer on top of the real habit, not a replacement for it.
+      <div class="ch-takeaway">A visible record of progress is its own reward — but the tracker should measure the habit, never become the habit itself.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Habit Tracking · "Don't Break the Chain"</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">17</div>
+      <div class="ch-title">How an Accountability Partner Can Change Everything</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear introduces the <strong>habit contract</strong>: a written agreement, ideally witnessed by an accountability partner, that spells out the habit you intend to keep and the consequence you'll face if you don't. Making the cost of failure social and immediate — rather than abstract and distant — dramatically raises the stakes of skipping a habit.
+      <br><br>
+      He argues most people don't need more information about why a habit matters; they need someone watching, because social cost (embarrassment, disappointing another person) is felt instantly, while the personal cost of a skipped habit is usually felt much later, if at all.
+      <div class="ch-takeaway">An audience changes behavior. A habit contract with a real accountability partner turns a distant, abstract cost into an immediate, social one.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Habit Contract · Accountability Partners</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Six — Advanced Tactics</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">18</div>
+      <div class="ch-title">The Truth About Talent (When Genes Matter and When They Don't)</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear addresses genetics directly: genes don't determine destiny, but they do predispose certain habits to feel easier, more natural, and more satisfying for a given person — meaning the same habit can be a struggle for one person and nearly effortless for another. Rather than ignoring this, he argues the smartest strategy is choosing habits and even competitive arenas that play to your natural predispositions.
+      <br><br>
+      He frames this as picking "the right game" — a sport, career, or habit where your specific traits (body type, temperament, cognitive style) are already an advantage — arguing that working with your nature rather than against it makes the Four Laws far easier to apply, since the habit is inherently more attractive and satisfying from the start.
+      <div class="ch-takeaway">Genes shape what comes easily to you, not what's possible for you. Choose habits and pursuits that play to your natural strengths, and the Four Laws do less heavy lifting.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Choosing the Right Game · Genetic Predisposition</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">19</div>
+      <div class="ch-title">The Goldilocks Rule: How to Stay Motivated in Life and Work</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear introduces the <strong>Goldilocks Rule</strong>: peak motivation occurs when a task sits right at the edge of your current ability — challenging enough to require full concentration, but not so hard that it feels impossible. Tasks too easy produce boredom; tasks too hard produce anxiety and avoidance; the sweet spot in between is where flow and sustained motivation both live.
+      <br><br>
+      He argues the greatest threat to long-term habits isn't failure, it's <strong>boredom</strong> — once a habit becomes routine, the temptation is to abandon it for something newer and more stimulating. The professional's edge, he argues, is sticking to the schedule regardless of mood: "professionals stick to the schedule; amateurs let life get in the way."
+      <div class="ch-takeaway">Boredom, not failure, kills most habits. Long-term success means showing up on schedule even when the task no longer feels new or exciting.</div>
+      <div class="ch-tool"><strong>Key rule:</strong> The Goldilocks Rule · Professionals vs. Amateurs</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">20</div>
+      <div class="ch-title">The Downside of Creating Good Habits</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear closes with a deliberate caution: automaticity, the very thing habits are built to produce, can also breed complacency, since automatic behavior stops requiring conscious attention to errors or opportunities for improvement. A habit that's become effortless can quietly stop improving — or start sliding backward — without the person noticing.
+      <br><br>
+      His proposed fix is pairing habits with periodic deliberate practice and reflection: using tools like a Habits Scorecard or an annual review to catch complacency before it calcifies, so mastery keeps advancing even as the underlying behavior becomes second nature.
+      <div class="ch-takeaway">Automaticity is efficient, but it's also blind to its own decline. Pair every settled habit with periodic reflection so ease doesn't quietly turn into stagnation.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Automaticity vs. Mastery · Reflection &amp; Review</div>
+    </div>
+  </div>
+
+  <div class="part-header">Conclusion</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">C</div>
+      <div class="ch-title">The Secret to Results That Last</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Clear closes by returning to the book's identity thread: small habits don't just change what you do, they change the story you tell yourself about who you are. Each repetition is quiet proof — to yourself, not to anyone else — that you're becoming the kind of person capable of the outcome you want.
+      <br><br>
+      The final call to action is simple: stop waiting to feel like the person you want to become, and instead let small, consistent habits provide the evidence first. Identity change isn't a precondition for building better habits — for most people, it's the result of building them.
+      <div class="ch-takeaway">You don't need to feel ready to become who you want to be. Small, repeated habits are how you build the evidence for a new identity, not the reward for already having one.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Habits as the Evidence of Identity</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     FRAMEWORK & TOOLKIT
+════════════════════════════════════════════ -->
+<div id="framework" class="panel">
+
+  <div class="section-header">
+    <h2>The Habit Loop</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Every habit — good or bad — runs on the same four-stage cycle. The Four Laws are simply this loop turned into a set of levers.</p>
+
+  <div class="steps-wrap">
+    <div class="step-card">
+      <div class="s-num">Stage 1</div>
+      <div class="s-title">Cue</div>
+      <div class="s-desc">Triggers the brain to notice a reward is available and starts a behavior in motion</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="s-num">Stage 2</div>
+      <div class="s-title">Craving</div>
+      <div class="s-desc">The motivational force behind every habit — you crave the change in state, not the action itself</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="s-num">Stage 3</div>
+      <div class="s-title">Response</div>
+      <div class="s-desc">The actual habit performed, determined by how easy or difficult it is to execute</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="s-num">Stage 4</div>
+      <div class="s-title">Reward</div>
+      <div class="s-desc">The end goal, satisfying the craving and teaching the brain to remember this cue next time</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Two-Minute Rule in Practice</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Scale any habit down until it can be started in two minutes or less — master showing up before worrying about performing well.</p>
+
+  <div class="code-block">
+    <span class="comment">// ambitious version — hard to start on a bad day</span><br>
+    <span class="keyword">HABIT</span> <span class="value">"Run a 5k every morning"</span><br><br>
+    <span class="comment">// scaled to a Two-Minute Rule gateway habit</span><br>
+    <span class="keyword">HABIT</span> <span class="value">"Put on my running shoes"</span><br><br>
+    <span class="keyword">RESULT:</span> <span class="value">showing up becomes automatic first — difficulty can scale back up once it is</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Four Laws of Behavior Change</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">1st Law · Cue</div>
+    <h4>Make It Obvious</h4>
+    <p>Use the Habits Scorecard to build awareness, write implementation intentions ("I will [X] at [TIME] in [LOCATION]"), stack new habits onto existing ones, and redesign your environment so good cues are visible everywhere.</p>
+  </div>
+  <div class="method-card">
+    <div class="tag">2nd Law · Craving</div>
+    <h4>Make It Attractive</h4>
+    <p>Use temptation bundling to pair a wanted action with a needed one, join a culture where your desired behavior is already normal, and reframe a habit's underlying association to make it something you crave rather than endure.</p>
+  </div>
+  <div class="method-card">
+    <div class="tag">3rd Law · Response</div>
+    <h4>Make It Easy</h4>
+    <p>Apply the Law of Least Effort by priming your environment, reduce the number of steps between you and a good habit, use the Two-Minute Rule to master showing up, and lock in good behavior with one-time commitment devices.</p>
+  </div>
+  <div class="method-card">
+    <div class="tag">4th Law · Reward</div>
+    <h4>Make It Satisfying</h4>
+    <p>Attach an immediate, small reward to every good habit so it feels satisfying right away, track progress visually to reinforce the streak, and use a habit contract with an accountability partner to make skipping it feel costly.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Building vs. Breaking: The Four Laws, Inverted</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>To Build a Good Habit</h4>
+      <div class="list-item"><div class="dot"></div><div>Make it Obvious — use cues, implementation intentions, habit stacking</div></div>
+      <div class="list-item"><div class="dot"></div><div>Make it Attractive — bundle temptation, join a supportive culture</div></div>
+      <div class="list-item"><div class="dot"></div><div>Make it Easy — reduce friction, use the Two-Minute Rule</div></div>
+      <div class="list-item"><div class="dot"></div><div>Make it Satisfying — add an immediate reward, track visibly</div></div>
+    </div>
+    <div class="con-list">
+      <h4>To Break a Bad Habit</h4>
+      <div class="list-item"><div class="dot"></div><div>Make it Invisible — remove the cue from your environment entirely</div></div>
+      <div class="list-item"><div class="dot"></div><div>Make it Unattractive — reframe the mindset, highlight the real costs</div></div>
+      <div class="list-item"><div class="dot"></div><div>Make it Difficult — increase friction, add steps between you and it</div></div>
+      <div class="list-item"><div class="dot"></div><div>Make it Unsatisfying — add an immediate cost, use a habit contract</div></div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Quick-Reference Toolkit</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div class="t-ic">📋</div><div><strong>Habits Scorecard</strong> — list your daily habits and mark each +, –, or = without judgment</div></div>
+    <div class="toolkit-item"><div class="t-ic">🧩</div><div><strong>Habit Stacking</strong> — "After [current habit], I will [new habit]"</div></div>
+    <div class="toolkit-item"><div class="t-ic">🏡</div><div><strong>Environment Design</strong> — make good cues visible, bad cues invisible</div></div>
+    <div class="toolkit-item"><div class="t-ic">⏱️</div><div><strong>Two-Minute Rule</strong> — scale any habit down to a two-minute starting version</div></div>
+    <div class="toolkit-item"><div class="t-ic">🎯</div><div><strong>Temptation Bundling</strong> — pair a wanted action with a needed one</div></div>
+    <div class="toolkit-item"><div class="t-ic">📈</div><div><strong>Habit Tracking</strong> — mark progress visually; never break the chain twice</div></div>
+    <div class="toolkit-item"><div class="t-ic">🤝</div><div><strong>Habit Contract</strong> — write consequences down with an accountability partner</div></div>
+    <div class="toolkit-item"><div class="t-ic">🔒</div><div><strong>Commitment Devices</strong> — automate a good choice once, in advance</div></div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     VERDICT
+════════════════════════════════════════════ -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.8 / 5</h3>
+    <p>The definitive operating manual for behavior change — the Habit Loop and Four Laws turn "build better habits" from a motivational slogan into a repeatable, engineerable system</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.9</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.8</div>
+        <div class="r-label">Actionability</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.6</div>
+        <div class="r-label">Evidence Base</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.9</div>
+        <div class="r-label">Readability</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>The Habit Loop and Four Laws give a genuinely repeatable system, not just motivational advice</div></div>
+      <div class="list-item"><div class="dot"></div><div>Every concept ships with a concrete tool — Habits Scorecard, habit stacking formula, Two-Minute Rule — nothing stays abstract</div></div>
+      <div class="list-item"><div class="dot"></div><div>The identity-based framing gives lasting motivation beyond any single goal</div></div>
+      <div class="list-item"><div class="dot"></div><div>Clear, propulsive writing with vivid stories (British Cycling, the paramedic, Seinfeld's chain) that make the science memorable</div></div>
+      <div class="list-item"><div class="dot"></div><div>The build/break inversion of each law doubles the framework's usefulness in one pass</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Individual habits are covered thoroughly, but coordinating many habits into a full daily/weekly system is left mostly to the reader</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some studies cited are older or drawn from small samples, and aren't always caveated as such</div></div>
+      <div class="list-item"><div class="dot"></div><div>Light on how to handle habits that depend on other people (parenting, teams, shared households) rather than solo behavior</div></div>
+      <div class="list-item"><div class="dot"></div><div>The identity-change argument is compelling but less rigorously evidenced than the habit-loop mechanics</div></div>
+      <div class="list-item"><div class="dot"></div><div>Chapter 20's caution about complacency arrives late and is thinner than the rest of the system it's warning against</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone who's relied on motivation or willpower and watched it fail</strong> — this book replaces both with a system.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>People trying to build one specific habit</strong> — exercise, reading, saving money — who want concrete, sequenced tactics rather than general encouragement.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Managers and coaches</strong> designing environments or incentive structures for teams, not just individuals.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Readers of Switch or The Power of Habit</strong> who want the most tactically dense, tool-heavy treatment of the same territory.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting deep academic rigor</strong> may want to pair this with the primary research it draws from.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Anyone facing habits entangled with clinical addiction or mental health conditions</strong> should treat this as a general framework, not a substitute for professional support.</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Lines</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>You do not rise to the level of your goals. You fall to the level of your systems.</p>
+    <div class="attr">— James Clear, Atomic Habits</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Every action you take is a vote for the type of person you wish to become.</p>
+    <div class="attr">— James Clear, Atomic Habits</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Habits are the compound interest of self-improvement.</p>
+    <div class="attr">— James Clear, Atomic Habits</div>
+  </div>
+
+  <div class="quote-block">
+    <p>You should be far more concerned with your current trajectory than with your current results.</p>
+    <div class="attr">— James Clear, Atomic Habits</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>If the book has one idea worth carrying forward above all others, it's that habits are never really about the outcome you're chasing — they're votes for the identity you're building, cast one small, unglamorous repetition at a time. The Four Laws matter because they make each vote easier to cast: obvious enough to remember, attractive enough to want, easy enough to actually do, and satisfying enough to repeat.</p>
+    <p>This is what separates <em>Atomic Habits</em> from advice built on willpower or motivation: it treats behavior change as a design problem, not a character test. Environment, friction, and immediate feedback do the work that discipline is usually asked to do — and unlike discipline, they don't run out by the end of a long day.</p>
+    <p>The closing warning about complacency is the book's quiet correction to itself: automaticity is the goal, but automaticity without periodic reflection can just as easily lock in stagnation as progress. The full system, then, isn't "build habits and stop thinking" — it's build habits, then keep checking whether they're still the right ones.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p><strong>Atomic Habits</strong> earns its place as the modern reference text on behavior change by doing something rarer than it sounds: turning genuinely useful psychology into tools a reader can apply the same day. The Habit Loop gives the underlying mechanism; the Four Laws (and their inversions) give the actionable interface on top of it — few books manage that translation this cleanly, and fewer still make it this readable.</p>
+    <p>Its comparative weakness is scope rather than execution: it's built for optimizing individual habits, one at a time, and offers less guidance on juggling many habits at once, habits entangled with other people, or habits complicated by genuine addiction. Readers wanting the research foundations underneath the stories will want to go looking for them elsewhere.</p>
+    <p>The practical recommendation: don't try to install the whole system at once. Pick one habit, run it through all Four Laws — cue, craving, response, reward — and let the Two-Minute Rule get you started. The book's real promise was never instant transformation; it's that small, obvious, easy, satisfying habits, repeated long enough, quietly become undeniable evidence of who you've become.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
