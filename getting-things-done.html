@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Things Done — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:        #161616;
+    --ink-deep:   #000000;
+    --ink-light:  #3a3a3a;
+    --ink-dim:    rgba(22,22,22,0.06);
+    --paper:      #ffffff;
+    --cream:      #f7f6f4;
+    --orange:     #f0741f;
+    --orange-dark:#c65915;
+    --orange-dim: rgba(240,116,31,0.13);
+    --navy:       #22314a;
+    --navy-dark:  #141d2c;
+    --navy-dim:   rgba(34,49,74,0.10);
+    --gray:       #8f8f8f;
+    --gray-dark:  #5c5c5c;
+    --border:     rgba(20,20,20,0.14);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink-deep);
+    min-height: 100vh;
+  }
+
+  /* ─────────────────────────────────────────────
+     HERO — pure white canvas, black/orange type + underline motif + checkmark seal
+  ───────────────────────────────────────────── */
+  .hero {
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    border-top: 6px solid var(--orange);
+  }
+  .hero-inner {
+    padding: 40px 40px 36px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .hero-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(20,20,20,0.035) 0px, rgba(20,20,20,0.035) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(90deg, rgba(20,20,20,0.035) 0px, rgba(20,20,20,0.035) 1px, transparent 1px, transparent 34px);
+    pointer-events: none;
+  }
+
+  /* Underline-stroke + checkmark-seal motif, echoing the cover's title underlines & "updated edition" badge */
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: 0.95; }
+  .hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img {
+    width: 128px;
+    border-radius: 4px;
+    border: 1px solid #eeeeee;
+    transform: rotate(-6deg);
+    box-shadow: -6px 10px 26px rgba(0,0,0,0.22);
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  .book-label {
+    display: inline-block;
+    background: var(--orange);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .hero h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(26px, 5vw, 44px);
+    color: var(--ink-deep);
+    line-height: 1.1;
+    max-width: 620px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 .underline-word { position: relative; display: inline-block; }
+  .hero h1 .underline-word::after {
+    content: '';
+    position: absolute;
+    left: 2px; right: 6px; bottom: -6px;
+    height: 4px;
+    background: var(--orange);
+  }
+  .hero h1 em { color: var(--gray-dark); font-style: normal; font-weight: 500; text-transform: none; font-family: 'DM Sans', sans-serif; display: block; font-size: 0.52em; letter-spacing: 0; margin-top: 12px; }
+  .author {
+    margin-top: 18px;
+    color: var(--gray-dark);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .author span { color: var(--ink); font-weight: 600; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .meta-pill {
+    background: var(--navy-dim);
+    border: 1px solid rgba(34,49,74,0.35);
+    color: var(--navy);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ── Back bar ── */
+  .back-bar { background: var(--cream); padding: 10px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+  .back-link { color: var(--gray-dark); font-size: 12px; text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+  .back-link:hover { color: var(--ink); }
+  .back-link span { margin-right: 6px; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; background: var(--cream); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+    color: var(--gray-dark); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all 0.2s;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--orange); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 21px; color: var(--ink); text-transform: uppercase; letter-spacing: 0.4px; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-dark); margin-bottom: 6px; }
+  .stat-value { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 18px; color: var(--ink); }
+  .stat-desc { font-size: 12px; color: var(--gray-dark); margin-top: 4px; }
+
+  .summary-block {
+    background: var(--cream); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 20px 22px;
+    margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: #222222;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: white; border: 1px solid #ece9e3;
+    border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--ink); color: #ffffff; padding: 10px 18px; border-radius: 6px; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 12px; margin-top: 24px; font-weight: 700;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card { background: white; border: 1px solid #ece9e3; border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(20,20,20,0.10); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num { width: 32px; height: 32px; background: var(--ink); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .ch-num.intro { background: var(--orange); color: #fff; }
+  .ch-title { font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 15.5px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--orange); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body { display: none; padding: 14px 18px 18px 64px; font-size: 13.5px; line-height: 1.7; color: #262626; border-top: 1px solid #f6f4f0; }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px; background: var(--navy-dim); border-left: 3px solid var(--navy); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12.5px; color: var(--navy); font-weight: 600;
+  }
+  .ch-tool {
+    margin-top: 8px; background: var(--ink-dim); border-left: 3px solid var(--ink); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12px; color: var(--ink-deep);
+  }
+  .ch-tool strong { color: var(--ink); }
+
+  /* ── Framework cards ── */
+  .method-card { background: white; border: 1px solid #ece9e3; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+  .method-card h4 { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--gray-dark); }
+  .method-card .tag {
+    display: inline-block; background: var(--ink); color: white; font-size: 10px; letter-spacing: 1px; padding: 3px 9px;
+    border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 600;
+  }
+
+  /* ── Five Steps of Mastering Workflow ── */
+  .steps-wrap { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; flex-wrap: wrap; }
+  .step-card { flex: 1; min-width: 118px; background: var(--cream); border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 12px; text-align: center; }
+  .step-card .s-num { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange-dark); font-weight: 700; margin-bottom: 6px; }
+  .step-card .s-title { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+  .step-card .s-desc { font-size: 11px; line-height: 1.5; color: var(--gray-dark); }
+  .step-arrow { display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 16px; }
+  @media (max-width: 760px) { .steps-wrap { flex-direction: column; } .step-arrow { display: none; } }
+
+  /* ── Horizons of Focus ladder ── */
+  .altitude-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+  .altitude-row { display: flex; align-items: center; gap: 14px; background: white; border: 1px solid #ece9e3; border-radius: 8px; padding: 12px 16px; }
+  .altitude-row.top { background: var(--orange-dim); border-color: rgba(240,116,31,0.35); }
+  .altitude-alt { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 12.5px; color: var(--orange-dark); min-width: 84px; }
+  .altitude-title { font-size: 13px; font-weight: 700; color: var(--ink); min-width: 150px; }
+  .altitude-desc { font-size: 12px; color: var(--gray-dark); line-height: 1.5; }
+  @media (max-width: 620px) { .altitude-row { flex-wrap: wrap; } .altitude-title { min-width: 100%; } }
+
+  /* ── Code-style block (Two-Minute Rule) ── */
+  .code-block { background: var(--ink-deep); color: #e8e4dc; border-radius: 8px; padding: 20px; font-family: monospace; font-size: 13px; line-height: 1.9; margin-bottom: 16px; }
+  .code-block .comment { color: rgba(240,116,31,0.55); }
+  .code-block .keyword { color: var(--orange); }
+  .code-block .value { color: #f0ece2; }
+
+  /* ── Toolkit page list ── */
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item { display: flex; gap: 10px; align-items: flex-start; background: white; border: 1px solid #ece9e3; border-radius: 8px; padding: 10px 12px; font-size: 12px; line-height: 1.5; color: #262626; }
+  .toolkit-item .t-ic { font-size: 14px; flex-shrink: 0; }
+  @media (max-width: 560px) { .toolkit-list { grid-template-columns: 1fr; } }
+
+  /* ── Verdict banner ── */
+  .verdict-banner { background: linear-gradient(135deg, var(--navy-dark) 0%, #000000 100%); border-radius: 12px; padding: 28px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden; }
+  .verdict-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at  5% 20%, var(--orange) 0%, var(--orange) 10px, transparent 11px),
+      radial-gradient(circle at 95% 75%, var(--orange) 0%, var(--orange) 13px, transparent 14px),
+      radial-gradient(circle at 90% 15%, #ffffff 0%, #ffffff 6px, transparent 7px),
+      radial-gradient(circle at 10% 85%, #ffffff 0%, #ffffff 8px, transparent 9px);
+    opacity: 0.18; pointer-events: none;
+  }
+  .verdict-banner h3 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 28px; color: var(--orange); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(255,255,255,0.75); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item { text-align: center; background: rgba(240,116,31,0.14); border: 1px solid rgba(240,116,31,0.35); border-radius: 8px; padding: 10px 16px; min-width: 90px; }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--orange); }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list { background: white; border-radius: 10px; padding: 16px 18px; border: 1px solid #ece9e3; }
+  .pro-list h4 { color: var(--ink); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--orange-dark); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--gray-dark); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--ink); }
+  .con-list .dot { background: var(--orange); }
+
+  /* ── Quotes ── */
+  .quote-block { background: var(--cream); border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; position: relative; border-left: 3px solid var(--orange); }
+  .quote-block::before {
+    content: '\201C'; font-family: 'Oswald', serif; font-size: 60px; color: var(--orange); position: absolute; top: -8px; left: 16px; line-height: 1;
+  }
+  .quote-block p { font-family: 'Oswald', sans-serif; font-weight: 500; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink-deep); }
+  .quote-block .attr { font-size: 11px; color: var(--gray-dark); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+
+  /* ── Who cards ── */
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid #ece9e3; border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.6; transition: border-color 0.2s; }
+  .who-card:hover { border-color: var(--orange); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .toolkit-list { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero-inner { padding: 32px 20px 28px; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     HERO — white canvas + orange underline motif + checkmark seal + cover
+════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-motif">
+      <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- echo of the cover's title underlines, upper right -->
+        <line x1="560" y1="40" x2="660" y2="40" stroke="#f0741f" stroke-width="5" opacity="0.16"/>
+        <line x1="676" y1="40" x2="740" y2="40" stroke="#f0741f" stroke-width="5" opacity="0.16"/>
+        <line x1="600" y1="66" x2="700" y2="66" stroke="#f0741f" stroke-width="5" opacity="0.12"/>
+        <!-- checkmark seal, echoing the "all-new updated edition" badge -->
+        <circle cx="700" cy="150" r="46" fill="none" stroke="#8f8f8f" stroke-width="2" opacity="0.2"/>
+        <path d="M685 152 L696 163 L718 138" fill="none" stroke="#f0741f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.28"/>
+        <!-- scattered short strokes, lower left -->
+        <line x1="50" y1="185" x2="90" y2="185" stroke="#22314a" stroke-width="4" opacity="0.14"/>
+        <line x1="60" y1="200" x2="120" y2="200" stroke="#f0741f" stroke-width="4" opacity="0.14"/>
+      </svg>
+    </div>
+
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Field Guide · All-New Updated Edition</div>
+      <h1><span class="underline-word">Getting</span> <span class="underline-word">Things</span> <span class="underline-word">Done</span><em>The Art of Stress-Free Productivity</em></h1>
+      <div class="author">by <span>David Allen</span> &nbsp;·&nbsp; From the New York Times bestselling author &nbsp;·&nbsp; Penguin Books</div>
+      <div class="hero-meta">
+        <div class="meta-pill">Productivity</div>
+        <div class="meta-pill">Personal Effectiveness</div>
+        <div class="meta-pill">Time Management</div>
+        <div class="meta-pill">15+ Million Copies Sold</div>
+      </div>
+    </div>
+
+    <div class="book-cover-wrap">
+      <img src="images/getting-things-done-cover.jpg" alt="Getting Things Done book cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('framework', this)">Framework &amp; Toolkit</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════════ -->
+<div id="overview" class="panel active">
+
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core Focus</div>
+      <div class="stat-value">A Complete System for Capturing &amp; Tracking Every Commitment</div>
+      <div class="stat-desc">Stress doesn't come from having too much to do — it comes from commitments held only in your head, tracked nowhere trustworthy</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">"Mind Like Water" Through Trusted Externalization</div>
+      <div class="stat-desc">A calm, ready state of focus becomes possible once every open loop is captured, clarified, and tracked in a system you actually trust</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Primary Tools</div>
+      <div class="stat-value">Five-Step Workflow · Two-Minute Rule · Horizons of Focus · Weekly Review</div>
+      <div class="stat-desc">A small, repeatable set of habits and lists designed to run continuously, not a one-time cleanup project</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Anyone Juggling Too Many Open Commitments to Hold in Their Head</div>
+      <div class="stat-desc">Knowledge workers, managers, and executives whose attention is fragmented across email, meetings, and competing projects</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Getting Things Done</strong> begins with a diagnosis familiar to almost anyone with a demanding job: it isn't the volume of work that produces stress, it's incomplete commitments that live only in your mind. David Allen calls these <strong>"open loops"</strong> — anything you've told yourself you should do, need to decide, or haven't finished — and argues that every one of them consumes a small, constant sliver of attention whether or not you're actually working on it, simply because your mind keeps trying to remind you at inconvenient moments.</p>
+    <p>His solution is not a better to-do list but a complete <strong>method</strong>: a five-step workflow (Capture, Clarify, Organize, Reflect, Engage) that moves everything competing for your attention out of your head and into an external system you fully trust, reviewed on a reliable cycle. Once that trust is established, Allen argues you reach a state he borrows from martial arts — <strong>"mind like water"</strong> — able to respond to whatever comes up with exactly the right amount of energy, neither underreacting nor overreacting, because nothing is being silently tracked in the background.</p>
+    <p>The book is deliberately practical rather than philosophical: it spends far more time on concrete mechanics — how to process an inbox to zero, how to define a "next action," how to build a tickler file, how to run a Weekly Review — than on motivation or theory. Its underlying claim is that the psychology of stress-free productivity is downstream of a small number of concrete habits, and that almost anyone can install those habits regardless of role, industry, or personality type.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">🌊</div><div><strong>Mind Like Water.</strong> A martial-arts metaphor for the state Allen is engineering toward — calm and fully responsive, reacting to each thing with appropriate force and then returning to stillness, because nothing is silently competing for attention.</div></div>
+  <div class="key-idea"><div class="icon">🔄</div><div><strong>Open loops create stress by default.</strong> Any commitment tracked only in your head — a promise, a half-finished project, an unmade decision — drains attention continuously, whether or not you're working on it right now.</div></div>
+  <div class="key-idea"><div class="icon">🪜</div><div><strong>The Five Steps of Mastering Workflow.</strong> Capture everything that has your attention, Clarify what each item means, Organize the results into the right buckets, Reflect on the system regularly, and Engage by choosing actions with confidence.</div></div>
+  <div class="key-idea"><div class="icon">⏱️</div><div><strong>The Two-Minute Rule.</strong> If an action takes less than two minutes, do it the moment you identify it — it's faster than the overhead of tracking it for later.</div></div>
+  <div class="key-idea"><div class="icon">➡️</div><div><strong>Next Action thinking.</strong> Every open loop needs a concrete, physical, visible next action decided in advance — vague projects stall precisely because no one has defined the very next physical step.</div></div>
+  <div class="key-idea"><div class="icon">🎈</div><div><strong>Horizons of Focus.</strong> Six altitudes, from ground-level actions up to life purpose, used to review commitments at every scale — not just the daily task list.</div></div>
+  <div class="key-idea"><div class="icon">🗓️</div><div><strong>The Weekly Review.</strong> The single habit that keeps the whole system trustworthy over time — without it, lists silently go stale and confidence in the system erodes.</div></div>
+  <div class="key-idea"><div class="icon">🧭</div><div><strong>The Natural Planning Model.</strong> A five-phase planning sequence — Purpose, Outcome Visioning, Brainstorming, Organizing, Next Actions — that mirrors how the brain plans anything naturally, even a vacation or a dinner.</div></div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     CHAPTERS
+════════════════════════════════════════════ -->
+<div id="chapters" class="panel">
+
+  <div class="part-header">Front Matter</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">P</div>
+      <div class="ch-title">Preface to the 2015 Edition</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Allen opens the revised edition by addressing the elephant in the room: the original book was published in 2001, before smartphones, cloud syncing, and constant connectivity reshaped how people work. He argues the underlying method needed no real revision at all, because it was never built around any particular tool — it describes the way a human mind actually needs to relate to its commitments, which hasn't changed even though the volume and velocity of "stuff" competing for attention has increased dramatically.
+      <br><br>
+      He notes that if anything, the flood of email, notifications, and always-on availability has made the core problem — too many open loops, not enough trusted places to put them — more urgent than when the book first appeared, and that readers now often need the method more, not less.
+      <div class="ch-takeaway">The method was never about a specific app or notebook — it's a description of how attention and commitment actually work, which is why it survived a technology shift the original edition never anticipated.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The method is tool-agnostic by design</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part One — The Art of Getting Things Done</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">A New Practice for a New Reality</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Allen opens with the observation that most people's working lives have expanded faster than their systems for managing them — job roles are less clearly bounded, information arrives constantly from more channels, and "done" is rarely well-defined for knowledge work the way it is for a factory task. He argues this creates a chronic, low-grade anxiety most people have simply learned to tolerate as normal, without realizing it's optional.
+      <br><br>
+      He introduces the book's central promise: it is genuinely possible to operate with a clear head and a sense of relaxed control, no matter how much is on your plate, provided you install a small number of specific habits. The chapter previews the "mind like water" state and makes an early, deliberately provocative claim — that most people's stress has less to do with how much they have to do and more to do with commitments they haven't clarified or organized properly.
+      <div class="ch-takeaway">Stress is rarely proportional to workload — it's proportional to the number of commitments you're tracking in your head instead of in a system you trust.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Mind Like Water · The Myth That More Effort Fixes Overwhelm</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">Getting Control of Your Life: The Five Steps of Mastering Workflow</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This is the chapter that lays out the book's central architecture. Allen argues that no matter the type of "stuff" competing for your attention — email, a hallway conversation, a half-formed idea in the shower — the same five steps apply to processing it: <strong>Capture</strong> (collect everything that has your attention into trusted inboxes), <strong>Clarify</strong> (decide what each item actually means and what, if anything, needs to happen), <strong>Organize</strong> (put the results in the right place — a calendar, a list, a project folder), <strong>Reflect</strong> (review the system regularly so it stays current), and <strong>Engage</strong> (use the system with confidence to choose what to do right now).
+      <br><br>
+      He stresses that most people already do all five steps informally and inconsistently — the method's power comes from doing each step deliberately and completely, rather than letting Capture and Clarify blur into a half-processed pile that never quite becomes trustworthy. He also introduces the idea that the system's value isn't in the tool used (paper, app, or otherwise) but in whether every step is actually executed for every open loop.
+      <div class="ch-takeaway">Everything competing for your attention passes through the same five steps — most systems fail not because the steps are wrong, but because one of them is skipped or done halfway.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Five Steps of Mastering Workflow (Capture · Clarify · Organize · Reflect · Engage)</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">Getting Projects Creatively Under Way: The Five Phases of Project Planning</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Allen turns from workflow to planning, introducing the <strong>Natural Planning Model</strong> — five phases he argues the brain already uses informally for something as simple as planning a dinner: <strong>Purpose</strong> (why are you doing this at all), <strong>Outcome Visioning</strong> (what does "done" actually look like), <strong>Brainstorming</strong> (capture every idea without judging it yet), <strong>Organizing</strong> (sort those ideas into components, sequences, and priorities), and <strong>Next Actions</strong> (decide the very next physical step for each active piece).
+      <br><br>
+      He contrasts this with what he calls "unnatural" planning — the corporate-style planning most people were trained on, which jumps straight to organizing and action steps without ever clarifying purpose or vision, producing plans that are technically complete but never generate real energy or buy-in. The chapter argues that applying this same five-phase sequence deliberately, even for a two-minute mental plan, produces dramatically clearer and more motivating outcomes than skipping straight to a task list.
+      <div class="ch-takeaway">The brain already knows how to plan naturally — from purpose through vision, brainstorming, and organizing, down to the next physical action. Most planning fails because it skips straight to tasks without the earlier phases.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Natural Planning Model (Purpose · Outcome · Brainstorm · Organize · Next Actions)</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Two — Practicing Stress-Free Productivity</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">Getting Started: Setting Up the Time, Space, and Tools</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Before describing the workflow in depth, Allen insists on a real physical and logistical setup: a dedicated workspace, a set of physical in-trays, filing supplies, and a decision about which digital tools will hold which kind of information. He is emphatic that trying to implement the method "in your head" or with a half-improvised setup undermines it from the start — the system's psychological power depends on every piece having one clear, known home.
+      <br><br>
+      He recommends blocking a substantial chunk of uninterrupted time (historically a full day or two) for the initial setup, because the first full Capture and Clarify pass is the single highest-leverage investment in the entire method — everything afterward is comparatively easy maintenance.
+      <div class="ch-takeaway">The upfront setup cost is real and worth protecting deliberately — a half-implemented system produces only a fraction of the psychological relief of a fully implemented one.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Dedicated Workspace · Physical &amp; Digital In-Trays · Filing System</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">Capturing: Corralling Your "Stuff"</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      "Stuff" is Allen's deliberately loose term for anything that has your attention but hasn't yet been clarified or organized — a stray thought, a business card, a half-read article, a nagging feeling you forgot something. This chapter's core discipline is <strong>ubiquitous capture</strong>: getting every one of these things out of your head and into a trusted collection tool the instant it appears, using as few different capture tools as you can manage consistently.
+      <br><br>
+      Allen argues the psychological relief of the whole method depends on total capture — if even a handful of open loops remain untracked, the mind cannot fully trust the system and keeps quietly rehearsing them anyway, which undermines "mind like water" for everything else. He recommends a genuine mind-sweep exercise: sitting down and exhaustively listing every current commitment, no matter how small, precisely because most people underestimate how much is silently occupying their attention.
+      <div class="ch-takeaway">Partial capture doesn't produce partial relief — a single untracked commitment is enough to keep your mind quietly rehearsing it, undermining trust in the whole system.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Ubiquitous Capture · The Mind Sweep · Trusted Inboxes</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">Clarifying: Getting "In" to Empty</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This chapter walks through processing captured items, one at a time, using a single disciplined question: <strong>"Is it actionable?"</strong> If not, it's trashed, filed as reference, or parked on a Someday/Maybe list. If it is actionable, Allen asks a second question — what's the very next physical action? — and then applies the <strong>Two-Minute Rule</strong>: if that action takes less than two minutes, do it right now rather than deferring it, since tracking it would take longer than simply finishing it.
+      <br><br>
+      For actions that take longer, Allen distinguishes three further choices: do it yourself later (track the next action), delegate it (track it on a Waiting For list), or defer it to a specific date (put it on the calendar). He's explicit that the goal of "getting in to empty" isn't finishing every task immediately — it's making a clear, recorded decision about every single item, so nothing sits unprocessed and ambiguous.
+      <div class="ch-takeaway">Processing isn't the same as doing — the goal is a clear decision about every item, made once, so nothing lingers in an ambiguous, half-considered state.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Two-Minute Rule · Do/Delegate/Defer · The "Is It Actionable?" Test</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Organizing: Setting Up the Right Buckets</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Allen lays out the actual list structure the method runs on: a <strong>Projects list</strong> (anything requiring more than one action to complete), <strong>Next Actions lists organized by context</strong> (grouped by where or with what you can do them — @calls, @computer, @errands), a <strong>Calendar</strong> reserved strictly for things tied to a specific day or time, a <strong>Waiting For list</strong> (items delegated to someone else), and a <strong>Someday/Maybe list</strong> (things you might want to do eventually, but aren't committed to now).
+      <br><br>
+      He's particular about keeping the calendar "sacred" — reserving it only for hard landscape items and time-specific actions, never as a dumping ground for aspirational to-dos, since a calendar cluttered with unrealistic entries quickly loses your trust. Context-based lists (rather than priority- or project-based lists alone) let you scan only the actions actually possible in your current situation, which Allen argues is what makes the system usable in the moment rather than just in theory.
+      <div class="ch-takeaway">A trustworthy system depends on strict separation between buckets — mixing calendar items with wish-list items, or projects with next actions, is what makes most homemade systems collapse under real use.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Projects List · Context-Based Next Actions · Waiting For List · Someday/Maybe List</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">Reflecting: Keeping It All Fresh and Functional</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Allen introduces the <strong>Weekly Review</strong> as the single habit that keeps the entire system honest over time: a dedicated block, ideally weekly, to get "in" to empty, review every active list, update the Projects list, and re-check the calendar and Waiting For items so nothing silently goes stale.
+      <br><br>
+      He's candid that the Weekly Review is the step most people skip, and that skipping it is what causes previously successful implementations of the method to quietly decay — lists stop matching reality, trust erodes, and people drift back to holding commitments in their heads. He frames the review less as an optional tidy-up and more as the structural keystone that makes daily Engage decisions trustworthy in the first place.
+      <div class="ch-takeaway">The system doesn't fail from bad lists — it fails from lists that used to be accurate and were never reviewed again. The Weekly Review is what the whole method actually depends on.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Weekly Review</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">Engaging: Making the Best Action Choices</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      With everything captured, clarified, organized, and reflected, this chapter addresses the moment-to-moment question: what should I actually do right now? Allen offers a layered framework for that decision — first by <strong>context</strong> (what's possible given where you are and what tools you have), then by <strong>time available</strong>, then by <strong>energy available</strong>, and finally by <strong>priority</strong>.
+      <br><br>
+      He also introduces a complementary model for reviewing how a day actually went: three types of work — <strong>predefined work</strong> (executing decisions already made and on your lists), <strong>work as it shows up</strong> (unplanned items that arrive and get handled in the moment), and <strong>defining your work</strong> (the Capture/Clarify/Organize activity of processing and planning itself). Allen argues confident engagement is only possible once the earlier steps are trustworthy — without them, "priority" decisions are really just guesses made under incomplete information.
+      <div class="ch-takeaway">Choosing what to do next is a four-factor decision — context, time, energy, and priority — and it only feels confident once the earlier steps have actually been done properly.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The Four-Criteria Model (Context · Time · Energy · Priority) · The Three-Fold Nature of Work</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">10</div>
+      <div class="ch-title">Getting Projects Under Control</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This chapter applies the Natural Planning Model from Chapter 3 to real, active projects, and pushes back against the temptation to over-plan. Allen argues most projects need only a light application of the five phases — enough clarity on purpose and outcome to know what "done" looks like, and enough brainstorming and organizing to identify the very next action — rather than an exhaustive formal plan for every initiative.
+      <br><br>
+      He introduces techniques for handling projects that stall: when a next action can't be identified, that's usually a signal the outcome itself hasn't been clarified enough yet, not a sign of procrastination. The chapter also covers using support materials (project plans, notes, checklists) as reference rather than action triggers — the Projects list itself should stay a short index, with detail materials filed separately and consulted only as needed.
+      <div class="ch-takeaway">A stalled project is almost always a symptom of an unclear outcome or an undefined next action — not laziness. Re-clarify the purpose and vision before assuming discipline is the problem.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Applying the Natural Planning Model to Live Projects · Project Support Material vs. the Projects List</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part Three — The Power of the Key Principles</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">11</div>
+      <div class="ch-title">The Power of the Capturing Habit</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Allen zooms out from mechanics to argue that the capturing habit alone — reliably getting things out of your head the moment they appear — produces a noticeable shift in clarity and calm, even before any of the other steps are fully mastered. He frames it as the entry point most people can adopt immediately, and the foundation every other habit in the book depends on.
+      <br><br>
+      He also connects capturing to creativity: a mind that isn't spending background cycles trying to remember open commitments has more genuine capacity available for higher-order thinking, strategic work, and presence with other people — the psychological payoff isn't just fewer dropped balls, it's freed-up cognitive bandwidth.
+      <div class="ch-takeaway">Capturing is the single highest-leverage habit in the entire system — most of the calm the method produces starts here, before any other step is even mastered.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Capturing as the Foundational Habit</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">12</div>
+      <div class="ch-title">The Power of the Next-Action Decision</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Allen returns to what he considers one of the book's most underrated ideas: defining a genuinely physical, visible next action for every open commitment. He notes that most stalled projects and procrastinated tasks aren't really about motivation — they're about vague framing. "Plan the anniversary party" isn't an action; "call the venue to check Saturday availability" is.
+      <br><br>
+      He argues this single reframe — forcing every commitment down to its literal next physical step — routinely dissolves resistance that felt like a motivation or willpower problem, because the brain was actually stalling on ambiguity, not on the difficulty of the task itself.
+      <div class="ch-takeaway">Most procrastination is a clarity problem disguised as a motivation problem — define the literal next physical action, and much of the resistance disappears on its own.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Next-Action Clarity as a Cure for Procrastination</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">13</div>
+      <div class="ch-title">The Power of Outcome Focusing</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The final principle chapter connects the entire method to the <strong>Horizons of Focus</strong> — six altitudes ranging from ground-level actions up to life purpose and core values. Allen argues that daily task management stays hollow unless it's periodically connected upward to the projects it serves, the broader areas of responsibility those projects sit within, and ultimately the goals, vision, and purpose that make any of it matter.
+      <br><br>
+      He's careful to note this isn't a demand to constantly meditate on life purpose while processing email — it's a periodic review discipline, done at a lower frequency the higher the altitude, that keeps the ground-level system honestly connected to what the person actually cares about, rather than becoming productivity for its own sake.
+      <div class="ch-takeaway">A perfectly organized task list still feels hollow if it's disconnected from what actually matters — periodically reviewing the higher altitudes keeps the whole system honest, not just efficient.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Horizons of Focus (Ground to 50,000 Feet)</div>
+    </div>
+  </div>
+
+  <div class="part-header">Afterword</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">A</div>
+      <div class="ch-title">Afterword: The Path of Mastery</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Allen closes by framing the method not as a project with an end date but as an ongoing discipline, comparable to any skill practiced toward mastery — improvement continues indefinitely, and even experienced practitioners keep finding sharper applications of the same five steps. He acknowledges candidly that most readers won't implement everything on a first pass, and that partial adoption still produces real benefit, provided the core habits — capturing consistently and running a genuine Weekly Review — are protected.
+      <br><br>
+      He ends on the book's throughline: this was never really a book about productivity for its own sake, but about freeing attention so it can be spent on what actually matters — better thinking, better relationships, and a calmer relationship with everything competing for your time.
+      <div class="ch-takeaway">The method is a discipline practiced toward mastery, not a project with a finish line — and partial, consistent adoption still beats a perfect system abandoned after a week.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Mastery as an Ongoing Practice, Not a One-Time Setup</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     FRAMEWORK & TOOLKIT
+════════════════════════════════════════════ -->
+<div id="framework" class="panel">
+
+  <div class="section-header">
+    <h2>The Five Steps of Mastering Workflow</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Every piece of "stuff" competing for your attention — email, a hallway request, a stray idea — moves through the same five steps.</p>
+
+  <div class="steps-wrap">
+    <div class="step-card">
+      <div class="s-num">Step 1</div>
+      <div class="s-title">Capture</div>
+      <div class="s-desc">Collect everything that has your attention into trusted inboxes</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="s-num">Step 2</div>
+      <div class="s-title">Clarify</div>
+      <div class="s-desc">Decide what each item means and whether it's actionable</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="s-num">Step 3</div>
+      <div class="s-title">Organize</div>
+      <div class="s-desc">Put the results into the right list, calendar, or folder</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="s-num">Step 4</div>
+      <div class="s-title">Reflect</div>
+      <div class="s-desc">Review the whole system on a reliable cycle so it stays current</div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="s-num">Step 5</div>
+      <div class="s-title">Engage</div>
+      <div class="s-desc">Choose and act with confidence, trusting the system behind it</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Two-Minute Rule</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="code-block">
+    <span class="comment">// Applied the instant a next action is identified during Clarify</span><br><br>
+    <span class="keyword">IF</span> next_action.duration <span class="value">&lt; 2 minutes</span><br>
+    &nbsp;&nbsp;<span class="keyword">THEN</span> <span class="value">do it right now — don't track it, don't defer it</span><br>
+    <span class="keyword">ELSE</span> <span class="value">do it later, delegate it, or defer it to the calendar</span><br><br>
+    <span class="comment">// Tracking a sub-two-minute task costs more time than finishing it</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Horizons of Focus — Ground to 50,000 Feet</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:8px; line-height:1.6;">Reviewed at decreasing frequency the higher the altitude — this is what keeps day-to-day task management connected to what actually matters.</p>
+
+  <div class="altitude-list">
+    <div class="altitude-row top">
+      <div class="altitude-alt">50,000 ft</div>
+      <div class="altitude-title">Purpose &amp; Principles</div>
+      <div class="altitude-desc">Why you're doing any of this at all — reviewed rarely, but everything else answers to it</div>
+    </div>
+    <div class="altitude-row">
+      <div class="altitude-alt">40,000 ft</div>
+      <div class="altitude-title">Vision</div>
+      <div class="altitude-desc">The long-term picture of success, three to five years out</div>
+    </div>
+    <div class="altitude-row">
+      <div class="altitude-alt">30,000 ft</div>
+      <div class="altitude-title">Goals</div>
+      <div class="altitude-desc">Specific objectives for the coming one to two years</div>
+    </div>
+    <div class="altitude-row">
+      <div class="altitude-alt">20,000 ft</div>
+      <div class="altitude-title">Areas of Focus &amp; Responsibility</div>
+      <div class="altitude-desc">The ongoing roles and areas you're accountable for maintaining</div>
+    </div>
+    <div class="altitude-row">
+      <div class="altitude-alt">10,000 ft</div>
+      <div class="altitude-title">Current Projects</div>
+      <div class="altitude-desc">Anything requiring more than one action to complete — reviewed weekly</div>
+    </div>
+    <div class="altitude-row">
+      <div class="altitude-alt">Runway</div>
+      <div class="altitude-title">Current Actions</div>
+      <div class="altitude-desc">The next physical actions on your context lists — reviewed daily, several times a day</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Key Concepts &amp; Tools</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The Weekly Review</h4>
+    <p>A dedicated weekly block to get "in" to empty, review every active list, update projects, and re-check the calendar and Waiting For items. Skipping it is the single most common reason the system quietly decays.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Method</div>
+    <h4>Ubiquitous Capture</h4>
+    <p>Getting every stray thought, request, or commitment out of your head and into a trusted inbox the instant it appears — the foundational habit every other part of the method depends on.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Framework</div>
+    <h4>Context-Based Next Actions</h4>
+    <p>Grouping actionable items by where or with what they can be done (@calls, @computer, @errands) rather than by project or priority alone — lets you scan only what's actually possible right now.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Tool</div>
+    <h4>The Someday/Maybe List</h4>
+    <p>A holding place for things you might want to do eventually but aren't committed to now — reviewed during the Weekly Review so ideas aren't lost, but also aren't cluttering active lists.</p>
+  </div>
+
+  <div class="method-card">
+    <div class="tag">Concept</div>
+    <h4>The Tickler File</h4>
+    <p>A 43-folder system (31 days + 12 months) for resurfacing physical items and reminders on a specific future date — a low-tech way to defer something completely out of sight until it's actually relevant.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Quick-Reference Toolkit</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div class="t-ic">📥</div><div><strong>Run a Full Mind Sweep</strong> — exhaustively list every current commitment, no matter how small, before setting up any lists</div></div>
+    <div class="toolkit-item"><div class="t-ic">⏱️</div><div><strong>Apply the Two-Minute Rule Instantly</strong> — if it's quick, do it the moment you identify it</div></div>
+    <div class="toolkit-item"><div class="t-ic">➡️</div><div><strong>Define the Next Physical Action</strong> — for every open project, always know the literal next step</div></div>
+    <div class="toolkit-item"><div class="t-ic">🗂️</div><div><strong>Keep the Calendar Sacred</strong> — only hard-landscape items and time-specific actions belong there</div></div>
+    <div class="toolkit-item"><div class="t-ic">🗓️</div><div><strong>Protect the Weekly Review</strong> — treat it as non-negotiable, not an optional tidy-up</div></div>
+    <div class="toolkit-item"><div class="t-ic">📍</div><div><strong>Organize Actions by Context</strong> — group by where or how a task can actually be done</div></div>
+    <div class="toolkit-item"><div class="t-ic">🌤️</div><div><strong>Zoom Out Periodically</strong> — check ground-level actions against Areas of Focus, Goals, and Vision</div></div>
+    <div class="toolkit-item"><div class="t-ic">🧹</div><div><strong>Get "In" to Empty</strong> — process every inbox to zero, not just the urgent items</div></div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     VERDICT
+════════════════════════════════════════════ -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.7 / 5</h3>
+    <p>The definitive operating manual for a cluttered mind — genuinely practical, endlessly re-applicable, and still the benchmark every later productivity system gets measured against</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.3</div>
+        <div class="r-label">Accessibility</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">5.0</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.5</div>
+        <div class="r-label">Depth</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.6</div>
+        <div class="r-label">Timelessness</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>The five-step workflow is genuinely universal — it applies as well to email and physical clutter as to vague someday-ideas</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Two-Minute Rule and Next-Action thinking are two of the most immediately useful productivity ideas ever put into a book</div></div>
+      <div class="list-item"><div class="dot"></div><div>Horizons of Focus connects daily task management to actual life purpose, so the system doesn't stay stuck at the to-do-list level</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Natural Planning Model matches how the brain already plans, making it easy to adopt rather than something to fight against</div></div>
+      <div class="list-item"><div class="dot"></div><div>The 2015 revision updates examples for smartphones and cloud tools without changing the underlying method — it has genuinely aged well</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>The upfront setup cost is real — a full initial capture-and-process pass can take a day or more, which causes many readers to quit early</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Weekly Review is described as essential but is chronically the step most readers skip — the book doesn't fully solve that motivation gap</div></div>
+      <div class="list-item"><div class="dot"></div><div>Written before today's notification-saturated always-on culture reached its current intensity; some implementation choices require adapting</div></div>
+      <div class="list-item"><div class="dot"></div><div>A handful of tool- and software-specific asides feel dated even in the revised edition</div></div>
+      <div class="list-item"><div class="dot"></div><div>Method-heavy and principle-light in tone — reads more like an operating manual than a character-driven book like <em>The 7 Habits</em></div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone whose mind feels cluttered with unfinished commitments</strong> — the mind-sweep and five-step workflow are the fastest route to real relief.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Knowledge workers juggling many simultaneous projects</strong> across email, meetings, and multiple tools at once.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Managers and executives</strong> who need a system that scales cleanly from daily tasks up to multi-year goals without switching frameworks.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Teams and organizations</strong> establishing a shared vocabulary and method for tracking commitments, not just individuals working alone.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Perfectionists prone to over-engineering systems</strong> should watch for spending more time organizing lists than actually doing the work.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting a quick read</strong> should know Allen himself is candid that the method takes weeks of consistent practice before it fully "clicks."</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Lines</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>Your mind is for having ideas, not holding them.</p>
+    <div class="attr">— David Allen, Getting Things Done</div>
+  </div>
+
+  <div class="quote-block">
+    <p>You can do anything, but not everything.</p>
+    <div class="attr">— David Allen, Getting Things Done</div>
+  </div>
+
+  <div class="quote-block">
+    <p>There is no reason ever to have the same thought twice, unless you like having that thought.</p>
+    <div class="attr">— David Allen, Getting Things Done</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Getting things done requires a change in behavior, and behavior change comes from new decisions and commitments, tested over time.</p>
+    <div class="attr">— David Allen, Getting Things Done</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>If the book has one idea worth carrying forward above all others, it's that stress comes from incomplete commitments, not workload itself. A hundred open loops tracked reliably in a trusted external system produce far less anxiety than ten open loops tracked only in your head — the number of things you're doing matters less than whether you trust that nothing is being silently forgotten.</p>
+    <p>This is what makes the Two-Minute Rule and Next-Action thinking so durable as tools — both attack the actual mechanism of overwhelm directly, rather than trying to manage its symptoms with willpower or motivation. Vague commitments create background anxiety; specific, externally tracked ones don't, regardless of how large the underlying project actually is.</p>
+    <p>What keeps this from being just a clever productivity hack is the Weekly Review: Allen is explicit that the entire psychological benefit depends on the system staying current. A brilliant system set up once and never reviewed again degrades into exactly the kind of untrustworthy pile the method was designed to eliminate — the relief isn't a one-time event, it's a maintained state.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p><strong>Getting Things Done</strong> earns its status as the foundational text of modern personal productivity by doing something most books in the category still don't manage: it describes a complete, mechanically precise system rather than a loose collection of motivational tips. Every piece — Capture, Clarify, Organize, Reflect, Engage — has an explicit job, and the book is disciplined about insisting all five have to function together for the psychological payoff to actually appear.</p>
+    <p>Its greatest strength is durability through specificity. The Two-Minute Rule, the Next-Action discipline, and the Weekly Review remain in daily use across radically different work styles and technologies, more than two decades after the original edition — rare evidence that Allen correctly identified something about how attention actually works, rather than a trend tied to a particular era's tools.</p>
+    <p>The honest caveat is that the system asks for real upfront investment and ongoing discipline, and the book is candid that most people implement it imperfectly at first. Some sections feel dated even in the revised edition, and the Weekly Review — the habit the whole system depends on — is also the one most readers struggle to sustain without external accountability.</p>
+    <p>The practical recommendation: read the whole book once for the full architecture, then start with just two habits — ubiquitous capture and a genuine weekly review — before worrying about a perfect list structure. The real value isn't in agreeing intellectually that "you should write things down." It's in actually running the mind sweep, actually defining the next physical action for every open project, and actually protecting the Weekly Review long enough for the system to become trustworthy — which is exactly the discipline the entire book is built to install.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
