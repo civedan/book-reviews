@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Subtle Art of Not Giving a F*ck — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:        #141414;
+    --ink-deep:   #000000;
+    --ink-light:  #3a3a3a;
+    --ink-dim:    rgba(20,20,20,0.06);
+    --paper:      #fffdfb;
+    --cream:      #fff3ec;
+    --orange:     #fd5001;
+    --orange-dark:#c93f00;
+    --orange-dim: rgba(253,80,1,0.12);
+    --peach:      #f7a583;
+    --peach-dim:  rgba(247,165,131,0.28);
+    --gray:       #8f8f8f;
+    --gray-dark:  #5c5c5c;
+    --border:     rgba(20,20,20,0.14);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink-deep);
+    min-height: 100vh;
+  }
+
+  /* ─────────────────────────────────────────────
+     HERO — solid cover-orange canvas, black splatter type + ink-blot motif
+  ───────────────────────────────────────────── */
+  .hero {
+    background: var(--orange);
+    position: relative;
+    overflow: hidden;
+  }
+  .bestseller-bar {
+    background: var(--peach);
+    padding: 7px 40px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: 700;
+    color: #ffffff;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-inner {
+    padding: 36px 40px 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  /* Ink-splatter motif, echoing the black blot over the cover's "U" */
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img {
+    width: 128px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.15);
+    transform: rotate(-6deg);
+    box-shadow: -6px 10px 26px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  .book-label {
+    display: inline-block;
+    background: var(--ink-deep);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .hero h1 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: clamp(30px, 6vw, 52px);
+    color: var(--ink-deep);
+    line-height: 0.98;
+    max-width: 620px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 em { color: #ffffff; font-style: normal; font-weight: 500; text-transform: none; font-family: 'DM Sans', sans-serif; display: block; font-size: 0.36em; letter-spacing: 0; margin-top: 14px; max-width: 480px; }
+  .author {
+    margin-top: 18px;
+    color: rgba(0,0,0,0.7);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  .author span { color: var(--ink-deep); font-weight: 700; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .meta-pill {
+    background: var(--ink-deep);
+    border: 1px solid rgba(0,0,0,0.4);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ── Back bar ── */
+  .back-bar { background: var(--cream); padding: 10px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+  .back-link { color: var(--gray-dark); font-size: 12px; text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+  .back-link:hover { color: var(--ink); }
+  .back-link span { margin-right: 6px; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; background: var(--cream); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    color: var(--gray-dark); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all 0.2s;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--orange); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 22px; color: var(--ink); text-transform: uppercase; letter-spacing: 0.4px; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange-dark); margin-bottom: 6px; font-weight: 700; }
+  .stat-value { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 17px; color: var(--ink); text-transform: uppercase; letter-spacing: 0.2px; }
+  .stat-desc { font-size: 12px; color: var(--gray-dark); margin-top: 4px; }
+
+  .summary-block {
+    background: var(--cream); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 20px 22px;
+    margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: #222222;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: white; border: 1px solid #f0e6dd;
+    border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter cards (flat — this book has no Parts) ── */
+  .chapter-card { background: white; border: 1px solid #f0e6dd; border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(20,20,20,0.10); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num { width: 32px; height: 32px; background: var(--ink-deep); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; font-family: 'Anton', sans-serif; }
+  .ch-title { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 15.5px; flex: 1; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.2px; }
+  .ch-arrow { color: var(--orange); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body { display: none; padding: 14px 18px 18px 64px; font-size: 13.5px; line-height: 1.7; color: #262626; border-top: 1px solid #f6efe8; }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px; background: var(--orange-dim); border-left: 3px solid var(--orange); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12.5px; color: var(--orange-dark); font-weight: 700;
+  }
+  .ch-tool {
+    margin-top: 8px; background: var(--ink-dim); border-left: 3px solid var(--ink); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12px; color: var(--ink-deep);
+  }
+  .ch-tool strong { color: var(--ink); }
+
+  /* ── Framework cards ── */
+  .method-card { background: white; border: 1px solid #f0e6dd; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+  .method-card h4 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 15px; color: var(--ink); margin-bottom: 8px; text-transform: uppercase; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--gray-dark); }
+  .method-card .tag {
+    display: inline-block; background: var(--ink-deep); color: white; font-size: 10px; letter-spacing: 1px; padding: 3px 9px;
+    border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 700;
+  }
+
+  /* ── Newton's Three Laws of Emotion (steps) ── */
+  .steps-wrap { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; flex-wrap: wrap; }
+  .step-card { flex: 1; min-width: 150px; background: var(--cream); border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 12px; text-align: center; }
+  .step-card .s-num { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange-dark); font-weight: 700; margin-bottom: 6px; }
+  .step-card .s-title { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 14px; color: var(--ink); margin-bottom: 6px; text-transform: uppercase; }
+  .step-card .s-desc { font-size: 11.5px; line-height: 1.5; color: var(--gray-dark); }
+  .step-arrow { display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 16px; }
+  @media (max-width: 760px) { .steps-wrap { flex-direction: column; } .step-arrow { display: none; } }
+
+  /* ── Fault / Responsibility quadrant ── */
+  .quadrant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+  .quadrant-card { border-radius: 8px; padding: 14px 16px; border: 1px solid var(--border); }
+  .quadrant-card.q-good { background: var(--orange-dim); border-color: rgba(253,80,1,0.35); }
+  .quadrant-card.q-bad { background: var(--ink-dim); }
+  .quadrant-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; color: var(--orange-dark); }
+  .quadrant-card.q-bad .quadrant-label { color: var(--ink); }
+  .quadrant-title { font-family: 'Anton', sans-serif; font-size: 14.5px; color: var(--ink); text-transform: uppercase; margin-bottom: 4px; }
+  .quadrant-desc { font-size: 12px; line-height: 1.55; color: var(--gray-dark); }
+  @media (max-width: 620px) { .quadrant-grid { grid-template-columns: 1fr; } }
+
+  /* ── Feedback Loop from Hell (code-style block) ── */
+  .code-block { background: var(--ink-deep); color: #f5e9df; border-radius: 8px; padding: 20px; font-family: monospace; font-size: 13px; line-height: 1.9; margin-bottom: 16px; }
+  .code-block .comment { color: rgba(253,80,1,0.6); }
+  .code-block .keyword { color: var(--orange); }
+  .code-block .value { color: #f5efe8; }
+
+  /* ── Toolkit page list ── */
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item { display: flex; gap: 10px; align-items: flex-start; background: white; border: 1px solid #f0e6dd; border-radius: 8px; padding: 10px 12px; font-size: 12px; line-height: 1.5; color: #262626; }
+  .toolkit-item .t-ic { font-size: 14px; flex-shrink: 0; }
+  @media (max-width: 560px) { .toolkit-list { grid-template-columns: 1fr; } }
+
+  /* ── Verdict banner ── */
+  .verdict-banner { background: linear-gradient(135deg, var(--ink-deep) 0%, #241000 100%); border-radius: 12px; padding: 28px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden; }
+  .verdict-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at  5% 20%, var(--orange) 0%, var(--orange) 12px, transparent 13px),
+      radial-gradient(circle at 95% 75%, var(--orange) 0%, var(--orange) 16px, transparent 17px),
+      radial-gradient(circle at 90% 15%, #ffffff 0%, #ffffff 5px, transparent 6px),
+      radial-gradient(circle at 10% 85%, #ffffff 0%, #ffffff 7px, transparent 8px);
+    opacity: 0.18; pointer-events: none;
+  }
+  .verdict-banner h3 { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 30px; color: var(--orange); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(255,255,255,0.78); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item { text-align: center; background: rgba(253,80,1,0.16); border: 1px solid rgba(253,80,1,0.4); border-radius: 8px; padding: 10px 16px; min-width: 90px; }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--orange); }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons (also reused for Good/Bad Values) ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list { background: white; border-radius: 10px; padding: 16px 18px; border: 1px solid #f0e6dd; }
+  .pro-list h4 { color: var(--ink); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--orange-dark); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--gray-dark); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--ink); }
+  .con-list .dot { background: var(--orange); }
+
+  /* ── Quotes ── */
+  .quote-block { background: var(--cream); border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; position: relative; border-left: 3px solid var(--orange); }
+  .quote-block::before {
+    content: '\201C'; font-family: 'Anton', sans-serif; font-size: 60px; color: var(--orange); position: absolute; top: -8px; left: 16px; line-height: 1;
+  }
+  .quote-block p { font-family: 'Anton', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; padding-left: 10px; margin-top: 16px; color: var(--ink-deep); text-transform: none; letter-spacing: 0.2px; }
+  .quote-block .attr { font-size: 11px; color: var(--gray-dark); margin-top: 8px; text-align: right; font-family: 'DM Sans', sans-serif; }
+
+  /* ── Who cards ── */
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid #f0e6dd; border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.6; transition: border-color 0.2s; }
+  .who-card:hover { border-color: var(--orange); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .toolkit-list, .quadrant-grid { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero-inner { padding: 28px 20px 28px; flex-wrap: wrap; }
+    .bestseller-bar { padding: 7px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     HERO — solid cover-orange canvas + black ink-splat motif + cover art
+════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="bestseller-bar">#1 New York Times Bestseller</div>
+  <div class="hero-inner">
+    <div class="hero-motif">
+      <svg viewBox="0 0 800 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- upper-right ink blot, echoing the splat over the cover's "U" -->
+        <g fill="#000000" opacity="0.13">
+          <ellipse cx="706" cy="54" rx="30" ry="23"/>
+          <circle cx="744" cy="78" r="8"/>
+          <circle cx="722" cy="94" r="5"/>
+          <circle cx="760" cy="40" r="4"/>
+          <circle cx="680" cy="30" r="3"/>
+        </g>
+        <!-- lower-left scatter -->
+        <g fill="#000000" opacity="0.10">
+          <ellipse cx="54" cy="196" rx="24" ry="18"/>
+          <circle cx="24" cy="214" r="6"/>
+          <circle cx="82" cy="178" r="4"/>
+          <circle cx="40" cy="160" r="3"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Field Guide</div>
+      <h1>THE SUBTLE ART OF NOT GIVING A F*CK<em>A Counterintuitive Approach to Living a Good Life</em></h1>
+      <div class="author">by <span>Mark Manson</span> &nbsp;·&nbsp; Over 10 Million Copies Sold &nbsp;·&nbsp; HarperOne</div>
+      <div class="hero-meta">
+        <div class="meta-pill">Self-Help</div>
+        <div class="meta-pill">Personal Development</div>
+        <div class="meta-pill">Psychology</div>
+        <div class="meta-pill">2016</div>
+      </div>
+    </div>
+
+    <div class="book-cover-wrap">
+      <img src="images/the-subtle-art-of-not-giving-a-fuck-cover.jpg" alt="The Subtle Art of Not Giving a F*ck book cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('framework', this)">Framework &amp; Toolkit</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════════ -->
+<div id="overview" class="panel active">
+
+  <div class="section-header">
+    <h2>What This Book Is About</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="overview-grid">
+    <div class="stat-card">
+      <div class="stat-label">Core Focus</div>
+      <div class="stat-value">Choosing Better Things to Give a F*ck About</div>
+      <div class="stat-desc">Caring about nothing is impossible and caring about everything is exhausting — the actual skill is ruthless selectivity</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Central Promise</div>
+      <div class="stat-value">A Good Life Through Better Values, Not Constant Positivity</div>
+      <div class="stat-desc">Chasing an unbroken high of positive feeling backfires; a meaningful life comes from choosing struggles worth having</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Primary Concepts</div>
+      <div class="stat-value">Backwards Law · Feedback Loop From Hell · Do Something Principle</div>
+      <div class="stat-desc">A small set of blunt, quotable reframes rather than a step-by-step operational system</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Best For</div>
+      <div class="stat-value">Anyone Exhausted by "You Can Have Anything" Self-Help</div>
+      <div class="stat-desc">Readers who want a plainer-spoken, more realistic alternative to relentless positivity culture</div>
+    </div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>The Subtle Art of Not Giving a F*ck</strong> opens with the funeral of Charles Bukowski — an alcoholic, gambling, chronically unsuccessful writer for most of his life, whose gravestone reads simply <em>"Don't Try."</em> Mark Manson uses Bukowski's story to launch a deliberately contrarian argument: the self-help industry's core promise — that you can have anything, feel amazing all the time, and eliminate every negative emotion if you just try hard enough — is itself the problem. Wanting a better life all the time, he argues, is itself a subtly negative, exhausting experience, precisely because it fixates attention on everything currently lacking.</p>
+    <p>His alternative isn't nihilism or "not caring." It's what he calls the subtle art: since your emotional energy and time are finite, the only real choice you have is <strong>what to give a f*ck about</strong> — which struggles, which pain, which values are worth investing in — rather than pretending you can or should care about nothing, or everything, at once. Much of the book is spent dismantling comfortable illusions (that you're uniquely special, that certainty is safety, that freedom means keeping every option open) that quietly get in the way of making that choice well.</p>
+    <p>The tone is blunt, profane, and frequently funny by design — Manson's stated goal is to make genuinely old ideas (stoicism, Buddhist non-attachment, existentialism) land with people who'd never pick up a philosophy book, using memoir, dark humor, and a "no-bullsh*t" voice rather than academic rigor. The payoff is less a system to install and more an orientation to adopt: pain and struggle are unavoidable, so the entire game is choosing better ones.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Core Ideas at a Glance</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="key-idea"><div class="icon">🐼</div><div><strong>The Backwards Law.</strong> The desire for a more positive experience is itself a negative experience; accepting a negative experience as it is becomes, in turn, a positive one. Chasing happiness directly pushes it further away.</div></div>
+  <div class="key-idea"><div class="icon">🔁</div><div><strong>The Feedback Loop from Hell.</strong> Feeling bad, then feeling bad about feeling bad, then feeling bad about that — judgment stacked on judgment turns one manageable feeling into a spiral.</div></div>
+  <div class="key-idea"><div class="icon">🎯</div><div><strong>Not all f*cks are created equal.</strong> The goal was never apathy — it's being deliberately selective about which struggles, people, and outcomes actually deserve your limited emotional investment.</div></div>
+  <div class="key-idea"><div class="icon">⚖️</div><div><strong>Fault vs. Responsibility.</strong> You're not always at fault for what happens to you, but you're always responsible for how you interpret it and respond — conflating the two produces either guilt or victimhood.</div></div>
+  <div class="key-idea"><div class="icon">🎬</div><div><strong>The Do Something Principle.</strong> Motivation is usually the result of action, not its cause. Acting first — even badly — produces the clarity and momentum people wait for before starting.</div></div>
+  <div class="key-idea"><div class="icon">💥</div><div><strong>Values determine everything.</strong> Good values are reality-based, socially constructive, and within your control; bad values are the opposite — and most unhappiness traces back to bad values, not bad circumstances.</div></div>
+  <div class="key-idea"><div class="icon">🌌</div><div><strong>Newton's Three Laws of Emotion.</strong> Emotions are feedback, not commands; they're frequently miscalibrated for modern life; and chasing a feeling too hard tends to produce its opposite.</div></div>
+  <div class="key-idea"><div class="icon">⚰️</div><div><strong>Mortality as a clarifying lens.</strong> Against the scale of a finite life, most daily anxieties shrink into proportion — which is exactly why choosing your struggles deliberately is urgent, not optional.</div></div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     CHAPTERS
+════════════════════════════════════════════ -->
+<div id="chapters" class="panel">
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">Don't Try</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Manson opens with Charles Bukowski's life story: a lifelong alcoholic and gambler who failed at nearly everything, wrote obsessively anyway with no real expectation of success, and — almost by accident — became one of the best-selling poets and novelists of his era. His gravestone reads <em>"Don't Try."</em> Manson uses this to introduce the book's central provocation: modern self-help's obsession with limitless positivity and "you can have anything" thinking doesn't fix unhappiness, it often manufactures it, by keeping people fixated on the gap between where they are and where they're told they should be.
+      <br><br>
+      He introduces the <strong>Feedback Loop from Hell</strong> — feeling anxious, then feeling anxious about being anxious, then ashamed of that anxiety too — as the mechanism by which trying harder to feel good backfires. The proposed alternative, elaborated across the rest of the book, isn't the absence of caring but radical selectivity: since you can't avoid struggle or care about nothing, the only real task is choosing what's worth the struggle.
+      <div class="ch-takeaway">Wanting to feel better all the time is itself a subtly exhausting, self-perpetuating problem. The goal isn't caring about nothing — it's caring about fewer, better things.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> The Feedback Loop from Hell · The Backwards Law (previewed)</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">Happiness Is a Problem</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Manson argues happiness was never meant to be a permanent destination — it's a byproduct of the ongoing process of solving problems, and dissatisfaction is a basic biological signal that something needs attention, not a malfunction to be eliminated. He identifies two common ways people avoid this reality: <strong>denial</strong> (refusing to acknowledge real problems exist) and a <strong>victim mentality</strong> (acknowledging problems but insisting they're always someone else's fault and therefore unsolvable).
+      <br><br>
+      He introduces "the Disappointment Panda" — a fictional, parody superhero who, instead of inspiring people with platitudes, travels the world telling them uncomfortable truths bluntly — as a device for the book's actual thesis: a good life isn't a problem-free one, it's one filled with problems you find worth solving. Struggle, in this framing, isn't the obstacle standing between you and a good life; it's the substance of it.
+      <div class="ch-takeaway">Happiness comes from solving problems, not eliminating them. A good life means better problems, not fewer of them.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The Disappointment Panda · Problems as the Engine of Happiness</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">You Are Not Special</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Manson takes aim at a culture that tells everyone they're exceptional, arguing it produces entitlement in two mirror-image forms: grandiose entitlement ("I'm better than everyone else") and inverted entitlement ("I'm uniquely broken, victimized, or special in my failures") — both of which keep attention locked on the self rather than on values worth pursuing.
+      <br><br>
+      He illustrates this with Dave Mustaine, the guitarist fired from Metallica before the band's rise to becoming one of the best-selling acts in music history. Mustaine went on to found Megadeth, selling tens of millions of records in his own right — an outcome almost anyone would call a success — yet spent years feeling like a failure purely because his reference point was Metallica's greater fame. The lesson: contentment is set by your reference point and expectations, not by objective achievement, and chasing "exceptional" as an identity is a trap regardless of how much you actually accomplish.
+      <div class="ch-takeaway">Entitlement — grandiose or self-pitying — keeps your attention on yourself instead of on what you actually value. Your reference point determines your contentment far more than your results do.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Two Forms of Entitlement · The Mustaine Principle (reference points shape contentment)</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">The Value of Suffering</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This chapter names and unpacks the <strong>Backwards Law</strong>, drawing on ideas popularized by philosopher Alan Watts and rooted in Buddhist and Stoic thought: the more you deliberately pursue positive experience as an end in itself, the more that pursuit becomes a subtly negative experience — an implicit admission that the present moment is lacking. Conversely, accepting a negative experience fully, without layering judgment on top of it, becomes itself a kind of positive experience.
+      <br><br>
+      Manson reframes pain as a universal, ever-present signaling system, similar to nerve endings — not something to eliminate but something to choose deliberately. He argues the more useful life question isn't "what do you want to feel?" (everyone wants to feel good) but <strong>"what pain are you willing to sit with, and what are you willing to struggle for?"</strong> — because identity and meaning are built from the specific difficulties a person is willing to endure, not the pleasures they chase.
+      <div class="ch-takeaway">The real question isn't what you want — it's what pain you're willing to endure to get it. Meaning is built from chosen struggle, not chased pleasure.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> The Backwards Law · "What pain do you want?" reframe</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">You Are Always Choosing</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Manson tackles responsibility and free will with a simple but sharp distinction: <strong>you are not always at fault</strong> for what happens to you, but <strong>you are always responsible</strong> for how you interpret it and respond. Conflating the two — assuming responsibility requires fault, or that lack of fault removes responsibility — produces either paralyzing guilt or a permanent victim stance, both of which are dead ends.
+      <br><br>
+      He draws on William James, a founding figure of American psychology, who as a young man endured serious depression and, after reading a philosopher's argument for free will, decided his very first act of free will would be to believe he had it — a decision credited with turning his life and career around. Even refusing to choose, Manson argues, is itself a choice, and interpretation and response are the only genuine levers anyone actually controls.
+      <div class="ch-takeaway">You don't have to be at fault to be responsible. Refusing to choose is still a choice — interpretation and response are the only levers you actually control.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> The Fault / Responsibility Distinction · James's "First Act of Free Will"</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">You're Wrong About Everything (But So Am I)</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Manson argues certainty is the enemy of growth: because understanding keeps evolving, anything you're confident about today will likely look naive in hindsight — and that's a sign of healthy growth, not personal failure. He lays out a loose set of principles he frames as "laws of emotion": emotions are feedback mechanisms rather than commands to be obeyed, they're frequently miscalibrated for modern circumstances rather than the ancestral ones they evolved for, and chasing a feeling too directly and too hard tends to produce something like its opposite over time.
+      <br><br>
+      To illustrate how thoroughly values shift, he points to how historical figures — a conqueror like Genghis Khan, celebrated as a hero and unifier in his own era yet viewed very differently by modern moral standards — show that even society's strongest present-day certainties will likely be revised by history. The practical takeaway is to treat intellectual humility as a permanent practice, not a phase to grow out of.
+      <div class="ch-takeaway">Being wrong is the actual mechanism of growth, not evidence against it. Treat your strongest current beliefs as your next set of mistakes waiting to be discovered.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Newton's Three "Laws" of Emotion · Historical relativism of values</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Failure Is the Way Forward</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Drawing on his own early adulthood playing in a struggling rock band while battling severe social anxiety and stage fright, Manson describes how forcing himself to perform badly in front of people, over and over, rather than waiting to feel ready or confident, gradually rewired his relationship with fear and failure. From that experience he derives the <strong>Do Something Principle</strong>: motivation is usually assumed to precede action, but in practice, action generates the emotional momentum and clarity that produce motivation — not the other way around.
+      <br><br>
+      He reframes failure from a discouraging verdict into raw data that narrows in on what actually works, arguing that people who tolerate more failure, faster, tend to improve faster than people who wait for certainty or inspiration before acting at all. Waiting to feel motivated, in this view, is often just a more comfortable way of avoiding the discomfort of starting.
+      <div class="ch-takeaway">Motivation is usually the result of action, not its cause. Doing something imperfectly beats waiting to feel ready — failure is just the fastest feedback available.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> The Do Something Principle · Failure as Data, Not Verdict</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">The Importance of Saying No</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Manson argues that meaning and freedom paradoxically come from commitment and rejection, not from keeping every option perpetually open. A life spent refusing to fully choose — in relationships, career, or values — in order to preserve maximum flexibility usually produces less satisfaction than a life built around a small number of deliberately chosen, non-negotiable commitments.
+      <br><br>
+      He draws on a strained relationship of his own, undermined by an attempt to keep things open-ended and non-committal, to argue that saying no to other options isn't a loss of freedom — it's the mechanism that gives any single choice real depth and meaning. He extends this to modern dating and consumer culture more broadly, where near-infinite choice is often mistaken for infinite opportunity, when in practice it just produces shallower commitment to everything.
+      <div class="ch-takeaway">Saying no to almost everything is what gives the few things you say yes to any real depth. Unlimited openness isn't freedom — it's a way of never fully committing to anything.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Rejection as the Source of Meaning · Commitment Over Optionality</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">...And Then You Die</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The closing chapter turns to mortality as the ultimate corrective lens: measured against the vastness of time, an individual life is a small, finite window — and against that scale, most day-to-day anxieties shrink into proportion, while the handful of values and relationships that genuinely matter come into sharper focus. Manson reflects on personal loss as a turning point that clarified which of his own daily "f*cks" were actually worth keeping.
+      <br><br>
+      The book's closing argument loops back to Chapter 1: since a finite life only allows you to meaningfully care about a limited number of things, choosing them deliberately — rather than drifting into whatever culture, habit, or circumstance hands you — is close to the entire task of living well. Death, in this framing, isn't a reason for despair; it's the deadline that makes the whole book's question urgent.
+      <div class="ch-takeaway">Mortality isn't a reason for despair — it's the deadline that forces the question the whole book has been building toward: out of everything you could care about, what's actually worth it?</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Mortality as a Clarifying Lens · Returning to "Choose Your F*cks"</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     FRAMEWORK & TOOLKIT
+════════════════════════════════════════════ -->
+<div id="framework" class="panel">
+
+  <div class="section-header">
+    <h2>The Feedback Loop from Hell</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">The spiral most self-help accidentally creates by insisting every negative feeling must be fixed immediately.</p>
+
+  <div class="code-block">
+    <span class="comment">// something bad happens</span><br>
+    <span class="keyword">FEEL</span> <span class="value">bad</span><br><br>
+    <span class="comment">// then you judge the feeling itself</span><br>
+    <span class="keyword">IF</span> you_demand_to_feel_good <span class="keyword">THEN</span><br>
+    &nbsp;&nbsp;<span class="value">feel bad about feeling bad</span> <span class="comment">// anxiety about anxiety</span><br>
+    &nbsp;&nbsp;<span class="value">feel bad about feeling bad about feeling bad</span> <span class="comment">// ...and it compounds</span><br><br>
+    <span class="keyword">BREAK POINT:</span> <span class="value">stop judging the original feeling — let it be one bad feeling, not three</span>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Newton's Three Laws of Emotion</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="steps-wrap">
+    <div class="step-card">
+      <div class="s-num">Law 1</div>
+      <div class="s-title">Feedback, Not Command</div>
+      <div class="s-desc">Emotions signal whether things align with your values — they're data, not orders to obey immediately</div>
+    </div>
+    <div class="step-card">
+      <div class="s-num">Law 2</div>
+      <div class="s-title">Often Miscalibrated</div>
+      <div class="s-desc">Emotions evolved for ancestral survival stakes, not modern-day inboxes, small talk, or social feeds</div>
+    </div>
+    <div class="step-card">
+      <div class="s-num">Law 3</div>
+      <div class="s-title">Equal &amp; Opposite Reaction</div>
+      <div class="s-desc">Chasing a feeling too hard, too directly, tends to produce something like its opposite over time</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Fault / Responsibility Model</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:8px; line-height:1.6;">You're not always at fault for your circumstances — but you're always responsible for how you interpret and respond to them.</p>
+
+  <div class="quadrant-grid">
+    <div class="quadrant-card q-good">
+      <div class="quadrant-label">Healthy Default</div>
+      <div class="quadrant-title">Not at Fault, Still Responsible</div>
+      <div class="quadrant-desc">You didn't cause it, but you own how you respond — the only stance that actually moves you forward</div>
+    </div>
+    <div class="quadrant-card q-good">
+      <div class="quadrant-label">Full Ownership</div>
+      <div class="quadrant-title">At Fault, and Responsible</div>
+      <div class="quadrant-desc">You caused it and you fix it — uncomfortable, but the cleanest path to resolving it</div>
+    </div>
+    <div class="quadrant-card q-bad">
+      <div class="quadrant-label">Dead End</div>
+      <div class="quadrant-title">Not at Fault, Not Responsible</div>
+      <div class="quadrant-desc">Learned helplessness — waiting to be rescued instead of acting on what you can actually control</div>
+    </div>
+    <div class="quadrant-card q-bad">
+      <div class="quadrant-label">Dead End</div>
+      <div class="quadrant-title">At Fault, Refusing Responsibility</div>
+      <div class="quadrant-desc">Denial — refusing to deal with a mess you had a hand in creating</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Good Values vs. Bad Values</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Good Values</h4>
+      <div class="list-item"><div class="dot"></div><div>Honesty, even when it's uncomfortable</div></div>
+      <div class="list-item"><div class="dot"></div><div>Reality-based reasoning over comforting fiction</div></div>
+      <div class="list-item"><div class="dot"></div><div>Standing up for yourself and others when it matters</div></div>
+      <div class="list-item"><div class="dot"></div><div>Curiosity and a willingness to be wrong</div></div>
+      <div class="list-item"><div class="dot"></div><div>Charity, generosity, and humility</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Bad Values</h4>
+      <div class="list-item"><div class="dot"></div><div>Pleasure for its own sake, disconnected from any deeper purpose</div></div>
+      <div class="list-item"><div class="dot"></div><div>Material success treated as the only measure of a life</div></div>
+      <div class="list-item"><div class="dot"></div><div>Always being right, regardless of the evidence</div></div>
+      <div class="list-item"><div class="dot"></div><div>Staying positive at all costs, even when it means denial</div></div>
+      <div class="list-item"><div class="dot"></div><div>Superstition or unquestioned belief as a substitute for reasoning</div></div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Quick-Reference Toolkit</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div class="t-ic">🎯</div><div><strong>Audit Your F*cks</strong> — list what currently consumes your emotional energy; cut what doesn't serve a real value</div></div>
+    <div class="toolkit-item"><div class="t-ic">🔁</div><div><strong>Name the Loop</strong> — when anxious about being anxious, consciously stop stacking judgment on judgment</div></div>
+    <div class="toolkit-item"><div class="t-ic">🎬</div><div><strong>Do Something First</strong> — take one small action before waiting to feel motivated to start</div></div>
+    <div class="toolkit-item"><div class="t-ic">⚖️</div><div><strong>Own the Response</strong> — ask "what can I control here?" instead of "whose fault is this?"</div></div>
+    <div class="toolkit-item"><div class="t-ic">🧭</div><div><strong>Pick Non-Negotiables</strong> — commit fully to a few things instead of keeping every option open</div></div>
+    <div class="toolkit-item"><div class="t-ic">📉</div><div><strong>Expect to Be Wrong Later</strong> — treat current certainty as temporary, not a final answer</div></div>
+    <div class="toolkit-item"><div class="t-ic">⏳</div><div><strong>Remember the Deadline</strong> — mortality is what makes choosing your struggles urgent, not optional</div></div>
+    <div class="toolkit-item"><div class="t-ic">🌊</div><div><strong>Sit With It</strong> — accepting a bad feeling as-is, without adding judgment, often dissolves more of it than fighting does</div></div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     VERDICT
+════════════════════════════════════════════ -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.4 / 5</h3>
+    <p>A blunt, funny antidote to toxic positivity — choose your struggles deliberately, because caring about everything is impossible and caring about nothing is worse</p>
+    <div class="rating-row">
+      <div class="rating-item">
+        <div class="r-score">4.8</div>
+        <div class="r-label">Accessibility</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.2</div>
+        <div class="r-label">Practicality</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">3.9</div>
+        <div class="r-label">Depth</div>
+      </div>
+      <div class="rating-item">
+        <div class="r-score">4.3</div>
+        <div class="r-label">Timelessness</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Strengths &amp; Limitations</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pro-con-grid">
+    <div class="pro-list">
+      <h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Blunt, funny, quotable writing makes genuinely old ideas (stoicism, non-attachment) land with readers who'd never open a philosophy book</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Backwards Law and Feedback Loop from Hell are immediately useful reframes for anxiety and self-criticism</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Fault/Responsibility distinction is a clean, applicable model for handling blame and ownership without guilt or victimhood</div></div>
+      <div class="list-item"><div class="dot"></div><div>Short, propulsive chapters make it easy to finish in one or two sittings</div></div>
+      <div class="list-item"><div class="dot"></div><div>An effective, well-timed counterweight to "you can have anything" self-help messaging</div></div>
+    </div>
+    <div class="con-list">
+      <h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Light on citations and rigorous research compared to evidence-heavy titles like <em>Mindset</em> — many claims lean on anecdote and rhetoric</div></div>
+      <div class="list-item"><div class="dot"></div><div>The deliberately profane, contrarian voice can start to feel gimmicky or repetitive by the back half</div></div>
+      <div class="list-item"><div class="dot"></div><div>Personal anecdotes sometimes carry more narrative weight than evidentiary weight</div></div>
+      <div class="list-item"><div class="dot"></div><div>Offers a philosophy and orientation more than a repeatable operational system, unlike <em>Getting Things Done</em> or <em>Traction</em></div></div>
+      <div class="list-item"><div class="dot"></div><div>The provocative title undersells how conventional — stoic- and Buddhist-adjacent — the underlying advice actually is</div></div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <h2>Who Should Read This</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone burned out on relentless positivity-focused self-help</strong> looking for a blunter, more realistic framework.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>People stuck in anxiety spirals</strong> who'd benefit from naming the "Feedback Loop from Hell" explicitly.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Readers newer to stoic or Buddhist-adjacent ideas</strong> who want a fast, funny, modern entry point rather than a philosophy text.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone re-evaluating what they spend emotional energy on</strong> — career, relationships, image, or old grievances.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting rigorous research or citations</strong> should treat this as philosophy and opinion, not science.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers who dislike profanity-driven writing</strong> may find the tone off-putting rather than clarifying.</div></div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Memorable Lines</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="quote-block">
+    <p>Don't just sit there. Do something.</p>
+    <div class="attr">— Mark Manson, The Subtle Art of Not Giving a F*ck</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Who you are is defined by what you're willing to struggle for.</p>
+    <div class="attr">— Mark Manson, The Subtle Art of Not Giving a F*ck</div>
+  </div>
+
+  <div class="quote-block">
+    <p>The desire for a more positive experience is itself a negative experience.</p>
+    <div class="attr">— Mark Manson, The Subtle Art of Not Giving a F*ck</div>
+  </div>
+
+  <div class="quote-block">
+    <p>You are not special. You're actually pretty average.</p>
+    <div class="attr">— Mark Manson, The Subtle Art of Not Giving a F*ck</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>The Single Most Important Insight</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p>If the book has one idea worth carrying forward above all others, it's that you were never in the market for a life without pain — only for the choice of which pain is worth having. The Backwards Law and the Feedback Loop from Hell both point at the same trap: fighting a feeling, or demanding that a feeling not exist, almost always produces more suffering than the feeling itself would have on its own.</p>
+    <p>This is what makes the Fault/Responsibility distinction and the Do Something Principle so durable as everyday tools — both bypass the paralysis of waiting for the "right" feeling or the "fair" circumstance, and instead point at the one lever that's always available: what you do next, and how you choose to interpret what already happened.</p>
+    <p>What keeps this from being just a clever reframe is the closing chapter on mortality: the whole argument only has urgency because your capacity to care about anything is finite. A hundred years from now, almost none of today's daily anxieties will matter — which is precisely why choosing a small number of them to care about, on purpose, is close to the entire task.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;">
+    <h2>Overall Summary</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="summary-block">
+    <p><strong>The Subtle Art of Not Giving a F*ck</strong> succeeds at exactly what it sets out to do: repackage old, well-tested ideas about acceptance, responsibility, and selective struggle in a voice sharp and funny enough that people who'd normally roll their eyes at "self-help" will actually finish it. Its best material — the Backwards Law, the Feedback Loop from Hell, the Fault/Responsibility split, the Do Something Principle — earns its popularity because each one is genuinely useful the first time you apply it, not just clever the first time you read it.</p>
+    <p>Its honest limitation is depth: this is a book of reframes and orientations, not a researched system with citations to lean on, and readers who want the rigor of <em>Mindset</em> or the operational precision of <em>Getting Things Done</em> will find this comparatively light. The profane, contrarian voice that makes the first half so propulsive also runs a little thin by the later chapters, where the same handful of moves get reapplied to new topics.</p>
+    <p>The practical recommendation: read it once for the reframes, then keep exactly two of them close at hand — the Fault/Responsibility distinction for whenever you're tempted toward blame or helplessness, and the Feedback Loop from Hell for whenever a bad feeling starts compounding into a worse one. The book's actual value isn't agreeing that "not everything deserves your energy." It's doing the audit — deciding, on purpose, what does.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleChapter(card) {
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
