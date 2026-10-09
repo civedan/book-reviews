@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>If You're Not First, You're Last — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Oswald:wght@500;700&family=DM+Sans:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:        #1c1712;
+    --ink-deep:   #0f0b07;
+    --ink-light:  #5a4630;
+    --ink-dim:    rgba(28,23,18,0.06);
+    --paper:      #f4e6bf;
+    --cream:      #f3e4b8;
+    --blue:       #b32d22;
+    --blue-dark:  #7d1d15;
+    --blue-dim:   rgba(179,45,34,0.13);
+    --blue-light: #e0553f;
+    --rust:       #8a4a1c;
+    --rust-dark:  #5e3010;
+    --red:        #c0392b;
+    --red-dark:   #96291e;
+    --gray:       #9a8663;
+    --gray-dark:  #6b5738;
+    --border:     rgba(60,40,10,0.18);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f6ecd0;
+    color: var(--ink-deep);
+    min-height: 100vh;
+  }
+
+  /* ─────────────────────────────────────────────
+     HERO — white cover canvas, rust ladder-rung motif, cover art
+  ───────────────────────────────────────────── */
+  .hero {
+    background: radial-gradient(ellipse at 30% 20%, #f3e2ac 0%, #e6cd8d 60%, #d9bb74 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .bestseller-bar {
+    padding: 8px 40px; color: var(--blue-dark) !important; font-weight: 700 !important;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner {
+    padding: 40px 40px 44px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  /* Ladder-rung motif, echoing the cover's climbing ladder */
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img {
+    width: 132px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+    transform: rotate(5deg);
+    box-shadow: 8px 12px 26px rgba(60,35,10,0.35);
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  .book-label {
+    display: inline-block;
+    background: var(--ink-deep);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .hero h1 {
+    font-family: 'Oswald', 'DM Sans', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: clamp(34px, 6.4vw, 58px);
+    line-height: 0.98;
+    max-width: 620px;
+    letter-spacing: -0.5px;
+    color: var(--ink-deep);
+  }
+  .hero h1 em { color: var(--blue-dark); text-transform: none; font-style: normal; font-weight: 500; display: block; font-size: 0.36em; letter-spacing: 0; margin-top: 14px; max-width: 480px; font-family: 'Fraunces', serif; font-style: italic; }
+  .author {
+    margin-top: 18px;
+    color: var(--gray-dark);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  .author span { color: var(--ink-deep); font-weight: 700; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+  .meta-pill {
+    background: var(--ink-deep);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .badge-seal {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #e0574a, var(--red-dark) 78%);
+    color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; font-weight: 800; letter-spacing: 0.3px; line-height: 1.05;
+    box-shadow: 0 3px 10px rgba(150,41,30,0.35);
+    flex-shrink: 0;
+  }
+  .badge-seal .b-top { font-size: 6.5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-seal .b-mid { font-size: 13px; margin: 1px 0; }
+  .badge-seal .b-bot { font-size: 6.5px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── Back bar ── */
+  .back-bar { background: var(--cream); padding: 10px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+  .back-link { color: var(--gray-dark); font-size: 12px; text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+  .back-link:hover { color: var(--ink); }
+  .back-link span { margin-right: 6px; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; background: var(--cream); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    color: var(--gray-dark); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all 0.2s;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--blue); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 21px; color: var(--ink); letter-spacing: 0.1px; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-dark); margin-bottom: 6px; font-weight: 700; }
+  .stat-value { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 16.5px; color: var(--ink); letter-spacing: 0.1px; }
+  .stat-desc { font-size: 12px; color: var(--gray-dark); margin-top: 4px; }
+
+  .summary-block {
+    background: var(--cream); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px;
+    margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: #2a2015;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: #fbf4de; border: 1px solid #e3d2a0;
+    border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--ink-deep); color: #ffffff; padding: 10px 18px; border-radius: 6px; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 12px; margin-top: 24px; font-weight: 700;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card { background: #fbf4de; border: 1px solid #e3d2a0; border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(60,35,10,0.14); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num { width: 32px; height: 32px; background: var(--ink-deep); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .ch-num.intro { background: var(--rust-dark); color: #fff; }
+  .ch-title { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 15px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--blue-dark); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body { display: none; background:#fbf4de; padding: 14px 18px 18px 64px; font-size: 13.5px; line-height: 1.7; color: #2a2015; border-top: 1px solid #eadcb2; }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px; background: var(--blue-dim); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12.5px; color: var(--blue-dark); font-weight: 700;
+  }
+  .ch-tool {
+    margin-top: 8px; background: var(--ink-dim); border-left: 3px solid var(--ink); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12px; color: var(--ink-deep);
+  }
+  .ch-tool strong { color: var(--ink); }
+
+  /* ── Habit list rows (Ch. 2's twenty habits) ── */
+  .habit-row { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-top: 1px solid #eadcb2; font-size: 13px; line-height: 1.55; }
+  .habit-row:first-of-type { border-top: none; }
+  .habit-num { width: 22px; height: 22px; border-radius: 50%; background: var(--blue-dim); color: var(--blue-dark); font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── Framework cards ── */
+  .method-card { background: #fbf4de; border: 1px solid #e3d2a0; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+  .method-card h4 { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--gray-dark); }
+  .method-card .tag {
+    display: inline-block; background: var(--ink-deep); color: white; font-size: 10px; letter-spacing: 1px; padding: 3px 9px;
+    border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 700;
+  }
+
+  /* ── Change process (steps) ── */
+  .steps-wrap { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; flex-wrap: wrap; }
+  .step-card { flex: 1; min-width: 130px; background: var(--cream); border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 12px; text-align: center; }
+  .step-card .s-num { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue-dark); font-weight: 700; margin-bottom: 6px; }
+  .step-card .s-title { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+  .step-card .s-desc { font-size: 11.5px; line-height: 1.5; color: var(--gray-dark); }
+  .step-arrow { display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 16px; }
+  @media (max-width: 760px) { .steps-wrap { flex-direction: column; } .step-arrow { display: none; } }
+
+  /* ── Code-style block (Feedforward script) ── */
+  .code-block { background: var(--ink-deep); color: #f3e4b8; border-radius: 8px; padding: 20px; font-family: monospace; font-size: 13px; line-height: 1.9; margin-bottom: 16px; }
+  .code-block .comment { color: rgba(224,85,63,0.8); }
+  .code-block .keyword { color: var(--blue-light); }
+  .code-block .value { color: #fff; }
+
+  /* ── Toolkit page list ── */
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item { display: flex; gap: 10px; align-items: flex-start; background: #fbf4de; border: 1px solid #e3d2a0; border-radius: 8px; padding: 10px 12px; font-size: 12px; line-height: 1.5; color: #2a2015; }
+  .toolkit-item .t-ic { font-size: 14px; flex-shrink: 0; }
+  @media (max-width: 560px) { .toolkit-list { grid-template-columns: 1fr; } }
+
+  /* ── Verdict banner ── */
+  .verdict-banner { background: linear-gradient(135deg, var(--ink-deep) 0%, #2b1810 100%); background: linear-gradient(135deg, var(--ink-deep) 0%, #2b1810 100%); border-radius: 12px; padding: 28px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden; }
+  .verdict-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at  5% 20%, var(--rust) 0%, var(--rust) 3px, transparent 4px) 0 0/26px 26px,
+      radial-gradient(circle at 95% 75%, var(--red) 0%, var(--red) 12px, transparent 13px),
+      radial-gradient(circle at 90% 15%, #ffffff 0%, #ffffff 5px, transparent 6px),
+      radial-gradient(circle at 10% 85%, #ffffff 0%, #ffffff 7px, transparent 8px);
+    opacity: 0.14; pointer-events: none;
+  }
+  .verdict-banner h3 { font-family: 'DM Sans', sans-serif; font-weight: 900; font-size: 30px; color: var(--blue-light); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(255,255,255,0.78); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item { text-align: center; background: rgba(179,45,34,0.25); border: 1px solid rgba(224,85,63,0.45); border-radius: 8px; padding: 10px 16px; min-width: 90px; }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--blue-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list { background: #fbf4de; border-radius: 10px; padding: 16px 18px; border: 1px solid #e3d2a0; }
+  .pro-list h4 { color: var(--ink); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--rust-dark); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--gray-dark); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--ink); }
+  .con-list .dot { background: var(--rust); }
+
+  /* ── Quotes ── */
+  .quote-block { background: var(--cream); border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; position: relative; border-left: 3px solid var(--blue); }
+  .quote-block::before {
+    content: '\201C'; font-family: 'Fraunces', serif; font-size: 60px; color: var(--blue); position: absolute; top: -8px; left: 16px; line-height: 1;
+  }
+  .quote-block p { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 16px; line-height: 1.5; padding-left: 10px; margin-top: 16px; color: var(--ink-deep); }
+  .quote-block .attr { font-size: 11px; color: var(--gray-dark); margin-top: 8px; text-align: right; font-family: 'DM Sans', sans-serif; font-style: normal; }
+
+  /* ── Who cards ── */
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: #fbf4de; border: 1px solid #e3d2a0; border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.6; transition: border-color 0.2s; }
+  .who-card:hover { border-color: var(--blue); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .toolkit-list { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero-inner { padding: 28px 20px 28px; flex-wrap: wrap; }
+    .bestseller-bar { padding: 8px 20px; }
+  }
+
+  .strategy-card { background:#fbf4de; border:1px solid #e3d2a0; border-left:4px solid var(--blue); border-radius:10px; padding:18px 20px; margin-bottom:12px; }
+  .strategy-card .s-tag { display:inline-block; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; color:#fff; background:var(--blue-dark); border-radius:10px; padding:3px 10px; margin-bottom:8px; }
+  .strategy-card h4 { font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.5px; font-size:16px; color:var(--ink-deep); margin-bottom:6px; }
+  .strategy-card p { font-size:13px; line-height:1.65; color:var(--gray-dark); }
+  .strategy-card .try { margin-top:10px; background:var(--blue-dim); border-radius:6px; padding:9px 12px; font-size:12.5px; color:var(--blue-dark); font-weight:700; line-height:1.5; }
+  .note-box { background:var(--ink-dim); border:1px dashed var(--gray); border-radius:8px; padding:12px 16px; font-size:12px; line-height:1.6; color:var(--gray-dark); margin-bottom:22px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="bestseller-bar">New York Times Bestseller</div>
+  <div class="hero-inner">
+    <div class="hero-motif">
+      <svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- torn red ribbon echoing the cover's finish-line ribbon -->
+        <path d="M0 150 C 60 120, 120 175, 190 140 C 150 165, 90 150, 0 170 Z" fill="#b32d22" opacity="0.55"/>
+        <path d="M800 140 C 740 110, 690 165, 620 130 C 660 160, 720 150, 800 165 Z" fill="#b32d22" opacity="0.55"/>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Sales Playbook</div>
+      <h1>If You're Not First, You're Last<em>Sales Strategies to Dominate Your Market and Beat Your Competition</em></h1>
+      <div class="author">by <span>Grant Cardone</span> &nbsp;·&nbsp; Wiley &nbsp;·&nbsp; 2010</div>
+      <div class="hero-meta">
+        <div class="meta-pill">Sales</div>
+        <div class="meta-pill">Business Development</div>
+        <div class="meta-pill">Mindset</div>
+        <div class="meta-pill">2010</div>
+        <div class="badge-seal"><div class="b-top">Advance &amp;</div><div class="b-mid">19</div><div class="b-bot">Chapters</div></div>
+      </div>
+    </div>
+    <div class="book-cover-wrap">
+      <img src="images/if-youre-not-first-cover.jpg" alt="If You're Not First, You're Last book cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('playbook', this)">Sales Strategies</div>
+  <div class="tab" onclick="showTab('quotes', this)">Notable Quotes</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<div id="overview" class="panel active">
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
+
+  <div class="overview-grid">
+    <div class="stat-card"><div class="stat-label">Core Focus</div><div class="stat-value">Selling Aggressively When Everyone Else Retreats</div><div class="stat-desc">A tactical sales manual written in the aftermath of the 2008–09 recession, aimed at taking market share when competitors are cutting back</div></div>
+    <div class="stat-card"><div class="stat-label">Central Promise</div><div class="stat-value">Number One Is a Position You Earn by Activity</div><div class="stat-desc">Revenue follows effort, follow-up, service, and attitude, regardless of the economy</div></div>
+    <div class="stat-card"><div class="stat-label">Primary Framework</div><div class="stat-value">Advance and Conquer</div><div class="stat-desc">Reactivate your network and past clients, convert the unsold, multiply existing accounts, defend price, and protect your selling time</div></div>
+    <div class="stat-card"><div class="stat-label">Best For</div><div class="stat-value">Salespeople, Owners, and Managers Who Need More Revenue Now</div><div class="stat-desc">Anyone whose growth depends on picking up the phone and asking for business</div></div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>If You're Not First, You're Last</strong> is Grant Cardone's argument that sales is the one activity every business depends on, and that a downturn is the best moment to take ground from competitors. Where most advice about a weak economy counsels caution, Cardone counsels offence: contact more people, follow up harder, serve better, and refuse to discount your way out of trouble.</p>
+    <p>The book works through nineteen chapters that move from who to sell to (your power base, past clients, the unsold, existing accounts) to how to sell (the call, the wow-level delivery, the second sale, the value-added proposition, repackaging), and finally to the habits and mindset underneath it all: the Power Schedule, an advance-and-conquer attitude, a freedom financial plan, closing, and the unreasonable attitude.</p>
+    <p>It is energetic, repetitive by design, and unapologetically motivational. The tone is closer to a pep talk from a sales manager than a research text, and that is both its appeal and its limit.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
+  <div class="key-idea"><div class="icon">🏁</div><div><strong>Position over comfort.</strong> Market position is won through daily effort and lost through hesitation.</div></div>
+  <div class="key-idea"><div class="icon">📞</div><div><strong>Reactivate before you prospect.</strong> Your network, past clients, and unsold leads are the cheapest revenue you have.</div></div>
+  <div class="key-idea"><div class="icon">🔁</div><div><strong>Multiply what you've got.</strong> Referrals, second sales, and expansion inside existing accounts beat constantly chasing strangers.</div></div>
+  <div class="key-idea"><div class="icon">💎</div><div><strong>Hold your price, add value.</strong> Discounting is a symptom of weak selling; build value instead.</div></div>
+  <div class="key-idea"><div class="icon">🗓️</div><div><strong>Protect selling time.</strong> The Power Schedule puts revenue activity first and keeps admin from eating the day.</div></div>
+  <div class="key-idea"><div class="icon">🔥</div><div><strong>Attitude drives activity.</strong> Act hungry, be unreasonable, and treat effort as the controllable variable.</div></div>
+</div>
+
+<div id="chapters" class="panel">
+  <div class="note-box">Chapter titles follow the publisher's table of contents. The summaries are written from the book's themes and chapter headings, not from a line-by-line reading, so check specifics against your copy before relying on them.</div>
+  <div class="part-header">Introduction</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">I</div>
+      <div class="ch-title">Introduction</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Cardone opens with the premise that most people respond to a tough economy by shrinking: cutting costs, pulling back on selling, and waiting for conditions to improve. He argues the opposite instinct is the profitable one, and that the book is a field manual for going on offence.
+      <div class="ch-takeaway">Selling harder in a downturn is not reckless; waiting is.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Offence over defence</div>
+    </div>
+  </div>
+  <div class="part-header">Part One — Respond to the Market (Ch. 1)</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">1</div>
+      <div class="ch-title">Four Responses to Economic Contractions</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Cardone frames the downturn as a fork in the road. Businesses can freeze, retreat, cut and wait, or they can commit to taking market share while competitors are distracted. He makes the case that contractions are when leaders are made and when weak competitors leave customers up for grabs.<br><br>The chapter sets the tone for everything that follows: the economy is a condition, not an excuse, and the only variable fully under your control is how hard and how smartly you sell.
+      <div class="ch-takeaway">The market you are in is not the problem; your response to it is the variable.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Advance and conquer vs. retreat and wait</div>
+    </div>
+  </div>
+  <div class="part-header">Part Two — Sell More to Who You Already Have (Ch. 2–9)</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">2</div>
+      <div class="ch-title">Power Base Reactivation</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Your power base is the network of people who already know, like, and trust you: friends, family, former colleagues, acquaintances, vendors. Cardone argues most salespeople ignore this group because it feels awkward to sell to people they know, yet it is the fastest, cheapest source of new business.<br><br>He pushes readers to build the list, contact everyone on it, and ask directly for business or introductions rather than hinting.
+      <div class="ch-takeaway">Your fastest revenue is usually sitting in your own contacts list.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Power Base list</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">3</div>
+      <div class="ch-title">Past Client Reactivation</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Past clients have already bought from you once, which makes them the warmest prospects you have. Cardone calls out the common failure of treating a closed sale as the end of the relationship, then wondering where repeat business went.<br><br>The chapter is a push to dig up every dormant account, call them, find out what has changed, and re-engage with a specific offer rather than a vague "just checking in."
+      <div class="ch-takeaway">A client you have already sold once costs far less to sell again than a stranger.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Dormant-account reactivation calls</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">4</div>
+      <div class="ch-title">The Most Effective Call to Advance and Conquer</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Here Cardone gets tactical about the phone. He treats the call as the core unit of sales activity and argues that volume, speed, and persistence matter more than script perfection. The goal of the call is to move the prospect to the next concrete step, not just have a pleasant conversation.<br><br>He stresses preparation, a clear purpose for each call, and the willingness to ask for the appointment or the order without apology.
+      <div class="ch-takeaway">Every call should end with a clear next step, not a pleasant goodbye.</div>
+      <div class="ch-tool"><strong>Key practice:</strong> Purposeful, high-volume calling</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">5</div>
+      <div class="ch-title">Converting the Unsold</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Most of the pipeline is made of people who said no, not yet, or nothing at all. Cardone argues that an unsold prospect is not a dead prospect: it is an unfinished sale. He describes following up on old quotes, stalled deals, and warm leads that went quiet.<br><br>The underlying belief is that a no usually means the prospect lacks information, urgency, or confidence, all of which a persistent, helpful seller can address.
+      <div class="ch-takeaway">"No" is usually a timing or information problem, not a verdict.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Treat the unsold as unfinished sales</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">6</div>
+      <div class="ch-title">Multiply through Existing Clients</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Existing customers can be multiplied: through additional purchases, wider use inside their organization, and referrals to people like them. Cardone argues that happy clients are under-asked, and that most sellers leave large amounts of money on the table by not requesting introductions.<br><br>The chapter encourages a deliberate system for asking existing clients what else they need and who else they know.
+      <div class="ch-takeaway">Your best prospecting channel is a satisfied client who has been asked.</div>
+      <div class="ch-tool"><strong>Key practice:</strong> Systematic referral and expansion asks</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">7</div>
+      <div class="ch-title">Delivering at "Wow" Levels</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Service is a sales tool. Cardone argues that merely satisfying customers is not enough in a contracting market, and that exceeding expectations is what generates repeat purchases, referrals, and pricing power.<br><br>He frames the wow level as something you design on purpose: finding small, visible ways to over-deliver so clients talk about you without prompting.
+      <div class="ch-takeaway">Satisfied customers leave quietly; wowed customers recruit for you.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Deliberate over-delivery</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">8</div>
+      <div class="ch-title">The Importance of Price</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Cardone tackles the reflex to cut price when sales slow. He argues discounting is often a symptom of weak selling, and that price is rarely the only factor buyers weigh when the seller has built enough value and trust.<br><br>The chapter pushes sellers to hold their price, explain the value behind it, and treat price objections as a prompt to sell more, not to give more away.
+      <div class="ch-takeaway">Cutting price is the easiest move and often the most expensive one.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Defend price by building value</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">9</div>
+      <div class="ch-title">Activate Second Sale to Boost Profits</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      After the first sale comes the second: the add-on, upgrade, or companion product the client did not know they needed. Cardone argues that the best moment to sell more is right after a customer has said yes, when trust and momentum are highest.<br><br>He encourages sellers to plan the second sale before the first closes, so it is part of the process rather than an afterthought.
+      <div class="ch-takeaway">The sale is not over when the customer says yes. It is just starting.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Planned add-on and upsell offers</div>
+    </div>
+  </div>
+  <div class="part-header">Part Three — Win Share from Competitors (Ch. 10–14)</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">10</div>
+      <div class="ch-title">The Value-Added Proposition</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Rather than competing on price, Cardone urges sellers to add things the competition does not: extra service, bonuses, guarantees, or bundled benefits that make your offer worth more than the sticker suggests.<br><br>The point is to give the buyer a reason to choose you that has nothing to do with being cheaper.
+      <div class="ch-takeaway">Compete on what you add, not on what you subtract.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Value-added offers over discounts</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">11</div>
+      <div class="ch-title">Act Hungry</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      A short chapter with a blunt message: customers respond to sellers who clearly want the business. Cardone says to show urgency, energy, and eagerness instead of the cool detachment many professionals mistake for confidence.<br><br>He ties hunger to follow-up and persistence: the hungry seller calls back, shows up, and keeps asking.
+      <div class="ch-takeaway">Wanting the business, visibly, is not desperate. It is persuasive.</div>
+      <div class="ch-tool"><strong>Key attitude:</strong> Visible hunger</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">12</div>
+      <div class="ch-title">Expand Acceptable Client Profile</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      When business slows, Cardone argues sellers should widen who they are willing to serve. Many companies unknowingly restrict themselves to a narrow ideal customer, ignoring adjacent segments that would buy gladly.<br><br>The chapter pushes readers to revisit assumptions about who qualifies and to go after the clients they previously dismissed as too small, too different, or too unlikely.
+      <div class="ch-takeaway">If you are short on revenue, check how narrowly you have defined a customer.</div>
+      <div class="ch-tool"><strong>Key exercise:</strong> Widen the target client profile</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">13</div>
+      <div class="ch-title">Effective Marketing Campaigns</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Cardone treats marketing as the force multiplier for sales activity. He argues for consistent, measurable campaigns with a clear offer and call to action, rather than vague brand-building that cannot be tied to revenue.<br><br>The emphasis is on staying visible during a downturn when competitors go quiet, and on campaigns that give prospects a specific next step.
+      <div class="ch-takeaway">Marketing without a clear offer and next step is just noise.</div>
+      <div class="ch-tool"><strong>Key practice:</strong> Offer-driven campaigns</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">14</div>
+      <div class="ch-title">Repackaging for Increased Profits</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      If the current offer is not selling, repackage it. Cardone describes combining products and services, changing how they are bundled, or reframing them for different buyers to raise perceived value and average sale size.<br><br>The underlying idea is that the market responds to packaging and positioning as much as to the underlying product.
+      <div class="ch-takeaway">Sometimes the product is fine and the package is the problem.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Bundling and repositioning</div>
+    </div>
+  </div>
+  <div class="part-header">Part Four — Attitude, Schedule & Skill (Ch. 15–19)</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">15</div>
+      <div class="ch-title">The Power Schedule to Advance and Conquer</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Cardone argues that time is the sales professional's most mismanaged asset. The Power Schedule is a structured plan that blocks the day and week around selling activities, with prospecting and client contact protected from interruptions and admin work.<br><br>He insists that a calendar full of non-selling activity is the clearest sign that a seller is not serious about results.
+      <div class="ch-takeaway">What is in your calendar is what you actually value.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Power Schedule</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">16</div>
+      <div class="ch-title">An Advance-and-Conquer Attitude</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The book's mindset chapter. Cardone argues that attitude determines activity, and activity determines income. He urges readers to stop absorbing negative news and conversation, take ownership of results, and commit fully rather than hedging.<br><br>The advance-and-conquer attitude is presented as a daily choice, not a personality trait.
+      <div class="ch-takeaway">You can't sell offensively with a defensive mindset.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Attitude drives activity</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">17</div>
+      <div class="ch-title">Your Freedom Financial Plan</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Cardone connects selling to personal finances. A freedom financial plan means knowing your numbers, controlling expenses, saving, and building toward independence so that fear of money does not drive bad selling decisions.<br><br>The chapter argues that sellers with financial breathing room are bolder, more patient, and less likely to panic-discount.
+      <div class="ch-takeaway">Financial desperation makes you sell worse, not harder.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Financial stability as a sales advantage</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">18</div>
+      <div class="ch-title">The Most Important Skill Needed to Advance and Conquer</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Cardone names the one skill he considers essential: the ability to close, to ask for the business and drive to a decision. Product knowledge, rapport, and presentation count for little if the seller can't secure commitment.<br><br>The chapter encourages sellers to practise closing, expect objections, and see each one as part of the process instead of a rejection.
+      <div class="ch-takeaway">The ability to ask for the order and handle the objection is the skill beneath all the others.</div>
+      <div class="ch-tool"><strong>Key skill:</strong> Closing</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num ">19</div>
+      <div class="ch-title">The Unreasonable Attitude</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      In the final chapter, Cardone argues that ambitious results require expectations others call unreasonable: higher targets, more effort, and refusal to accept ordinary limits. Reasonable people produce reasonable outcomes, and in a competitive market those are not enough.<br><br>He urges readers to set goals beyond what feels comfortable and then build activity to match.
+      <div class="ch-takeaway">Reasonable expectations produce average results.</div>
+      <div class="ch-tool"><strong>Key attitude:</strong> Unreasonable commitment</div>
+    </div>
+  </div>
+  <div class="part-header">Conclusion</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">C</div>
+      <div class="ch-title">Conclusion: How to Guarantee Your Position</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Cardone closes by tying the pieces together: activity, follow-up, service, price discipline, and attitude. He argues that market position is not given, it is earned and defended every day by the people willing to out-work and out-serve the competition.<br><br>The afterword and glossary reinforce the book's vocabulary so readers can apply the terms in their own organizations.
+      <div class="ch-takeaway">Number one is not a title you win once. It is a position you keep earning.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Position is maintained by daily activity</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="playbook" class="panel">
+  <div class="section-header"><h2>Sales Strategies to Try</h2><div class="section-line"></div></div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Fourteen tactics pulled from across the book, each with a small experiment you can run this week.</p>
+  <div class="strategy-card"><div class="s-tag">Reactivate</div><h4>Power Base Sweep</h4><p>Build a list of every person who knows you professionally or personally. Contact each one with a specific ask: business, an introduction, or a referral.</p><div class="try">Try it: Block one hour this week, list 50 names, and call or message ten of them with a clear ask.</div></div>
+  <div class="strategy-card"><div class="s-tag">Reactivate</div><h4>Dormant Client Revival</h4><p>Pull every past client who has not bought in 6–12 months. Lead with something new (an offer, an update, a problem you can now solve) instead of a generic check-in.</p><div class="try">Try it: Export your customer list, sort by last purchase date, and call the oldest 20.</div></div>
+  <div class="strategy-card"><div class="s-tag">Pipeline</div><h4>Convert the Unsold</h4><p>Revisit every quote, proposal, and stalled deal. Reach out with new information or a new reason to act now.</p><div class="try">Try it: Review last quarter's open quotes and send each one a fresh, specific follow-up.</div></div>
+  <div class="strategy-card"><div class="s-tag">Pipeline</div><h4>The Purposeful Call</h4><p>Make high volumes of calls, each with a defined objective and a next step booked before you hang up.</p><div class="try">Try it: Before every call, write one sentence on the next step you will ask for.</div></div>
+  <div class="strategy-card"><div class="s-tag">Grow Accounts</div><h4>Multiply Through Clients</h4><p>Ask each happy client what else they need and who else they know who would benefit.</p><div class="try">Try it: End every successful delivery with, "Who else do you know who should be hearing about this?"</div></div>
+  <div class="strategy-card"><div class="s-tag">Grow Accounts</div><h4>Plan the Second Sale</h4><p>Decide in advance which add-on or upgrade you will offer immediately after the first yes.</p><div class="try">Try it: Write down the one logical add-on for each product you sell and offer it at close.</div></div>
+  <div class="strategy-card"><div class="s-tag">Value</div><h4>Wow Delivery</h4><p>Find small, visible ways to exceed expectations so clients talk about you without being asked.</p><div class="try">Try it: Add one unexpected touch to your next five client deliveries.</div></div>
+  <div class="strategy-card"><div class="s-tag">Value</div><h4>Hold the Price</h4><p>Respond to price objections by rebuilding value rather than discounting. Add benefits before subtracting dollars.</p><div class="try">Try it: Before offering a discount, list three value points you have not yet mentioned.</div></div>
+  <div class="strategy-card"><div class="s-tag">Value</div><h4>Value-Added Proposition</h4><p>Bundle service, guarantees, or bonuses that competitors don't offer so you are not compared on price alone.</p><div class="try">Try it: Create one bonus that costs you little but is worth a lot to the buyer.</div></div>
+  <div class="strategy-card"><div class="s-tag">Market</div><h4>Widen the Client Profile</h4><p>Question who you currently consider an ideal customer, and test selling to adjacent segments you have been ignoring.</p><div class="try">Try it: List three customer types you have turned away and approach one of them this month.</div></div>
+  <div class="strategy-card"><div class="s-tag">Market</div><h4>Repackage the Offer</h4><p>Change how products and services are bundled or positioned to raise perceived value and sale size.</p><div class="try">Try it: Combine two existing offers into a single premium package and test it.</div></div>
+  <div class="strategy-card"><div class="s-tag">Habits</div><h4>The Power Schedule</h4><p>Block calendar time for selling and protect it from admin and meetings. Do the revenue activities first.</p><div class="try">Try it: Reserve your best two hours each morning for prospecting only.</div></div>
+  <div class="strategy-card"><div class="s-tag">Habits</div><h4>Act Hungry</h4><p>Show visible energy and eagerness to earn the business. Follow up fast and keep asking.</p><div class="try">Try it: Respond to every inquiry within an hour for one week.</div></div>
+  <div class="strategy-card"><div class="s-tag">Mindset</div><h4>Unreasonable Targets</h4><p>Set goals well beyond what feels comfortable, then back-solve the daily activity required.</p><div class="try">Try it: Double one monthly target on paper and write the daily call count that would hit it.</div></div>
+
+</div>
+
+<div id="quotes" class="panel">
+  <div class="section-header"><h2>Notable Lines &amp; Phrases</h2><div class="section-line"></div></div>
+  <div class="note-box">These are the book's signature phrases and chapter titles. Add your own favourite passages from your copy to this tab; I've deliberately not invented word-for-word quotations.</div>
+  <div class="quote-block"><p>If you're not first, you're last.</p><div class="attr">— Grant Cardone, the book's title and central claim</div></div>
+  <div class="quote-block"><p>Advance and conquer.</p><div class="attr">— Cardone's recurring call to action, used across the book</div></div>
+  <div class="quote-block"><p>Act hungry.</p><div class="attr">— Chapter 11 title, and a short summary of the whole attitude</div></div>
+  <div class="quote-block"><p>Deliver at "wow" levels.</p><div class="attr">— Chapter 7 title</div></div>
+  <div class="quote-block"><p>Be unreasonable.</p><div class="attr">— Paraphrase of Chapter 19 (The Unreasonable Attitude)</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Paraphrases of the book's main arguments, not direct quotes.</p>
+  <div class="quote-block"><p>A sale you have already made once is worth more than a stranger you have not met yet.</p><div class="attr">— Paraphrase of Chapters 3 and 6</div></div>
+  <div class="quote-block"><p>If you are cutting your price, you may be cutting your selling.</p><div class="attr">— Paraphrase of Chapter 8</div></div>
+  <div class="quote-block"><p>What is on your calendar is what you are really committed to.</p><div class="attr">— Paraphrase of Chapter 15</div></div>
+  <div class="quote-block"><p>Attitude drives activity, and activity drives income.</p><div class="attr">— Paraphrase of Chapter 16</div></div>
+
+</div>
+
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 3.9 / 5</h3>
+    <p>A high-energy, activity-first sales manual: practical and motivating, light on evidence, and best taken as a kick in the pants</p>
+    <div class="rating-row">
+      <div class="rating-item"><div class="r-score">4.3</div><div class="r-label">Motivation</div></div>
+      <div class="rating-item"><div class="r-score">4.0</div><div class="r-label">Actionability</div></div>
+      <div class="rating-item"><div class="r-score">3.0</div><div class="r-label">Evidence Base</div></div>
+      <div class="rating-item"><div class="r-score">4.2</div><div class="r-label">Readability</div></div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Immediately actionable: reactivation calls, follow-up on old quotes, and referral asks can start today</div></div>
+      <div class="list-item"><div class="dot"></div><div>Focuses on existing assets (network, past clients, unsold leads) before expensive new prospecting</div></div>
+      <div class="list-item"><div class="dot"></div><div>Clear, short chapters that are easy to dip into</div></div>
+      <div class="list-item"><div class="dot"></div><div>Strong message on protecting selling time and not discounting by reflex</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Anecdote and conviction in place of data or research</div></div>
+      <div class="list-item"><div class="dot"></div><div>Repetitive, with the same call to out-work competitors repeated throughout</div></div>
+      <div class="list-item"><div class="dot"></div><div>A high-pressure style that may not suit relationship-led or consultative sales</div></div>
+      <div class="list-item"><div class="dot"></div><div>Written for the post-2008 economy, so some references and examples feel dated</div></div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Salespeople stuck in a slow patch</strong> who need a push to start calling again.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Owners and managers</strong> looking for revenue levers beyond new advertising spend.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Recruiters, staffing and service sellers</strong> whose growth depends on re-engaging past clients and referrals.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers who dislike high-pressure sales language</strong> will find the tone grating.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p>Most revenue you need already exists in your contacts, your past clients, and your open quotes. The book's best advice is simply to go back to those people, ask directly, and keep following up, instead of assuming new leads are the only way to grow.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>If You're Not First, You're Last</strong> is a motivational sales playbook more than a rigorous strategy text. Its value is in the discipline it demands: reactivate, follow up, over-deliver, hold price, and protect your selling time.</p>
+    <p>Take the tactics (the Power Base sweep, dormant-client calls, second-sale planning, and the Power Schedule) and leave the bravado. Run two or three of the experiments in the Sales Strategies tab for a month and measure what changes.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleChapter(card) { card.classList.toggle('open'); }
+</script>
+</body>
+</html>
