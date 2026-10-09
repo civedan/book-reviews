@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radical Candor — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --ink:        #141414;
+    --ink-soft:   #4a3f2a;
+    --gold:       #fbb125;
+    --gold-deep:  #f19c0c;
+    --gold-pale:  #fff3d1;
+    --card:       #fffaf0;
+    --card-line:  #f0d28a;
+    --red:        #e8502a;
+    --red-dark:   #b93a18;
+    --red-dim:    rgba(232,80,42,0.13);
+    --border:     rgba(20,20,20,0.16);
+    --muted:      #6b5a36;
+    /* quadrant colours */
+    --q-rc:  #141414;
+    --q-re:  #2f6f8f;
+    --q-oa:  #e8502a;
+    --q-mi:  #6c6a4a;
+  }
+
+  body { font-family: 'DM Sans', sans-serif; background: var(--gold-pale); color: var(--ink); min-height: 100vh; }
+
+  /* ───────── HERO: golden cover, hand-drawn axes, red-orange marker type ───────── */
+  .hero { background: radial-gradient(ellipse at 28% 18%, #fdc04a 0%, #fbb125 55%, #f4a010 100%); position: relative; overflow: hidden; }
+  .bestseller-bar {
+    padding: 9px 40px; text-align: center; position: relative; z-index: 2;
+    font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-weight: 700;
+    font-size: 13px; letter-spacing: 5px; text-transform: uppercase; color: var(--red-dark);
+    border-bottom: 1px solid rgba(20,20,20,0.18);
+  }
+  .hero-inner { padding: 40px 40px 46px; position: relative; display: flex; align-items: center; gap: 36px; }
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hero-motif svg { width: 100%; height: 100%; display: block; }
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img { width: 150px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.15); transform: rotate(5deg); box-shadow: 9px 14px 28px rgba(80,45,0,0.4); transition: transform .3s ease; display: block; }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  .book-label { display: inline-block; background: var(--ink); color: var(--gold); font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; padding: 5px 13px; border-radius: 2px; margin-bottom: 16px; font-weight: 700; }
+  .hero h1 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: clamp(38px, 7vw, 68px); line-height: 1.0; color: var(--red-dark); max-width: 640px; }
+  .hero h1 em { display: block; font-style: normal; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: clamp(15px, 2.4vw, 21px); color: var(--ink); margin-top: 14px; max-width: 520px; line-height: 1.25; }
+  .author { margin-top: 18px; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; color: var(--ink); }
+  .author small { font-size: 12.5px; letter-spacing: 1px; font-weight: 500; text-transform: none; color: var(--ink-soft); margin-left: 6px; font-family: 'DM Sans', sans-serif; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+  .meta-pill { background: var(--ink); color: var(--gold); border-radius: 20px; padding: 5px 14px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+  .badge-seal { width: 76px; height: 76px; border-radius: 50%; background: var(--red); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 1.5px; line-height: 1.08; text-transform: uppercase; font-size: 11px; box-shadow: 0 3px 10px rgba(120,30,0,0.35); flex-shrink: 0; }
+
+  /* ── Back bar & tabs ── */
+  .back-bar { background: #fde6a1; padding: 10px 32px; border-bottom: 1px solid var(--border); }
+  .back-link { color: var(--ink-soft); font-size: 12px; text-decoration: none; letter-spacing: .5px; }
+  .back-link:hover { color: var(--ink); }
+  .back-link span { margin-right: 6px; }
+  .tabs { display: flex; background: #fde6a1; border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 20; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { padding: 14px 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--ink-soft); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all .2s; }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--red); }
+  .tab.hot { color: var(--red-dark); }
+
+  .panel { display: none; padding: 32px 32px 56px; max-width: 1020px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .section-header h2 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: 24px; color: var(--ink); }
+  .section-line { flex: 1; height: 2px; background: var(--border); }
+  .lead { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+
+  /* ── Overview ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: var(--card); border: 1px solid var(--card-line); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red-dark); margin-bottom: 6px; font-weight: 700; }
+  .stat-value { font-weight: 800; font-size: 16.5px; color: var(--ink); }
+  .stat-desc { font-size: 12.5px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+  .summary-block { background: var(--card); border-left: 4px solid var(--red); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: #2a2010; }
+  .summary-block p + p { margin-top: 12px; }
+  .key-idea { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--card); border: 1px solid var(--card-line); border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6; }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+  .note-box { background: rgba(20,20,20,0.05); border: 1.5px dashed var(--muted); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; line-height: 1.6; color: var(--ink-soft); margin-bottom: 22px; }
+
+  /* Mini matrix on overview */
+  .mini-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 4px 0 26px; }
+  .mini-q { border-radius: 8px; padding: 14px 16px; color: #fff; cursor: pointer; transition: transform .15s; }
+  .mini-q:hover { transform: translateY(-2px); }
+  .mini-q h4 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: 17px; margin-bottom: 4px; }
+  .mini-q p { font-size: 12px; line-height: 1.5; opacity: .92; }
+  .mini-q.rc { background: var(--q-rc); color: var(--gold); }
+  .mini-q.re { background: var(--q-re); }
+  .mini-q.oa { background: var(--q-oa); }
+  .mini-q.mi { background: var(--q-mi); }
+  .axis-cap { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; color: var(--ink-soft); display: flex; justify-content: space-between; margin-bottom: 6px; }
+
+  /* ── Chapters ── */
+  .part-header { background: var(--ink); color: var(--gold); padding: 10px 18px; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: 3px; text-transform: uppercase; margin: 26px 0 12px; font-weight: 700; }
+  .chapter-card { background: var(--card); border: 1px solid var(--card-line); border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: box-shadow .2s; }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(120,70,0,0.16); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num { width: 34px; height: 34px; background: var(--ink); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+  .ch-num.intro { background: var(--red); color: #fff; }
+  .ch-title { font-weight: 700; font-size: 15px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--red-dark); font-size: 20px; transition: transform .25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body { display: none; padding: 14px 20px 20px 66px; font-size: 13.5px; line-height: 1.75; color: #2a2010; border-top: 1px solid #f3dea4; }
+  .chapter-card.open .chapter-body { display: block; }
+  .chapter-body p + p { margin-top: 10px; }
+  .chapter-body ul { margin: 10px 0 0 18px; }
+  .chapter-body li { margin-bottom: 5px; }
+  .ch-takeaway { margin-top: 12px; background: var(--red-dim); border-left: 4px solid var(--red); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 13px; color: var(--red-dark); font-weight: 700; }
+  .ch-tool { margin-top: 8px; background: rgba(20,20,20,0.06); border-left: 4px solid var(--ink); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 12.5px; color: var(--ink); }
+  @media (max-width: 560px) { .chapter-body { padding-left: 20px; } }
+
+  /* ───────── QUADRANTS ───────── */
+  .quad-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .quad-pill { padding: 8px 16px; border-radius: 20px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: #fff; text-decoration: none; cursor: pointer; border: none; }
+  .quad-pill.rc { background: var(--q-rc); color: var(--gold); } .quad-pill.re { background: var(--q-re); } .quad-pill.oa { background: var(--q-oa); } .quad-pill.mi { background: var(--q-mi); } .quad-pill.cmp { background: var(--gold-deep); color: var(--ink); } .quad-pill.walk { background: var(--red-dark); }
+
+  .quad-section { background: var(--card); border: 1px solid var(--card-line); border-radius: 12px; overflow: hidden; margin-bottom: 30px; scroll-margin-top: 70px; }
+  .quad-head { padding: 24px 26px 20px; color: #fff; position: relative; overflow: hidden; }
+  .quad-head.rc { background: var(--q-rc); color: var(--gold); } .quad-head.re { background: var(--q-re); } .quad-head.oa { background: var(--q-oa); } .quad-head.mi { background: var(--q-mi); }
+  .quad-head .dials { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 2.5px; text-transform: uppercase; font-size: 13px; font-weight: 700; opacity: .9; margin-bottom: 8px; }
+  .quad-head h3 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: clamp(28px, 5vw, 40px); line-height: 1.05; }
+  .quad-head .tag { margin-top: 10px; font-size: 15px; line-height: 1.5; max-width: 600px; opacity: .95; }
+  .quad-head .stamp { position: absolute; right: 18px; top: 16px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; border: 2px solid currentColor; border-radius: 4px; padding: 4px 9px; transform: rotate(4deg); opacity: .85; }
+  @media (max-width: 560px) { .quad-head .stamp { position: static; display: inline-block; margin-bottom: 10px; transform: none; } }
+  .quad-body { padding: 22px 26px 26px; }
+  .quad-body h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red-dark); margin: 22px 0 8px; font-weight: 700; }
+  .quad-body h4:first-child { margin-top: 0; }
+  .quad-body p { font-size: 14px; line-height: 1.75; color: #2a2010; }
+  .quad-body p + p { margin-top: 10px; }
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 4px; }
+  @media (max-width: 700px) { .q-grid { grid-template-columns: 1fr; } }
+  .q-card { background: #fff; border: 1px solid var(--card-line); border-radius: 8px; padding: 14px 16px; }
+  .q-card h5 { font-size: 13px; font-weight: 800; margin-bottom: 8px; color: var(--ink); }
+  .q-card ul { list-style: none; }
+  .q-card li { position: relative; padding-left: 16px; font-size: 13px; line-height: 1.55; margin-bottom: 6px; color: #3a2e18; }
+  .q-card li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+  .say-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+  @media (max-width: 700px) { .say-grid { grid-template-columns: 1fr; } }
+  .say { border-radius: 8px; padding: 14px 16px; font-size: 13.5px; line-height: 1.6; }
+  .say .lab { font-family: 'Barlow Condensed', sans-serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .say.bad { background: #fde5dc; border: 1px solid #f2b9a6; color: #5a1d0b; } .say.bad .lab { color: var(--red-dark); }
+  .say.good { background: #14141410; border: 1px solid rgba(20,20,20,.25); color: var(--ink); } .say.good .lab { color: var(--ink); }
+  .say em { font-style: italic; }
+  .scenario { background: #fff; border: 1.5px dashed var(--muted); border-radius: 8px; padding: 14px 16px; font-size: 13.5px; line-height: 1.7; color: #3a2e18; }
+  .scenario .lab { font-family: 'Barlow Condensed', sans-serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+  .way-out { background: var(--red-dim); border-left: 4px solid var(--red); border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 13.5px; line-height: 1.7; color: #4a1a0a; }
+  .way-out ol { margin: 6px 0 0 20px; } .way-out li { margin-bottom: 5px; }
+  .callout { background: var(--ink); color: #fff; border-radius: 8px; padding: 14px 18px; font-size: 13.5px; line-height: 1.65; margin-top: 14px; }
+  .callout strong { color: var(--gold); }
+
+  /* components list for RC */
+  .dial-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 700px) { .dial-split { grid-template-columns: 1fr; } }
+  .dial-box { border-radius: 10px; padding: 16px 18px; border: 2px solid var(--ink); background: #fff; }
+  .dial-box h5 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: 18px; margin-bottom: 8px; color: var(--red-dark); }
+  .dial-box li { list-style: none; padding-left: 16px; position: relative; font-size: 13px; line-height: 1.55; margin-bottom: 6px; }
+  .dial-box li::before { content: '→'; position: absolute; left: 0; color: var(--red-dark); font-weight: 800; }
+  .hhiipp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 6px; }
+  @media (max-width: 700px) { .hhiipp { grid-template-columns: 1fr 1fr; } }
+  .h-item { background: var(--ink); color: #fff; border-radius: 8px; padding: 12px 12px 14px; text-align: center; }
+  .h-item .ltr { font-family: 'Permanent Marker', cursive; font-size: 26px; color: var(--gold); line-height: 1; }
+  .h-item .w { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; font-size: 14px; margin: 4px 0 4px; }
+  .h-item .d { font-size: 11.5px; line-height: 1.45; opacity: .82; }
+
+  /* comparison table */
+  .cmp-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--card-line); margin-bottom: 26px; }
+  table.cmp { width: 100%; border-collapse: collapse; background: #fff; min-width: 760px; font-size: 12.5px; line-height: 1.5; }
+  table.cmp th, table.cmp td { padding: 11px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid #f3dea4; }
+  table.cmp th { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
+  table.cmp th.rc { background: var(--q-rc); color: var(--gold); } table.cmp th.re { background: var(--q-re); } table.cmp th.oa { background: var(--q-oa); } table.cmp th.mi { background: var(--q-mi); } table.cmp th.blank { background: var(--gold-deep); color: var(--ink); }
+  table.cmp td.rowh { font-weight: 800; background: #fff6df; width: 118px; color: var(--ink); }
+
+  /* tightrope */
+  .rope { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: 24px; align-items: center; background: var(--card); border: 1px solid var(--card-line); border-radius: 12px; padding: 22px; margin-bottom: 26px; }
+  @media (max-width: 700px) { .rope { grid-template-columns: 1fr; } }
+  .rope svg { width: 100%; height: auto; display: block; border-radius: 8px; border: 2px solid var(--ink); background: #fff; }
+  .slider-row { margin-bottom: 14px; }
+  .slider-row label { display: flex; justify-content: space-between; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .slider-row input[type=range] { width: 100%; accent-color: var(--red); }
+  .rope-out { border-radius: 8px; padding: 14px 16px; color: #fff; font-size: 13.5px; line-height: 1.6; transition: background .25s; }
+  .rope-out h5 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: 20px; margin-bottom: 4px; }
+  .rope-out.rc { background: var(--q-rc); color: var(--gold); } .rope-out.re { background: var(--q-re); } .rope-out.oa { background: var(--q-oa); } .rope-out.mi { background: var(--q-mi); }
+  .fall-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  @media (max-width: 700px) { .fall-grid { grid-template-columns: 1fr; } }
+  .fall { background: #fff; border: 1px solid var(--card-line); border-top: 5px solid var(--red); border-radius: 8px; padding: 14px 16px; font-size: 13px; line-height: 1.6; }
+  .fall h5 { font-weight: 800; font-size: 14px; margin-bottom: 6px; }
+  .fall.l { border-top-color: var(--q-re); } .fall.r { border-top-color: var(--q-oa); } .fall.d { border-top-color: var(--q-mi); }
+  .swing-row { display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 1px solid var(--card-line); border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; font-size: 13px; line-height: 1.6; }
+  .swing-row .arrow { font-family: 'Permanent Marker', cursive; color: var(--red-dark); font-size: 15px; white-space: nowrap; }
+
+  /* quiz */
+  .quiz-card { background: var(--card); border: 1px solid var(--card-line); border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+  .quiz-card .q { font-size: 14px; line-height: 1.6; margin-bottom: 10px; font-weight: 500; }
+  .quiz-card .q .n { font-family: 'Permanent Marker', cursive; color: var(--red-dark); margin-right: 6px; }
+  .quiz-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .quiz-opts button { padding: 7px 14px; border-radius: 18px; border: 1.5px solid var(--ink); background: #fff; font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .quiz-opts button:hover:not(:disabled) { background: var(--gold); }
+  .quiz-opts button.right { background: #1d6b3a; color: #fff; border-color: #1d6b3a; }
+  .quiz-opts button.wrong { background: #b3281a; color: #fff; border-color: #b3281a; }
+  .quiz-exp { display: none; margin-top: 10px; font-size: 12.5px; line-height: 1.6; color: var(--ink-soft); background: rgba(20,20,20,.05); padding: 10px 12px; border-radius: 6px; }
+  .quiz-exp.show { display: block; }
+
+  /* ── Toolkit ── */
+  .method-card { background: var(--card); border: 1px solid var(--card-line); border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+  .method-card h4 { font-weight: 800; font-size: 16px; margin-bottom: 8px; }
+  .method-card p, .method-card li { font-size: 13.5px; line-height: 1.7; color: #3a2e18; }
+  .method-card ul { margin: 8px 0 0 18px; } .method-card li { margin-bottom: 4px; }
+  .method-card .tag { display: inline-block; background: var(--ink); color: var(--gold); font-family: 'Barlow Condensed', sans-serif; font-size: 12.5px; letter-spacing: 2px; padding: 3px 10px; border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 700; }
+  .steps-wrap { display: flex; gap: 6px; align-items: stretch; margin-bottom: 14px; flex-wrap: wrap; }
+  .step-card { flex: 1; min-width: 108px; background: var(--card); border: 1.5px solid var(--ink); border-radius: 10px; padding: 12px 10px; text-align: center; }
+  .step-card .s-num { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--red-dark); font-weight: 700; margin-bottom: 4px; }
+  .step-card .s-title { font-family: 'Permanent Marker', cursive; font-size: 16px; margin-bottom: 4px; }
+  .step-card .s-desc { font-size: 11.5px; line-height: 1.45; color: var(--muted); }
+  .step-arrow { display: flex; align-items: center; color: var(--red-dark); font-size: 16px; font-weight: 800; }
+  @media (max-width: 760px) { .steps-wrap { flex-direction: column; } .step-arrow { display: none; } }
+  .growth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0 8px; }
+  .g-cell { border-radius: 8px; padding: 14px 16px; font-size: 12.5px; line-height: 1.55; border: 2px solid var(--ink); background: #fff; }
+  .g-cell h5 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: 17px; margin-bottom: 4px; color: var(--red-dark); }
+  .g-cell.hi { background: var(--gold); }
+  .code-block { background: var(--ink); color: #f7e7b8; border-radius: 8px; padding: 18px 20px; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; line-height: 1.85; margin-bottom: 14px; }
+  .code-block .c { color: #f08a6a; } .code-block .k { color: var(--gold); }
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item { display: flex; gap: 10px; align-items: flex-start; background: var(--card); border: 1px solid var(--card-line); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; line-height: 1.5; }
+  @media (max-width: 560px) { .toolkit-list, .overview-grid, .mini-matrix { grid-template-columns: 1fr; } }
+
+  /* ── Quotes ── */
+  .quote-block { background: var(--card); border-radius: 10px; padding: 20px 24px 16px; margin-bottom: 14px; position: relative; border-left: 5px solid var(--red); }
+  .quote-block p { font-family: 'Permanent Marker', cursive; font-size: 18px; line-height: 1.45; color: var(--ink); }
+  .quote-block .attr { font-size: 11.5px; color: var(--muted); margin-top: 8px; text-align: right; }
+
+  /* ── Verdict ── */
+  .verdict-banner { background: linear-gradient(135deg, #141414 0%, #2b2110 100%); border-radius: 12px; padding: 30px 28px; margin-bottom: 22px; text-align: center; position: relative; overflow: hidden; }
+  .verdict-banner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(var(--gold), var(--gold)) 50% 0/3px 100% no-repeat, linear-gradient(var(--gold), var(--gold)) 0 50%/100% 3px no-repeat; opacity: .13; }
+  .verdict-banner h3 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: 36px; color: var(--gold); margin-bottom: 6px; position: relative; }
+  .verdict-banner p { color: rgba(255,255,255,.8); font-size: 13.5px; position: relative; max-width: 560px; margin: 0 auto; line-height: 1.55; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; position: relative; }
+  .rating-item { text-align: center; background: rgba(251,177,37,.16); border: 1px solid rgba(251,177,37,.45); border-radius: 8px; padding: 10px 16px; min-width: 96px; }
+  .rating-item .r-score { font-size: 21px; font-weight: 800; color: var(--gold); }
+  .rating-item .r-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: rgba(255,255,255,.65); letter-spacing: 1.5px; margin-top: 2px; text-transform: uppercase; }
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  @media (max-width: 560px) { .pro-con-grid { grid-template-columns: 1fr; } .panel { padding: 20px 16px 44px; } .hero-inner { padding: 28px 20px; flex-wrap: wrap; } .bestseller-bar { padding: 8px 20px; letter-spacing: 3px; font-size: 11px; } }
+  .pro-list, .con-list { background: var(--card); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--card-line); }
+  .pro-list h4, .con-list h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 10px; }
+  .pro-list h4 { color: var(--ink); } .con-list h4 { color: var(--red-dark); }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.55; margin-bottom: 8px; color: #3a2e18; }
+  .list-item .dot { margin-top: 6px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--ink); } .con-list .dot { background: var(--red); }
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: var(--card); border: 1px solid var(--card-line); border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.6; }
+  .who-card:hover { border-color: var(--red); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="bestseller-bar">New York Times Bestseller</div>
+  <div class="hero-inner">
+    <div class="hero-motif" aria-hidden="true">
+      <svg viewBox="0 0 900 340" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#141414" stroke-linecap="round" stroke-linejoin="round">
+        <!-- hand-drawn axes echoing the cover -->
+        <path d="M30 172 C 220 166, 520 176, 868 168" stroke-width="7" opacity=".22"/>
+        <path d="M868 168 l-30 -17 M868 168 l-32 14" stroke-width="7" opacity=".22"/>
+        <path d="M30 172 l30 -16 M30 172 l31 15" stroke-width="7" opacity=".22"/>
+        <path d="M452 12 C 448 110, 456 230, 450 328" stroke-width="7" opacity=".22"/>
+        <path d="M452 12 l-16 28 M452 12 l17 27" stroke-width="7" opacity=".22"/>
+        <path d="M450 328 l-16 -28 M450 328 l17 -27" stroke-width="7" opacity=".22"/>
+        <g font-family="Permanent Marker, cursive" fill="#b93a18" stroke="none" opacity=".34" font-size="15">
+          <text x="468" y="34">CARE PERSONALLY</text>
+          <text x="690" y="198">CHALLENGE DIRECTLY</text>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Management Playbook</div>
+      <h1>Radical Candor<em>Be a Kick-Ass Boss Without Losing Your Humanity</em></h1>
+      <div class="author">Kim Scott <small>· St. Martin's Press · Revised ed. 2019 (orig. 2017)</small></div>
+      <div class="hero-meta">
+        <div class="meta-pill">Leadership</div>
+        <div class="meta-pill">Management</div>
+        <div class="meta-pill">Feedback &amp; Communication</div>
+        <div class="badge-seal">Fully<br>Revised &amp;<br>Updated</div>
+      </div>
+    </div>
+    <div class="book-cover-wrap">
+      <img src="images/radical-candor-cover.jpg" alt="Radical Candor (Fully Revised and Updated Edition) book cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar"><a href="index.html" class="back-link"><span>←</span> Back to Library</a></div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab hot" onclick="showTab('quadrants', this)">The Four Quadrants</div>
+  <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
+  <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<div id="overview" class="panel active">
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
+
+  <div class="overview-grid">
+    <div class="stat-card"><div class="stat-label">Core Focus</div><div class="stat-value">Giving, Getting &amp; Encouraging Honest Guidance</div><div class="stat-desc">A management philosophy built on one idea: the best bosses build real relationships and tell people the truth</div></div>
+    <div class="stat-card"><div class="stat-label">Central Promise</div><div class="stat-value">Care Personally + Challenge Directly</div><div class="stat-desc">Do both at the same time and you can lead hard without losing your humanity</div></div>
+    <div class="stat-card"><div class="stat-label">Primary Frameworks</div><div class="stat-value">The Radical Candor Quadrants</div><div class="stat-desc">Plus the Get Stuff Done wheel, Growth Management (Rock Stars and Superstars), and the three-conversation relationship builders</div></div>
+    <div class="stat-card"><div class="stat-label">Best For</div><div class="stat-value">Managers at Every Level</div><div class="stat-desc">New leads, seasoned executives, and anyone who wants to give (or get) better feedback, including upward</div></div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Radical Candor</strong> is Kim Scott's management handbook, drawn from her years leading teams at Google and Apple and running her own startup. Her argument is that most workplace dysfunction starts with bosses who can't, or won't, tell people the truth, and that the usual advice ("be nice" or "be tough") gets the problem wrong. The real axes are <em>how much you care about the person</em> and <em>how willing you are to challenge them</em>.</p>
+    <p>Those two dimensions produce four quadrants. <strong>Radical Candor</strong> sits where both are high. The three ways of failing are <strong>Ruinous Empathy</strong> (caring but not challenging), <strong>Obnoxious Aggression</strong> (challenging but not caring), and <strong>Manipulative Insincerity</strong> (doing neither). The book is built around helping you recognise which one you slip into, and why.</p>
+    <p>The fully revised and updated edition, as I read its structure, keeps the core of the 2017 original (a four-chapter philosophy half and a four-chapter tools half) and adds a new preface, a "Radical Candor on Radical Candor" section, an afterword on rolling the approach out across an organisation, and a bonus chapter on performance reviews.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:30px;"><h2>The Whole Book on One Grid</h2><div class="section-line"></div></div>
+  <div class="axis-cap"><span>↑ Care Personally (high at top)</span><span>Challenge Directly (high at right) →</span></div>
+  <div class="mini-matrix">
+    <div class="mini-q re" onclick="jumpQuad('q-re')"><h4>Ruinous Empathy</h4><p>High care, low challenge. Nice, but you withhold what the person needs to hear.</p></div>
+    <div class="mini-q rc" onclick="jumpQuad('q-rc')"><h4>Radical Candor</h4><p>High care, high challenge. Kind, clear, specific, sincere guidance.</p></div>
+    <div class="mini-q mi" onclick="jumpQuad('q-mi')"><h4>Manipulative Insincerity</h4><p>Low care, low challenge. Fake praise, back-stabbing, politics.</p></div>
+    <div class="mini-q oa" onclick="jumpQuad('q-oa')"><h4>Obnoxious Aggression</h4><p>Low care, high challenge. Blunt, harsh, front-stabbing criticism.</p></div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
+  <div class="key-idea"><div class="icon">❤️</div><div><strong>Care first, personally.</strong> You earn the right to challenge people by showing you care about them as whole humans, not only as workers.</div></div>
+  <div class="key-idea"><div class="icon">🎯</div><div><strong>Silence is not kindness.</strong> Scott's sharpest claim is that Ruinous Empathy, the "nice" failure, is the most common mistake bosses make.</div></div>
+  <div class="key-idea"><div class="icon">👂</div><div><strong>Ask for criticism before you give it.</strong> Bosses go first, solicit candor, and reward it when it comes.</div></div>
+  <div class="key-idea"><div class="icon">📈</div><div><strong>Manage growth, not just performance.</strong> Rock Stars (steady, valuable) and Superstars (steep growth) need different things from you.</div></div>
+  <div class="key-idea"><div class="icon">🔁</div><div><strong>Results come from a collaborative loop.</strong> Listen, Clarify, Debate, Decide, Persuade, Execute, Learn: the Get Stuff Done wheel.</div></div>
+  <div class="key-idea"><div class="icon">🪢</div><div><strong>It's a tightrope.</strong> The aim is both dials high at once, not a compromise in the middle, and it is easy to fall off either side.</div></div>
+</div>
+
+<!-- ═══════════════ CHAPTERS ═══════════════ -->
+<div id="chapters" class="panel">
+  <div class="note-box"><strong>How to read this tab:</strong> the chapter order and titles follow the fully revised edition's published table of contents. The summaries are my reconstruction of each section's argument and tools, not a line-by-line transcription, so check specific stories, numbers, and exact wording against your own copy. Part titles are descriptive labels. I have not quoted the book directly.</div>
+
+  <div class="part-header">Front Matter</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">P</div><div class="ch-title">Preface to the Revised Edition</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>New to this edition. Scott looks back at how the original landed in the world: widely adopted, but also frequently misread. The preface sets up the revision's purpose, which is to protect the idea from being used as cover for bad behaviour and to sharpen what the framework actually asks of people.</p>
+      <div class="ch-takeaway">The idea has been misapplied; this edition exists partly to correct that.</div>
+      <div class="ch-tool"><strong>Watch for:</strong> a recurring theme that Radical Candor and "brutal honesty" are not the same thing</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">R</div><div class="ch-title">Radical Candor on Radical Candor</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>A short, self-referential section where Scott turns the framework on itself: what she has learned from watching people use it, where it has helped, and where it has been twisted. It is the revised edition's clearest statement that the two dimensions have to stay together, and that "challenge directly" is never a licence to skip "care personally."</p>
+      <p>It also nudges the reader to think about context: how power, culture, and personal background change how directness is received.</p>
+      <div class="ch-takeaway">Candor without care isn't Radical Candor; it's just Obnoxious Aggression with a better brand name.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The framework is judged by how it lands on the other person, not by how honest the speaker feels</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">I</div><div class="ch-title">Introduction</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>Scott opens with the case for why bosses matter. Bad bosses make work miserable; good ones are rare because nobody is trained to be one. She draws on her own career (a startup she helped run, then Google, then Apple) and on the feedback moments that changed her, most memorably the early Google conversation in which a senior leader told her bluntly how a verbal habit was undermining her, and then made sure it landed.</p>
+      <p>She introduces the three responsibilities of a boss that shape the rest of the book (guidance, team, results), built on a foundation of trusting relationships, and previews the two-dimension idea that becomes the quadrant model.</p>
+      <div class="ch-takeaway">Good management is a teachable skill, and the foundation is relationships plus honest guidance.</div>
+      <div class="ch-tool"><strong>Key framing:</strong> Relationships → Guidance → Team → Results</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">U</div><div class="ch-title">How to Use This Book</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>A reader's guide. The first half (philosophy) explains the thinking, and the second half (tools and techniques) turns that into practices you can try on Monday. Scott invites readers to treat the book as something to experiment with rather than absorb passively.</p>
+      <div class="ch-takeaway">Read it as a field manual: try something small, watch what happens, adjust.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part I — The Management Philosophy (Ch. 1–4)</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">Building Radically Candid Relationships</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>The foundation of the whole book and the home of the four-quadrant framework. Scott defines the two axes: <strong>Care Personally</strong> (genuinely caring about the people who work for you as human beings) and <strong>Challenge Directly</strong> (telling them what you really think, including when it's hard to hear). Radical Candor is both at once.</p>
+      <p>She then walks through each failure mode, with stories: <strong>Ruinous Empathy</strong> (care without challenge), <strong>Obnoxious Aggression</strong> (challenge without care), and <strong>Manipulative Insincerity</strong> (neither). The chapter stresses that relationships come first. People can only hear hard feedback from someone they trust, and trust is built by showing up as a real person, not a "work persona."</p>
+      <ul>
+        <li>"Care personally" is not the same as being nice, or being friends</li>
+        <li>"Challenge directly" is not the same as being harsh</li>
+        <li>You can land in a different quadrant with different people, or on different days</li>
+      </ul>
+      <div class="ch-takeaway">Trust is the currency of feedback. You can't spend what you haven't built.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Radical Candor quadrants (see the Four Quadrants tab for the deep dive)</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">2</div><div class="ch-title">Get, Give, and Encourage Guidance</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>This chapter covers the first of the boss's three responsibilities: guidance, meaning praise and criticism that helps people do better work. Scott's structure is a sequence: <strong>get</strong> guidance (ask for criticism of yourself first), <strong>give</strong> guidance (praise and criticism that are kind, clear, specific, and sincere), and <strong>encourage</strong> guidance (build a team culture where everyone does this for everyone).</p>
+      <p>The "get it first" move is the key behavioural shift. If you want your team to be candid with you, you go first, you ask, you sit through the discomfort, and you visibly act on what you hear. She also lays out the principles for delivering feedback well: be humble, be helpful, do it immediately, do it in person where you can, praise in public and criticise in private, and don't make it about the person's character.</p>
+      <ul>
+        <li>Praise matters as much as criticism, and it should be specific, not generic</li>
+        <li>Don't tell people not to take it personally; you're talking to a person</li>
+        <li>Guidance should be given early and often, not stored for the annual review</li>
+      </ul>
+      <div class="ch-takeaway">Go first: ask for criticism, take it well, and only then expect it back.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> The "Get, Give, Encourage" sequence · the humble / helpful / immediate / in-person / praise-public-criticise-private / not-personal checklist</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">3</div><div class="ch-title">Understand What Motivates Each Person on Your Team</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>The second responsibility is building a cohesive team of people who are actually in the right roles. Scott's answer is to learn what motivates each person, then manage their <em>growth trajectory</em> deliberately. She introduces a framework that plots performance against growth: <strong>Rock Stars</strong> are steady, high performers on a gradual growth trajectory who love and anchor their roles, while <strong>Superstars</strong> are on a steep growth trajectory and need new challenges and opportunities to stay engaged.</p>
+      <p>A central warning: bosses over-invest in Superstars and quietly neglect Rock Stars, or, worse, push Rock Stars to "advance" when they're happiest and most valuable where they are. The way to avoid guessing is to talk, and she proposes conversations that explore a person's life story, dreams, and a concrete plan for the next stretch of their career.</p>
+      <div class="ch-takeaway">Motivation and trajectory differ person to person. Ask, don't assume.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Growth Management (Rock Star vs Superstar) · Life Story, Dreams, and 18-month-plan conversations</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">4</div><div class="ch-title">Drive Results Collaboratively</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>The third responsibility is getting stuff done, and doing it with the team rather than over it. Scott presents the <strong>Get Stuff Done (GSD) wheel</strong>, a repeating cycle: <em>Listen, Clarify, Debate, Decide, Persuade, Execute, Learn.</em> The idea is to give people room to have a real say before a decision is made, then align and move fast afterwards.</p>
+      <p>She treats the boss as the person who keeps the wheel turning: making sure ideas get heard, that disagreement is surfaced early rather than after the fact, and that decisions get made and communicated rather than hovering in limbo. This chapter links the philosophy back to the quadrants, because a Radically Candid team debates openly, and an insincere or aggressive one doesn't.</p>
+      <div class="ch-takeaway">Results come from a loop of listening, debating, deciding, and learning, not from orders handed down.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The Get Stuff Done wheel</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part II — Tools &amp; Techniques (Ch. 5–8)</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">Relationships: Establish Trust with Your Direct Reports</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>Practical ways to build the trust Chapter 1 says everything depends on. The workhorse tool is the <strong>one-on-one</strong>: a regular meeting that belongs to the direct report, where they set the agenda and the boss mainly listens. Scott discusses how to run these so they build relationship and surface problems, rather than becoming status updates.</p>
+      <p>The chapter also gives approaches for asking for feedback about yourself in a way that actually gets a real answer, and for staying close to the people you manage without crossing professional lines.</p>
+      <div class="ch-takeaway">A good one-on-one is the single most useful trust-building habit a manager has.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The direct-report-owned one-on-one</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Guidance: Praise and Criticism That Help People Grow</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>The detailed mechanics of Chapter 2: how to actually word praise and criticism, how to time them, and how to keep them from collapsing into one of the three failure quadrants. Scott discusses specific, sincere praise (so people know what to repeat), and criticism delivered promptly and kindly.</p>
+      <p>She also addresses the emotional side: what to do when someone gets upset or defensive, why reacting emotionally doesn't mean you were wrong to speak up, and how to stay in the conversation instead of retreating into soft, vague language.</p>
+      <div class="ch-takeaway">Specific and sincere beats polished and vague, every time.</div>
+      <div class="ch-tool"><strong>Key practice:</strong> Say the specific thing, soon, in person, then stay for the reaction</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Team: Avoid Boredom and Burnout, Hire, Promote, and Fire Well</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>This chapter turns Growth Management into practice. It covers how to avoid boredom (Rock Stars stuck on a treadmill, Superstars with nowhere to go) and burnout, and how to make decisions about hiring, promotion, and, where needed, letting someone go.</p>
+      <p>Scott's thread here is that Ruinous Empathy shows up most painfully in people decisions: tolerating poor fit for too long, or promoting the wrong person to avoid a hard conversation. Handling these moments with care <em>and</em> clarity is, in her view, kinder than letting problems fester.</p>
+      <div class="ch-takeaway">Dodging a hard people decision doesn't spare anyone; it just delays the pain.</div>
+      <div class="ch-tool"><strong>Key practice:</strong> Match roles and growth pace to each person, and act when there's a mismatch</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">Results: Get Stuff Done Faster</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>The operational counterpart to Chapter 4. Scott describes a rhythm of meetings that supports the GSD wheel: one-on-ones, regular staff meetings, dedicated "big debate" and "big decision" sessions, quick updates, and protected time to think. The point is to separate debating from deciding from informing, so each gets the right kind of room.</p>
+      <p>It also deals with the pacing of work, making sure speed doesn't come at the cost of the quality of conversations that make teams effective.</p>
+      <div class="ch-takeaway">Different meetings do different jobs; mixing them is how teams get slow.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> A deliberate meeting rhythm built around the GSD wheel</div>
+    </div>
+  </div>
+
+  <div class="part-header">Back Matter</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">G</div><div class="ch-title">Getting Started</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>A short send-off aimed at helping readers turn the book into behaviour. The practical spirit is to start small: pick one relationship, one habit, one conversation, rather than trying to overhaul everything at once. Asking for feedback about yourself is the natural first move.</p>
+      <div class="ch-takeaway">You don't need to be perfect at it. You need to start.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">A</div><div class="ch-title">Afterword: Rolling Out Radical Candor</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>New in this edition. Where the main text is about an individual boss, the afterword is about an organisation: how to introduce a shared language of Radical Candor across a team or company without it feeling like a mandate. The underlying lesson is that culture change begins with leaders modelling the behaviour, not with a training programme or a poster on the wall.</p>
+      <div class="ch-takeaway">A shared vocabulary helps, but only if leaders go first.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">B</div><div class="ch-title">Bonus Chapter: Performance Reviews</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>New in this edition. Applies the framework to the formal review. The central principle is that nothing in a review should surprise the person, because guidance has been flowing all year. Where reviews go wrong, it's usually because the manager was Ruinously Empathic through the year and tries to compensate in one painful hour, or because the process becomes a box-ticking exercise disconnected from growth.</p>
+      <div class="ch-takeaway">A review should summarise an ongoing conversation, not be the first time it happens.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FOUR QUADRANTS ═══════════════ -->
+<div id="quadrants" class="panel">
+  <div class="section-header"><h2>The Four Quadrants, In Depth</h2><div class="section-line"></div></div>
+  <p class="lead">This is the heart of the book. Two dials, <strong>Care Personally</strong> (vertical) and <strong>Challenge Directly</strong> (horizontal), produce four ways of showing up. Below, each quadrant gets the same treatment: what it is, what it looks like, why people slip into it, how it feels to receive, what it costs, what it sounds like, and how to climb out. The sample dialogue and scenarios are my own illustrations in the spirit of the book, not quotations from it.</p>
+
+  <div class="note-box"><strong>A note on the name:</strong> the fourth quadrant is <em>Manipulative Insincerity</em> (not "insecurity"). It's easy to mix up because insecurity is often what drives it, which is part of the point.</div>
+
+  <div class="quad-nav">
+    <a class="quad-pill rc" onclick="jumpQuad('q-rc')">Radical Candor</a>
+    <a class="quad-pill re" onclick="jumpQuad('q-re')">Ruinous Empathy</a>
+    <a class="quad-pill oa" onclick="jumpQuad('q-oa')">Obnoxious Aggression</a>
+    <a class="quad-pill mi" onclick="jumpQuad('q-mi')">Manipulative Insincerity</a>
+    <a class="quad-pill cmp" onclick="jumpQuad('q-cmp')">Side-by-Side</a>
+    <a class="quad-pill walk" onclick="jumpQuad('q-walk')">The Tightrope</a>
+  </div>
+
+  <!-- ───── RADICAL CANDOR ───── -->
+  <div class="quad-section" id="q-rc">
+    <div class="quad-head rc">
+      <div class="stamp">The Target</div>
+      <div class="dials">Care: High · Challenge: High</div>
+      <h3>Radical Candor</h3>
+      <div class="tag">Say what you think, because you genuinely care. Guidance that is kind, clear, specific, and sincere, from someone who has earned the standing to give it.</div>
+    </div>
+    <div class="quad-body">
+      <h4>What it is</h4>
+      <p>Radical Candor is the combination of two things that most people treat as opposites. Scott's insight is that they are not a trade-off. You do not need to be a little nice and a little tough; you need to be fully invested in the person <em>and</em> fully honest with them at the same time. Praise and criticism both count: it is as much about telling someone precisely what they did well as about telling them where they missed.</p>
+
+      <h4>The two dials, unpacked</h4>
+      <div class="dial-split">
+        <div class="dial-box">
+          <h5>Care Personally</h5>
+          <ul>
+            <li>See the person as a whole human being, not a resource</li>
+            <li>Learn what matters to them: ambitions, pressures, what's going on outside work (without prying)</li>
+            <li>Bring your own whole self to work so the relationship is real, not a performance</li>
+            <li>Show it with time and attention: listen, remember, show up in hard moments</li>
+            <li>Want them to succeed, even when that's uncomfortable for you</li>
+            <li>Not the same as being nice, being friends, or avoiding upset</li>
+          </ul>
+        </div>
+        <div class="dial-box">
+          <h5>Challenge Directly</h5>
+          <ul>
+            <li>Tell people what you really think, clearly enough that it can't be missed</li>
+            <li>Name what's working and what isn't, with specifics</li>
+            <li>Push people to do better than they thought they could</li>
+            <li>Invite them to challenge <em>you</em> too, and take it well</li>
+            <li>Say it soon, not months later in a review</li>
+            <li>Not the same as being harsh, loud, or blunt for its own sake</li>
+          </ul>
+        </div>
+      </div>
+
+      <h4>The delivery checklist</h4>
+      <p style="margin-bottom:10px;">Scott gives a handful of principles for making guidance land as Radical Candor rather than slipping into a failure quadrant:</p>
+      <div class="hhiipp">
+        <div class="h-item"><div class="ltr">H</div><div class="w">Humble</div><div class="d">You might be wrong; stay open to their view</div></div>
+        <div class="h-item"><div class="ltr">H</div><div class="w">Helpful</div><div class="d">Aimed at helping, not venting or scoring points</div></div>
+        <div class="h-item"><div class="ltr">I</div><div class="w">Immediate</div><div class="d">Close to the moment, not stored up for later</div></div>
+        <div class="h-item"><div class="ltr">I</div><div class="w">In Person</div><div class="d">Face to face where you can; tone gets lost in text</div></div>
+        <div class="h-item"><div class="ltr">P</div><div class="w">Praise Public, Criticise Private</div><div class="d">Celebrate openly; correct discreetly</div></div>
+        <div class="h-item"><div class="ltr">P</div><div class="w">Not Personal</div><div class="d">Talk about the work or behaviour, not the person's character</div></div>
+      </div>
+
+      <h4>What it looks like and how it lands</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>In practice</h5><ul>
+          <li>Specific praise: "here's exactly what worked and why it mattered"</li>
+          <li>Direct, kind correction early, before it compounds</li>
+          <li>Asking "what could I do differently?" and then acting on the answer</li>
+          <li>Disagreeing openly in meetings, then committing once decided</li>
+          <li>Giving bad news plainly, with respect and a path forward</li>
+        </ul></div>
+        <div class="q-card"><h5>How it feels to receive</h5><ul>
+          <li>Sometimes uncomfortable in the moment, almost never confusing</li>
+          <li>"They're on my side, even when they're telling me something hard"</li>
+          <li>Clarity about where you stand, so less guessing and gossip</li>
+          <li>Motivating, because it's tied to real growth</li>
+        </ul></div>
+      </div>
+
+      <h4>Why it's hard (and why most of us miss it)</h4>
+      <p>It takes emotional courage on both dials at once. Care without courage becomes Ruinous Empathy; courage without care becomes Obnoxious Aggression; and when you feel neither, you slide into Manipulative Insincerity. Power gaps make it harder still: employees rarely tell the boss the truth unless the boss has actively made it safe, which is why Scott insists the boss goes first by asking for criticism.</p>
+
+      <h4>What it sounds like</h4>
+      <div class="say-grid">
+        <div class="say good"><div class="lab">Criticism</div><em>"I want you to do well in front of the client, so I'm telling you now: your recommendation is on slide fourteen and the room will have stopped listening by then. Lead with it, and I think they'll follow you."</em></div>
+        <div class="say good"><div class="lab">Praise</div><em>"When the two teams were arguing you reframed it as a customer problem rather than a team problem. That's what turned the meeting around. Do more of that."</em></div>
+      </div>
+
+      <div class="callout"><strong>The test:</strong> if the other person walked away knowing both that you were on their side <em>and</em> exactly what you meant, it was Radical Candor. If either is missing, you've drifted into a different quadrant.</div>
+    </div>
+  </div>
+
+  <!-- ───── RUINOUS EMPATHY ───── -->
+  <div class="quad-section" id="q-re">
+    <div class="quad-head re">
+      <div class="stamp">Most Common</div>
+      <div class="dials">Care: High · Challenge: Low</div>
+      <h3>Ruinous Empathy</h3>
+      <div class="tag">Being nice at the expense of being useful. You care about the person so much (or fear their reaction so much) that you hold back what they need to hear.</div>
+    </div>
+    <div class="quad-body">
+      <h4>What it is</h4>
+      <p>Ruinous Empathy is the failure of the good-hearted. You genuinely like and care about the person, but in an effort to spare their feelings (and your own discomfort) you soften, delay, or skip the hard message. It feels kind in the moment, which is exactly why it is so common: nothing about it feels like a mistake. Scott's argument is that this is where most bosses go wrong most of the time, and that the "ruin" in the name is literal. The person's growth is ruined, the team's standards are ruined, and eventually the relationship is ruined too.</p>
+
+      <h4>What it looks like</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Behaviours</h5><ul>
+          <li>Vague praise for work that isn't actually good ("looks great!")</li>
+          <li>Burying the real issue under so much cushioning it disappears</li>
+          <li>Hedged, hesitant language: "maybe you might consider possibly…"</li>
+          <li>Quietly fixing someone's work yourself rather than telling them</li>
+          <li>Putting off the performance conversation "until the right moment"</li>
+          <li>Keeping a poor-fit person in a role for far too long</li>
+          <li>Avoiding disagreement in meetings to keep the peace</li>
+          <li>Praising only what's easy to praise, leaving high performers without real challenge</li>
+        </ul></div>
+        <div class="q-card"><h5>Why we slip into it</h5><ul>
+          <li>We want to be liked and to avoid the other person's disappointment</li>
+          <li>We fear tears, anger, or a damaged relationship</li>
+          <li>We mistake empathy ("I'd hate to hear that") for kindness</li>
+          <li>Work cultures that prize politeness and harmony</li>
+          <li>It's faster and easier today to say nothing</li>
+          <li>The more we like someone, the harder it is to criticise them</li>
+          <li>We're tired, and honest feedback takes energy</li>
+        </ul></div>
+      </div>
+
+      <h4>How it lands on the receiver</h4>
+      <p>The person usually doesn't know there's a problem, because the signals were muffled. They carry on, then get blindsided: a poor review that "came out of nowhere," being passed over, or in the worst case losing the job. Strong performers feel unchallenged and bored; weaker ones feel secure until they aren't. Colleagues notice the inconsistency and resent it. And when the truth finally arrives, it often arrives all at once and angrier than it would have been if delivered early.</p>
+
+      <h4>What it costs</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>To the person</h5><ul>
+          <li>Missed chances to improve while it was still easy</li>
+          <li>Surprise and a sense of betrayal when reality catches up</li>
+          <li>Slower growth than they could have had</li>
+        </ul></div>
+        <div class="q-card"><h5>To the team</h5><ul>
+          <li>Standards drift downward</li>
+          <li>High performers carry others, then leave</li>
+          <li>The boss becomes the safety net, doing other people's work</li>
+        </ul></div>
+      </div>
+
+      <h4>What it sounds like</h4>
+      <div class="say-grid">
+        <div class="say bad"><div class="lab">Ruinous Empathy</div><em>"Great effort, team! Maybe a few small tweaks when you get a chance, but honestly it's basically there."</em> (when it isn't)</div>
+        <div class="say good"><div class="lab">Radically Candid rewrite</div><em>"I can see how much work went into this and I appreciate it. It isn't at the level we need yet: the data on page three doesn't support the headline. Let's go through how to fix it before Thursday."</em></div>
+      </div>
+
+      <h4>Illustrative scenario</h4>
+      <div class="scenario"><div class="lab">Example (mine, not the book's)</div>A manager has a warm, likeable analyst whose reports regularly contain errors. She says "nice job" each time, then quietly corrects them on Sunday nights. Six months on, a client catches a mistake. The analyst, who has never been told, is stunned at the review, and the manager is exhausted, resentful, and implicated.</div>
+
+      <h4>How to climb out</h4>
+      <div class="way-out">
+        <ol>
+          <li><strong>Reframe the silence.</strong> Withholding the truth isn't neutral; it's a choice with a cost, and the other person pays most of it.</li>
+          <li><strong>Name the one thing you're avoiding.</strong> What's the hard message you've been dodging? Write it in one plain sentence.</li>
+          <li><strong>Say it sooner and smaller.</strong> Early feedback is lighter than late feedback. Don't wait for the perfect moment.</li>
+          <li><strong>Swap cushioning for specifics.</strong> Don't pad; show exactly what you saw and why it matters.</li>
+          <li><strong>Stay for the reaction.</strong> Someone being upset doesn't mean you were wrong to say it. Stay in the conversation rather than retreating into reassurance.</li>
+          <li><strong>Start by asking for criticism yourself.</strong> It lowers the stakes and models the behaviour.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── OBNOXIOUS AGGRESSION ───── -->
+  <div class="quad-section" id="q-oa">
+    <div class="quad-head oa">
+      <div class="stamp">Front Stab</div>
+      <div class="dials">Care: Low · Challenge: High</div>
+      <h3>Obnoxious Aggression</h3>
+      <div class="tag">Honest, but harsh, and with no evidence of care. The truth gets delivered like a punch, so the person focuses on the sting instead of the message.</div>
+    </div>
+    <div class="quad-body">
+      <h4>What it is</h4>
+      <p>Obnoxious Aggression is Challenge Directly with the care removed. The boss does say what they think, often bluntly and sometimes brutally, but there's no sign that they value the person on the receiving end. It's the quadrant most people picture when they hear "candid," and it is where "brutal honesty" lives. Scott's point is that this is where the <em>drama</em> is, but not where most of the mistakes are. Its appeal is that at least people know where they stand. Its cost is that the guidance rarely lands, and people stop telling you anything.</p>
+
+      <h4>What it looks like</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Behaviours</h5><ul>
+          <li>Harsh, public criticism, sometimes in front of the team</li>
+          <li>Attacking the person ("you're sloppy") rather than the work</li>
+          <li>Sarcasm, eye-rolling, put-downs framed as jokes</li>
+          <li>Interrupting, steamrolling, or shouting</li>
+          <li>"I'm just being honest" or "don't take this personally"</li>
+          <li>Praise that is rare, grudging, or backhanded</li>
+          <li>Using position to dominate rather than persuade</li>
+          <li>Judging first, asking later (or never)</li>
+        </ul></div>
+        <div class="q-card"><h5>Why we slip into it</h5><ul>
+          <li>Frustration after too long in Ruinous Empathy, then snapping</li>
+          <li>Pressure and stress: the deadline has no room for niceties</li>
+          <li>Believing toughness equals high standards</li>
+          <li>Confusing directness with permission to be careless about feelings</li>
+          <li>Role models who were aggressive and seemed to "get results"</li>
+          <li>Not seeing (or noticing) the effect on others</li>
+          <li>Treating "radical candor" as a licence rather than a discipline</li>
+        </ul></div>
+      </div>
+
+      <h4>How it lands on the receiver</h4>
+      <p>Defensiveness and shutdown. When people feel attacked, their attention goes to protecting themselves, not to the content of the message. Some fight back; many go quiet. People start hiding mistakes, avoiding the boss, and filtering what they report upward. Those with less power, or who've experienced bias, can absorb the harshest version of it. Over time the boss loses the very information they'd need to do their job, and the "honest" environment becomes less honest than before.</p>
+
+      <h4>What it costs</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>To trust and learning</h5><ul>
+          <li>Bad news stops flowing up</li>
+          <li>People stop experimenting for fear of being slammed</li>
+          <li>The message is lost behind the tone</li>
+        </ul></div>
+        <div class="q-card"><h5>To people and the organisation</h5><ul>
+          <li>Talent leaves, often the best, who have options</li>
+          <li>Anxiety and burnout rise</li>
+          <li>The behaviour can cross a line into bullying or harassment, which Scott addresses explicitly in the revised edition's framing</li>
+        </ul></div>
+      </div>
+
+      <h4>What it sounds like</h4>
+      <div class="say-grid">
+        <div class="say bad"><div class="lab">Obnoxious Aggression</div><em>"This is garbage. Did you even try? How many times do I have to tell you?"</em></div>
+        <div class="say good"><div class="lab">Radically Candid rewrite</div><em>"This draft isn't ready: the intro repeats the summary and there are three typos on page one. I know you can do better, because your last report was sharp. What got in the way this time?"</em></div>
+      </div>
+
+      <h4>Illustrative scenario</h4>
+      <div class="scenario"><div class="lab">Example (mine, not the book's)</div>A senior leader reviews a missed milestone in front of the whole team, with sarcasm and a few pointed remarks about "people who don't read the plan." The room goes silent. Next quarter, a different team spots a risk but says nothing until it explodes, because nobody wants to be the next example.</div>
+
+      <h4>How to climb out</h4>
+      <div class="way-out">
+        <ol>
+          <li><strong>Don't dial down the challenge; dial up the care.</strong> The fix for Obnoxious Aggression is not to go quiet. Keep saying what you think, and add genuine regard for the person.</li>
+          <li><strong>Move it to private and to the work.</strong> Criticise the work or behaviour, not the person, and not in front of an audience.</li>
+          <li><strong>Lead with curiosity.</strong> Ask what happened before you conclude; you may be missing context.</li>
+          <li><strong>Notice and name what's good.</strong> Specific, sincere praise changes how criticism lands.</li>
+          <li><strong>Ask how you come across.</strong> "Is there anything I could do or stop doing that would make it easier to work with me?" and then stay quiet through the answer.</li>
+          <li><strong>Watch the swing.</strong> The common over-correction is to retreat into silence, which lands you in Manipulative Insincerity.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── MANIPULATIVE INSINCERITY ───── -->
+  <div class="quad-section" id="q-mi">
+    <div class="quad-head mi">
+      <div class="stamp">Back Stab</div>
+      <div class="dials">Care: Low · Challenge: Low</div>
+      <h3>Manipulative Insincerity</h3>
+      <div class="tag">Neither caring nor challenging, and pretending otherwise. Fake praise, passive-aggression, politics, and the truth told behind someone's back instead of to their face.</div>
+    </div>
+    <div class="quad-body">
+      <h4>What it is</h4>
+      <p>Manipulative Insincerity is the quadrant Scott treats as the worst. Where the other failures at least involve a real impulse (care in one case, honesty in the other), this one involves neither: the person is saying what's convenient or advantageous, not what they believe, and often has little genuine concern for the person they're talking to. The signature is a gap between what's said to your face and what's said elsewhere. It's the "back-stab" to Obnoxious Aggression's "front-stab."</p>
+
+      <h4>What it looks like</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Behaviours</h5><ul>
+          <li>Praising someone's work to their face, criticising it to others</li>
+          <li>Nodding through a meeting, then undermining the decision after</li>
+          <li>Political manoeuvring, gossip, and alliance-building</li>
+          <li>Passive-aggression: sighs, silence, "fine, whatever"</li>
+          <li>False praise or flattery to avoid conflict or win favour</li>
+          <li>The false apology: "sorry you feel that way"</li>
+          <li>Going around someone to their boss instead of to them</li>
+          <li>Withholding information; credit-claiming</li>
+        </ul></div>
+        <div class="q-card"><h5>Why we slip into it</h5><ul>
+          <li>Fear: for status, job security, or of conflict</li>
+          <li>Disengagement or burnout: not caring enough to bother</li>
+          <li>A political culture that rewards positioning over honesty</li>
+          <li>Over-correction after being called out for Obnoxious Aggression: pull back on challenge without adding care</li>
+          <li>Tiredness: on a bad day, any of us can drift here</li>
+          <li>Believing nothing will change, so why say it</li>
+        </ul></div>
+      </div>
+
+      <h4>How it lands on the receiver</h4>
+      <p>Confusion and mistrust. Nobody can tell what the person really thinks, so everyone starts guessing, reading between the lines, and protecting themselves. When people discover the gap between the face and the back, the reaction is often stronger than for either of the other failures, because the betrayal is of the relationship itself. The environment turns political, and people begin to behave the same way.</p>
+
+      <h4>What it costs</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Trust</h5><ul>
+          <li>The fastest way to destroy it, because no signal can be taken at face value</li>
+          <li>Psychological safety collapses; people stop speaking up</li>
+        </ul></div>
+        <div class="q-card"><h5>Decisions and culture</h5><ul>
+          <li>Decisions made on false consensus</li>
+          <li>Compliance replaces commitment; talent leaves</li>
+          <li>The behaviour spreads, because it seems to work</li>
+        </ul></div>
+      </div>
+
+      <h4>What it sounds like</h4>
+      <div class="say-grid">
+        <div class="say bad"><div class="lab">Manipulative Insincerity</div><em>"Love it, great work!"</em> (to the person), then <em>"honestly, that was a mess"</em> (in the hallway). Or: <em>"Sure, whatever you think is best."</em></div>
+        <div class="say good"><div class="lab">Radically Candid rewrite</div><em>"I have a concern about the timeline, and I'd rather say it now than let it surprise us later. Can we look at what you're assuming about vendor lead time?"</em></div>
+      </div>
+
+      <h4>Illustrative scenario</h4>
+      <div class="scenario"><div class="lab">Example (mine, not the book's)</div>A manager nods through a product manager's roadmap review, saying it "looks great," then tells the VP in the corridor that the PM isn't ready for the role. The PM never hears it. When the roadmap is quietly cancelled, the PM is baffled, then angry, then starts looking for a new job, and starts being guarded with everyone.</div>
+
+      <h4>How to climb out</h4>
+      <div class="way-out">
+        <ol>
+          <li><strong>Diagnose the root.</strong> Are you afraid, burnt out, or disengaged? Insincerity is usually a symptom, so treat the cause rather than the behaviour.</li>
+          <li><strong>Say it to the person, not about them.</strong> Take whatever you'd say behind their back and say it to their face, kindly.</li>
+          <li><strong>Replace fake praise with true praise.</strong> If you can't find something sincere to say, look harder, or say less.</li>
+          <li><strong>Rebuild care first.</strong> If you don't care about the person or the work, ask why, and be honest about whether the role or environment is the problem.</li>
+          <li><strong>Make small honest moves.</strong> Start with low-risk candour (a mild disagreement, a clarifying question) and build the muscle.</li>
+          <li><strong>Notice the culture.</strong> If the environment rewards this behaviour, fixing yourself isn't enough; the system needs to change too.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── SIDE BY SIDE ───── -->
+  <div class="quad-section" id="q-cmp">
+    <div class="quad-head" style="background:var(--gold-deep); color:var(--ink);">
+      <div class="dials">All four at once</div>
+      <h3>Side-by-Side</h3>
+      <div class="tag">How the same moment looks in each quadrant, and how praise and criticism change shape.</div>
+    </div>
+    <div class="quad-body">
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead><tr><th class="blank"></th><th class="rc">Radical Candor</th><th class="re">Ruinous Empathy</th><th class="oa">Obnoxious Aggression</th><th class="mi">Manipulative Insincerity</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">Care / Challenge</td><td>High / High</td><td>High / Low</td><td>Low / High</td><td>Low / Low</td></tr>
+            <tr><td class="rowh">Nickname</td><td>Kind, clear, specific, sincere</td><td>"Nice" but withholding</td><td>Front-stab</td><td>Back-stab</td></tr>
+            <tr><td class="rowh">Praise looks like</td><td>Specific and sincere: "here's what worked and why"</td><td>Vague or inflated: "great job!"</td><td>Rare, grudging, or backhanded</td><td>Flattery, or false praise to your face</td></tr>
+            <tr><td class="rowh">Criticism looks like</td><td>Timely, specific, kind, about the work</td><td>Withheld, softened to nothing, or delayed</td><td>Harsh, public, personal</td><td>Said behind your back, or passive-aggressive</td></tr>
+            <tr><td class="rowh">Feels like</td><td>"They're on my side"</td><td>"I think I'm fine…?"</td><td>"I'm under attack"</td><td>"I can't tell what they think"</td></tr>
+            <tr><td class="rowh">Typical line</td><td>"I'm telling you because I think you can be great."</td><td>"It's fine, don't worry about it."</td><td>"Don't take this personally, but this is garbage."</td><td>"Love it!" (then the opposite elsewhere)</td></tr>
+            <tr><td class="rowh">Main cost</td><td>Discomfort in the moment</td><td>Stalled growth; blindsiding</td><td>Fear; lost information; attrition</td><td>Collapse of trust</td></tr>
+            <tr><td class="rowh">The antidote</td><td>Keep going; stay humble</td><td>Add challenge</td><td>Add care, not silence</td><td>Care first, then be honest in person</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Two points from Scott's framing are worth holding onto. First, <strong>Ruinous Empathy is the most common failure</strong>; Obnoxious Aggression gets the attention because it's loud. Second, <strong>Manipulative Insincerity is the most corrosive</strong>, because its damage is hidden and spreads quietly.</p>
+    </div>
+  </div>
+
+  <!-- ───── TIGHTROPE ───── -->
+  <div class="quad-section" id="q-walk">
+    <div class="quad-head" style="background:var(--red-dark);">
+      <div class="dials">Staying balanced</div>
+      <h3>The Tightrope</h3>
+      <div class="tag">Radical Candor isn't the midpoint between kind and tough. It's both dials turned up at once, and there's a drop on every side.</div>
+    </div>
+    <div class="quad-body">
+      <h4>Try it: where are you right now?</h4>
+      <p style="margin-bottom:14px;">Slide the two dials for a specific relationship or a recent conversation and see which quadrant you land in. Anything past the midline on both counts is Radical Candor, but the point is to notice which way you lean.</p>
+      <div class="rope">
+        <svg id="rope-svg" viewBox="0 0 300 300" role="img" aria-label="Radical Candor quadrant chart">
+          <rect x="0" y="0" width="150" height="150" fill="#d7e6ee"/>
+          <rect x="150" y="0" width="150" height="150" fill="#fbb125"/>
+          <rect x="0" y="150" width="150" height="150" fill="#dedcc6"/>
+          <rect x="150" y="150" width="150" height="150" fill="#f7c4b4"/>
+          <g font-family="Permanent Marker, cursive" font-size="12" fill="#141414" text-anchor="middle">
+            <text x="75" y="70">Ruinous</text><text x="75" y="86">Empathy</text>
+            <text x="225" y="70">Radical</text><text x="225" y="86">Candor</text>
+            <text x="75" y="220">Manipulative</text><text x="75" y="236">Insincerity</text>
+            <text x="225" y="220">Obnoxious</text><text x="225" y="236">Aggression</text>
+          </g>
+          <path d="M6 150 L294 150 M150 6 L150 294" stroke="#141414" stroke-width="4" stroke-linecap="round"/>
+          <path d="M294 150 l-9 -6 M294 150 l-9 6 M150 6 l-6 9 M150 6 l6 9" stroke="#141414" stroke-width="4" stroke-linecap="round"/>
+          <g font-family="DM Sans, sans-serif" font-size="9" font-weight="700" fill="#141414">
+            <text x="154" y="18">CARE ↑</text>
+            <text x="234" y="144">CHALLENGE →</text>
+          </g>
+          <circle id="rope-dot" cx="225" cy="75" r="9" fill="#e8502a" stroke="#141414" stroke-width="3"/>
+        </svg>
+        <div>
+          <div class="slider-row"><label><span>Care Personally</span><span id="care-val">75</span></label><input id="care" type="range" min="0" max="100" value="75"></div>
+          <div class="slider-row"><label><span>Challenge Directly</span><span id="chal-val">75</span></label><input id="chal" type="range" min="0" max="100" value="75"></div>
+          <div class="rope-out rc" id="rope-out"><h5>Radical Candor</h5><div id="rope-text"></div></div>
+        </div>
+      </div>
+
+      <h4>Three ways to fall off</h4>
+      <div class="fall-grid">
+        <div class="fall l"><h5>Fall left → Ruinous Empathy</h5>You keep the care and lose the challenge. It feels safe and kind. <strong>Back on the rope:</strong> say the hard thing, specifically and soon.</div>
+        <div class="fall r"><h5>Fall right → Obnoxious Aggression</h5>You keep the challenge and lose the care. It feels honest and efficient. <strong>Back on the rope:</strong> add genuine regard and move it private.</div>
+        <div class="fall d"><h5>Fall down → Manipulative Insincerity</h5>You lose both: you stop caring and stop being real. <strong>Back on the rope:</strong> find the root (fear, burnout, politics) and be honest in person.</div>
+      </div>
+
+      <h4>Common swings between quadrants</h4>
+      <div class="swing-row"><div class="arrow">OA → MI</div><div>Told you're too harsh, so you go quiet and polite, but you've reduced challenge instead of adding care. You now say nothing real to people's faces.</div></div>
+      <div class="swing-row"><div class="arrow">RE → OA</div><div>After a long stretch of avoiding the truth, frustration boils over and you unload on someone who never knew there was a problem. (My synthesis of a pattern the book's framing implies.)</div></div>
+      <div class="swing-row"><div class="arrow">MI → RC</div><div>The hardest climb, because you need to rebuild both dials: care about the person again, and say the true thing to them directly.</div></div>
+      <div class="swing-row"><div class="arrow">Any day</div><div>Scott's own framing is that you will find yourself in every quadrant at some point, sometimes in a single week, and sometimes with different people. The skill is noticing and correcting, not never slipping.</div></div>
+
+      <h4>Spot the quadrant</h4>
+      <p style="margin-bottom:12px;">Six quick calls. Tap your answer.</p>
+      <div id="quiz"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOOLKIT ═══════════════ -->
+<div id="toolkit" class="panel">
+  <div class="section-header"><h2>The Toolkit</h2><div class="section-line"></div></div>
+  <p class="lead">The practical machinery of the book, gathered in one place. Frameworks are described from the book's structure; the practice plan at the bottom is my own suggestion.</p>
+
+  <div class="method-card"><div class="tag">Guidance</div><h4>Get, Give, Encourage</h4>
+    <ul>
+      <li><strong>Get:</strong> ask for criticism of yourself first. Then wait through the silence, listen to understand, and reward the candor with visible action.</li>
+      <li><strong>Give:</strong> praise and criticism that are specific, sincere, and timely, following the humble / helpful / immediate / in-person / praise-public-criticise-private / not-personal checklist.</li>
+      <li><strong>Encourage:</strong> make it normal for everyone on the team to guide each other, not just the boss.</li>
+    </ul>
+  </div>
+
+  <div class="code-block">
+    <span class="c"># A way to ask for criticism (the spirit of the book's approach)</span><br>
+    <span class="k">Ask:</span> "Is there anything I could do or stop doing that would make it easier to work with me?"<br>
+    <span class="k">Then:</span> stay silent, count to five if you have to<br>
+    <span class="k">Listen:</span> to understand, not to defend<br>
+    <span class="k">Respond:</span> thank them, and act on at least one thing soon
+  </div>
+
+  <div class="method-card"><div class="tag">Team</div><h4>Growth Management: Rock Stars &amp; Superstars</h4>
+    <p>Plot each person by performance and by growth trajectory. Different people want different things from their careers, and a good boss manages to that.</p>
+    <div class="growth-grid">
+      <div class="g-cell"><h5>Rock Star</h5>Strong performer, gradual growth. Loves the role and anchors the team. Needs recognition and stability, <em>not</em> pressure to climb.</div>
+      <div class="g-cell hi"><h5>Superstar</h5>Strong performer, steep growth. Needs new challenges and visible opportunities, or they get bored and leave.</div>
+      <div class="g-cell"><h5>Lower performance, early or improving</h5>Often newer to the role. Needs clear guidance, coaching, and honest feedback on pace.</div>
+      <div class="g-cell"><h5>Lower performance, poor fit</h5>Needs the hardest and kindest conversation: if the role isn't right, saying so is better than letting it drag on.</div>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted);">The warning: don't over-invest in Superstars while neglecting Rock Stars, and don't push Rock Stars toward promotion they don't want.</p>
+  </div>
+
+  <div class="method-card"><div class="tag">Relationships</div><h4>Three Conversations to Know Your People</h4>
+    <ul>
+      <li><strong>Life Story:</strong> where they've come from and what shaped them</li>
+      <li><strong>Dreams:</strong> what they hope to do, in work and beyond</li>
+      <li><strong>The 18-Month Plan:</strong> a practical plan linking their ambitions to what's possible in the next stretch</li>
+    </ul>
+  </div>
+
+  <div class="method-card"><div class="tag">Results</div><h4>The Get Stuff Done Wheel</h4>
+    <div class="steps-wrap">
+      <div class="step-card"><div class="s-num">1</div><div class="s-title">Listen</div><div class="s-desc">Create space for ideas to surface</div></div><div class="step-arrow">→</div>
+      <div class="step-card"><div class="s-num">2</div><div class="s-title">Clarify</div><div class="s-desc">Test understanding; sharpen the idea</div></div><div class="step-arrow">→</div>
+      <div class="step-card"><div class="s-num">3</div><div class="s-title">Debate</div><div class="s-desc">Surface disagreement openly</div></div><div class="step-arrow">→</div>
+      <div class="step-card"><div class="s-num">4</div><div class="s-title">Decide</div><div class="s-desc">Someone owns the decision</div></div><div class="step-arrow">→</div>
+      <div class="step-card"><div class="s-num">5</div><div class="s-title">Persuade</div><div class="s-desc">Bring people along</div></div><div class="step-arrow">→</div>
+      <div class="step-card"><div class="s-num">6</div><div class="s-title">Execute</div><div class="s-desc">Move fast, together</div></div><div class="step-arrow">→</div>
+      <div class="step-card"><div class="s-num">7</div><div class="s-title">Learn</div><div class="s-desc">Feed results back into the next loop</div></div>
+    </div>
+    <p>The loop repeats. Radical Candor is what makes the <em>Debate</em> step honest instead of political.</p>
+  </div>
+
+  <div class="method-card"><div class="tag">Rhythm</div><h4>A Meeting Rhythm That Supports the Wheel</h4>
+    <ul>
+      <li><strong>One-on-ones:</strong> owned by the direct report</li>
+      <li><strong>Staff meetings:</strong> alignment and updates</li>
+      <li><strong>Big Debate:</strong> a space to argue ideas without deciding</li>
+      <li><strong>Big Decision:</strong> a separate session to decide</li>
+      <li><strong>Think time:</strong> protected time to do the actual work</li>
+    </ul>
+  </div>
+
+  <div class="section-header" style="margin-top:30px;"><h2>A 30-Day Practice Plan</h2><div class="section-line"></div></div>
+  <div class="note-box">This plan is my own suggestion for putting the book to work, not something drawn from it.</div>
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div>🗓️</div><div><strong>Week 1:</strong> Ask three people for criticism of you. Don't defend. Thank them and act on one thing.</div></div>
+    <div class="toolkit-item"><div>🤝</div><div><strong>Week 2:</strong> Hold one-on-ones where the other person owns the agenda. Try one of the three conversations.</div></div>
+    <div class="toolkit-item"><div>💬</div><div><strong>Week 3:</strong> Give one piece of specific praise and one piece of specific, kind criticism every day.</div></div>
+    <div class="toolkit-item"><div>🔍</div><div><strong>Week 4:</strong> Notice which quadrant you slip into and with whom. Write down one correction for each pattern.</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════ KEY PHRASES ═══════════════ -->
+<div id="quotes" class="panel">
+  <div class="section-header"><h2>Key Phrases &amp; Ideas</h2><div class="section-line"></div></div>
+  <div class="note-box">These are the book's signature terms and short-form paraphrases of its main arguments. I have not reproduced passages from the text. Add your own favourite lines from your copy here.</div>
+
+  <div class="quote-block"><p>Be a Kick-Ass Boss Without Losing Your Humanity.</p><div class="attr">— The book's subtitle</div></div>
+  <div class="quote-block"><p>Care Personally. Challenge Directly.</p><div class="attr">— The two dimensions of the framework</div></div>
+  <div class="quote-block"><p>Ruinous Empathy.</p><div class="attr">— Care without challenge; Scott's most common failure</div></div>
+  <div class="quote-block"><p>Obnoxious Aggression.</p><div class="attr">— Challenge without care</div></div>
+  <div class="quote-block"><p>Manipulative Insincerity.</p><div class="attr">— Neither care nor challenge; the back-stab</div></div>
+  <div class="quote-block"><p>Get Stuff Done.</p><div class="attr">— The wheel from Chapters 4 and 8</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
+  <p class="lead">Paraphrases, not direct quotes.</p>
+  <div class="quote-block"><p>Withholding the truth to be nice is not kind.</p><div class="attr">— Paraphrase of the Ruinous Empathy argument</div></div>
+  <div class="quote-block"><p>If you want candor, go first and ask for it.</p><div class="attr">— Paraphrase of Chapter 2</div></div>
+  <div class="quote-block"><p>Don't promote your Rock Stars out of the role they love.</p><div class="attr">— Paraphrase of Chapter 3</div></div>
+  <div class="quote-block"><p>Debate openly, decide clearly, then commit together.</p><div class="attr">— Paraphrase of Chapters 4 and 8</div></div>
+  <div class="quote-block"><p>A review should hold no surprises.</p><div class="attr">— Paraphrase of the bonus chapter</div></div>
+</div>
+
+<!-- ═══════════════ VERDICT ═══════════════ -->
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.6 / 5</h3>
+    <p>A clear, memorable, immediately usable model of feedback. Its two-axis grid gives managers a shared language for something most never learn to name.</p>
+    <div class="rating-row">
+      <div class="rating-item"><div class="r-score">4.9</div><div class="r-label">Framework</div></div>
+      <div class="rating-item"><div class="r-score">4.5</div><div class="r-label">Actionability</div></div>
+      <div class="rating-item"><div class="r-score">3.6</div><div class="r-label">Evidence Base</div></div>
+      <div class="rating-item"><div class="r-score">4.4</div><div class="r-label">Readability</div></div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>The quadrant model is simple enough to remember and precise enough to diagnose real situations</div></div>
+      <div class="list-item"><div class="dot"></div><div>Names the "nice" failure, Ruinous Empathy, which most management advice ignores</div></div>
+      <div class="list-item"><div class="dot"></div><div>Practical tools (one-on-ones, the GSD wheel, Growth Management) that go beyond the headline idea</div></div>
+      <div class="list-item"><div class="dot"></div><div>The revised edition directly addresses misuse and adds an organisation-level rollout and review guidance</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Built mainly on personal stories and experience rather than research</div></div>
+      <div class="list-item"><div class="dot"></div><div>Heavily shaped by tech-industry settings; culture and power dynamics vary elsewhere</div></div>
+      <div class="list-item"><div class="dot"></div><div>Easy to take "Challenge Directly" and skip the "Care Personally" half, as the author herself notes</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some repetition between the philosophy half and the tools half</div></div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>New and aspiring managers</strong> who want a vocabulary and a playbook for feedback.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Experienced leaders</strong> who suspect they're too soft or too harsh and want a way to check.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Individual contributors</strong> who want to give feedback upward or to peers without wrecking the relationship.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Anyone looking for hard research</strong> will find an experience-based handbook rather than an evidence review.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p>Being nice isn't the same as being kind. The most common way bosses fail their people isn't cruelty; it's silence delivered with a smile. Radical Candor is the discipline of caring enough to say the true thing, and of building the relationship that makes it possible to hear.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>Radical Candor</strong> earns its place as a management classic because it gives people a map for a conversation most dread. Its four quadrants let you name what you're doing, and what the other person is experiencing, in plain terms.</p>
+    <p>Take the framework, ask for criticism first, and watch which quadrant you slip into under pressure. Leave the slogan behind if it tempts you toward bluntness: the book's whole point is that candor without care is just another way of failing.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 1 });
+  }
+  function toggleChapter(card) { card.classList.toggle('open'); }
+
+  function jumpQuad(id) {
+    const tab = Array.from(document.querySelectorAll('.tab')).find(t => t.textContent.includes('Four Quadrants'));
+    if (!document.getElementById('quadrants').classList.contains('active')) { showTab('quadrants', tab); }
+    setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+  }
+
+  /* Tightrope sliders */
+  const careEl = document.getElementById('care'), chalEl = document.getElementById('chal');
+  const quads = {
+    rc: ['Radical Candor', 'Both dials up. Keep going: stay humble, stay specific, keep asking for criticism yourself.'],
+    re: ['Ruinous Empathy', 'Lots of care, not enough challenge. What is the hard thing you have been softening or skipping? Say it, specifically, soon.'],
+    oa: ['Obnoxious Aggression', 'Plenty of challenge, not enough visible care. Keep the honesty, add regard for the person, and move it private.'],
+    mi: ['Manipulative Insincerity', 'Low on both. Find the root (fear, burnout, politics), then start with one honest, in-person conversation.']
+  };
+  function updateRope() {
+    const care = +careEl.value, chal = +chalEl.value;
+    document.getElementById('care-val').textContent = care;
+    document.getElementById('chal-val').textContent = chal;
+    const dot = document.getElementById('rope-dot');
+    dot.setAttribute('cx', 6 + chal * 2.88);
+    dot.setAttribute('cy', 294 - care * 2.88);
+    const key = care >= 50 ? (chal >= 50 ? 'rc' : 're') : (chal >= 50 ? 'oa' : 'mi');
+    const out = document.getElementById('rope-out');
+    out.className = 'rope-out ' + key;
+    out.querySelector('h5').textContent = quads[key][0];
+    document.getElementById('rope-text').textContent = quads[key][1];
+  }
+  careEl.addEventListener('input', updateRope); chalEl.addEventListener('input', updateRope); updateRope();
+
+  /* Quiz */
+  const quizData = [
+    { q: 'Your direct report\'s deck is badly off. You say, "Great effort! Maybe tweak a few things when you get a chance."', a: 're', why: 'High care, but the real message is missing. This is Ruinous Empathy: kind, and not useful.' },
+    { q: '"This is garbage. Did you even try?" said in front of the team.', a: 'oa', why: 'Direct, but harsh, public, and personal, with no sign of care. Obnoxious Aggression.' },
+    { q: 'You say "love it!" to a colleague\'s proposal, then tell your boss later it won\'t work.', a: 'mi', why: 'Saying one thing to the face and another behind the back is the signature of Manipulative Insincerity.' },
+    { q: '"I\'m telling you because I want you to succeed: your recommendation is buried on slide 14. Lead with it."', a: 'rc', why: 'Specific, timely, kind, and clearly on their side. Radical Candor.' },
+    { q: 'A struggling employee clearly lacks a skill. You say, "I\'m sure you\'ll figure it out," and leave it there.', a: 're', why: 'Caring tone, no challenge or guidance. The person is left alone with a problem they can\'t see.' },
+    { q: 'You say "let\'s table that" to dodge disagreement, then quietly kill the project without telling its owner.', a: 'mi', why: 'Avoiding honesty to their face while acting against them: manipulative insincerity at its clearest.' }
+  ];
+  const names = { rc: 'Radical Candor', re: 'Ruinous Empathy', oa: 'Obnoxious Aggression', mi: 'Manipulative Insincerity' };
+  const quiz = document.getElementById('quiz');
+  quizData.forEach((d, i) => {
+    const card = document.createElement('div'); card.className = 'quiz-card';
+    card.innerHTML = '<div class="q"><span class="n">' + (i + 1) + '.</span>' + d.q + '</div><div class="quiz-opts"></div><div class="quiz-exp"></div>';
+    const opts = card.querySelector('.quiz-opts'), exp = card.querySelector('.quiz-exp');
+    Object.keys(names).forEach(k => {
+      const b = document.createElement('button'); b.textContent = names[k];
+      b.onclick = () => {
+        opts.querySelectorAll('button').forEach(x => { x.disabled = true; if (x.textContent === names[d.a]) x.classList.add('right'); });
+        if (k !== d.a) b.classList.add('wrong');
+        exp.textContent = (k === d.a ? 'Correct. ' : 'Not quite: it\'s ' + names[d.a] + '. ') + d.why;
+        exp.classList.add('show');
+      };
+      opts.appendChild(b);
+    });
+    quiz.appendChild(card);
+  });
+</script>
+</body>
+</html>
