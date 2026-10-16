@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Gift — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Oswald:wght@500;700&family=DM+Sans:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:        #1d1818;
+    --ink-deep:   #141010;
+    --ink-light:  #5e4a4c;
+    --ink-dim:    rgba(28,23,18,0.06);
+    --paper:      #fbf6ec;
+    --cream:      #fbf1e6;
+    --blue:       #cf3f65;
+    --blue-dark:  #93264a;
+    --blue-dim:   rgba(207,63,101,0.11);
+    --blue-light: #ee7a98;
+    --rust:       #8c5a52;
+    --rust-dark:  #5a3430;
+    --red:        #cf3f65;
+    --red-dark:   #a52c50;
+    --gray:       #a08c8e;
+    --gray-dark:  #6b5557;
+    --border:     rgba(120,40,60,0.18);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #fdf9f1;
+    color: var(--ink-deep);
+    min-height: 100vh;
+  }
+
+  /* ─────────────────────────────────────────────
+     HERO — white cover canvas, rust ladder-rung motif, cover art
+  ───────────────────────────────────────────── */
+  .hero {
+    background: radial-gradient(ellipse at 30% 20%, #fffaf0 0%, #fbeee6 55%, #f4d9d6 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .bestseller-bar {
+    padding: 8px 40px; color: var(--blue-dark) !important; font-weight: 700 !important;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-inner {
+    padding: 40px 40px 44px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  /* Ladder-rung motif, echoing the cover's climbing ladder */
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img {
+    width: 132px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.1);
+    transform: rotate(5deg);
+    box-shadow: 8px 12px 26px rgba(110,35,55,0.35);
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  .book-label {
+    display: inline-block;
+    background: var(--ink-deep);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .hero h1 {
+    font-family: 'Oswald', 'DM Sans', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: clamp(34px, 6.4vw, 58px);
+    line-height: 0.98;
+    max-width: 620px;
+    letter-spacing: -0.5px;
+    color: var(--ink-deep);
+  }
+  .hero h1 em { color: var(--blue-dark); text-transform: none; font-style: normal; font-weight: 500; display: block; font-size: 0.36em; letter-spacing: 0; margin-top: 14px; max-width: 480px; font-family: 'Fraunces', serif; font-style: italic; }
+  .author {
+    margin-top: 18px;
+    color: var(--gray-dark);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  .author span { color: var(--ink-deep); font-weight: 700; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+  .meta-pill {
+    background: var(--ink-deep);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .badge-seal {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #f0809c, var(--red-dark) 78%);
+    color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; font-weight: 800; letter-spacing: 0.3px; line-height: 1.05;
+    box-shadow: 0 3px 10px rgba(165,44,80,0.35);
+    flex-shrink: 0;
+  }
+  .badge-seal .b-top { font-size: 6.5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-seal .b-mid { font-size: 13px; margin: 1px 0; }
+  .badge-seal .b-bot { font-size: 6.5px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── Back bar ── */
+  .back-bar { background: var(--cream); padding: 10px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: center; }
+  .back-link { color: var(--gray-dark); font-size: 12px; text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+  .back-link:hover { color: var(--ink); }
+  .back-link span { margin-right: 6px; }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; background: var(--cream); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 14px 22px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700;
+    color: var(--gray-dark); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all 0.2s;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--blue); }
+
+  /* ── Panels ── */
+  .panel { display: none; padding: 32px 32px 48px; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-header h2 { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 21px; color: var(--ink); letter-spacing: 0.1px; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--blue-dark); margin-bottom: 6px; font-weight: 700; }
+  .stat-value { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 16.5px; color: var(--ink); letter-spacing: 0.1px; }
+  .stat-desc { font-size: 12px; color: var(--gray-dark); margin-top: 4px; }
+
+  .summary-block {
+    background: var(--cream); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 20px 22px;
+    margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: #2a1f20;
+  }
+  .summary-block p + p { margin-top: 12px; }
+
+  .key-idea {
+    display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: #fffaf3; border: 1px solid #ecd2cf;
+    border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6;
+  }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+
+  /* ── Chapter section headers ── */
+  .part-header {
+    background: var(--ink-deep); color: #ffffff; padding: 10px 18px; border-radius: 6px; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 12px; margin-top: 24px; font-weight: 700;
+  }
+
+  /* ── Chapter cards ── */
+  .chapter-card { background: #fffaf3; border: 1px solid #ecd2cf; border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(110,35,55,0.14); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
+  .ch-num { width: 32px; height: 32px; background: var(--ink-deep); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .ch-num.intro { background: var(--rust-dark); color: #fff; }
+  .ch-title { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 15px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--blue-dark); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body { display: none; background:#fffaf3; padding: 14px 18px 18px 64px; font-size: 13.5px; line-height: 1.7; color: #2a1f20; border-top: 1px solid #f1dedb; }
+  .chapter-card.open .chapter-body { display: block; }
+  .ch-takeaway {
+    margin-top: 10px; background: var(--blue-dim); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12.5px; color: var(--blue-dark); font-weight: 700;
+  }
+  .ch-tool {
+    margin-top: 8px; background: var(--ink-dim); border-left: 3px solid var(--ink); border-radius: 0 6px 6px 0;
+    padding: 10px 14px; font-size: 12px; color: var(--ink-deep);
+  }
+  .ch-tool strong { color: var(--ink); }
+
+  /* ── Habit list rows (Ch. 2's twenty habits) ── */
+  .habit-row { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-top: 1px solid #f1dedb; font-size: 13px; line-height: 1.55; }
+  .habit-row:first-of-type { border-top: none; }
+  .habit-num { width: 22px; height: 22px; border-radius: 50%; background: var(--blue-dim); color: var(--blue-dark); font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── Framework cards ── */
+  .method-card { background: #fffaf3; border: 1px solid #ecd2cf; border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+  .method-card h4 { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 15px; color: var(--ink); margin-bottom: 8px; }
+  .method-card p { font-size: 13px; line-height: 1.65; color: var(--gray-dark); }
+  .method-card .tag {
+    display: inline-block; background: var(--ink-deep); color: white; font-size: 10px; letter-spacing: 1px; padding: 3px 9px;
+    border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 700;
+  }
+
+  /* ── Change process (steps) ── */
+  .steps-wrap { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; flex-wrap: wrap; }
+  .step-card { flex: 1; min-width: 130px; background: var(--cream); border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 12px; text-align: center; }
+  .step-card .s-num { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue-dark); font-weight: 700; margin-bottom: 6px; }
+  .step-card .s-title { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 14px; color: var(--ink); margin-bottom: 6px; }
+  .step-card .s-desc { font-size: 11.5px; line-height: 1.5; color: var(--gray-dark); }
+  .step-arrow { display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 16px; }
+  @media (max-width: 760px) { .steps-wrap { flex-direction: column; } .step-arrow { display: none; } }
+
+  /* ── Code-style block (Feedforward script) ── */
+  .code-block { background: var(--ink-deep); color: #fbe9e6; border-radius: 8px; padding: 20px; font-family: monospace; font-size: 13px; line-height: 1.9; margin-bottom: 16px; }
+  .code-block .comment { color: rgba(238,122,152,0.8); }
+  .code-block .keyword { color: var(--blue-light); }
+  .code-block .value { color: #fff; }
+
+  /* ── Toolkit page list ── */
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item { display: flex; gap: 10px; align-items: flex-start; background: #fffaf3; border: 1px solid #ecd2cf; border-radius: 8px; padding: 10px 12px; font-size: 12px; line-height: 1.5; color: #2a1f20; }
+  .toolkit-item .t-ic { font-size: 14px; flex-shrink: 0; }
+  @media (max-width: 560px) { .toolkit-list { grid-template-columns: 1fr; } }
+
+  /* ── Verdict banner ── */
+  .verdict-banner { background: linear-gradient(135deg, var(--ink-deep) 0%, #2e1420 100%); background: linear-gradient(135deg, var(--ink-deep) 0%, #2e1420 100%); border-radius: 12px; padding: 28px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden; }
+  .verdict-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at  5% 20%, var(--rust) 0%, var(--rust) 3px, transparent 4px) 0 0/26px 26px,
+      radial-gradient(circle at 95% 75%, var(--red) 0%, var(--red) 12px, transparent 13px),
+      radial-gradient(circle at 90% 15%, #ffffff 0%, #ffffff 5px, transparent 6px),
+      radial-gradient(circle at 10% 85%, #ffffff 0%, #ffffff 7px, transparent 8px);
+    opacity: 0.14; pointer-events: none;
+  }
+  .verdict-banner h3 { font-family: 'DM Sans', sans-serif; font-weight: 900; font-size: 30px; color: var(--blue-light); margin-bottom: 6px; position: relative; z-index: 1; }
+  .verdict-banner p { color: rgba(255,255,255,0.78); font-size: 13px; position: relative; z-index: 1; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .rating-item { text-align: center; background: rgba(207,63,101,0.25); border: 1px solid rgba(238,122,152,0.45); border-radius: 8px; padding: 10px 16px; min-width: 90px; }
+  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--blue-light); }
+  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+
+  /* ── Pros / Cons ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list { background: #fffaf3; border-radius: 10px; padding: 16px 18px; border: 1px solid #ecd2cf; }
+  .pro-list h4 { color: var(--ink); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .con-list h4 { color: var(--rust-dark); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--gray-dark); }
+  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--ink); }
+  .con-list .dot { background: var(--rust); }
+
+  /* ── Quotes ── */
+  .quote-block { background: var(--cream); border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; position: relative; border-left: 3px solid var(--blue); }
+  .quote-block::before {
+    content: '\201C'; font-family: 'Fraunces', serif; font-size: 60px; color: var(--blue); position: absolute; top: -8px; left: 16px; line-height: 1;
+  }
+  .quote-block p { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 16px; line-height: 1.5; padding-left: 10px; margin-top: 16px; color: var(--ink-deep); }
+  .quote-block .attr { font-size: 11px; color: var(--gray-dark); margin-top: 8px; text-align: right; font-family: 'DM Sans', sans-serif; font-style: normal; }
+
+  /* ── Who cards ── */
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: #fffaf3; border: 1px solid #ecd2cf; border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.6; transition: border-color 0.2s; }
+  .who-card:hover { border-color: var(--blue); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .overview-grid, .pro-con-grid, .toolkit-list { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 40px; }
+    .hero-inner { padding: 28px 20px 28px; flex-wrap: wrap; }
+    .bestseller-bar { padding: 8px 20px; }
+  }
+
+  .strategy-card { background:#fffaf3; border:1px solid #ecd2cf; border-left:4px solid var(--blue); border-radius:10px; padding:18px 20px; margin-bottom:12px; }
+  .strategy-card .s-tag { display:inline-block; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; font-weight:700; color:#fff; background:var(--blue-dark); border-radius:10px; padding:3px 10px; margin-bottom:8px; }
+  .strategy-card h4 { font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.5px; font-size:16px; color:var(--ink-deep); margin-bottom:6px; }
+  .strategy-card p { font-size:13px; line-height:1.65; color:var(--gray-dark); }
+  .strategy-card .try { margin-top:10px; background:var(--blue-dim); border-radius:6px; padding:9px 12px; font-size:12.5px; color:var(--blue-dark); font-weight:700; line-height:1.5; }
+  .note-box { background:var(--ink-dim); border:1px dashed var(--gray); border-radius:8px; padding:12px 16px; font-size:12px; line-height:1.6; color:var(--gray-dark); margin-bottom:22px; }
+
+  .hero h1 { font-family: 'Fraunces', serif; text-transform: none; font-weight: 600; letter-spacing: -1px; }
+  .hero h1 em { font-size: 0.34em; line-height: 1.35; }
+  .book-cover-wrap img { width: 150px; }
+  .vs-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:24px; }
+  .vs-card { background:#fffaf3; border:1px solid #ecd2cf; border-radius:10px; padding:16px 18px; }
+  .vs-card.gift { border-top:3px solid var(--blue); }
+  .vs-card.com { border-top:3px solid var(--ink); }
+  .vs-card h4 { font-family:'Fraunces',serif; font-size:17px; margin-bottom:10px; color:var(--ink-deep); }
+  .vs-card .row { font-size:13px; line-height:1.55; color:var(--gray-dark); margin-bottom:8px; padding-left:12px; position:relative; }
+  .vs-card .row::before { content:''; position:absolute; left:0; top:7px; width:5px; height:5px; border-radius:50%; background:var(--blue); }
+  .vs-card.com .row::before { background:var(--ink); }
+  @media (max-width: 560px) { .vs-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="bestseller-bar">25th Anniversary Edition &nbsp;·&nbsp; Praised by Margaret Atwood &amp; David Foster Wallace</div>
+  <div class="hero-inner">
+    <div class="hero-motif">
+      <svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- soft watercolour hearts echoing the cover's painted heart -->
+        <g fill="#cf3f65">
+          <path transform="translate(70 70) scale(0.55)" opacity="0.22" d="M0 -20 C -40 -60, -90 -10, 0 50 C 90 -10, 40 -60, 0 -20 Z"/>
+          <path transform="translate(150 190) scale(0.3) rotate(-14)" opacity="0.2" d="M0 -20 C -40 -60, -90 -10, 0 50 C 90 -10, 40 -60, 0 -20 Z"/>
+          <path transform="translate(735 60) scale(0.35) rotate(12)" opacity="0.2" d="M0 -20 C -40 -60, -90 -10, 0 50 C 90 -10, 40 -60, 0 -20 Z"/>
+          <path transform="translate(690 200) scale(0.7) rotate(-8)" opacity="0.14" d="M0 -20 C -40 -60, -90 -10, 0 50 C 90 -10, 40 -60, 0 -20 Z"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Reading Guide</div>
+      <h1>The Gift<em>How the Creative Spirit Transforms the World</em></h1>
+      <div class="author">by <span>Lewis Hyde</span> &nbsp;·&nbsp; Vintage Books &nbsp;·&nbsp; First published 1983</div>
+      <div class="hero-meta">
+        <div class="meta-pill">Creativity</div>
+        <div class="meta-pill">Culture &amp; Economics</div>
+        <div class="meta-pill">Philosophy</div>
+        <div class="meta-pill">1983</div>
+        <div class="badge-seal"><div class="b-top">Two parts</div><div class="b-mid">10</div><div class="b-bot">Chapters</div></div>
+      </div>
+    </div>
+    <div class="book-cover-wrap">
+      <img src="images/the-gift-cover.jpg" alt="The Gift by Lewis Hyde, 25th anniversary edition cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar">
+  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab" onclick="showTab('concepts', this)">Gift vs. Commodity</div>
+  <div class="tab" onclick="showTab('quotes', this)">Notable Ideas</div>
+  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+</div>
+
+<div id="overview" class="panel active">
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
+
+  <div class="overview-grid">
+    <div class="stat-card"><div class="stat-label">Core Focus</div><div class="stat-value">Gift Exchange and the Creative Life</div><div class="stat-desc">An inquiry into how gifts behave, and why creative work depends on them.</div></div>
+    <div class="stat-card"><div class="stat-label">Central Claim</div><div class="stat-value">A Work of Art Is a Gift, Not a Commodity</div><div class="stat-desc">The market can pay for art, but it cannot produce the inner gift that makes it.</div></div>
+    <div class="stat-card"><div class="stat-label">Primary Framework</div><div class="stat-value">Two Economies: Gift and Market</div><div class="stat-desc">Gifts bind and circulate; commodities settle and separate. Both are needed.</div></div>
+    <div class="stat-card"><div class="stat-label">Best For</div><div class="stat-value">Artists, Writers, Founders, and Anyone Who Makes Things</div><div class="stat-desc">Also readers curious about the anthropology and ethics of economic life.</div></div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>The Gift</strong> is Lewis Hyde's long meditation on a deceptively simple question: why does making art feel so different from making a living? His answer is that a work of art belongs to a gift economy, in which things are received, passed on and kept alive by movement, while the culture around it increasingly treats everything as a commodity to be bought, sold and settled.</p>
+    <p>The book is built in two halves. Part One is a theory of gifts, assembled from anthropology (the Kula ring, the Maori <em>hau</em>, first-salmon rites), folktales, Alcoholics Anonymous and the history of usury. Part Two applies the theory to two poets: Walt Whitman, who tried to live as a giver, and Ezra Pound, whose sharp insight into money turned into something far darker.</p>
+    <p>It is part anthropology, part literary criticism, part moral philosophy, and it is written with a poet's care for language. It does not offer a business model for artists. It gives them, and the rest of us, a vocabulary for understanding why some work feels like an offering and why it suffers when treated as only a product.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
+  <div class="key-idea"><div class="icon">🎁</div><div><strong>A gift is received, not earned.</strong> Talent, inspiration and the sense of being handed an idea are unearned gifts, and the artist's job is to serve them.</div></div>
+  <div class="key-idea"><div class="icon">🔄</div><div><strong>The gift must always move.</strong> A gift keeps its life only by being passed along, and it dies when it is hoarded or turned purely into capital.</div></div>
+  <div class="key-idea"><div class="icon">🤝</div><div><strong>Gifts create bonds; commodities settle accounts.</strong> A purchase ends the relationship, and a gift extends it.</div></div>
+  <div class="key-idea"><div class="icon">🌱</div><div><strong>Gifts increase through use.</strong> Capital is consumed when spent, while a gift grows as it circulates among people.</div></div>
+  <div class="key-idea"><div class="icon">🎨</div><div><strong>Art needs both economies.</strong> The artist lives on market income but must protect a gift sphere where the work is actually made.</div></div>
+  <div class="key-idea"><div class="icon">⚠️</div><div><strong>Critiquing money is not enough.</strong> Pound shows how a real insight about usury can be bent into scapegoating.</div></div>
+</div>
+
+<div id="chapters" class="panel">
+  <div class="note-box">Chapter titles follow the book's table of contents. The summaries are written from the book's themes and section headings rather than a line-by-line reading, so check specifics against your own copy before relying on them. If something I've described does not match your memory of the text, trust the book.</div>
+  <div class="part-header">Front Matter</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">I</div>
+      <div class="ch-title">Introduction</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Hyde opens with the problem that drives the whole book: a work of art is a gift, yet the artist has to live in a market economy that treats everything as a commodity. He separates the two ideas early. A gift, in his sense, is something we receive rather than earn, and the creative talent an artist carries is the clearest example. The introduction promises a book that moves between anthropology, economic history and literary biography to show how gifts behave, and what happens to creative work when the gift side is starved.
+      <div class="ch-takeaway">Art lives in two economies at once, and the trouble starts when the market is the only one we can see.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Talent and inspiration arrive as gifts, not purchases</div>
+    </div>
+  </div>
+  <div class="part-header">Part I — A Theory of Gifts (Ch. 1–7)</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">Some Food We Could Not Eat</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The chapter sets out the basic grammar of gift exchange in two movements. <strong>The Motion</strong> introduces the central rule: a gift must keep moving. Drawing on Marcel Mauss and the Maori account of the <em>hau</em>, the spirit that travels with a gift, Hyde argues that a gift is not truly alive if it is hoarded or sold. <strong>The Circle</strong> follows the Kula ring of the Trobriand Islands, where valuables circulate in opposite directions around a ring of islands and are never kept. The point is that the gift binds a community through ongoing passage, not through a single payback.
+      <div class="ch-takeaway">A gift stays a gift only while it continues to move.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The gift must always move</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">The Bones of the Dead</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Hyde turns to the gifts of nature and the ethics that grow up around them. Hunting and fishing peoples treat the animals they take as gifts that must be honoured and, in some rites, returned. The first-salmon ceremonies of the Pacific Northwest are the best known example: the bones go back to the water so the gift can come round again. The chapter widens the idea from objects passed between people to the larger cycle of giving that sustains a living community.
+      <div class="ch-takeaway">Treating the world as a gift creates obligations of restraint and return.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Gratitude expressed as return and ritual</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">The Labor of Gratitude</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      A gift does something to the person who receives it, and the receiver has work to do. Hyde draws on folktales and on the anthropology of gift-giving to show that the proper response to a gift is rarely an immediate repayment. It is to be changed by it and to pass something on. The labour of gratitude is the effort of becoming worthy of what was given, and it explains why gifts often feel like a burden as well as a blessing.
+      <div class="ch-takeaway">A gift obliges us to change, not just to reciprocate.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Receiving as work</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">4</div>
+      <div class="ch-title">The Bond</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      This is the chapter where the contrast with commerce is drawn most sharply. A commodity transaction aims at a clean break: you pay, you take, and you owe each other nothing. A gift aims at the opposite. It creates a feeling-bond between giver and receiver, and the lingering obligation is the point. Hyde frames this as two different principles of exchange, one built on connection and one on detachment, and he asks what is lost when too much of life is organised on the second.
+      <div class="ch-takeaway">Commodities settle accounts; gifts open them.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Gift as a bond, commodity as a clean break</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">5</div>
+      <div class="ch-title">The Gift Community</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Gift economies tend to define groups. Hyde looks at what it takes for a gift to circulate among many people rather than between two, and he uses Alcoholics Anonymous as a modern example. Sobriety is received as a gift that cannot be kept unless it is given away, and the fellowship runs on that principle. The chapter also introduces the idea that a gift often passes to a third party rather than back to the giver, and that this is what lets a group hold together without bookkeeping.
+      <div class="ch-takeaway">Gifts that pass to a third party build communities that do not keep accounts.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Gift circulation as the structure of a community</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">6</div>
+      <div class="ch-title">A Female Property</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Hyde examines how women have been treated as items of exchange in the anthropology of kinship, with a section on the woman given in marriage and another on Big Men and the status economies of Melanesia. He shows how a theory of gifts can illuminate marriage exchange and also how easily it can slide into treating people as property. It is the most dated chapter in tone and best read as a critical look at how gift theory has been applied.
+      <div class="ch-takeaway">Gift logic can bind a community, and it can also be used to treat people as objects.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The limits and dangers of gift exchange</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">7</div>
+      <div class="ch-title">Usury: A History of Gift Exchange</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      A long historical chapter on lending at interest. It starts from the biblical rule that one may lend at interest to a stranger but not to a brother, the "law of the gate", and follows the argument through Aristotle, medieval Christianity and Dante. Hyde reads the old prohibitions against usury as a defence of the gift sphere inside the community, and he traces how the line between brother and stranger gradually dissolves as everyone becomes a stranger to commerce.
+      <div class="ch-takeaway">Old objections to usury were really arguments about which relationships should sit outside the market.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The brother/stranger boundary and the gift sphere</div>
+    </div>
+  </div>
+  <div class="part-header">Part II — Two Experiments in Gift Aesthetics (Ch. 8–10)</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">8</div>
+      <div class="ch-title">The Commerce of the Creative Spirit</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The hinge of the book. Hyde argues that a work of art is a gift and not a commodity, and that the artist's inner gift (talent, inspiration, the sense of being handed something) is what the work carries into the world. The market can pay for the work, but it cannot produce the gift. Hyde does not tell artists to refuse money. He asks them to protect the gift sphere, find ways to be paid without being owned, and keep passing the gift on to the next generation.
+      <div class="ch-takeaway">Make the work as a gift; get paid for it by the market, but do not let the market make it.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The work as a gift, the artist as a steward</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">9</div>
+      <div class="ch-title">A Draft of Whitman</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      In three parts (<em>The Grass Over Graves</em>, <em>Adhesive Riches</em>, <em>Saplings</em>) Hyde reads Walt Whitman as a poet who staked his career on the gift. <em>Leaves of Grass</em> is offered to the reader as a gift and a bond, an attempt to make a democratic community through poetry. Hyde also follows Whitman's struggle with the book trade and the reception of his work. It is an experiment in applying gift theory to a single career.
+      <div class="ch-takeaway">Whitman is the case study of an artist who tried to live the gift openly.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Poetry as an offering that builds community</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">10</div>
+      <div class="ch-title">Ezra Pound and the Fate of Vegetable Money</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      The second experiment is a cautionary one. Pound saw clearly that money and usury corrupt art, and he spent decades on monetary reform ideas. Hyde follows how the insight went wrong, with Pound's economics sliding into conspiracy and antisemitism, and into his support for Mussolini. The five sections trace that arc and the damage done. Hyde uses Pound to show how a true perception about gift and commerce can be bent by fear and resentment into something ugly.
+      <div class="ch-takeaway">A sound critique of money can curdle when it needs a scapegoat.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Vegetable money and a warning about misusing the gift critique</div>
+    </div>
+  </div>
+  <div class="part-header">Closing</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">C</div>
+      <div class="ch-title">Conclusion</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      Hyde gathers the threads: gifts must move, art is a gift, and a culture that wants art has to protect the conditions under which gifts can be made and passed on. He leaves the reader with a practical question rather than a formula, namely how to keep gift life and market life in a workable relationship.
+      <div class="ch-takeaway">A healthy culture keeps a gift economy alongside its market.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Keeping the two economies in balance</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">A</div>
+      <div class="ch-title">On Being Good Ancestors</div>
+      <div class="ch-arrow">›</div>
+    </div>
+    <div class="chapter-body">
+      A newer closing essay in the later editions that looks at what we pass on to those who come after us. It extends the gift idea into inheritance and the commons: what one generation hands to the next, and what it takes away.
+      <div class="ch-takeaway">We are all receiving, and eventually giving, from a long line of gifts.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Inheritance and the commons as gifts</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="concepts" class="panel">
+  <div class="section-header"><h2>Gift vs. Commodity</h2><div class="section-line"></div></div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">The book's central contrast, as I understand it, laid out side by side. This is my summary of Hyde's distinction and not a quotation from the text.</p>
+  <div class="vs-grid">
+    <div class="vs-card gift"><h4>🎁 Gift exchange</h4>
+      <div class="row">Creates a feeling-bond between giver and receiver</div>
+      <div class="row">Value rises as the gift circulates</div>
+      <div class="row">Obligation is open-ended and often passes to a third party</div>
+      <div class="row">Works through trust, gratitude and relationship</div>
+      <div class="row">Gives a community its shape</div>
+    </div>
+    <div class="vs-card com"><h4>💵 Commodity exchange</h4>
+      <div class="row">Aims at a clean break once the transaction is done</div>
+      <div class="row">Value is realised, then consumed or stored</div>
+      <div class="row">Accounts are settled on the spot</div>
+      <div class="row">Works through price, contract and equivalence</div>
+      <div class="row">Connects strangers efficiently</div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>What This Means for Creative Work</h2><div class="section-line"></div></div>
+  <div class="strategy-card"><div class="s-tag">Mindset</div><h4>Treat the talent as received</h4><p>Hyde's view is that the creative ability you carry was given to you. That does not excuse laziness, and it does ask for humility and gratitude, and for the willingness to serve the work.</p><div class="try">Try it: Next time an idea arrives unbidden, write down where it came from and who you owe it to.</div></div>
+  <div class="strategy-card"><div class="s-tag">Practice</div><h4>Keep the gift moving</h4><p>The work and the knowledge behind it improve when passed on, through teaching, mentoring, sharing and publishing, and not just when kept as a private asset.</p><div class="try">Try it: Pick one thing you know well and give it away this month, with no invoice attached.</div></div>
+  <div class="strategy-card"><div class="s-tag">Livelihood</div><h4>Protect the gift sphere from the market</h4><p>Hyde accepts that artists have to eat. His suggestion is to find ways of being paid that do not distort the work, whether through patronage, side work or a separate income line, and keep the creative core insulated.</p><div class="try">Try it: Name the part of your work that must never be rushed or priced, and guard time for it.</div></div>
+  <div class="strategy-card"><div class="s-tag">Community</div><h4>Build circles, not ledgers</h4><p>AA's logic shows how a group can run on passing the gift forward rather than on tracking who owes whom. The healthiest creative communities work the same way.</p><div class="try">Try it: Replace one transactional favour with an open-ended gift and watch how the relationship changes.</div></div>
+  <div class="strategy-card"><div class="s-tag">Caution</div><h4>Be wary of scapegoats</h4><p>Pound's story is a reminder that anger at money and institutions needs to stay anchored in evidence and in compassion for real people.</p><div class="try">Try it: When you catch yourself blaming an entire group for a systemic problem, stop and name the actual mechanism.</div></div>
+</div>
+
+<div id="quotes" class="panel">
+  <div class="section-header"><h2>Notable Ideas &amp; Phrases</h2><div class="section-line"></div></div>
+  <div class="note-box">These are the book's signature phrases, chapter titles and the praise printed on its cover. Add your own favourite passages from your copy to this tab. I have deliberately not invented word-for-word quotations from the text.</div>
+  <div class="quote-block"><p>No one who is invested in any kind of art can read <em>The Gift</em> and remain unchanged.</p><div class="attr">— David Foster Wallace, as printed on the 25th anniversary edition cover</div></div>
+  <div class="quote-block"><p>The best book I know of for talented but unacknowledged creators. A masterpiece.</p><div class="attr">— Margaret Atwood, <em>Los Angeles Times Book Review</em>, as printed on the cover</div></div>
+  <div class="quote-block"><p>The gift must always move.</p><div class="attr">— The book's best-known principle, from Part One</div></div>
+  <div class="quote-block"><p>The commerce of the creative spirit.</p><div class="attr">— Chapter Eight title, and the book's central pairing of art and exchange</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Paraphrases of the book's main arguments, not direct quotes.</p>
+  <div class="quote-block"><p>A gift is something we are handed, not something we can purchase or will into being.</p><div class="attr">— Paraphrase of the Introduction</div></div>
+  <div class="quote-block"><p>A purchase ends a relationship; a gift extends it.</p><div class="attr">— Paraphrase of Chapter Four</div></div>
+  <div class="quote-block"><p>Receiving a gift creates work: the labour of becoming worthy of it and passing something on.</p><div class="attr">— Paraphrase of Chapter Three</div></div>
+  <div class="quote-block"><p>An artist can sell the work but not the gift that made it, so the two economies have to be kept in balance.</p><div class="attr">— Paraphrase of Chapter Eight</div></div>
+</div>
+
+<div id="verdict" class="panel">
+  <div class="verdict-banner">
+    <h3>⭐ 4.7 / 5</h3>
+    <p>A demanding, beautifully written classic that changes how you think about creative work, money and community</p>
+    <div class="rating-row">
+      <div class="rating-item"><div class="r-score">5.0</div><div class="r-label">Ideas</div></div>
+      <div class="rating-item"><div class="r-score">4.8</div><div class="r-label">Prose</div></div>
+      <div class="rating-item"><div class="r-score">3.6</div><div class="r-label">Accessibility</div></div>
+      <div class="rating-item"><div class="r-score">3.5</div><div class="r-label">Actionability</div></div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>A genuinely original frame: it gives creative people language for something they already feel but rarely articulate</div></div>
+      <div class="list-item"><div class="dot"></div><div>Graceful, literate prose that rewards slow reading</div></div>
+      <div class="list-item"><div class="dot"></div><div>Ranges widely, from the Kula ring to AA to Whitman, and ties them together convincingly</div></div>
+      <div class="list-item"><div class="dot"></div><div>Honest about the tension between art and income instead of romanticising poverty</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Pound chapter is a rare and valuable warning about how a good critique can go wrong</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Dense and slow in Part One, especially the anthropology and the long history of usury</div></div>
+      <div class="list-item"><div class="dot"></div><div>Leans on early and mid-twentieth century anthropology, and can read as romantic about non-market societies</div></div>
+      <div class="list-item"><div class="dot"></div><div>Chapter Six on women and exchange is the most dated section</div></div>
+      <div class="list-item"><div class="dot"></div><div>Offers a way of seeing more than a how-to, so readers wanting concrete steps may be frustrated</div></div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Artists, writers and makers</strong> who feel the strain between their work and the need to earn from it.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Founders, mentors and community builders</strong> thinking about generosity, reciprocity and how groups hold together.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Curious readers</strong> who enjoy anthropology, economic history and literary criticism.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting a quick, practical playbook</strong> will find it slow going; it rewards patience and re-reading.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p>The best of what we make arrives as a gift, and it stays alive only if we keep passing it on. A culture that measures everything in price will eventually starve the thing it most wants.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>The Gift</strong> earns its reputation as a classic. It is not an easy read, and Part One asks for patience, but its central distinction between gift and commodity keeps proving useful long after the last page. The Whitman and Pound chapters give the theory flesh and a warning.</p>
+    <p>Read it slowly, mark the passages that speak to your own work, and then pass the book on. That would be the most fitting way to finish it.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  function toggleChapter(card) { card.classList.toggle('open'); }
+</script>
+</body>
+</html>
