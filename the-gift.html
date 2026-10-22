@@ -312,6 +312,25 @@
   .vs-card .row::before { content:''; position:absolute; left:0; top:7px; width:5px; height:5px; border-radius:50%; background:var(--blue); }
   .vs-card.com .row::before { background:var(--ink); }
   @media (max-width: 560px) { .vs-grid { grid-template-columns:1fr; } }
+
+  .cmp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
+  .cmp-card { background:#fffaf3; border:1px solid #ecd2cf; border-radius:12px; padding:18px 16px; text-align:center; }
+  .cmp-card.you { border-top:4px solid var(--blue); }
+  .cmp-card.crowd { border-top:4px solid var(--rust); }
+  .cmp-card.me { border-top:4px solid var(--ink); }
+  .cmp-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--gray-dark); margin-bottom:8px; }
+  .cmp-score { font-family:'Fraunces',serif; font-weight:600; font-size:40px; color:var(--ink-deep); line-height:1; }
+  .cmp-score small { font-size:15px; color:var(--gray-dark); font-weight:500; }
+  .cmp-sub { font-size:12px; color:var(--gray-dark); margin-top:8px; line-height:1.5; }
+  .cat-table { width:100%; border-collapse:collapse; background:#fffaf3; border:1px solid #ecd2cf; border-radius:10px; overflow:hidden; font-size:13px; margin-bottom:8px; }
+  .cat-table th, .cat-table td { padding:10px 14px; text-align:left; border-bottom:1px solid #f1dedb; }
+  .cat-table th { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gray-dark); background:#fbf1e6; }
+  .cat-table td.num { font-weight:700; font-variant-numeric:tabular-nums; }
+  .cat-table tr.avg td { font-weight:800; background:#fbf1e6; }
+  .src-list { font-size:12px; color:var(--gray-dark); line-height:1.8; margin:6px 0 24px; }
+  .src-list a { color:var(--blue-dark); }
+  .stars-bar { display:flex; height:10px; border-radius:5px; overflow:hidden; margin:10px 0 6px; }
+  @media (max-width: 560px) { .cmp-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -357,7 +376,7 @@
   <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
   <div class="tab" onclick="showTab('concepts', this)">Gift vs. Commodity</div>
   <div class="tab" onclick="showTab('quotes', this)">Notable Ideas</div>
-  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+  <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
 <div id="overview" class="panel active">
@@ -595,49 +614,82 @@
 </div>
 
 <div id="verdict" class="panel">
-  <div class="verdict-banner">
-    <h3>⭐ 4.7 / 5</h3>
-    <p>A demanding, beautifully written classic that changes how you think about creative work, money and community</p>
-    <div class="rating-row">
-      <div class="rating-item"><div class="r-score">5.0</div><div class="r-label">Ideas</div></div>
-      <div class="rating-item"><div class="r-score">4.8</div><div class="r-label">Prose</div></div>
-      <div class="rating-item"><div class="r-score">3.6</div><div class="r-label">Accessibility</div></div>
-      <div class="rating-item"><div class="r-score">3.5</div><div class="r-label">Actionability</div></div>
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">0.5<small> / 5</small></div><div class="cmp-sub">Overall, in his own words: long, rambling and one-sided toward artists, with little to take away.</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Reader consensus</div><div class="cmp-score">3.90<small> / 5</small></div><div class="cmp-sub">Goodreads, 3,287 ratings (checked 22 Oct 2026). 67% gave 4 or 5 stars; 10% gave 1 or 2.</div></div>
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.5<small> / 5</small></div><div class="cmp-sub">Revised down from an earlier 4.7, which leaned on the book's reputation. Category average 3.2.</div></div>
+  </div>
+  <div class="note-box">Claude's original 4.7 was a judgment based on the book's reputation and cover praise, not on reader data and not on Dan's experience. After comparing with reader reviews it was revised to 3.5. Claude has not read the book itself; its scores rest on the table of contents, the book's known themes and the reviews linked below.</div>
+
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <table class="cat-table">
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">4.5</td><td class="num">—</td><td>The gift-versus-commodity frame is original and has influenced many writers and artists.</td></tr>
+    <tr><td>Readability</td><td class="num">2.8</td><td class="num">—</td><td>Dense and repetitive in Part One; many readers call it overlong.</td></tr>
+    <tr><td>Actionability</td><td class="num">2.3</td><td class="num">—</td><td>Offers a way of seeing more than concrete steps; readers repeatedly say it lacks practical answers.</td></tr>
+    <tr><td>Evidence</td><td class="num">3.0</td><td class="num">—</td><td>Rich examples, but readers question the ethnographic accuracy and the one-sided treatment of gift economies.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.2</td><td class="num">—</td><td>Dan's overall rating was 0.5.</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--gray-dark);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence.</p>
+
+  <div class="section-header"><h2>What Other Readers Say</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--gray-dark);line-height:1.6;margin-bottom:12px;">Goodreads combines every edition of the book. Star split: 5★ 36%, 4★ 31%, 3★ 21%, 2★ 8%, 1★ 2%.</p>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>What readers praise</h4>
+      <div class="list-item"><div class="dot"></div><div>The idea that art is better understood as a gift than a product, and the tension artists face in a market economy</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Whitman and Pound chapters, which many readers find the most engaging; Pound is read as a cautionary tale</div></div>
+      <div class="list-item"><div class="dot"></div><div>Poetic prose, and ideas that have aged well (some tie them to open-access publishing and the sharing economy)</div></div>
+      <div class="list-item"><div class="dot"></div><div>One blogger says the final chapter is the best in the book; another reviewer highlights Hyde's eros versus logos distinction</div></div>
+    </div>
+    <div class="con-list"><h4>What readers criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>Too long and repetitive, especially the first half. One Goodreads reviewer says it "could have been done in about 50 pages"</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Whitman and Pound section feels loosely connected to the main thesis</div></div>
+      <div class="list-item"><div class="dot"></div><div>Little practical guidance, and the title and subtitle suggest a creativity guide when it is mostly anthropology and economics</div></div>
+      <div class="list-item"><div class="dot"></div><div>Questioned accuracy of the ethnography, and a one-sided, romanticised view of gift economies that skips their problems, including treatment of women</div></div>
     </div>
   </div>
+  <div class="summary-block">
+    <p><strong>Where Dan and the consensus agree:</strong> the density, the repetition, the weak link between Part Two and the argument, and the shortage of practical takeaways all appear in the reader reviews. Dan's 0.5 is far below the 3.90 average, but his complaints are ones many readers raise. The difference is that most of them still found the central idea worth the effort.</p>
+    <p><strong>What you may have missed:</strong> readers who rated it highly point to the Pound chapter as a warning about how a sound critique of money can curdle into scapegoating, to the last chapter as the book's strongest, and to the relevance of the gift idea to open-source work, sharing and open access. If you skimmed Part Two or the ending, those are the parts to revisit first.</p>
+  </div>
+  <div class="src-list"><strong>Sources (read 22 Oct 2026):</strong>
+    <a href="https://www.goodreads.com/book/show/2080673.The_Gift">Goodreads, <em>The Gift</em></a> (ratings and review themes) ·
+    <a href="https://jakeseliger.com/2009/01/27/the-gift-%E2%80%94-lewis-hyde/">Jake Seliger's review</a> ·
+    <a href="https://southerncrossreview.org/4/schwartz.html">JoAnn Schwartz, Southern Cross Review</a>.
+    Seliger and Schwartz are summarised from search results, not read in full. Amazon and the Paris Review essay returned errors and were not used.</div>
 
-  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p>Dan found the book a long, rambling run of artistic concepts that never arrived anywhere. He felt it was one-sided from the artist's point of view and gave readers outside the artistic community nothing solid to hold on to. The gift-versus-market contrast could have been made more concisely and more pointedly, and he came away feeling he had not gained or learned anything useful, personally or professionally.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
   <div class="pro-con-grid">
     <div class="pro-list"><h4>Strengths</h4>
-      <div class="list-item"><div class="dot"></div><div>A genuinely original frame: it gives creative people language for something they already feel but rarely articulate</div></div>
-      <div class="list-item"><div class="dot"></div><div>Graceful, literate prose that rewards slow reading</div></div>
-      <div class="list-item"><div class="dot"></div><div>Ranges widely, from the Kula ring to AA to Whitman, and ties them together convincingly</div></div>
-      <div class="list-item"><div class="dot"></div><div>Honest about the tension between art and income instead of romanticising poverty</div></div>
-      <div class="list-item"><div class="dot"></div><div>The Pound chapter is a rare and valuable warning about how a good critique can go wrong</div></div>
+      <div class="list-item"><div class="dot"></div><div>An original, influential frame that gives artists language for the tension between making and earning</div></div>
+      <div class="list-item"><div class="dot"></div><div>Graceful prose for readers who enjoy a literary style</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Pound chapter is a rare warning about how a good critique can go wrong</div></div>
     </div>
     <div class="con-list"><h4>Limitations</h4>
-      <div class="list-item"><div class="dot"></div><div>Dense and slow in Part One, especially the anthropology and the long history of usury</div></div>
-      <div class="list-item"><div class="dot"></div><div>Leans on early and mid-twentieth century anthropology, and can read as romantic about non-market societies</div></div>
-      <div class="list-item"><div class="dot"></div><div>Chapter Six on women and exchange is the most dated section</div></div>
-      <div class="list-item"><div class="dot"></div><div>Offers a way of seeing more than a how-to, so readers wanting concrete steps may be frustrated</div></div>
+      <div class="list-item"><div class="dot"></div><div>Far longer and more repetitive than its core argument needs</div></div>
+      <div class="list-item"><div class="dot"></div><div>Written from the artist's side, so readers outside the arts get little to apply</div></div>
+      <div class="list-item"><div class="dot"></div><div>Dated and romanticised anthropology; Part Two feels only loosely tied to the thesis</div></div>
+      <div class="list-item"><div class="dot"></div><div>No practical guidance for living in both economies</div></div>
     </div>
   </div>
 
   <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Artists, writers and makers</strong> who feel the strain between their work and the need to earn from it.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Founders, mentors and community builders</strong> thinking about generosity, reciprocity and how groups hold together.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Curious readers</strong> who enjoy anthropology, economic history and literary criticism.</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting a quick, practical playbook</strong> will find it slow going; it rewards patience and re-reading.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Artists, writers and makers</strong> who want a name for the tension between their work and their income.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Readers who enjoy slow, literary non-fiction</strong> and don't need the argument delivered quickly.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers outside the arts, or anyone wanting a concise, practical argument,</strong> are likely to find it hard going. A summary or a short essay on the gift idea may serve better.</div></div>
 
   <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
-  <div class="summary-block">
-    <p>The best of what we make arrives as a gift, and it stays alive only if we keep passing it on. A culture that measures everything in price will eventually starve the thing it most wants.</p>
-  </div>
+  <div class="summary-block"><p>A gift creates a relationship that keeps going, while a purchase ends one. Hyde argues creative work lives in the first economy even though artists have to survive in the second.</p></div>
 
   <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
   <div class="summary-block">
-    <p><strong>The Gift</strong> earns its reputation as a classic. It is not an easy read, and Part One asks for patience, but its central distinction between gift and commodity keeps proving useful long after the last page. The Whitman and Pound chapters give the theory flesh and a warning.</p>
-    <p>Read it slowly, mark the passages that speak to your own work, and then pass the book on. That would be the most fitting way to finish it.</p>
+    <p><strong>The Gift</strong> is a divisive book. Most readers rate it well for one durable idea and its literary style, while a substantial minority, Dan among them, find it long, one-sided and short on takeaways. Whether it works depends heavily on whether you already feel the artist-versus-market tension it describes.</p>
   </div>
 </div>
 
