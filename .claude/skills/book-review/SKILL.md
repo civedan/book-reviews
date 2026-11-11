@@ -19,7 +19,16 @@ The page must show three separate views of the book and never blend them:
 Never present a number as Dan's opinion unless Dan gave it. Never invent quotes, scores, page
 counts or statistics. If something could not be verified, say so on the page.
 
+## Step 0 — Which book? (every run)
+
+Ask which book this run is for unless Dan has named it in this conversation. Never default to the
+book from a previous session or to `the-gift.html`; it is only the layout reference. Ask for the
+cover image too (save it as `images/<slug>-cover.jpg`), and theme the page from it.
+
 ## Step 1 — Ask Dan before writing (do not skip, do not assume he liked it)
+
+This happens on every run, for every book, even if Dan says "just make it". Wait for his answers
+before generating anything.
 
 Ask, in one message:
 - Overall rating out of 5, and what he liked / disliked, in his own words.
@@ -66,6 +75,11 @@ repetition, structure, evidence, and practical value as a reader would.
 ## Step 5 — Page structure
 
 Tabs: Overview, All Chapters, (a book-specific concepts tab), Notable Ideas, **Ratings & Verdict**.
+For depth, model the non-ratings tabs on `radical-candor.html`: expandable per-chapter cards, a
+deep dive on the book's core framework (per-element breakdown, side-by-side table, an interactive
+sliders/quiz element), a Toolkit tab and a Key Phrases tab (paraphrased, no long quotes) before the
+final **Ratings & Verdict** tab. Radical Candor's older Verdict tab does not have the three-way
+ratings; use the Ratings & Verdict layout below instead.
 The Ratings & Verdict tab contains, in this order:
 1. Three side-by-side cards: Claude's take, Consensus, Dan's rating.
 2. Category table: Claude's four scores vs Dan's four scores, plus each average.
