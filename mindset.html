@@ -5,907 +5,854 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mindset — Book Review</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:wght@300;400;500;700;900&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   :root {
-    --ink:          #14191b;
-    --paper:        #ffffff;
-    --cream:        #f1fbfc;
-    --teal:         #2bb6c6;
-    --teal-light:   #5cd0da;
-    --teal-dark:    #1f8e9c;
-    --teal-deep:    #0f545d;
-    --teal-pale:    #d7f3f6;
-    --teal-dim:     rgba(43,182,198,0.10);
-    --rust:         #c9634a;
-    --rust-dim:     rgba(201,99,74,0.14);
-    --muted:        #57696c;
-    --border:       rgba(43,182,198,0.22);
+    --ink:        #0d0f10;
+    --ink-soft:   #2f3b3d;
+    --paper:      #ffffff;
+    --cream:      #f1fbfc;
+    --teal:       #2bb6c6;
+    --teal-light: #5cd0da;
+    --teal-dark:  #1f8e9c;
+    --teal-deep:  #0f545d;
+    --teal-pale:  #d7f3f6;
+    --teal-dim:   rgba(43,182,198,0.10);
+    --rust:       #c9634a;
+    --rust-dark:  #9a4430;
+    --rust-dim:   rgba(201,99,74,0.13);
+    --muted:      #57696c;
+    --border:     rgba(43,182,198,0.25);
+    --line:       #dff3f5;
   }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
 
-  /* ─────────────────────────────────────────────
-     HERO — white canvas, speech-bubble & dot motif
-  ───────────────────────────────────────────── */
-  .hero {
-    background: #ffffff;
-    padding: 48px 40px 40px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    gap: 36px;
-    border-bottom: 3px solid var(--teal);
+  /* ───────── HERO: white canvas, black lowercase weight, teal bubble + rising dots ───────── */
+  .hero { background: #fff; position: relative; overflow: hidden; border-bottom: 4px solid var(--teal); }
+  .cover-bar {
+    padding: 9px 40px; text-align: center; position: relative; z-index: 2;
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12.5px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal-dark); border-bottom: 1px solid var(--border);
   }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+  .hero-inner { padding: 40px 40px 44px; position: relative; display: flex; align-items: center; gap: 36px; }
+  .hero-inner::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
     background-image:
-      repeating-linear-gradient(0deg, rgba(43,182,198,0.05) 0px, rgba(43,182,198,0.05) 1px, transparent 1px, transparent 34px),
-      repeating-linear-gradient(90deg, rgba(43,182,198,0.05) 0px, rgba(43,182,198,0.05) 1px, transparent 1px, transparent 34px);
-    pointer-events: none;
+      repeating-linear-gradient(0deg, rgba(43,182,198,0.05) 0 1px, transparent 1px 34px),
+      repeating-linear-gradient(90deg, rgba(43,182,198,0.05) 0 1px, transparent 1px 34px);
   }
-
-  /* Speech-bubble + trailing dots motif, echoing the cover's callout */
-  .hero-motif {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-    opacity: 0.9;
-  }
-  .hero-motif svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hero-motif svg { width: 100%; height: 100%; display: block; }
   .hero-text { flex: 1; position: relative; z-index: 2; }
 
-  .book-cover-wrap {
-    flex-shrink: 0;
-    position: relative;
-    z-index: 2;
-  }
-  .book-cover-wrap img {
-    width: 128px;
-    border-radius: 4px;
-    border: 1px solid #eef7f8;
-    transform: rotate(-6deg);
-    box-shadow: -6px 10px 26px rgba(15,84,93,0.22);
-    transition: transform 0.3s ease;
-    display: block;
-  }
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img { width: 140px; border-radius: 3px; border: 1px solid #e4f3f5; transform: rotate(-5deg); box-shadow: -7px 12px 28px rgba(15,84,93,0.28); transition: transform .3s ease; display: block; }
   .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
   @media (max-width: 500px) { .book-cover-wrap { display: none; } }
 
-  .book-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--teal-dark);
-    margin-bottom: 12px;
-    font-weight: 700;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(24px, 4.5vw, 42px);
-    color: var(--ink);
-    line-height: 1.12;
-    max-width: 580px;
-  }
-  .hero h1 em { color: var(--teal-dark); font-style: normal; font-weight: 700; }
-  .author {
-    margin-top: 14px;
-    color: var(--muted);
-    font-size: 13px;
-    letter-spacing: 0.5px;
-  }
-  .author span { color: var(--teal-dark); font-weight: 600; }
-  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-  .meta-pill {
-    background: var(--teal-dim);
-    border: 1px solid rgba(43,182,198,0.4);
-    color: var(--teal-deep);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
+  .book-label { display: inline-block; background: var(--ink); color: var(--teal-light); font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; padding: 5px 13px; border-radius: 3px; margin-bottom: 16px; font-weight: 700; }
+  .hero h1 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(44px, 9vw, 84px); line-height: 1.0; color: var(--ink); letter-spacing: -2px; text-transform: lowercase; }
+  .hero h1 .dot-i { color: var(--teal); }
+  .hero .tagline { margin-top: 12px; font-size: clamp(15px, 2.4vw, 19px); color: var(--ink-soft); max-width: 470px; line-height: 1.4; font-weight: 400; }
+  .author { margin-top: 16px; font-family: 'Poppins', sans-serif; font-size: 15px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 600; color: var(--teal); }
+  .author small { font-size: 12px; letter-spacing: .5px; font-weight: 500; text-transform: none; color: var(--muted); margin-left: 6px; font-family: 'DM Sans', sans-serif; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+  .meta-pill { background: var(--teal-dim); border: 1px solid rgba(43,182,198,.45); color: var(--teal-deep); border-radius: 20px; padding: 5px 14px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+  .badge-seal { width: 78px; height: 78px; border-radius: 50%; background: var(--teal); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: 1px; line-height: 1.12; text-transform: uppercase; font-size: 10px; flex-shrink: 0; }
 
-  /* ── Back bar ── */
-  .back-bar {
-    background: var(--cream);
-    padding: 10px 32px;
-    border-bottom: 1px solid rgba(43,182,198,0.15);
-    display: flex;
-    align-items: center;
-  }
-  .back-link {
-    color: var(--muted);
-    font-size: 12px;
-    text-decoration: none;
-    letter-spacing: 0.5px;
-    transition: color 0.2s;
-  }
+  /* ── Back bar & tabs ── */
+  .back-bar { background: var(--cream); padding: 10px 32px; border-bottom: 1px solid rgba(43,182,198,.18); }
+  .back-link { color: var(--muted); font-size: 12px; text-decoration: none; letter-spacing: .5px; transition: color .2s; }
   .back-link:hover { color: var(--teal-dark); }
   .back-link span { margin-right: 6px; }
-
-  /* ── Tabs ── */
-  .tabs {
-    display: flex;
-    background: var(--cream);
-    border-bottom: 2px solid var(--border);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
+  .tabs { display: flex; background: var(--cream); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 20; }
   .tabs::-webkit-scrollbar { display: none; }
-  .tab {
-    padding: 14px 22px;
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: var(--muted);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
+  .tab { padding: 14px 20px; font-family: 'Poppins', sans-serif; font-size: 12.5px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all .2s; }
   .tab:hover { color: var(--teal-dark); }
-  .tab.active { color: var(--teal-deep); border-bottom-color: var(--teal); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--teal); }
+  .tab.hot { color: var(--teal-deep); }
 
-  /* ── Panels ── */
-  .panel { display: none; padding: 32px 32px 48px; }
+  .panel { display: none; padding: 32px 32px 56px; max-width: 1020px; margin: 0 auto; }
   .panel.active { display: block; }
 
-  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
-  .section-line { flex: 1; height: 1px; background: var(--border); }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .section-header h2 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 21px; color: var(--ink); letter-spacing: -.3px; }
+  .section-line { flex: 1; height: 2px; background: var(--border); }
+  .lead { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+  .note-box { background: rgba(13,15,16,0.04); border: 1.5px dashed var(--muted); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; line-height: 1.6; color: var(--ink-soft); margin-bottom: 22px; }
 
-  /* ── Overview grid ── */
+  /* ── Overview ── */
   .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
-  .stat-card {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 18px 20px;
-  }
-  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .stat-value { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--teal-deep); }
-  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
-
-  .summary-block {
-    background: var(--cream);
-    border-left: 3px solid var(--teal);
-    border-radius: 0 8px 8px 0;
-    padding: 20px 22px;
-    margin-bottom: 20px;
-    font-size: 14.5px;
-    line-height: 1.75;
-    color: #1c2c2e;
-  }
+  .stat-card { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-dark); margin-bottom: 6px; font-weight: 700; }
+  .stat-value { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 17px; color: var(--ink); line-height: 1.3; }
+  .stat-desc { font-size: 12.5px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+  .summary-block { background: var(--cream); border-left: 4px solid var(--teal); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: #1c2c2e; }
   .summary-block p + p { margin-top: 12px; }
-
-  .key-idea {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    padding: 14px 18px;
-    background: white;
-    border: 1px solid #e3f5f7;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 13.5px;
-    line-height: 1.6;
-  }
+  .key-idea { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: #fff; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6; }
   .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
 
-  /* ── Chapter section headers ── */
-  .part-header {
-    background: var(--teal);
-    color: #ffffff;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    margin-top: 24px;
-    font-weight: 700;
-  }
+  /* Mini grid on overview */
+  .axis-cap { font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .mini-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0 26px; }
+  .mini-m { border-radius: 10px; padding: 16px 18px; cursor: pointer; transition: transform .15s; }
+  .mini-m:hover { transform: translateY(-2px); }
+  .mini-m h4 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+  .mini-m p { font-size: 12.5px; line-height: 1.5; opacity: .92; }
+  .mini-m.fx { background: var(--ink); color: #fff; }
+  .mini-m.fx h4 { color: var(--rust); }
+  .mini-m.gr { background: var(--teal); color: #fff; }
+  .mini-m.gr h4 { color: var(--ink); }
 
-  /* ── Chapter cards ── */
-  .chapter-card {
-    background: white;
-    border: 1px solid #e3f5f7;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: box-shadow 0.2s;
-  }
-  .chapter-card:hover { box-shadow: 0 4px 16px rgba(43,182,198,0.14); }
+  /* ── Chapters ── */
+  .part-header { background: var(--ink); color: var(--teal-light); padding: 10px 18px; border-radius: 6px; font-family: 'Poppins', sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; margin: 26px 0 12px; font-weight: 700; }
+  .chapter-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: box-shadow .2s; }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(43,182,198,.18); }
   .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
-  .ch-num {
-    width: 32px; height: 32px;
-    background: var(--teal);
-    color: white;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
+  .ch-num { width: 34px; height: 34px; background: var(--teal); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; flex-shrink: 0; }
   .ch-num.intro { background: var(--ink); color: var(--teal-light); }
-  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
-  .ch-arrow { color: var(--teal); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .ch-title { font-weight: 700; font-size: 15px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--teal); font-size: 20px; transition: transform .25s; flex-shrink: 0; }
   .chapter-card.open .ch-arrow { transform: rotate(90deg); }
-  .chapter-body {
-    display: none;
-    padding: 14px 18px 18px 64px;
-    font-size: 13.5px;
-    line-height: 1.7;
-    color: #263a3c;
-    border-top: 1px solid #f0fafb;
-  }
+  .chapter-body { display: none; padding: 14px 20px 20px 66px; font-size: 13.5px; line-height: 1.75; color: #263a3c; border-top: 1px solid #eaf8fa; }
   .chapter-card.open .chapter-body { display: block; }
-  .ch-takeaway {
-    margin-top: 10px;
-    background: var(--teal-dim);
-    border-left: 3px solid var(--teal);
-    border-radius: 0 6px 6px 0;
-    padding: 10px 14px;
-    font-size: 12.5px;
-    color: var(--teal-deep);
-    font-weight: 600;
-  }
-  .ch-tool {
-    margin-top: 8px;
-    background: rgba(20,25,27,0.05);
-    border-left: 3px solid var(--ink);
-    border-radius: 0 6px 6px 0;
-    padding: 10px 14px;
-    font-size: 12px;
-    color: #2a3234;
-  }
-  .ch-tool strong { color: var(--ink); }
+  .chapter-body p + p { margin-top: 10px; }
+  .chapter-body ul { margin: 10px 0 0 18px; }
+  .chapter-body li { margin-bottom: 5px; }
+  .ch-takeaway { margin-top: 12px; background: var(--teal-dim); border-left: 4px solid var(--teal); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 13px; color: var(--teal-deep); font-weight: 600; }
+  .ch-tool { margin-top: 8px; background: rgba(13,15,16,.05); border-left: 4px solid var(--ink); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 12.5px; color: var(--ink-soft); }
+  @media (max-width: 560px) { .chapter-body { padding-left: 20px; } }
 
-  /* ── Framework cards ── */
-  .method-card {
-    background: white;
-    border: 1px solid #e3f5f7;
-    border-radius: 10px;
-    padding: 18px;
-    margin-bottom: 12px;
-  }
-  .method-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--teal-deep); margin-bottom: 8px; }
-  .method-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
-  .method-card .tag {
-    display: inline-block;
-    background: var(--teal);
-    color: white;
-    font-size: 10px;
-    letter-spacing: 1px;
-    padding: 3px 9px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
+  /* ───────── DEEP DIVE ───────── */
+  .m-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .m-pill { padding: 8px 16px; border-radius: 20px; font-family: 'Poppins', sans-serif; font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; color: #fff; cursor: pointer; border: none; }
+  .m-pill.fx { background: var(--ink); } .m-pill.gr { background: var(--teal); } .m-pill.mx { background: var(--teal-deep); } .m-pill.cmp { background: var(--teal-pale); color: var(--teal-deep); } .m-pill.try { background: var(--rust); }
 
-  /* ── Fixed vs. Growth comparison ── */
-  .compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
-  .compare-col { border-radius: 12px; padding: 18px 20px; }
-  .compare-col.fixed { background: #fbf3ef; border: 1.5px solid rgba(201,99,74,0.35); }
-  .compare-col.growth { background: var(--teal-dim); border: 1.5px solid rgba(43,182,198,0.35); }
-  .compare-col h4 { font-family: 'Playfair Display', serif; font-size: 16px; margin-bottom: 12px; }
-  .compare-col.fixed h4 { color: var(--rust); }
-  .compare-col.growth h4 { color: var(--teal-deep); }
-  .compare-row { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; line-height: 1.55; margin-bottom: 9px; color: #33403f; }
-  .compare-row .c-ic { flex-shrink: 0; margin-top: 1px; }
-  @media (max-width: 560px) { .compare-wrap { grid-template-columns: 1fr; } }
+  .m-section { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 30px; scroll-margin-top: 70px; }
+  .m-head { padding: 24px 26px 20px; color: #fff; position: relative; overflow: hidden; }
+  .m-head.fx { background: var(--ink); } .m-head.gr { background: var(--teal); } .m-head.mx { background: var(--teal-deep); }
+  .m-head .dials { font-family: 'Poppins', sans-serif; letter-spacing: 2px; text-transform: uppercase; font-size: 11.5px; font-weight: 600; opacity: .85; margin-bottom: 8px; }
+  .m-head h3 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(26px, 5vw, 38px); line-height: 1.05; letter-spacing: -1px; text-transform: lowercase; }
+  .m-head.fx h3 { color: var(--rust); }
+  .m-head .tag { margin-top: 10px; font-size: 14.5px; line-height: 1.55; max-width: 620px; opacity: .95; }
+  .m-head .stamp { position: absolute; right: 18px; top: 16px; font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; border: 2px solid currentColor; border-radius: 4px; padding: 4px 9px; transform: rotate(4deg); opacity: .8; }
+  @media (max-width: 560px) { .m-head .stamp { position: static; display: inline-block; margin-bottom: 10px; transform: none; } }
+  .m-body { padding: 22px 26px 26px; }
+  .m-body h4 { font-family: 'Poppins', sans-serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-dark); margin: 22px 0 8px; font-weight: 700; }
+  .m-body h4:first-child { margin-top: 0; }
+  .m-body p { font-size: 14px; line-height: 1.75; color: #1c2c2e; }
+  .m-body p + p { margin-top: 10px; }
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 4px; }
+  @media (max-width: 700px) { .q-grid { grid-template-columns: 1fr; } }
+  .q-card { background: var(--cream); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .q-card h5 { font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+  .q-card ul { list-style: none; }
+  .q-card li { position: relative; padding-left: 16px; font-size: 13px; line-height: 1.55; margin-bottom: 6px; color: #263a3c; }
+  .q-card li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+  .m-section.fxs .q-card li::before { background: var(--rust); }
+  .say-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+  @media (max-width: 700px) { .say-grid { grid-template-columns: 1fr; } }
+  .say { border-radius: 8px; padding: 14px 16px; font-size: 13.5px; line-height: 1.6; }
+  .say .lab { font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .say.bad { background: #fbeee9; border: 1px solid #efc6ba; color: #55261a; } .say.bad .lab { color: var(--rust-dark); }
+  .say.good { background: var(--teal-dim); border: 1px solid rgba(43,182,198,.4); color: var(--teal-deep); } .say.good .lab { color: var(--teal-dark); }
+  .say em { font-style: italic; }
+  .scenario { background: #fff; border: 1.5px dashed var(--muted); border-radius: 8px; padding: 14px 16px; font-size: 13.5px; line-height: 1.7; color: #263a3c; }
+  .scenario .lab { font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+  .way-out { background: var(--teal-dim); border-left: 4px solid var(--teal); border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 13.5px; line-height: 1.7; color: #123c42; }
+  .way-out ol { margin: 6px 0 0 20px; } .way-out li { margin-bottom: 5px; }
+  .callout { background: var(--ink); color: #fff; border-radius: 8px; padding: 14px 18px; font-size: 13.5px; line-height: 1.65; margin-top: 14px; }
+  .callout strong { color: var(--teal-light); }
 
-  /* ── Code-style block ── */
-  .code-block {
-    background: var(--ink);
-    color: var(--teal-pale);
-    border-radius: 8px;
-    padding: 20px;
-    font-family: monospace;
-    font-size: 13px;
-    line-height: 1.9;
-    margin-bottom: 16px;
-  }
-  .code-block .comment { color: rgba(92,208,218,0.55); }
-  .code-block .keyword { color: var(--teal-light); }
-  .code-block .value { color: #cdeef2; }
+  /* comparison table */
+  .cmp-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 22px; }
+  table.cmp { width: 100%; border-collapse: collapse; background: #fff; min-width: 640px; font-size: 12.5px; line-height: 1.5; }
+  table.cmp th, table.cmp td { padding: 11px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid #e7f6f8; }
+  table.cmp th { font-family: 'Poppins', sans-serif; font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; color: #fff; }
+  table.cmp th.fx { background: var(--ink); } table.cmp th.gr { background: var(--teal); } table.cmp th.blank { background: var(--teal-pale); }
+  table.cmp td.rowh { font-weight: 800; background: var(--cream); width: 130px; }
 
-  /* ── Toolkit page list ── */
+  /* mindset map sliders */
+  .map-box { background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 26px; }
+  .slider-row { margin-bottom: 14px; }
+  .slider-row label { display: flex; justify-content: space-between; font-family: 'Poppins', sans-serif; letter-spacing: 1px; font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .slider-row label .lean { font-weight: 500; color: var(--muted); font-size: 12px; }
+  .slider-row input[type=range] { width: 100%; accent-color: var(--teal); }
+  .scale-cap { display: flex; justify-content: space-between; font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-top: -2px; }
+  .map-out { border-radius: 10px; padding: 14px 16px; color: #fff; font-size: 13.5px; line-height: 1.6; margin-top: 16px; background: var(--teal-deep); transition: background .25s; }
+  .map-out h5 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+  .map-out.fx { background: var(--ink); } .map-out.gr { background: var(--teal-dark); }
+  .map-bar { height: 12px; border-radius: 6px; background: linear-gradient(90deg, var(--ink), var(--teal)); position: relative; margin: 16px 0 4px; }
+  .map-bar i { position: absolute; top: -4px; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 4px solid var(--rust); transform: translateX(-50%); transition: left .25s; }
+
+  .swing-row { display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; font-size: 13px; line-height: 1.6; }
+  .swing-row .arrow { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--teal-dark); font-size: 13px; white-space: nowrap; }
+
+  /* quiz */
+  .quiz-card { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+  .quiz-card .q { font-size: 14px; line-height: 1.6; margin-bottom: 10px; font-weight: 500; }
+  .quiz-card .q .n { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--teal-dark); margin-right: 6px; }
+  .quiz-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .quiz-opts button { padding: 7px 14px; border-radius: 18px; border: 1.5px solid var(--ink); background: #fff; font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .quiz-opts button:hover:not(:disabled) { background: var(--teal-pale); }
+  .quiz-opts button.right { background: #1d6b3a; color: #fff; border-color: #1d6b3a; }
+  .quiz-opts button.wrong { background: #b3281a; color: #fff; border-color: #b3281a; }
+  .quiz-exp { display: none; margin-top: 10px; font-size: 12.5px; line-height: 1.6; color: var(--ink-soft); background: rgba(13,15,16,.05); padding: 10px 12px; border-radius: 6px; }
+  .quiz-exp.show { display: block; }
+  .quiz-score { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: var(--teal-deep); margin-top: 8px; }
+
+  /* ── Toolkit ── */
+  .method-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+  .method-card h4 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 16px; color: var(--teal-deep); margin-bottom: 8px; }
+  .method-card p, .method-card li { font-size: 13.5px; line-height: 1.7; color: #263a3c; }
+  .method-card ul { margin: 8px 0 0 18px; } .method-card li { margin-bottom: 4px; }
+  .method-card .tag { display: inline-block; background: var(--teal); color: #fff; font-family: 'Poppins', sans-serif; font-size: 10.5px; letter-spacing: 1.5px; padding: 3px 10px; border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 600; }
+  .code-block { background: var(--ink); color: var(--teal-pale); border-radius: 8px; padding: 18px 20px; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; line-height: 1.85; margin-bottom: 14px; }
+  .code-block .c { color: rgba(92,208,218,.55); } .code-block .k { color: var(--teal-light); } .code-block .r { color: #e9967f; }
   .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-  .toolkit-item {
-    display: flex; gap: 10px; align-items: flex-start;
-    background: white;
-    border: 1px solid #e3f5f7;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 12px;
-    line-height: 1.5;
-    color: #263a3c;
-  }
-  .toolkit-item .t-ic { font-size: 14px; flex-shrink: 0; }
-  @media (max-width: 560px) { .toolkit-list { grid-template-columns: 1fr; } }
-
-  /* ── Verdict banner ── */
-  .verdict-banner {
-    background: linear-gradient(135deg, var(--teal-deep) 0%, #0a1414 100%);
-    border-radius: 12px;
-    padding: 28px;
-    margin-bottom: 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .verdict-banner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at  5% 20%, var(--teal) 0%, var(--teal) 10px, transparent 11px),
-      radial-gradient(circle at 95% 75%, var(--teal) 0%, var(--teal) 13px, transparent 14px),
-      radial-gradient(circle at 90% 15%, var(--teal) 0%, var(--teal) 7px, transparent 8px),
-      radial-gradient(circle at 10% 85%, var(--teal) 0%, var(--teal) 9px, transparent 10px);
-    opacity: 0.22;
-    pointer-events: none;
-  }
-  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--teal-light); margin-bottom: 6px; position: relative; z-index: 1; }
-  .verdict-banner p { color: rgba(255,255,255,0.68); font-size: 13px; position: relative; z-index: 1; }
-  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; position: relative; z-index: 1; }
-  .rating-item {
-    text-align: center;
-    background: rgba(43,182,198,0.14);
-    border: 1px solid rgba(43,182,198,0.35);
-    border-radius: 8px;
-    padding: 10px 16px;
-    min-width: 90px;
-  }
-  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--teal-light); }
-  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
-
-  /* ── Pros / Cons ── */
-  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
-  .pro-list, .con-list {
-    background: white;
-    border-radius: 10px;
-    padding: 16px 18px;
-    border: 1px solid #e3f5f7;
-  }
-  .pro-list h4 { color: var(--teal-dark); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-  .con-list h4 { color: var(--rust); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
-  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .pro-list .dot { background: var(--teal); }
-  .con-list .dot { background: var(--rust); }
+  .toolkit-item { display: flex; gap: 10px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; line-height: 1.5; color: #263a3c; }
+  @media (max-width: 560px) { .toolkit-list, .overview-grid, .mini-pair { grid-template-columns: 1fr; } }
 
   /* ── Quotes ── */
-  .quote-block {
-    background: var(--cream);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-bottom: 14px;
-    position: relative;
-    border-left: 3px solid var(--teal);
-  }
-  .quote-block::before {
-    content: '\201C';
-    font-family: 'Playfair Display', serif;
-    font-size: 60px;
-    color: var(--teal);
-    position: absolute;
-    top: -8px; left: 16px;
-    line-height: 1;
-  }
-  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink); }
-  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
+  .quote-block { background: var(--cream); border-radius: 10px; padding: 18px 24px 14px; margin-bottom: 14px; border-left: 5px solid var(--teal); }
+  .quote-block p { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 17px; line-height: 1.4; color: var(--ink); }
+  .quote-block .attr { font-size: 11.5px; color: var(--muted); margin-top: 8px; text-align: right; }
 
-  /* ── Who cards ── */
-  .who-card {
-    display: flex; gap: 12px; align-items: flex-start;
-    background: white;
-    border: 1px solid #e3f5f7;
-    border-radius: 8px;
-    padding: 14px 16px;
-    margin-bottom: 8px;
-    font-size: 13.5px;
-    line-height: 1.6;
-    transition: border-color 0.2s;
-  }
+  /* ── Verdict ── */
+  .verdict-banner { background: linear-gradient(135deg, var(--teal-deep) 0%, #0a1414 100%); border-radius: 12px; padding: 30px 28px; margin-bottom: 22px; text-align: center; position: relative; overflow: hidden; }
+  .verdict-banner::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .22;
+    background: radial-gradient(circle at 5% 20%, var(--teal) 0 10px, transparent 11px), radial-gradient(circle at 95% 75%, var(--teal) 0 13px, transparent 14px), radial-gradient(circle at 90% 15%, var(--teal) 0 7px, transparent 8px), radial-gradient(circle at 10% 85%, var(--teal) 0 9px, transparent 10px); }
+  .verdict-banner h3 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 34px; color: var(--teal-light); margin-bottom: 6px; position: relative; }
+  .verdict-banner p { color: rgba(255,255,255,.78); font-size: 13.5px; position: relative; max-width: 560px; margin: 0 auto; line-height: 1.55; }
+  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; position: relative; }
+  .rating-item { text-align: center; background: rgba(43,182,198,.15); border: 1px solid rgba(43,182,198,.4); border-radius: 8px; padding: 10px 16px; min-width: 96px; }
+  .rating-item .r-score { font-size: 21px; font-weight: 800; color: var(--teal-light); }
+  .rating-item .r-label { font-family: 'Poppins', sans-serif; font-size: 10.5px; color: rgba(255,255,255,.6); letter-spacing: 1.2px; margin-top: 2px; text-transform: uppercase; }
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  @media (max-width: 560px) { .pro-con-grid { grid-template-columns: 1fr; } .panel { padding: 20px 16px 44px; } .hero-inner { padding: 28px 20px; flex-wrap: wrap; } .cover-bar { padding: 8px 20px; letter-spacing: 2px; font-size: 11px; } }
+  .pro-list, .con-list { background: #fff; border-radius: 10px; padding: 16px 18px; border: 1px solid var(--line); }
+  .pro-list h4, .con-list h4 { font-family: 'Poppins', sans-serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .pro-list h4 { color: var(--teal-dark); } .con-list h4 { color: var(--rust); }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.55; margin-bottom: 8px; color: #33403f; }
+  .list-item .dot { margin-top: 6px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--teal); } .con-list .dot { background: var(--rust); }
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.6; transition: border-color .2s; }
   .who-card:hover { border-color: var(--teal); }
   .who-card .ic { font-size: 20px; flex-shrink: 0; }
 
-  @media (max-width: 560px) {
-    .overview-grid, .pro-con-grid, .toolkit-list { grid-template-columns: 1fr; }
-    .panel { padding: 20px 16px 40px; }
-    .hero { padding: 36px 20px 28px; flex-wrap: wrap; }
-  }
+  /* ── Three-way ratings ── */
+  .cmp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
+  .cmp-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 16px; text-align:center; }
+  .cmp-card.you { border-top:4px solid var(--rust); }
+  .cmp-card.crowd { border-top:4px solid var(--teal); }
+  .cmp-card.me { border-top:4px solid var(--ink); }
+  .cmp-label { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--muted); margin-bottom:8px; }
+  .cmp-score { font-family:'Poppins',sans-serif; font-weight:800; font-size:38px; color:var(--ink); line-height:1; }
+  .cmp-score small { font-size:15px; color:var(--muted); font-weight:500; }
+  .cmp-score.pending { color:var(--muted); }
+  .cmp-sub { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.5; }
+  .cat-wrap { overflow-x:auto; margin-bottom:8px; }
+  .cat-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); font-size:13px; }
+  .cat-table th, .cat-table td { padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
+  .cat-table th { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); background:var(--cream); }
+  .cat-table td.num { font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .cat-table tr.avg td { font-weight:800; background:var(--cream); }
+  .src-list { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:22px; }
+  .src-list a { color:var(--teal-dark); }
+  @media (max-width: 560px) { .cmp-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════
-     HERO — white canvas + speech-bubble/dot motif + cover
-════════════════════════════════════════════ -->
+<!-- ═══════════════ HERO ═══════════════ -->
 <div class="hero">
-  <div class="hero-motif">
-    <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <!-- trailing dots, echoing the cover's callout tail up to the "i" -->
-      <circle cx="640" cy="170" r="14" fill="#2bb6c6" opacity="0.12"/>
-      <circle cx="668" cy="140" r="8" fill="#2bb6c6" opacity="0.16"/>
-      <circle cx="685" cy="118" r="5" fill="#2bb6c6" opacity="0.2"/>
-      <!-- speech-bubble outline, upper right -->
-      <g opacity="0.14" transform="translate(690,20)">
-        <rect x="0" y="0" width="90" height="70" rx="30" fill="none" stroke="#2bb6c6" stroke-width="2"/>
-        <path d="M20 66 L10 90 L38 68 Z" fill="none" stroke="#2bb6c6" stroke-width="2"/>
-      </g>
-      <!-- small scattered dots, lower left -->
-      <circle cx="60" cy="190" r="4" fill="#2bb6c6" opacity="0.18"/>
-      <circle cx="90" cy="200" r="6" fill="#2bb6c6" opacity="0.14"/>
-      <circle cx="130" cy="185" r="3" fill="#2bb6c6" opacity="0.2"/>
-    </svg>
-  </div>
-
-  <div class="hero-text">
-    <div class="book-label">Book Review &amp; Field Guide · Updated Edition · Million-Copy Bestseller</div>
-    <h1><em>Mindset</em> — Changing the Way You Think to Fulfil Your Potential</h1>
-    <div class="author">by <span>Dr. Carol S. Dweck</span> &nbsp;·&nbsp; Robinson / Ballantine Books &nbsp;·&nbsp; Updated Edition</div>
-    <div class="hero-meta">
-      <div class="meta-pill">Psychology</div>
-      <div class="meta-pill">Growth Mindset</div>
-      <div class="meta-pill">Self-Development</div>
-      <div class="meta-pill">Million-Copy Bestseller</div>
+  <div class="cover-bar">Updated Edition · Million-Copy Bestseller</div>
+  <div class="hero-inner">
+    <div class="hero-motif" aria-hidden="true">
+      <svg viewBox="0 0 900 340" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- thought-bubble with rising dots, echoing the cover's callout over the "i" -->
+        <circle cx="690" cy="262" r="12" fill="#2bb6c6" opacity=".16"/>
+        <circle cx="716" cy="228" r="20" fill="#2bb6c6" opacity=".14"/>
+        <circle cx="772" cy="150" r="62" fill="#2bb6c6" opacity=".10"/>
+        <circle cx="772" cy="150" r="62" fill="none" stroke="#2bb6c6" stroke-width="2" opacity=".25"/>
+        <circle cx="60" cy="300" r="5" fill="#2bb6c6" opacity=".2"/>
+        <circle cx="96" cy="314" r="8" fill="#2bb6c6" opacity=".14"/>
+        <circle cx="140" cy="296" r="4" fill="#2bb6c6" opacity=".22"/>
+        <circle cx="850" cy="40" r="6" fill="#2bb6c6" opacity=".18"/>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Field Guide</div>
+      <h1>m<span class="dot-i">i</span>ndset</h1>
+      <div class="tagline">Changing the way you think to fulfil your potential</div>
+      <div class="author">Dr Carol S. Dweck <small>· Robinson (UK updated edition)</small></div>
+      <div class="hero-meta">
+        <div class="meta-pill">Psychology</div>
+        <div class="meta-pill">Growth Mindset</div>
+        <div class="meta-pill">Self-Development</div>
+        <div class="badge-seal">Updated<br>Edition</div>
+      </div>
+    </div>
+    <div class="book-cover-wrap">
+      <img src="images/mindset-cover.jpg" alt="Mindset (Updated Edition) book cover">
     </div>
   </div>
-
-  <div class="book-cover-wrap">
-    <img src="images/mindset-cover.jpg" alt="Mindset book cover">
-  </div>
 </div>
 
-<div class="back-bar">
-  <a href="index.html" class="back-link"><span>←</span> Back to Library</a>
-</div>
+<div class="back-bar"><a href="index.html" class="back-link"><span>←</span> Back to Library</a></div>
 
 <div class="tabs">
   <div class="tab active" onclick="showTab('overview', this)">Overview</div>
   <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
-  <div class="tab" onclick="showTab('framework', this)">Framework &amp; Toolkit</div>
-  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+  <div class="tab hot" onclick="showTab('mindsets', this)">The Two Mindsets</div>
+  <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
+  <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
+  <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     OVERVIEW
-════════════════════════════════════════════ -->
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
 <div id="overview" class="panel active">
-
-  <div class="section-header">
-    <h2>What This Book Is About</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
 
   <div class="overview-grid">
-    <div class="stat-card">
-      <div class="stat-label">Core Focus</div>
-      <div class="stat-value">Two Ways of Seeing Ability</div>
-      <div class="stat-desc">Whether you believe intelligence, talent, and personality are fixed traits or qualities you can develop shapes nearly every choice you make</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Central Promise</div>
-      <div class="stat-value">The Growth Mindset Can Be Learned</div>
-      <div class="stat-desc">Mindsets are beliefs, not personality traits — which means they can be recognized, questioned, and deliberately changed at any age</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Primary Tools</div>
-      <div class="stat-value">Process Praise, The Power of Yet, The Fixed-Mindset Persona</div>
-      <div class="stat-desc">Concrete language and self-reflection techniques for noticing a fixed-mindset reaction and choosing a growth-mindset one instead</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Best For</div>
-      <div class="stat-value">Anyone Pursuing Growth</div>
-      <div class="stat-desc">Parents, teachers, coaches, leaders, athletes, and anyone facing a challenge where natural talent alone won't be enough</div>
-    </div>
+    <div class="stat-card"><div class="stat-label">Core Focus</div><div class="stat-value">Two Ways of Seeing Ability</div><div class="stat-desc">Whether you treat intelligence, talent, and personality as fixed or as something you can develop shapes how you handle nearly everything</div></div>
+    <div class="stat-card"><div class="stat-label">Central Promise</div><div class="stat-value">A Mindset Is a Belief, So It Can Change</div><div class="stat-desc">Beliefs can be noticed, questioned, and deliberately shifted at any age</div></div>
+    <div class="stat-card"><div class="stat-label">Primary Frameworks</div><div class="stat-value">Fixed vs Growth Mindset</div><div class="stat-desc">Plus process-versus-person praise, the "not yet" reframe, and naming your fixed-mindset persona</div></div>
+    <div class="stat-card"><div class="stat-label">Best For</div><div class="stat-value">Anyone Who Teaches, Leads or Strives</div><div class="stat-desc">Parents, teachers, coaches, managers, and anyone stuck where talent alone has stopped being enough</div></div>
   </div>
 
   <div class="summary-block">
-    <p><strong>Mindset</strong> distills decades of Carol Dweck's research into a single, deceptively simple distinction: some people believe their qualities — intelligence, talent, personality, even relationship compatibility — are fixed traits, carved in stone from birth. Others believe those same qualities are starting points that can be developed through effort, strategy, and the help of others. Dweck calls the first the <strong>fixed mindset</strong> and the second the <strong>growth mindset</strong>, and the book's central claim is that this one belief, often held unconsciously, quietly determines how people respond to challenge, criticism, and failure across every domain of life.</p>
-    <p>The book grew out of Dweck's early research watching children respond to difficult puzzles: some collapsed into helplessness at the first sign of struggle, even ones who had been performing well moments before, while others met the exact same difficulty with something close to relish, treating it as a chance to learn. What surprised Dweck wasn't that children differed in ability — it was that ability barely predicted the reaction. What predicted it was whether a child believed intelligence was fixed (making struggle a threat, a sign of not being smart) or capable of growth (making struggle simply the process of getting smarter).</p>
-    <p>From that observation, Dweck builds outward — into education, sports, business, and relationships — showing the same fixed/growth split producing dramatically different outcomes in each domain, often independent of raw talent. The book is less a self-help program with a rigid multi-step method and more a lens: once you can see the fixed mindset operating — in yourself, your child, your team, your partner — you gain the ability to interrupt it and choose differently, which is precisely the book's most practical and durable contribution.</p>
+    <p><strong>Mindset</strong> is psychologist Carol Dweck's account of her research on how beliefs about ability shape behaviour. Her central claim is a single distinction: a <strong>fixed mindset</strong> holds that your qualities are set in stone, while a <strong>growth mindset</strong> holds that they are a starting point that effort, strategy, and help can develop.</p>
+    <p>The book grew out of her studies of children facing hard puzzles. What struck her was that ability did not neatly predict who crumbled and who thrived. The belief about what struggle <em>means</em> did. If struggle signals that you are not smart, it is a threat; if it is simply how you get smarter, it is the interesting part.</p>
+    <p>From there she follows the idea into school, sport, business, relationships, and parenting, then closes with a chapter on how to change your own mindset. It reads less like a step-by-step programme and more like a lens: once you can see the fixed mindset at work in yourself or others, you can interrupt it.</p>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Core Ideas at a Glance</h2>
-    <div class="section-line"></div>
+  <div class="section-header" style="margin-top:30px;"><h2>The Whole Book on One Grid</h2><div class="section-line"></div></div>
+  <div class="axis-cap"><span>The belief</span><span>Tap to explore →</span></div>
+  <div class="mini-pair">
+    <div class="mini-m fx" onclick="jumpM('m-fx')"><h4>Fixed Mindset</h4><p>Ability is a set quantity. Every task is a test of what you have. Avoid risk, protect the image.</p></div>
+    <div class="mini-m gr" onclick="jumpM('m-gr')"><h4>Growth Mindset</h4><p>Ability is developed. Every task is a chance to grow. Seek challenge, learn from setbacks.</p></div>
   </div>
 
-  <div class="key-idea"><div class="icon">🪨</div><div><strong>The fixed mindset treats traits as carved in stone.</strong> Intelligence, talent, and character are seen as fixed quantities you either have or don't — so every test, challenge, or setback becomes a referendum on your basic worth.</div></div>
-  <div class="key-idea"><div class="icon">🌱</div><div><strong>The growth mindset treats traits as a starting point.</strong> Abilities can be developed through effort, good strategies, and input from others — so challenge and setback become information, not verdicts.</div></div>
-  <div class="key-idea"><div class="icon">🎭</div><div><strong>Mindsets create entire meaning systems.</strong> The same event — a poor grade, a lost deal, a difficult conversation — is interpreted completely differently depending on which mindset is doing the interpreting.</div></div>
-  <div class="key-idea"><div class="icon">🙅</div><div><strong>Fixed mindset avoids challenge to protect its image.</strong> If ability is fixed, taking on a hard task and failing is dangerous — it might reveal you were never good enough. Safer to avoid the risk entirely.</div></div>
-  <div class="key-idea"><div class="icon">💪</div><div><strong>Growth mindset seeks out challenge because it's how you improve.</strong> Effort isn't evidence of low ability — it's the mechanism by which ability is built.</div></div>
-  <div class="key-idea"><div class="icon">🗣️</div><div><strong>Praise shapes mindset — and most well-meant praise backfires.</strong> Praising intelligence ("you're so smart") breeds a fixed mindset; praising process ("you worked hard and found a good strategy") breeds a growth one.</div></div>
-  <div class="key-idea"><div class="icon">⏳</div><div><strong>"Not yet" is more powerful than "not able."</strong> Reframing failure as a temporary state rather than a permanent verdict — the "power of yet" — keeps the door to future improvement visibly open.</div></div>
-  <div class="key-idea"><div class="icon">🔁</div><div><strong>Mindsets can be taught and changed at any age.</strong> Because a mindset is a belief, not a fixed personality trait, it can be recognized, named, and deliberately shifted — the entire final chapter is a practical guide to doing exactly that.</div></div>
-
+  <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
+  <div class="key-idea"><div class="icon">🪨</div><div><strong>Fixed means "prove it."</strong> If traits are set, every test, challenge, or setback becomes a verdict on your worth.</div></div>
+  <div class="key-idea"><div class="icon">🌱</div><div><strong>Growth means "improve it."</strong> Traits are a starting point, so challenge and failure become information rather than judgement.</div></div>
+  <div class="key-idea"><div class="icon">🙅</div><div><strong>Fixed thinking protects the image.</strong> Hard tasks are risky if failing might expose you, so the safe choice is to avoid them.</div></div>
+  <div class="key-idea"><div class="icon">💪</div><div><strong>Effort is the mechanism, not the consolation prize.</strong> Needing to try is not evidence of low ability; it is how ability gets built.</div></div>
+  <div class="key-idea"><div class="icon">🗣️</div><div><strong>Praise shapes mindset.</strong> Praising the person ("you're so smart") tends to feed a fixed mindset; praising the process (effort, strategy) feeds a growth one.</div></div>
+  <div class="key-idea"><div class="icon">⏳</div><div><strong>"Not yet" keeps the door open.</strong> Treat a current limit as a stage, not a sentence.</div></div>
+  <div class="key-idea"><div class="icon">🎭</div><div><strong>Most people are a mix.</strong> You can be growth-minded about work and fixed about, say, creativity or being liked.</div></div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     CHAPTERS
-════════════════════════════════════════════ -->
+<!-- ═══════════════ CHAPTERS ═══════════════ -->
 <div id="chapters" class="panel">
+  <div class="note-box"><strong>How to read this tab:</strong> the chapter titles follow the contents listed by study guides and unofficial copies of the book that I found through a web search. I could not retrieve the publisher's own contents page, so check numbering and any extras (a new preface or end matter in the updated edition) against your copy. The summaries are my reconstruction of each chapter's argument, not a line-by-line transcription, and I have not quoted the book. Specific studies and names are mentioned as I understand them; verify details before citing them.</div>
 
-  <div class="part-header">Introduction</div>
+  <div class="part-header">Front Matter</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num intro">I</div>
-      <div class="ch-title">Why Do People Differ in Achieving Their Potential?</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num intro">I</div><div class="ch-title">Introduction</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Dweck opens with the puzzle that launched her career: why do people with similar ability so often end up achieving wildly different amounts? Her early research had her giving children puzzles of increasing difficulty and simply watching how they reacted once the puzzles got hard. What she found didn't fit the assumption that better students would cope better — instead, some children of every ability level responded to difficulty with a kind of giving-up helplessness, while others of every ability level responded with enthusiasm, treating the harder puzzles as the interesting part.
-      <br><br>
-      The dividing line, she realized, wasn't skill but belief: children who believed their intelligence was a fixed quantity experienced difficulty as a threat to that fixed quantity — evidence they might not be smart after all — while children who believed intelligence could grow experienced the exact same difficulty as simply the process of getting smarter. The introduction names these two belief systems the fixed mindset and the growth mindset and previews the book's structure: showing how this one distinction plays out in schools, sports, business, and relationships.
-      <div class="ch-takeaway">The predictor of how someone handles difficulty isn't their current ability level — it's whether they believe ability is fixed or can grow. That belief, not talent, is where the real leverage for change lives.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The Puzzle-Difficulty Studies · The Fixed/Growth Mindset Distinction</div>
+      <p>Dweck sets out the puzzle behind the book: why do people of similar ability end up achieving such different amounts? She describes early research in which children were given increasingly hard puzzles, and notes that some of them met the difficulty with relish rather than despair.</p>
+      <p>Her conclusion is that the difference lay in belief, not skill: whether the child saw intelligence as fixed or as something that grows. The introduction names the two mindsets and previews how they will play out across the later chapters.</p>
+      <div class="ch-takeaway">What predicts how someone handles difficulty is less their current ability than what they believe ability is.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The puzzle-and-difficulty studies that launched the mindset distinction</div>
+    </div>
+  </div>
+
+  <div class="part-header">The Core Idea (Ch. 1–3)</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">The Mindsets</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>The foundational chapter. In the fixed mindset, every situation is implicitly a test of whether you have enough intelligence, talent, or personality: success proves it, failure threatens it. In the growth mindset, the same situations are chances to develop the ability in question, and both success and failure tell you what to do next.</p>
+      <p>Dweck traces how one belief cascades into opposite reactions to almost everything. Fixed-minded people need to prove themselves in each encounter, so they steer toward places where they will already look good. Growth-minded people are freed from constant self-validation and can take on harder, more revealing challenges.</p>
+      <p>She is clear that nearly everyone holds a mix, varying by domain. Spotting where your own fixed mindset lives is the starting point for everything later.</p>
+      <div class="ch-takeaway">Nobody is purely one or the other. The useful move is finding exactly where your fixed mindset operates.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Mapping your mindset domain by domain (try it on the Two Mindsets tab)</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">1</div>
-      <div class="ch-title">The Mindsets</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">2</div><div class="ch-title">Inside the Mindsets</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      This chapter lays out the two mindsets in full. In the fixed mindset, every situation is implicitly a test of whether you have "enough" intelligence, talent, or personality — success proves you have it, failure suggests you don't, and there's no real alternative interpretation available. In the growth mindset, the same situations become opportunities to develop whatever ability is in question — success is welcome, but so is failure, because both generate information about what to do next.
-      <br><br>
-      Dweck traces how this single belief cascades into opposite responses to nearly everything: fixed-mindset people need to prove themselves in every encounter, so they gravitate toward situations where they're already certain to look good and avoid ones where they might not. Growth-mindset people are freed from that constant self-validation, which paradoxically lets them take on harder, more revealing challenges — the ones that actually build capability — without it costing them their sense of self-worth.
-      <br><br>
-      The chapter is explicit that almost everyone holds a mix of both mindsets across different domains — someone might have a rock-solid growth mindset about their professional skills and a completely fixed one about their artistic ability, or their capacity to be loved. Recognizing which domains carry a fixed mindset for you personally is presented as the necessary first step before any of the later change-oriented material becomes useful.
-      <div class="ch-takeaway">Nobody is purely one mindset or the other — most people carry a growth mindset in some domains and a fixed one in others. The useful move is identifying exactly where your own fixed mindset is quietly operating.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The Two Mindsets Comparison · Domain-by-Domain Mindset Mapping</div>
+      <p>A closer look at how each mindset processes information, drawing on experiments. When given a choice, fixed-minded participants tended to favour tasks that would let them look smart over tasks that would teach them something, while growth-minded participants leaned toward learning even at the risk of looking worse.</p>
+      <p>The chapter also covers feedback and effort. For the fixed mindset, needing to work hard can feel like a sign you lack talent, and criticism can feel like a verdict. For the growth mindset, effort is simply how potential becomes ability, and feedback is data about strategy.</p>
+      <div class="ch-takeaway">Fixed thinking does not only avoid failure. It also avoids the effort and honest feedback that improvement needs.</div>
+      <div class="ch-tool"><strong>Key ideas:</strong> Choosing to look smart vs choosing to learn · How each mindset treats effort and criticism</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">2</div>
-      <div class="ch-title">Inside the Mindsets</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">3</div><div class="ch-title">The Truth About Ability and Accomplishment</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Having introduced the two mindsets, Dweck goes deeper into how each one actually processes information day to day, drawing on a wide body of experimental research. Fixed-mindset subjects, given a choice between an easy task they'd already mastered and a harder one they'd learn from, reliably chose the easy one — protecting their current self-image took priority over actually improving. Growth-mindset subjects chose the harder task at a much higher rate, willing to look worse in the short term in exchange for genuine progress.
-      <br><br>
-      The chapter's most striking research concerns feedback: fixed-mindset subjects shown other students' scores that were lower than their own felt reassured, while growth-mindset subjects were more interested in information about strategies that had worked for others, regardless of whether those others scored higher or lower. Fixed-mindset subjects also had a documented tendency to disregard useful negative feedback about their performance, since acknowledging a flaw felt like conceding a permanent deficiency rather than gathering useful information.
-      <br><br>
-      Dweck also addresses effort directly here — in the fixed mindset, needing to work hard at something is itself faintly damning evidence ("if you were really talented, you wouldn't need to try so hard"), which is precisely why fixed-mindset people so often disengage rather than risk visible effort that might still end in failure. In the growth mindset, effort carries no such stigma; it's simply what turns potential into ability.
-      <div class="ch-takeaway">Fixed-mindset thinking doesn't just avoid failure — it avoids the effort and honest feedback that failure-avoidance requires giving up, which is exactly what stalls long-term improvement.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The Easy-vs-Hard Task Choice studies · Feedback-Seeking Behavior Research</div>
+      <p>This chapter takes on the myth of natural genius. Dweck argues that celebrated achievers usually reached their level through sustained, often unglamorous effort, and that the effortless-gift story is largely told after the fact.</p>
+      <p>She is especially interested in the "gifted" label. Being told you are brilliant can make your whole identity depend on looking effortlessly clever, which makes future struggle feel dangerous. Some talented people therefore avoid the very challenges that would develop them.</p>
+      <div class="ch-takeaway">Real accomplishment is better explained by sustained engagement than by a hidden gift, and believing otherwise can discourage the effort that produces it.</div>
+      <div class="ch-tool"><strong>Key ideas:</strong> The effortless-genius myth · The gifted-label trap</div>
+    </div>
+  </div>
+
+  <div class="part-header">The Mindsets in the World (Ch. 4–7)</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">4</div><div class="ch-title">Sports: The Mindset of a Champion</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>Sport is a vivid test because talent is partly visible, yet results still split by mindset. Dweck contrasts athletes who developed through effort and setbacks, with figures such as Michael Jordan used as an illustration of this, against "naturals" who plateaued when real adversity arrived.</p>
+      <p>She also looks at coaching. Coaches who focus on process, preparation, and character, with John Wooden as the famous example, are presented as growth-minded leaders whose teams outperform what raw recruiting would predict.</p>
+      <div class="ch-takeaway">Being called a "natural" is a mixed blessing: it builds confidence but can leave an identity that is fragile at the first serious setback.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The "natural" vs the "made" athlete · Process-focused coaching</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">3</div>
-      <div class="ch-title">The Truth About Ability and Accomplishment</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">Business: Mindset and Leadership</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      This chapter tackles the popular idea of "natural talent" head-on, arguing that even history's most celebrated prodigies and geniuses were, on close examination, cases of sustained deliberate effort far more than raw inborn gift. Dweck walks through examples across the arts and sciences where the popular myth of effortless genius collapses under scrutiny of the actual working habits involved — extensive early training, years of unglamorous repetition, and a body of discarded, imperfect early work that rarely makes it into the popular story.
-      <br><br>
-      The chapter is particularly interested in what happens to children labeled "gifted" early on: rather than being liberating, the gifted label frequently installs a fixed mindset, since the child's entire identity becomes wrapped up in appearing effortlessly smart — which makes any future struggle existentially threatening in a way it wouldn't be for a child who was simply told they were doing well and could keep improving. Dweck presents case studies of celebrated child prodigies who avoided appropriately challenging work for years specifically to protect their "gifted" identity, at real cost to their eventual development.
-      <br><br>
-      The chapter's conclusion reframes accomplishment itself: rather than being the revelation of a pre-existing gift, real accomplishment in any field is better understood as the product of sustained engagement over time — which means the growth mindset isn't just psychologically healthier, it's a more accurate description of how expertise is actually built.
-      <div class="ch-takeaway">The "natural genius" story is largely a myth constructed after the fact. Real accomplishment is built through sustained effort and deliberate practice — believing otherwise can actively discourage the very effort that produces it.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Case Studies in Manufactured Genius · The Gifted-Label Trap</div>
+      <p>Applied to organisations, the mindsets produce two leadership styles. Fixed-minded leaders treat their own brilliance as the organisation's central asset, crave validation, and discourage dissent. Dweck uses case studies of high-profile executives to show how this can look successful until suppressed problems surface.</p>
+      <p>Growth-minded leaders build what she calls a culture of collective genius: they seek out disconfirming information, develop the people around them, and treat capability as something to build. Companies that label employees as stars or duds tend, in her telling, to breed defensiveness.</p>
+      <div class="ch-takeaway">A culture that depends on one person's judgement never being wrong is fragile. A culture of shared development is sturdier.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Genius-leader culture vs collective-genius culture</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">4</div>
-      <div class="ch-title">Sports: The Mindset of a Champion</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Relationships: Mindsets in Love (or War)</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Sport offers an unusually clean test of the mindset framework because physical talent is at least partly visible and measurable, yet outcomes still diverge sharply based on mindset. Dweck contrasts athletes written off early for lacking obvious natural gifts — most famously Michael Jordan, cut from his high school varsity team — who used that setback as fuel for the deliberate, effort-heavy development that made them legendary, against widely-touted "naturals" who had every physical advantage but plateaued once real competition or adversity arrived.
-      <br><br>
-      The chapter examines what separates great coaches from mediocre ones through the same lens: coaches like John Wooden built their programs around process, preparation, and character rather than obsessing over game outcomes, on the theory that outcomes take care of themselves once the underlying process is sound — a distinctly growth-mindset approach to leadership that Dweck argues explains sustained excellence better than raw recruiting talent does.
-      <br><br>
-      A recurring, less comfortable pattern also emerges: athletes who are told from a young age that they're simply "naturals" often develop a fragile relationship with failure, since their entire identity rests on effortless superiority — any loss becomes evidence the label was wrong, which some respond to by disengaging from the sport altogether rather than doing the hard developmental work that might have kept them at the top.
-      <div class="ch-takeaway">Being labeled a "natural" is a mixed blessing in sport — it can build unearned confidence, but it also sets up a fragile identity that struggles to survive the first serious setback, unlike an identity built around effort and improvement.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The "Natural" vs. "Made" Athlete Contrast · Process-Focused Coaching</div>
+      <p>Mindset applies to relationships too. A fixed mindset treats compatibility as something you have or lack, so friction becomes proof the match is wrong. A growth mindset treats conflict as normal and workable, a skill two people can get better at.</p>
+      <p>Dweck extends this to social life more broadly: how people read shyness, rejection, and bullying, and how a belief that personality is fixed can turn one awkward moment into a permanent verdict. Forgiveness is affected too, since a fixed view of character makes a partner's mistake look like who they really are.</p>
+      <div class="ch-takeaway">The belief shapes whether people work through difficulty or conclude, at the first sign of it, that the relationship was never right.</div>
+      <div class="ch-tool"><strong>Key ideas:</strong> Mindset and conflict · Mindset and social rejection</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">5</div>
-      <div class="ch-title">Business: Mindset and Leadership</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Parents, Teachers, and Coaches: Where Do Mindsets Come From?</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Applied to business, the mindset framework distinguishes two very different models of leadership. Fixed-mindset leaders tend to see their own talent as the central, non-negotiable fact of the organization — needing constant validation of their own genius, surrounding themselves with people who won't challenge them, and treating internal dissent or bad news as a threat rather than useful information. Dweck details case studies of celebrity CEOs whose companies thrived on the leader's reputation right up until it didn't, often collapsing rapidly once the underlying organizational weaknesses the leader had suppressed finally surfaced.
-      <br><br>
-      Growth-mindset leaders, by contrast, tend to build what Dweck calls a culture of "collective genius" rather than a cult of individual genius — actively seeking out disconfirming information, developing the people around them rather than just judging them, and treating the organization's capability as something to be built continuously rather than a fixed asset to be protected. These leaders are typically less charismatic in the media-friendly sense, which the chapter notes is part of why fixed-mindset "visionary" leadership gets disproportionate attention despite often producing worse long-term outcomes.
-      <br><br>
-      The chapter extends the analysis to workplace culture more broadly: organizations that publicly rank and label employees as talented or not-talented tend to produce fixed-mindset defensiveness and internal competition, while organizations that emphasize development and collaborative problem-solving tend to produce the growth-mindset behaviors — risk-taking, honest feedback-seeking, and resilience through setbacks — that actually predict long-term performance.
-      <div class="ch-takeaway">A "genius with a thousand helpers" culture is fragile because it depends on one person's judgment never being wrong. A collective-genius culture, built on growth-mindset development at every level, tends to be far more durable.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Genius-Leader vs. Collective-Genius Case Studies · Culture Diagnostics for Fixed-Mindset Organizations</div>
+      <p>This chapter is about how mindsets form, largely through the messages children get from adults. Dweck's own praise studies are central: children praised for being smart after a success tended afterwards to prefer safer tasks and cope worse with difficulty, while children praised for effort or strategy tended to seek challenge and persist.</p>
+      <p>The line she draws is between <strong>person praise</strong> (about traits) and <strong>process praise</strong> (about effort, strategy, focus, improvement). She also profiles teachers who keep standards high while clearly believing in students' ability to reach them, and warns that adults can transmit a fixed mindset through reactions alone, such as visible disappointment or comparison, even without using the word "smart."</p>
+      <div class="ch-takeaway">What adults praise, and how they react to struggle, teaches children what ability is.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Person praise vs process praise</div>
     </div>
   </div>
+
+  <div class="part-header">Change</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">6</div>
-      <div class="ch-title">Relationships: Mindsets in Love (or War)</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">Changing Mindsets</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Mindset applies to relationships as directly as it does to intelligence or talent. In the fixed mindset, relationship compatibility is treated as something you either have or don't — problems in the relationship become evidence that the match was wrong from the start, rather than a normal part of two people learning to work together, which makes fixed-mindset partners far quicker to walk away from difficulty rather than work through it.
-      <br><br>
-      Growth-mindset partners treat relationship conflict as expected and workable — something both people can get better at handling with effort and communication, the same way any other skill improves with practice. Dweck extends the framework to social dynamics more broadly, including how fixed versus growth beliefs about personality shape reactions to shyness, rejection, and bullying: a fixed mindset about social ability tends to interpret a single awkward interaction as proof of permanent social inadequacy, fueling avoidance, while a growth mindset treats the same interaction as something to learn from and try differently next time.
-      <br><br>
-      The chapter also examines how mindset shapes forgiveness and grudges: fixed-mindset individuals, believing character traits are permanent, tend to see a partner's mistake as revealing who they "really are," making lasting resentment more likely, while growth-mindset individuals are more able to see a mistake as a specific, correctable event rather than a permanent character verdict.
-      <div class="ch-takeaway">Fixed-mindset partners treat relationship struggle as proof of incompatibility; growth-mindset partners treat it as a normal, improvable part of being together. The belief shapes whether people work through conflict or abandon the relationship at the first sign of it.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Mindset and Conflict Response · Mindset and Social Rejection</div>
+      <p>The practical close. Because a mindset is a belief, it can be changed. Dweck describes educational work in which students learn that the brain strengthens with effortful practice (the Brainology programme) and shows how this can shift behaviour and outcomes.</p>
+      <p>For adults she suggests getting to know your <strong>fixed-mindset persona</strong>: the inner voice that shows up under challenge or criticism and urges you to protect your ego. She is candid that the voice never entirely disappears; the aim is to notice it quickly enough to choose a growth response.</p>
+      <p>The chapter also tempers the message: a growth mindset is not a claim that anyone can do anything with enough positive thinking.</p>
+      <div class="ch-takeaway">You will not delete your fixed-mindset reactions, but you can learn to spot them and choose differently.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Brainology · The fixed-mindset persona</div>
     </div>
   </div>
-
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">7</div>
-      <div class="ch-title">Parents, Teachers, and Coaches: Where Do Mindsets Come From?</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      This chapter turns to how mindsets get formed in the first place — largely through the praise and feedback children receive from the adults around them. Dweck's own research is central here: children praised for their intelligence after succeeding at a task later chose easier tasks, showed less persistence when they hit difficulty, and were more likely to misrepresent their scores to others — all classic fixed-mindset responses, triggered by a single well-intentioned sentence of praise. Children praised instead for their effort or the strategy they used chose harder tasks, persisted longer, and reported enjoying the challenge more.
-      <br><br>
-      The distinction Dweck draws is between <strong>person praise</strong> ("you're so smart," "you're a natural") and <strong>process praise</strong> (praising the effort, strategy, focus, or improvement involved) — the former installs a fixed mindset even when meant purely as encouragement, while the latter reliably installs a growth one. The chapter extends this to teachers and coaches, profiling educators who maintained high standards while explicitly communicating belief in students' capacity to meet them — a combination Dweck argues is far more effective than either low standards paired with unconditional praise, or high standards paired with harsh, ability-focused criticism.
-      <br><br>
-      The chapter closes with a caution against a subtler trap: parents and teachers who consciously reject "you're so smart" language but still communicate a fixed mindset indirectly — through visible disappointment at struggle, through effusive celebration only of easy successes, or through comparing a child unfavorably to siblings or peers — can install the same fixed-mindset patterns despite never using the word "smart" at all.
-      <div class="ch-takeaway">The specific words used to praise children shape their mindset more than most parents realize. Praising the process — effort, strategy, persistence — builds a growth mindset; praising the person — talent, intelligence — builds a fixed one, even with the best intentions.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Person Praise vs. Process Praise research · Teacher and Coach Case Studies</div>
-    </div>
-  </div>
-
-  <div class="part-header">Closing — Changing Mindsets</div>
-
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">8</div>
-      <div class="ch-title">Changing Mindsets</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      The final chapter makes the book's most practically important claim explicit: because a mindset is a belief rather than a fixed personality trait, it can be recognized and deliberately changed at any age. Dweck describes intervention programs — including a curriculum called Brainology that teaches students the neuroscience of how the brain physically changes and strengthens through effortful practice — which produced measurable shifts toward growth-mindset behavior and improved academic outcomes, even among students who had spent years operating from a fixed mindset.
-      <br><br>
-      For adult, self-directed change, Dweck offers a specific technique: identifying your personal <strong>fixed-mindset persona</strong> — the internal voice that shows up when you're challenged or criticized, urging you to protect your ego rather than engage with the difficulty — giving it a name, and learning to recognize its triggers. The goal isn't to eliminate this voice entirely (Dweck is candid that even she, decades into this research, still hears her own fixed-mindset persona in high-stakes moments) but to recognize it quickly enough to consciously choose a growth-mindset response instead.
-      <br><br>
-      The chapter closes by widening the lens one final time: growth mindset isn't a claim that effort alone guarantees success, or that anyone can become anything with enough positive thinking — it's a more modest and more useful claim, that believing your abilities can develop changes how you respond to the setbacks and difficulties that are an unavoidable part of any real pursuit, which over time produces meaningfully different outcomes than believing those abilities were fixed all along.
-      <div class="ch-takeaway">You cannot delete your fixed-mindset reactions entirely, but you can learn to recognize your own fixed-mindset persona quickly enough to choose a growth-mindset response before the moment passes.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The Brainology Program · The Fixed-Mindset Persona Technique</div>
-    </div>
-  </div>
-
 </div>
 
-<!-- ════════════════════════════════════════════
-     FRAMEWORK & TOOLKIT
-════════════════════════════════════════════ -->
-<div id="framework" class="panel">
+<!-- ═══════════════ THE TWO MINDSETS (DEEP DIVE) ═══════════════ -->
+<div id="mindsets" class="panel">
+  <div class="section-header"><h2>The Two Mindsets, In Depth</h2><div class="section-line"></div></div>
+  <p class="lead">This is the heart of the book. One belief, whether ability is fixed or can grow, produces two different ways of living. Below, each mindset gets the same treatment: what it is, how it shows up, why people slip into it, how it feels from the inside, what it costs, what it sounds like, and how to move on. The sample sentences and scenarios are my own illustrations in the spirit of the book, not quotations from it.</p>
 
-  <div class="section-header">
-    <h2>Fixed Mindset vs. Growth Mindset</h2>
-    <div class="section-line"></div>
-  </div>
-  <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6;">The book's entire argument compressed into one comparison. The same event lands completely differently depending on which mindset is interpreting it.</p>
+  <div class="note-box"><strong>A note on the "mix":</strong> Dweck stresses that people are not simply "a fixed type" or "a growth type." Most of us move between the two depending on the domain and the day, which is why the third section here covers the in-between.</div>
 
-  <div class="compare-wrap">
-    <div class="compare-col fixed">
-      <h4>🪨 Fixed Mindset</h4>
-      <div class="compare-row"><span class="c-ic">•</span><div>Avoids challenges that might reveal inadequacy</div></div>
-      <div class="compare-row"><span class="c-ic">•</span><div>Gives up easily when things get hard</div></div>
-      <div class="compare-row"><span class="c-ic">•</span><div>Sees effort as pointless, or as proof of low ability</div></div>
-      <div class="compare-row"><span class="c-ic">•</span><div>Ignores or resents useful negative feedback</div></div>
-      <div class="compare-row"><span class="c-ic">•</span><div>Feels threatened by other people's success</div></div>
-    </div>
-    <div class="compare-col growth">
-      <h4>🌱 Growth Mindset</h4>
-      <div class="compare-row"><span class="c-ic">•</span><div>Embraces challenges as opportunities to improve</div></div>
-      <div class="compare-row"><span class="c-ic">•</span><div>Persists through obstacles and setbacks</div></div>
-      <div class="compare-row"><span class="c-ic">•</span><div>Sees effort as the path to mastery</div></div>
-      <div class="compare-row"><span class="c-ic">•</span><div>Learns from criticism and actively seeks it out</div></div>
-      <div class="compare-row"><span class="c-ic">•</span><div>Finds lessons and inspiration in others' success</div></div>
-    </div>
+  <div class="m-nav">
+    <a class="m-pill fx" onclick="jumpM('m-fx')">Fixed Mindset</a>
+    <a class="m-pill gr" onclick="jumpM('m-gr')">Growth Mindset</a>
+    <a class="m-pill mx" onclick="jumpM('m-mx')">The Mix</a>
+    <a class="m-pill cmp" onclick="jumpM('m-cmp')">Side-by-Side</a>
+    <a class="m-pill try" onclick="jumpM('m-try')">Try It</a>
   </div>
 
-  <div class="section-header">
-    <h2>The Power of "Yet"</h2>
-    <div class="section-line"></div>
+  <!-- FIXED -->
+  <div class="m-section fxs" id="m-fx">
+    <div class="m-head fx">
+      <div class="stamp">Prove It</div>
+      <div class="dials">Belief: Ability is set</div>
+      <h3>fixed mindset</h3>
+      <div class="tag">You have what you have. So every challenge is a test, and the safest plan is to look good and avoid risk.</div>
+    </div>
+    <div class="m-body">
+      <h4>What it is</h4>
+      <p>The fixed mindset holds that intelligence, talent, and personality are quantities you are born with. Because the amount is fixed, the goal in any situation becomes proving you have enough. That makes success feel like a measure of you, and failure feel like a measure of you too. It is not a flaw of character; it is a reasonable-seeming response to a belief about how ability works, and a very common one.</p>
+
+      <h4>What it looks like and why we slip into it</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Behaviours</h5><ul>
+          <li>Choosing tasks you are sure to ace over ones you could learn from</li>
+          <li>Giving up quickly, or never starting, when a task is hard</li>
+          <li>Hiding effort or treating it as a sign of weakness</li>
+          <li>Getting defensive about criticism or ignoring it</li>
+          <li>Feeling threatened by other people's success</li>
+          <li>Blaming others, circumstances, or the task after a failure</li>
+          <li>Comparing downward to feel better</li>
+        </ul></div>
+        <div class="q-card"><h5>Why we slip into it</h5><ul>
+          <li>We were praised for being smart or talented, so we learned to protect that label</li>
+          <li>High stakes: exams, reviews, public performance</li>
+          <li>Entering a domain where we feel less sure of ourselves</li>
+          <li>Being around people who judge and rank</li>
+          <li>Tiredness and stress, when we have less room for curiosity</li>
+          <li>A past failure that felt like a verdict</li>
+        </ul></div>
+      </div>
+
+      <h4>How it feels from the inside</h4>
+      <p>Pressure, mostly. There is a constant low-level scoreboard running: am I smart enough, am I impressive, will this expose me? Wins bring relief rather than satisfaction, and setbacks bring shame. A hard task can feel like a trap, which is why avoiding it feels sensible.</p>
+
+      <h4>What it costs</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>To the person</h5><ul>
+          <li>Learning stalls because the stretch tasks get avoided</li>
+          <li>Talented people plateau, sometimes early</li>
+          <li>Relationships suffer when every difficulty is a verdict</li>
+        </ul></div>
+        <div class="q-card"><h5>To teams and families</h5><ul>
+          <li>Honest feedback dries up</li>
+          <li>Ranking and labelling breeds defensiveness and politics</li>
+          <li>Children learn to protect an image rather than explore</li>
+        </ul></div>
+      </div>
+
+      <h4>What it sounds like</h4>
+      <div class="say-grid">
+        <div class="say bad"><div class="lab">Fixed-mindset voice</div><em>"I'm just not a maths person. I'll embarrass myself, so I'll skip the course."</em></div>
+        <div class="say good"><div class="lab">Growth rewrite</div><em>"I'm not strong at maths yet. Let me find out what's tripping me up and try a different way in."</em></div>
+      </div>
+
+      <h4>Illustrative scenario</h4>
+      <div class="scenario"><div class="lab">Example (mine, not the book's)</div>A high-performing analyst is offered a stretch project in an unfamiliar area. She declines, citing workload, because she has never been anything but excellent and cannot bear to be seen as a beginner. A year later, a colleague who said yes is doing the work she once would have led.</div>
+
+      <h4>How to move on</h4>
+      <div class="way-out"><ol>
+        <li><strong>Notice the trigger.</strong> When do you feel judged, threatened, or tempted to avoid? That is where the fixed voice shows up.</li>
+        <li><strong>Name the voice.</strong> Give your fixed-mindset persona a name so you can tell it apart from your own judgement.</li>
+        <li><strong>Add "yet."</strong> Turn "I can't" into "I can't yet" and ask what it would take.</li>
+        <li><strong>Choose the learning option once.</strong> Pick the harder task or ask for the criticism in one low-stakes setting and see what happens.</li>
+        <li><strong>Treat effort as information.</strong> If it is hard, you are in the zone where growth happens.</li>
+      </ol></div>
+    </div>
+  </div>
+
+  <!-- GROWTH -->
+  <div class="m-section" id="m-gr">
+    <div class="m-head gr">
+      <div class="stamp">Improve It</div>
+      <div class="dials">Belief: Ability develops</div>
+      <h3>growth mindset</h3>
+      <div class="tag">Your qualities are a starting point. Effort, strategy, and help build them, so challenge and setback are material to work with.</div>
+    </div>
+    <div class="m-body">
+      <h4>What it is</h4>
+      <p>The growth mindset holds that basic qualities can be cultivated through effort, good strategies, and input from others. It does not say everyone is the same or that anyone can become anything. It says that the current level is not the ceiling, and that how you respond to difficulty determines how far you go. The result is freedom from needing to prove yourself in every moment.</p>
+
+      <h4>What it looks like and how to cultivate it</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Behaviours</h5><ul>
+          <li>Seeking out challenges that stretch you</li>
+          <li>Persisting through obstacles and setbacks</li>
+          <li>Treating effort as the route to mastery</li>
+          <li>Asking for and using criticism</li>
+          <li>Learning from other people's success instead of resenting it</li>
+          <li>Changing strategy rather than giving up when something fails</li>
+          <li>Praising process (effort, strategy, improvement) in others</li>
+        </ul></div>
+        <div class="q-card"><h5>What feeds it</h5><ul>
+          <li>Process praise rather than talent praise</li>
+          <li>Learning how the brain strengthens with practice</li>
+          <li>Environments that value learning over ranking</li>
+          <li>Leaders and teachers who pair high standards with belief in people</li>
+          <li>Seeing mistakes as normal and useful</li>
+          <li>Having specific strategies to try when you are stuck</li>
+        </ul></div>
+      </div>
+
+      <h4>How it feels from the inside</h4>
+      <p>Lighter, and more curious. Difficulty is uncomfortable but interesting. You can lose a round without losing yourself. Wins still matter, but they are not the only thing keeping your self-worth afloat.</p>
+
+      <h4>What it gives</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>To the person</h5><ul>
+          <li>More learning, because stretch tasks get taken</li>
+          <li>Resilience after failure</li>
+          <li>Relationships that can survive friction</li>
+        </ul></div>
+        <div class="q-card"><h5>To teams and families</h5><ul>
+          <li>Honest feedback becomes safe</li>
+          <li>A culture of shared development</li>
+          <li>People take risks, so more gets tried</li>
+        </ul></div>
+      </div>
+
+      <h4>What it sounds like</h4>
+      <div class="say-grid">
+        <div class="say bad"><div class="lab">Praise that backfires</div><em>"You got that straight away. You're a natural!"</em></div>
+        <div class="say good"><div class="lab">Process-praise rewrite</div><em>"You tried two different approaches before it clicked. That persistence is what got you there."</em></div>
+      </div>
+
+      <h4>Illustrative scenario</h4>
+      <div class="scenario"><div class="lab">Example (mine, not the book's)</div>A manager's presentation goes badly. Instead of burying it, he asks two colleagues what lost the room, picks the one change he can make, and volunteers to present again next month. It is uncomfortable, but he leaves with a plan rather than a grudge.</div>
+
+      <h4>Keeping it going</h4>
+      <div class="way-out"><ol>
+        <li><strong>Set learning goals.</strong> Decide what you want to get better at, not only what you want to look good at.</li>
+        <li><strong>Plan the next move after a setback.</strong> What will you try differently, and who can help?</li>
+        <li><strong>Reward process.</strong> Notice effort and improvement in yourself and others.</li>
+        <li><strong>Stay honest.</strong> Growth is not just positive talk; it needs real strategies and real feedback.</li>
+        <li><strong>Expect the fixed voice to return.</strong> It is part of the process, not a failure of it.</li>
+      </ol></div>
+    </div>
+  </div>
+
+  <!-- MIX -->
+  <div class="m-section" id="m-mx">
+    <div class="m-head mx">
+      <div class="stamp">Reality</div>
+      <div class="dials">Domain by domain</div>
+      <h3>the mix</h3>
+      <div class="tag">Most of us are growth-minded somewhere and fixed somewhere else. The work is finding out where.</div>
+    </div>
+    <div class="m-body">
+      <h4>What it is</h4>
+      <p>The book does not present the mindsets as personality types. It stresses that people carry a mix, and that the balance shifts by domain (work, sport, creativity, relationships) and by situation (under pressure, among strangers, after a failure). That is also why the idea is usable: you are not trying to become a different kind of person, only to catch particular moments.</p>
+
+      <h4>Common swings</h4>
+      <div class="swing-row"><div class="arrow">Strong → Fixed</div><div>A person who is growth-minded about their career becomes fixed the moment they try a new hobby in public, where they feel like a beginner.</div></div>
+      <div class="swing-row"><div class="arrow">Win → Fixed</div><div>After a big success, the pressure to stay "the smart one" can quietly pull someone back toward avoiding risk.</div></div>
+      <div class="swing-row"><div class="arrow">Loss → Growth</div><div>A painful setback can be what finally prompts someone to ask what they could do differently.</div></div>
+
+      <h4>A caution on "false" growth mindset</h4>
+      <div class="note-box" style="margin-bottom:0;">This is a point from the wider conversation around the book rather than something I am attributing to a specific chapter: it is easy to adopt the vocabulary ("I have a growth mindset!") while still avoiding challenge or praising effort that is not working. Claiming the label is not the same as doing the behaviours, and effort without a better strategy is not growth. Treat this as my reading, and check your copy (the updated edition's preface may address it).</div>
+    </div>
+  </div>
+
+  <!-- SIDE BY SIDE -->
+  <div class="m-section" id="m-cmp">
+    <div class="m-head" style="background:var(--teal-pale); color:var(--teal-deep);">
+      <div class="dials">Both at once</div>
+      <h3>side-by-side</h3>
+      <div class="tag" style="color:var(--ink-soft);">The same moment, read through each mindset.</div>
+    </div>
+    <div class="m-body">
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead><tr><th class="blank"></th><th class="fx">Fixed Mindset</th><th class="gr">Growth Mindset</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">Core belief</td><td>Ability is a set quantity</td><td>Ability is developed over time</td></tr>
+            <tr><td class="rowh">Goal</td><td>Look smart, avoid looking dumb</td><td>Learn and improve</td></tr>
+            <tr><td class="rowh">Challenge</td><td>Avoid it: it might expose me</td><td>Embrace it: it will stretch me</td></tr>
+            <tr><td class="rowh">Obstacles</td><td>Give up or get defensive</td><td>Persist and change tactics</td></tr>
+            <tr><td class="rowh">Effort</td><td>Pointless, or a sign I lack talent</td><td>The path to mastery</td></tr>
+            <tr><td class="rowh">Criticism</td><td>Ignore it or feel attacked</td><td>Use it as information</td></tr>
+            <tr><td class="rowh">Others' success</td><td>A threat to my standing</td><td>A source of lessons and inspiration</td></tr>
+            <tr><td class="rowh">Failure means</td><td>"I am a failure"</td><td>"That strategy didn't work"</td></tr>
+            <tr><td class="rowh">Praise that fits</td><td>"You're so smart!"</td><td>"You worked through that well."</td></tr>
+            <tr><td class="rowh">In leadership</td><td>Genius-leader, yes-people</td><td>Collective genius, open dissent</td></tr>
+            <tr><td class="rowh">In relationships</td><td>Trouble means wrong match</td><td>Trouble means something to work on</td></tr>
+            <tr><td class="rowh">Main cost / gain</td><td>Stalled growth and fragility</td><td>Discomfort now, development over time</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Two points are worth holding onto. First, the mindsets are about <strong>meaning</strong>: the same event is read two different ways. Second, the shift is usually small and specific: the choice of a word, a task, or a question in the moment.</p>
+    </div>
+  </div>
+
+  <!-- TRY IT -->
+  <div class="m-section" id="m-try">
+    <div class="m-head" style="background:var(--rust);">
+      <div class="dials">Interactive</div>
+      <h3>try it</h3>
+      <div class="tag">Map your own lean by domain, then test your eye on six statements.</div>
+    </div>
+    <div class="m-body">
+      <h4>Your mindset map</h4>
+      <p style="margin-bottom:14px;">A self-reflection sketch of my own, not a test from the book. For each area, slide toward the side that sounds more like your gut reaction when it is hard.</p>
+      <div class="map-box">
+        <div id="map-sliders"></div>
+        <div class="map-bar"><i id="map-pos" style="left:50%"></i></div>
+        <div class="scale-cap"><span>More fixed</span><span>More growth</span></div>
+        <div class="map-out" id="map-out"><h5 id="map-title"></h5><div id="map-text"></div></div>
+      </div>
+
+      <h4>Spot the mindset</h4>
+      <p style="margin-bottom:12px;">Six statements, all invented by me. Tap your answer.</p>
+      <div id="quiz"></div>
+      <div class="quiz-score" id="quiz-score"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOOLKIT ═══════════════ -->
+<div id="toolkit" class="panel">
+  <div class="section-header"><h2>The Toolkit</h2><div class="section-line"></div></div>
+  <p class="lead">The book's main practical ideas gathered in one place. They are described from my reading of its structure; the practice plan at the bottom is my own suggestion.</p>
+
+  <div class="method-card"><div class="tag">Language</div><h4>Process Praise vs Person Praise</h4>
+    <p>Praise what someone did (effort, strategy, focus, improvement) rather than what they supposedly are. The point is to tell them what to repeat.</p>
+    <ul>
+      <li><strong>Swap:</strong> "You're so clever" → "That strategy paid off. How did you decide on it?"</li>
+      <li><strong>Swap:</strong> "Natural talent!" → "I could see how much you practised that."</li>
+      <li><strong>Also:</strong> be careful with consolation like "not everyone is good at this," which can carry a fixed message.</li>
+    </ul>
   </div>
 
   <div class="code-block">
-    <span class="comment">// A one-word reframe that keeps the door to improvement open</span><br><br>
-    <span class="keyword">Fixed frame:</span>  <span class="value">"I'm not good at this."  → a permanent verdict</span><br>
-    <span class="keyword">Growth frame:</span> <span class="value">"I'm not good at this yet."  → a temporary status</span><br><br>
-    <span class="comment">// The task hasn't changed — only whether failure is a full stop or a comma</span>
+    <span class="c"># The one-word reframe</span><br>
+    <span class="r">Fixed:</span>  "I'm not good at this."      → a permanent verdict<br>
+    <span class="k">Growth:</span> "I'm not good at this yet."  → a stage<br>
+    <span class="c"># Then add a question: what would help me get there?</span>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Key Concepts &amp; Tools</h2>
-    <div class="section-line"></div>
+  <div class="method-card"><div class="tag">Self-work</div><h4>The Fixed-Mindset Persona</h4>
+    <ul>
+      <li><strong>Notice:</strong> when do you feel judged or threatened? What does the inner voice say?</li>
+      <li><strong>Name:</strong> give the voice a name so it is separate from you.</li>
+      <li><strong>Talk back:</strong> acknowledge it, then ask what a learner would do next.</li>
+      <li><strong>Act:</strong> take one small growth-minded step anyway.</li>
+    </ul>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Research</div>
-    <h4>Person Praise vs. Process Praise</h4>
-    <p>Praising a person's intelligence or talent ("you're so smart") reliably installs a fixed mindset, even when purely well-intentioned — it teaches that worth is tied to an innate quality that can be revealed as lacking. Praising the process — effort, strategy, focus, persistence, improvement — reliably installs a growth mindset instead. This is Dweck's single most actionable, widely cited finding.</p>
+  <div class="method-card"><div class="tag">Education</div><h4>Brainology and the Brain-Grows Message</h4>
+    <p>Teaching people that the brain strengthens with effortful practice gives them a reason to value struggle. The idea is to pair this with specific strategies, since belief without a plan has little to hold on to.</p>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Tool</div>
-    <h4>The Fixed-Mindset Persona</h4>
-    <p>A self-reflection technique for adults: name the internal voice that appears when you're challenged or criticized and urges you to protect your ego rather than engage. Learning to recognize this persona's specific triggers creates a moment of choice — respond as the persona wants, or deliberately choose the growth-mindset response instead.</p>
+  <div class="method-card"><div class="tag">Leadership</div><h4>Collective Genius Over Genius Leader</h4>
+    <ul>
+      <li>Ask for disconfirming information and reward the person who brings it.</li>
+      <li>Develop people rather than only judging them.</li>
+      <li>Avoid labelling people as stars or duds.</li>
+      <li>Treat mistakes as material for the team to learn from.</li>
+    </ul>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Program</div>
-    <h4>Brainology</h4>
-    <p>An educational curriculum, developed from Dweck's research, that teaches students the neuroscience of how the brain physically strengthens through effortful practice. Students who understood the biological mechanism behind growth showed measurable shifts toward growth-mindset behavior and improved academic outcomes.</p>
+  <div class="toolkit-list" style="margin-top:12px;">
+    <div class="toolkit-item"><div>🔍</div><div><strong>Domain Mindset Map</strong>: list where you notice a fixed mindset operating</div></div>
+    <div class="toolkit-item"><div>🗣️</div><div><strong>Praise Language Check</strong>: swap trait praise for process praise</div></div>
+    <div class="toolkit-item"><div>⏳</div><div><strong>The Power of "Yet"</strong>: add it to any fixed statement about ability</div></div>
+    <div class="toolkit-item"><div>🎭</div><div><strong>Name Your Persona</strong>: recognise the voice faster</div></div>
+    <div class="toolkit-item"><div>🧠</div><div><strong>Reframe Feedback</strong>: criticism is data about strategy, not a verdict on worth</div></div>
+    <div class="toolkit-item"><div>🤝</div><div><strong>Seek Disconfirming Feedback</strong>: ask for what a fixed mindset would avoid</div></div>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Model</div>
-    <h4>Genius vs. Collective Genius</h4>
-    <p>Two leadership models drawn from the business chapter: a "genius with a thousand helpers" culture, dependent on one leader's judgment never being wrong, versus a "collective genius" culture that develops capability throughout the organization and actively seeks disconfirming information. The second is more durable because it doesn't depend on infallibility.</p>
-  </div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Quick-Reference Toolkit</h2>
-    <div class="section-line"></div>
-  </div>
-
+  <div class="section-header" style="margin-top:30px;"><h2>A 30-Day Practice Plan</h2><div class="section-line"></div></div>
+  <div class="note-box">This plan is my own suggestion for putting the book to work, not something drawn from it.</div>
   <div class="toolkit-list">
-    <div class="toolkit-item"><div class="t-ic">🔍</div><div><strong>Domain Mindset Map</strong> — list the areas of your life where you notice a fixed mindset operating</div></div>
-    <div class="toolkit-item"><div class="t-ic">🗣️</div><div><strong>Praise Language Check</strong> — swap "you're so smart" for praise of effort, strategy, or process</div></div>
-    <div class="toolkit-item"><div class="t-ic">⏳</div><div><strong>The Power of Yet</strong> — add "yet" to any fixed statement about ability</div></div>
-    <div class="toolkit-item"><div class="t-ic">🎭</div><div><strong>Name Your Persona</strong> — give your fixed-mindset inner voice a name so you can recognize it faster</div></div>
-    <div class="toolkit-item"><div class="t-ic">🧠</div><div><strong>Reframe Feedback</strong> — treat criticism as data about strategy, not a verdict on worth</div></div>
-    <div class="toolkit-item"><div class="t-ic">🏆</div><div><strong>Celebrate Effort Publicly</strong> — recognize process and improvement, not just outcomes, in teams and kids alike</div></div>
-    <div class="toolkit-item"><div class="t-ic">🤝</div><div><strong>Seek Disconfirming Feedback</strong> — actively ask for the criticism a fixed mindset would avoid</div></div>
-    <div class="toolkit-item"><div class="t-ic">📈</div><div><strong>Track Growth, Not Just Results</strong> — measure improvement over time, not just pass/fail outcomes</div></div>
+    <div class="toolkit-item"><div>🗓️</div><div><strong>Week 1:</strong> Map three or four domains. Write down one moment this week when the fixed voice spoke up.</div></div>
+    <div class="toolkit-item"><div>💬</div><div><strong>Week 2:</strong> Change your praise. Give one piece of process praise a day to someone else, and to yourself.</div></div>
+    <div class="toolkit-item"><div>🎯</div><div><strong>Week 3:</strong> Pick one thing you have been avoiding because you might look bad, and attempt a small version of it.</div></div>
+    <div class="toolkit-item"><div>🤲</div><div><strong>Week 4:</strong> Ask two people for specific criticism. Do not defend; act on one thing and report back.</div></div>
   </div>
-
 </div>
 
-<!-- ════════════════════════════════════════════
-     VERDICT
-════════════════════════════════════════════ -->
+<!-- ═══════════════ KEY PHRASES ═══════════════ -->
+<div id="quotes" class="panel">
+  <div class="section-header"><h2>Key Phrases &amp; Ideas</h2><div class="section-line"></div></div>
+  <div class="note-box">These are the book's signature terms and short paraphrases of its main arguments. I have not reproduced passages from the text. Add your own favourite lines from your copy here.</div>
+
+  <div class="quote-block"><p>Fixed mindset.</p><div class="attr">— Ability as a set quantity to be proved</div></div>
+  <div class="quote-block"><p>Growth mindset.</p><div class="attr">— Ability as something developed through effort and strategy</div></div>
+  <div class="quote-block"><p>Not yet.</p><div class="attr">— The reframe from permanent verdict to current stage</div></div>
+  <div class="quote-block"><p>Person praise vs process praise.</p><div class="attr">— Praising traits versus praising effort and strategy</div></div>
+  <div class="quote-block"><p>The fixed-mindset persona.</p><div class="attr">— The inner voice that protects the ego under challenge</div></div>
+  <div class="quote-block"><p>Brainology.</p><div class="attr">— The programme teaching that the brain grows with practice</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
+  <p class="lead">Paraphrases, not direct quotes.</p>
+  <div class="quote-block"><p>Struggle is not proof you lack ability; it is how ability is built.</p><div class="attr">— Paraphrase of the core argument</div></div>
+  <div class="quote-block"><p>Telling a child they are clever can make them afraid to be seen failing.</p><div class="attr">— Paraphrase of the praise research (Ch. 7)</div></div>
+  <div class="quote-block"><p>The "natural genius" story hides the years of work behind it.</p><div class="attr">— Paraphrase of Chapter 3</div></div>
+  <div class="quote-block"><p>Leaders who need to be the smartest in the room end up with rooms full of yes.</p><div class="attr">— Paraphrase of Chapter 5</div></div>
+  <div class="quote-block"><p>Notice your fixed voice early enough to choose a different reply.</p><div class="attr">— Paraphrase of Chapter 8</div></div>
+</div>
+
+<!-- ═══════════════ VERDICT ═══════════════ -->
 <div id="verdict" class="panel">
-  <div class="verdict-banner">
-    <h3>⭐ 4.6 / 5</h3>
-    <p>A landmark distinction, backed by decades of research, that reframes how to think about talent, effort, failure, and growth in every domain of life</p>
-    <div class="rating-row">
-      <div class="rating-item">
-        <div class="r-score">4.7</div>
-        <div class="r-label">Accessibility</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.5</div>
-        <div class="r-label">Practicality</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.6</div>
-        <div class="r-label">Breadth</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.8</div>
-        <div class="r-label">Originality</div>
-      </div>
-    </div>
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">5.0<small> / 5</small></div><div class="cmp-sub">Dan's own rating. His category average is 4.38, so his overall is 0.62 above it.</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Reader consensus</div><div class="cmp-score">4.09<small> / 5</small></div><div class="cmp-sub">Goodreads, 183,879 ratings (checked 9 Nov 2026). 75% gave 4 or 5 stars; 6% gave 1 or 2.</div></div>
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.8<small> / 5</small></div><div class="cmp-sub">Category average 3.75. Close to the crowd; slightly lower on evidence.</div></div>
   </div>
+  <div class="note-box">Claude's scores are a judgment, not Dan's opinion and not reader data. Claude has not read the book itself: they rest on its contents and themes, reader reviews and the critiques linked below. The three views are kept separate on purpose.</div>
 
-  <div class="section-header">
-    <h2>Strengths &amp; Limitations</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <div class="cat-wrap"><table class="cat-table">
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">4.5</td><td class="num">4.0</td><td>The fixed-versus-growth contrast is simple, original in its reach and has changed how schools and workplaces talk about ability.</td></tr>
+    <tr><td>Readability</td><td class="num">4.0</td><td class="num">4.0</td><td>Clear, story-driven and well structured, but the same contrast repeats across every domain.</td></tr>
+    <tr><td>Actionability</td><td class="num">3.5</td><td class="num">5.0</td><td>The praise guidance and the "yet" reframe are usable at once; some readers say the how-to-change section is thin.</td></tr>
+    <tr><td>Evidence</td><td class="num">3.0</td><td class="num">4.5</td><td>Strong early experiments, but later chapters lean on anecdote and follow-up research shows smaller effects than popular accounts imply.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.75</td><td class="num">4.38</td><td>Claude's overall 3.8 is 0.3 below the Goodreads 4.09, within the usual margin. Dan's overall of 5.0 sits above his own category average of 4.38. The biggest gap between Dan and Claude is Evidence (4.5 vs 3.0), then Actionability (5.0 vs 3.5).</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence.</p>
 
+  <div class="section-header"><h2>What Other Readers Say</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Goodreads (<em>Mindset: The New Psychology of Success</em>, all editions combined): 183,879 ratings, 12,975 reviews. Star split: 5&#9733; 42% (77,998), 4&#9733; 33% (61,191), 3&#9733; 17% (31,895), 2&#9733; 4% (9,115), 1&#9733; 2% (3,680).</p>
   <div class="pro-con-grid">
-    <div class="pro-list">
-      <h4>Strengths</h4>
-      <div class="list-item"><div class="dot"></div><div>A genuinely simple, sticky distinction that's immediately useful the moment you understand it — rare for a book built on decades of academic research</div></div>
-      <div class="list-item"><div class="dot"></div><div>Spans domains convincingly — school, sport, business, and relationships all get real, specific treatment rather than a single case study stretched thin</div></div>
-      <div class="list-item"><div class="dot"></div><div>The person-praise vs. process-praise research is immediately actionable for parents, teachers, and managers alike</div></div>
-      <div class="list-item"><div class="dot"></div><div>Honest about the fact that mindsets are mixed and situational, not a clean personality type — avoids oversimplifying into "growth people" and "fixed people"</div></div>
-      <div class="list-item"><div class="dot"></div><div>The final chapter gives a real, practical method for adult self-change, not just a diagnosis of the problem</div></div>
+    <div class="pro-list"><h4>What readers praise</h4>
+      <div class="list-item"><div class="dot"></div><div>A simple, easily explained core idea: effort and learning over innate talent</div></div>
+      <div class="list-item"><div class="dot"></div><div>Especially useful to parents, teachers, managers and coaches, mainly the effort-over-"smart" praise advice</div></div>
+      <div class="list-item"><div class="dot"></div><div>Reflective: many say it helped them spot their own fixed-mindset habits</div></div>
     </div>
-    <div class="con-list">
-      <h4>Limitations</h4>
-      <div class="list-item"><div class="dot"></div><div>Some of Dweck's original findings — particularly around praise and motivation — have faced replication challenges in later research, and effect sizes in some follow-up studies are smaller than the book implies</div></div>
-      <div class="list-item"><div class="dot"></div><div>Business and sports chapters lean heavily on individual case studies and anecdote rather than the more rigorous experimental evidence used earlier in the book</div></div>
-      <div class="list-item"><div class="dot"></div><div>Says little about genuine structural or resource barriers to growth — the framework can be misread as implying effort alone overcomes any constraint</div></div>
-      <div class="list-item"><div class="dot"></div><div>The "growth mindset" label has since become corporate shorthand in ways the book itself would likely critique — praised in slogans more often than practiced in specific praise language or feedback culture</div></div>
-      <div class="list-item"><div class="dot"></div><div>Relatively light on how to sustain a growth-mindset shift once the initial insight's novelty wears off</div></div>
+    <div class="con-list"><h4>What readers criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>Repetitive: reviewers say the point is made over and over and suggest a short article would do</div></div>
+      <div class="list-item"><div class="dot"></div><div>Anecdotal and overreaching: examples feel cherry-picked and nearly everything is attributed to mindset</div></div>
+      <div class="list-item"><div class="dot"></div><div>Light on how to actually change</div></div>
     </div>
   </div>
-
-  <div class="section-header">
-    <h2>Who Should Read This</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="who-card"><div class="ic">✅</div><div><strong>Parents and teachers</strong> — the praise-language research alone (person praise vs. process praise) is worth the read and is immediately usable the same day.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Managers and leaders</strong> building a team culture — the genius vs. collective-genius distinction reframes how feedback, ranking, and development should work.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone facing a challenge where talent alone hasn't been enough</strong> — a new skill, a new role, a difficult relationship — this book gives language for why effort keeps stalling and how to reframe it.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Coaches and mentors</strong> working with people who show promise but crumble under pressure — the fixed-mindset fragility pattern described here is extremely common and directly addressable.</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting rigorous, current academic grounding</strong> should be aware some original studies have faced replication scrutiny — treat the framework as a genuinely useful lens rather than settled, unchallenged science.</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers facing real structural barriers</strong> (resources, access, systemic disadvantage) should read the growth mindset as a way to respond to setbacks, not as a claim that mindset alone erases external constraints.</div></div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Memorable Lines</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="quote-block">
-    <p>Becoming is better than being.</p>
-    <div class="attr">— Dr. Carol S. Dweck, Mindset</div>
-  </div>
-
-  <div class="quote-block">
-    <p>The passion for stretching yourself and sticking to it, even when it's not going well, is the hallmark of the growth mindset.</p>
-    <div class="attr">— Dr. Carol S. Dweck, Mindset</div>
-  </div>
-
-  <div class="quote-block">
-    <p>Why waste time proving over and over how great you are, when you could be getting better?</p>
-    <div class="attr">— Dr. Carol S. Dweck, Mindset</div>
-  </div>
-
-  <div class="quote-block">
-    <p>Not yet. It turns out that the words "not yet" changed everything.</p>
-    <div class="attr">— Dr. Carol S. Dweck, Mindset</div>
-  </div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>The Single Most Important Insight</h2>
-    <div class="section-line"></div>
-  </div>
   <div class="summary-block">
-    <p>If the book has one idea worth carrying forward above all others, it's that effort and struggle are not evidence of inadequacy — they are the actual mechanism by which capability gets built. The fixed mindset treats needing to try hard as faintly embarrassing, an admission that talent alone wasn't enough. The growth mindset inverts this completely: trying hard is not a consolation prize for lacking natural ability, it is how ability of any kind is actually produced, at any age, in any domain.</p>
-    <p>This reframing has an outsized practical effect precisely because it's so easy to apply in the moment. The instant a setback, a piece of criticism, or a difficult new skill triggers the thought "I'm just not good at this," the growth-mindset move is to add one word — "yet" — and ask what strategy, effort, or help would move the needle, rather than treating the current struggle as a final verdict on capability.</p>
-    <p>What makes this durable rather than just motivational is that Dweck backs it with a genuine mechanism: the brain physically changes and strengthens through effortful engagement, which means the growth mindset isn't wishful thinking layered on top of reality — it's a more biologically accurate description of how learning actually works than the fixed mindset's assumption of static, unchangeable ability.</p>
+    <p><strong>What you may have missed:</strong> the wider research record is more mixed than the book's tone suggests. Wikipedia's summary of the criticism cites a 2019 Education Endowment Foundation randomised trial that found no significant literacy or numeracy gain from growth-mindset training, and a 2019 paper by Moreau and colleagues warning that overstating how malleable abilities are can backfire.</p>
+    <p>Dweck herself has said nobody has a growth mindset in everything all the time, and later researchers describe a "false growth mindset" where people endorse the idea but do not act on it. That is why the book's own hedge about mixed, situational mindsets matters. I have not read these studies directly.</p>
+  </div>
+  <div class="src-list"><strong>Sources (read 9 Nov 2026):</strong>
+    <a href="https://www.goodreads.com/book/show/40745.Mindset">Goodreads, <em>Mindset</em></a> (ratings and review themes) &middot;
+    <a href="https://en.wikipedia.org/wiki/Mindset">Wikipedia, Mindset</a> (criticism and replication summary, first part of the page read).
+    Summarised from page text, not from the underlying papers. The Sisk et al. 2018 meta-analysis page (SAGE) returned 403, and Amazon was not used: not available.</div>
+
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Dan rates <em>Mindset</em> 5 out of 5. He finds the ideas strong and the book readable, and says he has taken a lot from it and put it into action in his life. He rates the evidence highly because the author has spent years in the research and the datasets behind it.</p>
+    <p>He describes it as something he has taken as gospel and carries into everything he tries. He couldn't name anything he disliked, because changing the way you think only brings good things out of it. The one possible complaint is that it is a long book, but he keeps going back to it, so he doesn't think it can be that long.</p>
+    <p style="font-size:12px;color:var(--muted);">Written up from Dan's own words (11 Nov 2026). His view stands apart from the Claude and reader views above; note that the reader criticisms about repetition and thin evidence in later chapters are not part of his rating.</p></div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>A sticky distinction that is useful the moment you grasp it</div></div>
+      <div class="list-item"><div class="dot"></div><div>Spans school, sport, business, relationships, and parenting with specific treatment of each</div></div>
+      <div class="list-item"><div class="dot"></div><div>The person-versus-process praise idea is immediately actionable for parents, teachers, and managers</div></div>
+      <div class="list-item"><div class="dot"></div><div>Acknowledges that mindsets are mixed and situational rather than a personality type</div></div>
+      <div class="list-item"><div class="dot"></div><div>The final chapter gives adults a practical way to work on themselves</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Some findings from the wider growth-mindset literature have been debated in later research, and effects in some follow-up studies appear smaller than popular accounts suggest (I have not audited the studies here)</div></div>
+      <div class="list-item"><div class="dot"></div><div>The sports and business chapters lean on stories and case studies more than the experimental work in the early chapters</div></div>
+      <div class="list-item"><div class="dot"></div><div>Says relatively little about structural barriers; it can be misread as "effort alone fixes everything"</div></div>
+      <div class="list-item"><div class="dot"></div><div>The term has since become corporate shorthand, often without the specific praise and feedback habits the book describes</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some repetition: the same contrast is made in several domains</div></div>
+    </div>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Overall Summary</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Parents and teachers</strong>: the praise research is worth the read and usable the same day.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Managers and leaders</strong> shaping a team culture, especially around feedback and development.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone stuck where talent alone has not been enough</strong>: a new skill, role, or difficult relationship.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Coaches and mentors</strong> working with people who show promise but crumble under pressure.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting a rigorous review of the evidence</strong> should treat this as an accessible lens, not a settled science, and read critiques alongside it.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers facing real structural barriers</strong> should read the growth mindset as a way to respond to setbacks, not a claim that mindset erases external constraints.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
   <div class="summary-block">
-    <p><strong>Mindset</strong> earns its status as a modern classic by taking a genuinely simple idea — beliefs about whether ability is fixed or can grow shape how people respond to challenge — and following it with rigor and range into education, sport, business, and relationships, without ever needing to complicate the core distinction to make it fit each domain.</p>
-    <p>Its greatest strength is how immediately actionable the research is. The person-praise vs. process-praise finding alone changes concrete, everyday language for parents, teachers, coaches, and managers — a rare case of academic psychology translating directly into a specific sentence you can say differently starting today.</p>
-    <p>The honest caveat is that some of the underlying research has faced replication scrutiny in the years since publication, and the book's later-chapter case studies (particularly in business and sport) lean more on illustrative anecdote than the tighter experimental work in the early chapters. Read it as a genuinely useful lens for interpreting your own and others' reactions to challenge — not as a settled, unchallengeable science of achievement.</p>
-    <p>The practical recommendation: read the whole book once for the framework, then keep the final chapter's fixed-mindset-persona technique close at hand. The real value isn't in agreeing intellectually that growth mindset sounds right — it's in catching your own fixed-mindset reaction in the moment it happens, which is exactly the skill the book spends its last pages building.</p>
+    <p>Effort and struggle are not evidence of inadequacy. They are how capability gets built. The fixed mindset hears difficulty as a verdict; the growth mindset hears it as the work itself. The practical move is small: when you catch the thought "I'm just not good at this," add "yet" and ask what would help.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>Mindset</strong> earns its status as a modern classic by taking one simple idea about beliefs and following it, with range, into learning, sport, work, and relationships. Its biggest practical gift is the praise distinction, which changes concrete sentences you can say differently today.</p>
+    <p>Read it as a lens rather than a settled science, and take the caveats about evidence and structural limits seriously. Then keep the final chapter's persona technique close: the real value is catching your own fixed reaction in the moment it happens.</p>
   </div>
 </div>
 
@@ -915,10 +862,70 @@
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     el.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 1 });
   }
-  function toggleChapter(card) {
-    card.classList.toggle('open');
+  function toggleChapter(card) { card.classList.toggle('open'); }
+
+  function jumpM(id) {
+    const tab = Array.from(document.querySelectorAll('.tab')).find(t => t.textContent.includes('Two Mindsets'));
+    if (!document.getElementById('mindsets').classList.contains('active')) { showTab('mindsets', tab); }
+    setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
   }
+
+  /* Mindset map sliders */
+  const domains = ['Work and career', 'Sport or fitness', 'Creative skills', 'Close relationships', 'Learning something new'];
+  const mapWrap = document.getElementById('map-sliders');
+  domains.forEach((d, i) => {
+    const row = document.createElement('div'); row.className = 'slider-row';
+    row.innerHTML = '<label><span>' + d + '</span><span class="lean" id="lean-' + i + '">Balanced</span></label><input type="range" class="map-in" id="dom-' + i + '" min="0" max="100" value="50">';
+    mapWrap.appendChild(row);
+  });
+  function leanWord(v) { return v < 30 ? 'Leans fixed' : v < 45 ? 'Slightly fixed' : v <= 55 ? 'Balanced' : v <= 70 ? 'Slightly growth' : 'Leans growth'; }
+  function updateMap() {
+    const ins = Array.from(document.querySelectorAll('.map-in'));
+    let sum = 0, lowest = 0;
+    ins.forEach((el, i) => { const v = +el.value; sum += v; document.getElementById('lean-' + i).textContent = leanWord(v); if (v < +ins[lowest].value) lowest = i; });
+    const avg = sum / ins.length;
+    document.getElementById('map-pos').style.left = avg + '%';
+    const out = document.getElementById('map-out');
+    const key = avg < 40 ? 'fx' : avg > 60 ? 'gr' : '';
+    out.className = 'map-out ' + key;
+    document.getElementById('map-title').textContent = avg < 40 ? 'Mostly fixed, at the moment' : avg > 60 ? 'Mostly growth, at the moment' : 'A mix, like most of us';
+    document.getElementById('map-text').textContent = 'Your lowest score is "' + domains[lowest] + '". That is the first place to try a "not yet" reframe, one small stretch task, or a request for specific feedback.';
+  }
+  document.querySelectorAll('.map-in').forEach(el => el.addEventListener('input', updateMap));
+  updateMap();
+
+  /* Quiz */
+  const quizData = [
+    { q: '"If I have to study this hard, I clearly don\'t have the talent."', a: 'fx', why: 'Treating effort as proof of low ability is a hallmark of the fixed mindset.' },
+    { q: '"That pitch flopped. What did the client react to, and what would I change?"', a: 'gr', why: 'Failure becomes information about strategy, not a verdict on the person.' },
+    { q: 'A parent says to a child after a test: "You\'re so clever, you didn\'t even need to revise!"', a: 'fx', why: 'Praising a trait (and easy success) teaches that struggle means you are not clever. It tends to feed a fixed mindset.' },
+    { q: '"I\'m not confident at public speaking yet. I\'ll do the short slot first and ask for notes."', a: 'gr', why: '"Yet", a small stretch, and a request for feedback: classic growth-mindset moves.' },
+    { q: 'A colleague gets promoted and you think: "They must have gotten lucky, and now I look worse."', a: 'fx', why: 'Feeling threatened by others\' success is a fixed-mindset reaction. A growth view would ask what you could learn.' },
+    { q: '"You tried three different ways to solve that. What did you learn from the second one?"', a: 'gr', why: 'Process praise plus a curious question: it names effort and strategy.' }
+  ];
+  const names = { fx: 'Fixed', gr: 'Growth' };
+  const quiz = document.getElementById('quiz');
+  let answered = 0, correct = 0;
+  quizData.forEach((d, i) => {
+    const card = document.createElement('div'); card.className = 'quiz-card';
+    card.innerHTML = '<div class="q"><span class="n">' + (i + 1) + '.</span>' + d.q + '</div><div class="quiz-opts"></div><div class="quiz-exp"></div>';
+    const opts = card.querySelector('.quiz-opts'), exp = card.querySelector('.quiz-exp');
+    Object.keys(names).forEach(k => {
+      const b = document.createElement('button'); b.textContent = names[k] + ' mindset';
+      b.onclick = () => {
+        opts.querySelectorAll('button').forEach(x => { x.disabled = true; if (x.textContent === names[d.a] + ' mindset') x.classList.add('right'); });
+        if (k !== d.a) b.classList.add('wrong'); else correct++;
+        answered++;
+        exp.textContent = (k === d.a ? 'Correct. ' : 'Not quite: it\'s the ' + names[d.a].toLowerCase() + ' mindset. ') + d.why;
+        exp.classList.add('show');
+        if (answered === quizData.length) document.getElementById('quiz-score').textContent = 'Score: ' + correct + ' / ' + quizData.length;
+      };
+      opts.appendChild(b);
+    });
+    quiz.appendChild(card);
+  });
 </script>
 </body>
 </html>
