@@ -484,13 +484,100 @@
     .panel { padding: 20px 16px 40px; }
     .hero { padding: 36px 20px 28px; flex-wrap: wrap; }
   }
+
+  /* ── Added for six-tab format ── */
+  html { scroll-behavior: smooth; }
+  .tabs { position: sticky; top: 0; z-index: 20; }
+  .panel { max-width: 1020px; margin: 0 auto; }
+  .lead { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+  .note-box { background: rgba(10,20,20,0.04); border: 1.5px dashed var(--muted); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; line-height: 1.6; color: #333; margin-bottom: 22px; }
+  .chapter-body p + p { margin-top: 10px; }
+  .chapter-body ul { margin: 10px 0 0 18px; }
+  .ch-num.intro { background: var(--ink); color: var(--yellow); }
+  .ch-tool { margin-top: 8px; background: rgba(10,20,20,.05); border-left: 3px solid var(--ink); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 12.5px; color: #333; }
+  .ch-tool strong { color: var(--ink); }
+  .badge-v { display: inline-block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; font-family: 'DM Sans', sans-serif; }
+  .badge-v.ok { background: #e3f1e6; color: #1d6b3a; }
+  .badge-v.warn { background: #fdecd6; color: #9a4a06; }
+  .m-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .m-pill { padding: 8px 16px; border-radius: 20px; font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; color: #fff; cursor: pointer; background: var(--ink); text-decoration: none; }
+  .m-pill.o { background: var(--teal-dark); } .m-pill.y { background: var(--yellow); color: var(--ink); } .m-pill.l { background: var(--teal-pale); color: var(--teal-deep); }
+  .m-section { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 28px; scroll-margin-top: 70px; }
+  .m-head { padding: 22px 26px 18px; color: #fff; }
+  .m-head.o { background: var(--teal-dark); } .m-head.k { background: var(--ink); } .m-head.y { background: var(--yellow); color: var(--ink); } .m-head.l { background: var(--teal-pale); color: var(--teal-deep); } .m-head.r { background: var(--rust); }
+  .m-head .dials { letter-spacing: 2px; text-transform: uppercase; font-size: 11px; font-weight: 600; opacity: .85; margin-bottom: 6px; }
+  .m-head h3 { font-family: 'Playfair Display', serif; font-size: clamp(22px, 5vw, 30px); line-height: 1.1; }
+  .m-head .tag { margin-top: 8px; font-size: 14px; line-height: 1.55; max-width: 620px; opacity: .95; }
+  .m-body { padding: 20px 26px 24px; }
+  .m-body h4 { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-dark); margin: 20px 0 8px; font-weight: 700; }
+  .m-body h4:first-child { margin-top: 0; }
+  .m-body p { font-size: 14px; line-height: 1.75; color: #282828; }
+  .m-body p + p { margin-top: 10px; }
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 4px; }
+  .q-card { background: var(--cream); border: 1px solid #dcefee; border-radius: 8px; padding: 14px 16px; }
+  .q-card h5 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .q-card ul { list-style: none; }
+  .q-card li { position: relative; padding-left: 16px; font-size: 13px; line-height: 1.55; margin-bottom: 6px; color: #333; }
+  .q-card li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+  .scenario { background: #fff; border: 1.5px dashed var(--muted); border-radius: 8px; padding: 14px 16px; font-size: 13.5px; line-height: 1.7; color: #333; }
+  .scenario .lab { font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+  .cmp-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 18px; }
+  table.cmp { width: 100%; border-collapse: collapse; background: #fff; min-width: 760px; font-size: 12.5px; line-height: 1.5; }
+  table.cmp th, table.cmp td { padding: 10px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid #eee; }
+  table.cmp th { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; color: #fff; background: var(--ink); }
+  table.cmp th.a { background: var(--teal-dark); } table.cmp th.b { background: var(--teal-deep); } table.cmp th.c { background: var(--ink); } table.cmp th.d { background: var(--rust); } table.cmp th.e { background: var(--yellow); color: var(--ink); } table.cmp th.blank { background: var(--teal-pale); }
+  table.cmp td.rowh { font-weight: 700; background: var(--cream); width: 120px; }
+  .map-box { background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 26px; }
+  .slider-row { margin-bottom: 14px; }
+  .slider-row label { display: flex; justify-content: space-between; gap: 10px; font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .slider-row label .lean { font-weight: 700; color: var(--teal-dark); font-size: 12px; white-space: nowrap; }
+  .slider-row input[type=range] { width: 100%; accent-color: var(--teal-dark); }
+  .map-out { border-radius: 10px; padding: 14px 16px; color: #fff; font-size: 13.5px; line-height: 1.6; margin-top: 16px; background: var(--teal-deep); }
+  .map-out h5 { font-family: 'Playfair Display', serif; font-size: 17px; margin-bottom: 4px; color: var(--yellow); }
+  .mix-bars { margin-top: 14px; }
+  .mix-row { display: flex; align-items: center; gap: 10px; font-size: 12px; margin-bottom: 6px; }
+  .mix-row span.nm { width: 120px; font-weight: 600; flex-shrink: 0; }
+  .mix-row .bar { flex: 1; height: 10px; border-radius: 5px; background: #d6ecea; overflow: hidden; }
+  .mix-row .bar i { display: block; height: 100%; background: var(--teal-dark); transition: width .25s; }
+  .mix-row span.pc { width: 38px; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .quiz-card { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+  .quiz-card .q { font-size: 14px; line-height: 1.6; margin-bottom: 10px; font-weight: 500; }
+  .quiz-card .q .n { font-weight: 700; color: var(--teal-dark); margin-right: 6px; }
+  .quiz-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .quiz-opts button { padding: 7px 14px; border-radius: 18px; border: 1.5px solid var(--ink); background: #fff; font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .quiz-opts button:hover:not(:disabled) { background: var(--yellow-dim); }
+  .quiz-opts button.right { background: #1d6b3a; color: #fff; border-color: #1d6b3a; }
+  .quiz-opts button.wrong { background: #b3281a; color: #fff; border-color: #b3281a; }
+  .quiz-exp { display: none; margin-top: 10px; font-size: 12.5px; line-height: 1.6; color: #333; background: rgba(10,20,20,.05); padding: 10px 12px; border-radius: 6px; }
+  .quiz-exp.show { display: block; }
+  .quiz-score { font-weight: 600; font-size: 14px; color: var(--teal-dark); margin-top: 8px; }
+  .method-card ul { margin: 8px 0 0 18px; } .method-card li { font-size: 13px; line-height: 1.65; color: var(--muted); margin-bottom: 4px; }
+  .code-block { overflow-wrap: anywhere; }
+  .quote-block p { font-size: 17px; }
+  /* Three-way ratings */
+  .cmp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
+  .cmp-card { background:#fff; border:1px solid #dcefee; border-radius:12px; padding:18px 16px; text-align:center; }
+  .cmp-card.you { border-top:4px solid var(--rust); }
+  .cmp-card.crowd { border-top:4px solid var(--teal); }
+  .cmp-card.me { border-top:4px solid var(--ink); }
+  .cmp-label { font-size:10.5px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--muted); margin-bottom:8px; }
+  .cmp-score { font-family:'Playfair Display',serif; font-weight:700; font-size:38px; color:var(--ink); line-height:1; }
+  .cmp-score small { font-size:15px; color:var(--muted); font-weight:400; }
+  .cmp-score.pending { color:var(--muted); }
+  .cmp-sub { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.5; }
+  .cat-wrap { overflow-x:auto; margin-bottom:8px; }
+  .cat-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid #dcefee; font-size:13px; min-width: 520px; }
+  .cat-table th, .cat-table td { padding:10px 12px; text-align:left; border-bottom:1px solid #eee; vertical-align:top; }
+  .cat-table th { font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); background:var(--cream); }
+  .cat-table td.num { font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .cat-table tr.avg td { font-weight:700; background:var(--cream); }
+  .src-list { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:22px; }
+  .src-list a { color: var(--teal-dark); }
+  @media (max-width: 700px) { .q-grid, .toolkit-list, .cmp-grid { grid-template-columns:1fr; } .mix-row span.nm { width: 96px; } }
+  @media (max-width: 560px) { .m-body { padding: 16px 16px 20px; } .m-head { padding: 18px 16px 14px; } .back-bar { padding: 10px 16px; } }
 </style>
 </head>
 <body>
-
-<!-- ════════════════════════════════════════════
-     HERO — teal canvas + timeline dots + cover
-════════════════════════════════════════════ -->
 <div class="hero">
   <div class="hero-timeline">
     <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -517,7 +604,7 @@
       <div class="meta-pill">Leadership Transitions</div>
       <div class="meta-pill">Onboarding</div>
       <div class="meta-pill">Career Strategy</div>
-      <div class="meta-pill">International Bestseller</div>
+      <div class="meta-pill">STARS Model</div>
     </div>
   </div>
 
@@ -533,512 +620,570 @@
 <div class="tabs">
   <div class="tab active" onclick="showTab('overview', this)">Overview</div>
   <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
-  <div class="tab" onclick="showTab('framework', this)">Framework &amp; Toolkit</div>
-  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+  <div class="tab" onclick="showTab('framework', this)">STARS &amp; Five Conversations</div>
+  <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
+  <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
+  <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     OVERVIEW
-════════════════════════════════════════════ -->
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
 <div id="overview" class="panel active">
 
-  <div class="section-header">
-    <h2>What This Book Is About</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
 
   <div class="overview-grid">
     <div class="stat-card">
       <div class="stat-label">Core Focus</div>
       <div class="stat-value">Leadership Transitions</div>
-      <div class="stat-desc">How to take charge successfully in a new role — whether you're promoted, hired externally, or moving to a new unit</div>
+      <div class="stat-desc">How to take charge in a new role, whether you are promoted, hired from outside, or moved to a new unit</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Central Promise</div>
-      <div class="stat-value">Accelerate the Break-Even Point</div>
-      <div class="stat-desc">Every transition has a moment where you start producing more value than you consume — the goal is to reach it faster and more safely</div>
+      <div class="stat-value">Reach Break-Even Sooner</div>
+      <div class="stat-desc">The break-even point is when the value you have produced matches the value you have consumed; the book is about reaching it faster</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Primary Tools</div>
-      <div class="stat-value">STARS, 5 Conversations, Early Wins</div>
-      <div class="stat-desc">A full toolkit of diagnostic frameworks — matching your situation, negotiating with your boss, and building momentum</div>
+      <div class="stat-value">STARS, Five Conversations, Early Wins</div>
+      <div class="stat-desc">Diagnose your situation, negotiate with your boss, and choose early wins with a checklist</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Best For</div>
-      <div class="stat-value">Anyone Starting Something New</div>
-      <div class="stat-desc">New leaders, newly promoted managers, new hires, and the HR/talent teams responsible for onboarding them</div>
+      <div class="stat-value">Anyone Starting a Leadership Role</div>
+      <div class="stat-desc">New leaders, newly promoted managers, and the people who design onboarding for them</div>
     </div>
-  </div>
-
-  <div class="resource-notice">
-    <strong>Companion Toolkit Included</strong>
-    This review includes the full <em>Figures, Tables, and Exercises</em> companion workbook referenced throughout the book — 48 pages of every diagnostic tool, checklist, and template Watkins mentions, ready to print and use.
-    <br>
-    <a href="pdfs/the-first-90-days-toolkit.pdf" class="resource-btn" target="_blank">📄 Download the Companion Toolkit (PDF)</a>
   </div>
 
   <div class="summary-block">
-    <p><strong>The First 90 Days</strong> is the definitive playbook for navigating a career transition — the highest-risk, highest-opportunity period a leader will ever face. Michael Watkins, a leadership transition expert who has coached executives at every level, builds the book around a deceptively simple insight: transitions are dangerous because the "vicious cycle" of bad decisions, lost credibility, and poor relationship-building is much easier to fall into than the "virtuous cycle" of good decisions and increasing trust — and once you're in the vicious cycle, it is extraordinarily hard to climb back out.</p>
-    <p>This Updated and Expanded edition adds a decade and a half of new material on top of the original 2003 classic: a chapter on onboarding others (Chapter 10, "Expedite Everyone"), the STARS model for diagnosing your situation, deeper coverage of promotions specifically (as opposed to only external hires), and new tools like the Transition Risk Assessment and the Transition Heat Map. The result is less a single argument and more a complete operating system for the first three months in any new role — methodical, sequential, and built for immediate application rather than passive reading.</p>
-    <p>The book's power comes from its refusal to treat "getting up to speed" as something that just happens with time and good intentions. Watkins breaks the transition into distinct, learnable skills — diagnosing your situation, learning efficiently, negotiating with your new boss, securing early wins, aligning the organization, building your team, creating alliances, and managing your own energy — and gives a specific tool for each one. It reads less like a book of stories and more like a manual you keep on your desk during your first quarter.</p>
+    <p><strong>The First 90 Days</strong> by Michael D. Watkins is a structured playbook for the first months in a new leadership role. This is the Updated and Expanded edition (Harvard Business Review Press, the tenth-anniversary edition per the publisher listing at IMD). The cover on this page is that edition.</p>
+    <p>Its backbone is a set of core challenges, one per chapter: prepare yourself, accelerate your learning, match your strategy to the situation, negotiate success, secure early wins, achieve alignment, build your team, and create alliances, followed by chapters on keeping your balance and on helping everyone else through their own transitions. Almost every chapter ends in a worksheet, table or diagram.</p>
+    <p>Two diagrams frame the whole book. The break-even chart shows value produced against value consumed over the first months. A pair of cycle diagrams show how inadequate learning, bad decisions and lost credibility feed on each other, while focused learning, informed strategy and early wins build on each other. I rate it more as a working manual than a narrative: it is easy to dip into and harder to read straight through.</p>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Core Ideas at a Glance</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="note-box"><strong>Sourcing:</strong> I have not read the book cover to cover. The names and contents of the figures and tables on this page come from the companion <em>Figures, Tables and Exercises</em> PDF (linked on the Toolkit tab), which reproduces the book's own tools by chapter number. Chapter prose summaries are reconstructed from those tools plus published summaries, not a line-by-line reading. Details are on the All Chapters tab. The previous version of this page had invented quotations; they have been removed.</div>
 
-  <div class="key-idea"><div class="icon">⚖️</div><div><strong>Every transition has a break-even point.</strong> Early on you consume more value than you create — you're being paid to learn, not yet to produce. The entire book is about shortening the distance to the point where that flips.</div></div>
-  <div class="key-idea"><div class="icon">🔁</div><div><strong>You are always in one of two cycles.</strong> The virtuous cycle (learning → good decisions → credibility → support → more good decisions) reinforces itself. So does the vicious cycle (poor learning → bad decisions → lost credibility → resistance). Small early choices determine which one you're in.</div></div>
-  <div class="key-idea"><div class="icon">🧭</div><div><strong>Diagnose your situation before you act.</strong> The STARS model (Start-up, Turnaround, Accelerated growth, Realignment, Sustaining success) means the "right" leadership approach is completely different depending on which situation you've actually walked into.</div></div>
-  <div class="key-idea"><div class="icon">🤝</div><div><strong>Your relationship with your new boss is the single highest-leverage relationship you have.</strong> The Five Conversations framework gives you a structured way to build it deliberately instead of hoping it develops on its own.</div></div>
-  <div class="key-idea"><div class="icon">🏆</div><div><strong>Early wins buy you the credibility to do everything else.</strong> But not just any win — the right win, chosen deliberately using tools like FOGLAMP, that also builds long-term capability rather than just looking good in month one.</div></div>
-  <div class="key-idea"><div class="icon">🧩</div><div><strong>Alignment, team, and coalitions compound.</strong> Fixing organizational misalignments, building the right team, and creating a base of political support aren't separate projects — they reinforce and depend on each other.</div></div>
-  <div class="key-idea"><div class="icon">🧗</div><div><strong>Transitions are physically and emotionally taxing — plan for it.</strong> The book takes seriously that new leaders burn out, get isolated, and lose perspective, and gives concrete tools (advisers, counselors, the Yerkes-Dodson performance curve) for managing yourself, not just the job.</div></div>
-  <div class="key-idea"><div class="icon">🌊</div><div><strong>Your transition is never the only one happening.</strong> The Updated edition's new closing chapter flips the lens: as a leader, you're constantly onboarding others too, and the same discipline that accelerates your own transition should accelerate theirs.</div></div>
+  <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
+
+  <div class="key-idea"><div class="icon">⚖️</div><div><strong>Every transition has a break-even point.</strong> Early on you consume more than you produce. Figure I-1 in the companion PDF plots this against months after entry, and the book is about shortening the distance.</div></div>
+  <div class="key-idea"><div class="icon">🔁</div><div><strong>Two cycles, one choice.</strong> The vicious cycle runs from inadequate learning to bad decisions, lost credibility, resistance and weak relationships. The virtuous cycle runs from focused learning to informed strategy, credibility, alliances and early wins.</div></div>
+  <div class="key-idea"><div class="icon">🧭</div><div><strong>Diagnose before you act.</strong> STARS (Start-up, Turnaround, Accelerated growth, Realignment, Sustaining success) says the right approach depends on the situation you actually inherited, and most people inherit a mix.</div></div>
+  <div class="key-idea"><div class="icon">🤝</div><div><strong>Negotiate the relationship with your boss.</strong> The Five Conversations (situation, expectations, resources, style, personal development) are a structured agenda, and a second table adapts them for your own team.</div></div>
+  <div class="key-idea"><div class="icon">🏆</div><div><strong>Pick early wins deliberately.</strong> The book gives an evaluation tool for candidate wins and a FOGLAMP checklist (focus, oversight, goals, leadership, abilities, means, process) for planning them.</div></div>
+  <div class="key-idea"><div class="icon">🧩</div><div><strong>Alignment, team and alliances.</strong> Check whether strategy, structure, processes and skills fit; assess the team you inherited; and map who supports, opposes or is undecided.</div></div>
+  <div class="key-idea"><div class="icon">🧗</div><div><strong>Look after yourself.</strong> A stress and performance curve, a self-assessment of the core challenges and a map of your advisers address the personal side.</div></div>
+  <div class="key-idea"><div class="icon">🌊</div><div><strong>You are never the only one in transition.</strong> The final chapter turns to onboarding and promoting other people, with a Transition Heat Map for spotting where support is needed.</div></div>
 
 </div>
 
-<!-- ════════════════════════════════════════════
-     CHAPTERS
-════════════════════════════════════════════ -->
+<!-- ═══════════════ CHAPTERS ═══════════════ -->
 <div id="chapters" class="panel">
+  <div class="note-box"><strong>How to read this tab:</strong> I could not retrieve a full official table of contents (the publisher and O'Reilly pages blocked the fetch). What I could verify: the companion PDF lists the book's figures and tables by chapter number (Introduction and chapters 1 to 10); a publisher excerpt names chapter 4 as "Negotiate Success"; and the book's own Table 9-1 lists the first eight core challenges in order (prepare yourself, accelerate your learning, match your strategy to the situation, negotiate success, secure early wins, achieve alignment, build your team, create alliances). Titles for chapters 8 to 10 come from summary sites and a review, and some listings call chapter 8 "Create Alliances". The earlier version of this page also gave part names ("Framing the Challenge", and so on); I could not verify them and removed them. One summary describes three parts (preface to chapter 2, chapters 3 to 6, chapters 7 to 10). The summaries below are reconstructed from the tools and from published descriptions, not a line-by-line reading, and nothing is quoted. Check titles against your copy.</div>
 
-  <div class="part-header">Introduction — The Challenge of New Beginnings</div>
+  <div class="part-header">Front Matter and Introduction</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num intro">I</div>
-      <div class="ch-title">The Challenge of New Beginnings</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num intro">I</div><div class="ch-title">Preface and Introduction <span class="badge-v warn">Title not verified</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Watkins opens by making the stakes explicit: transitions are the moments of greatest vulnerability and greatest opportunity in a leader's career. Research he cites shows that how a leader handles the first few months in a role is a strong predictor of ultimate success or failure in that role — yet almost no one is trained for it. Most leaders learn transition management by trial and error, at significant personal and organizational cost.
-      <br><br>
-      The chapter introduces the book's two foundational diagrams. The <strong>break-even point</strong> is the moment when you've created as much value as you've consumed since starting the role — before that point, the organization is investing in you; after it, you're paying dividends. The faster and more safely you reach break-even, the better. The <strong>vicious and virtuous cycles</strong> diagram explains why some leaders spiral upward while others spiral downward: focused learning leads to good decisions, which build credibility, which earns support, which enables more learning and better decisions. Skip the learning step, and the same loop runs in reverse — bad decisions erode credibility, credibility loss breeds resistance, and resistance makes further learning even harder.
-      <br><br>
-      Watkins also lays out the <strong>Transition Risk Assessment</strong> here — a self-scoring tool for identifying exactly which types of transition you're facing simultaneously (new industry, new company, new level, new geography, new culture, and so on) and how difficult each dimension actually is for you. Most people are stacking three or four transition types at once without realizing it, which is why transitions that "should" be manageable often aren't.
-      <div class="ch-takeaway">You don't get a grace period in a transition — the vicious cycle can start forming in week one. The goal from day one is to consciously choose the virtuous cycle: learn first, then decide, then act.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The Break-Even Point diagram · The Vicious/Virtuous Cycle model · The Transition Risk Assessment · Key Transition Milestones map</div>
+      <p>This edition opens with a preface for the tenth-anniversary edition, which the publisher listing at IMD describes as adding a view of careers as a series of transitions, updated statistics and new tools. The introduction sets up the book's three framing diagrams.</p>
+      <p>Verified from the companion PDF: the break-even chart (Figure I-1), the vicious cycle (I-2) and the virtuous cycle (I-3), a Transition Risk Assessment (Table I-1) and a map of key transition milestones (Figure I-4). The risk assessment lists twelve kinds of transition, such as a new industry, a new company, a promotion, leading former peers, moving geographically, doing two jobs at once, or entering an organization already in the middle of major change. You tick the ones that apply and rate each from 1 to 10 for difficulty.</p>
+      <div class="ch-takeaway">Count how many transitions you are stacking at once before you plan the first 90 days.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Break-even point · Vicious and virtuous cycles · Transition Risk Assessment · Key transition milestones</div>
     </div>
   </div>
 
-  <div class="part-header">Part I — Framing the Challenge</div>
+  <div class="part-header">Chapters 1 to 4</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">1</div>
-      <div class="ch-title">Prepare Yourself</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">Prepare Yourself <span class="badge-v ok">Title in book's Table 9-1</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      The first practical chapter tackles the mental transition that has to happen before the job transition can succeed: letting go of the mind-set, habits, and sources of expertise that made you successful in your previous role. This is hardest for people being promoted, who assume that what got them promoted will keep working — usually the opposite is true.
-      <br><br>
-      Watkins details how promotion specifically changes the nature of the job: broader impact horizon, greater complexity and ambiguity, tougher organizational politics, more distance from the front line, and dramatically more scrutiny. Each of these demands a corresponding shift — balancing depth and breadth, delegating more deeply, learning to influence rather than direct, communicating more formally, and adjusting to being watched constantly. Leaders who were excellent individual contributors or first-line managers often stumble here because they keep trying to solve problems the old way at a scale where that approach no longer works.
-      <br><br>
-      The chapter introduces the <strong>culture pyramid</strong> — symbols and language at the visible top, norms and behavior patterns in the middle, and fundamental assumptions and values hidden at the base — as a way of understanding that adapting to a new organization's culture requires more than learning the vocabulary; it requires understanding the invisible assumptions that drive everything visible. It closes with detailed onboarding checklists across four dimensions: business orientation, stakeholder connection, expectations alignment, and cultural adaptation — the practical to-do list for the weeks before and immediately after you start.
-      <div class="ch-takeaway">The biggest risk for newly promoted leaders isn't lack of skill — it's continuing to rely on the skills, relationships, and instincts that worked at the previous level, in a role that now demands something different.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Core Promotion Challenges table · The Culture Pyramid · Onboarding Checklists (business, stakeholder, expectations, cultural) · Assessment of Problem Preferences</div>
+      <p>About the mental shift of leaving the old role behind. Table 9-1 phrases the question as adopting the right mind-set for the new job and letting go of the past.</p>
+      <p>The tools for this chapter, per the companion PDF: a table of core promotion challenges (broader impact horizon, more complexity and ambiguity, tougher politics, more distance from the front line, more scrutiny, each paired with a response such as delegating more deeply or communicating more formally); a culture pyramid (symbols and language at the visible top, norms in the middle, fundamental assumptions hidden at the base); four onboarding checklists (business orientation, stakeholder connection, expectations alignment, cultural adaptation); and two self-assessments of which kinds of problems you enjoy (technical, political, cultural).</p>
+      <div class="ch-takeaway">Promotion changes the job in predictable ways; plan for each change rather than doing more of what worked before.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Core promotion challenges · Culture pyramid · Onboarding checklists · Problem preferences</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">2</div>
-      <div class="ch-title">Accelerate Your Learning</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">2</div><div class="ch-title">Accelerate Your Learning <span class="badge-v ok">Title in book's Table 9-1</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Every transition strategy depends on rapid, accurate learning about the new organization — yet most new leaders learn haphazardly, picking up whatever information happens to come their way rather than pursuing it systematically. This chapter turns learning into a deliberate discipline with its own agenda, methods, and sources.
-      <br><br>
-      Watkins distinguishes between technical learning (markets, products, technologies), political learning (who has influence and how decisions really get made), and cultural learning (norms, values, unwritten rules) — and argues most new leaders overinvest in technical learning because it feels safest, while underinvesting in the political and cultural learning that actually predicts success. He maps out the full landscape of knowledge sources available — customers, suppliers, distributors, analysts, competitors, historians (people who've been there a long time), builders (people who helped create current systems), and more — each offering a different, partial view that needs to be triangulated.
-      <br><br>
-      A structured set of learning methods gets detailed treatment: organizational climate surveys, structured interviews across horizontal or vertical "slices" of the organization, focus groups, analysis of critical past decisions, process analysis, plant and market tours, and pilot projects. Each has a specific use case — a vertical slice of interviews surfaces how a decision cascades through levels, for instance, while a horizontal slice reveals whether different departments see the same problem the same way. The chapter's core message is that learning agenda and learning method both need to be chosen on purpose, not left to chance.
-      <div class="ch-takeaway">Technical learning feels productive and is the easiest to pursue — but political and cultural learning are usually what actually determines whether your decisions land. Build a deliberate learning plan that covers all three.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Sources of Knowledge map · Structured Methods for Learning table (surveys, interviews, focus groups, decision analysis, process analysis, tours, pilots)</div>
+      <p>Treats learning as something to plan: what you need to learn, from whom, and how to speed it up. A diagram of sources of knowledge places people such as top management, customers, distributors, suppliers, analysts, salespeople, allies, integrators, historians and builders around the organization's boundary.</p>
+      <p>A table of structured learning methods covers climate and satisfaction surveys, structured interviews with horizontal or vertical slices of the organization, focus groups, analysis of critical past decisions, process analysis, plant and market tours, and pilot projects, each with what it is good for and which managers it suits.</p>
+      <div class="ch-takeaway">Choose your learning methods on purpose, and ask everyone the same questions so you can compare answers.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Sources of knowledge · Structured methods for learning</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">3</div>
-      <div class="ch-title">Match Strategy to Situation</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">3</div><div class="ch-title">Match Strategy to Situation <span class="badge-v ok">Title in book's Table 9-1</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      One of the most important additions to the Updated edition: the <strong>STARS model</strong>. Watkins argues that the single most common transition failure is applying the same leadership approach regardless of situation — running a turnaround like a start-up, or trying to sustain success using the aggressive tactics that work in accelerated growth. The five STARS situations — Start-up, Turnaround, Accelerated growth, Realignment, and Sustaining success — each have distinct challenges, opportunities, and correct playbooks.
-      <br><br>
-      Crucially, most leaders don't face a single pure STARS situation — they inherit a portfolio, with different parts of their remit sitting in different categories at the same time. The chapter's diagnostic tool has you list every project, product, or business unit you're responsible for, assign each to a STARS category, and then allocate your effort across categories deliberately rather than defaulting to whichever situation you personally find most engaging. Watkins includes striking survey data here: leaders find realignment the most challenging situation (30%) but prefer start-ups by a wide margin (47%) — a mismatch between preference and reality that causes real damage when unchecked.
-      <br><br>
-      The chapter's centerpiece comparison is turnarounds versus realignments — deceptively similar (both involve fixing something broken) but requiring nearly opposite approaches across six dimensions: how you organize to learn, how you define strategic intent, how you set priorities, how you build your leadership team, how you secure early wins, and how you create alliances. Turnarounds reward speed and boldness; realignments punish it. Getting this distinction wrong is one of the most common — and most damaging — transition mistakes Watkins has observed.
-      <div class="ch-takeaway">"What got me here" thinking is dangerous because the right leadership approach is situational, not personal. Diagnose whether you're in a start-up, turnaround, accelerated growth, realignment, or sustaining-success situation before choosing your playbook — and expect to be managing several at once.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The STARS Model · Diagnosing Your STARS Portfolio · Leading Change in Turnarounds vs. Realignments · STARS Challenges and Preferences survey data</div>
-    </div>
-  </div>
-
-  <div class="part-header">Part II — Building Support and Momentum</div>
-
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">4</div>
-      <div class="ch-title">Negotiate Success</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      Your relationship with your new boss is, in Watkins's framing, the single most important relationship of your transition — and one that most new leaders leave almost entirely to chance. This chapter turns that relationship into something you actively build through what he calls the <strong>Five Conversations</strong>.
-      <br><br>
-      The five conversations are: the <em>situation</em> conversation (how does your boss see the STARS portfolio you've inherited?), the <em>expectations</em> conversation (what specifically are you expected to accomplish, and by when?), the <em>resources</em> conversation (what people, budget, and authority do you actually have?), the <em>style</em> conversation (how does your boss like to communicate and be kept informed — and how do you?), and the <em>personal development</em> conversation (what's going well, what needs to change, and how will you both know?). Watkins is emphatic that these need to happen early, explicitly, and repeatedly — not as one onboarding meeting but as an ongoing negotiation that gets revisited as the situation evolves.
-      <br><br>
-      A frequently overlooked extension in this chapter: the same five conversations apply to your relationship with each of your own direct reports, not just upward to your boss. New leaders often lavish attention on managing up while assuming their team will simply fall in line — the chapter's team-facing version of the Five Conversations tool corrects for that blind spot. The chapter also details how your boss's ideal support role shifts depending on your STARS situation — a turnaround needs a boss who'll back tough personnel calls, while sustaining success needs one who'll reality-test whether you're actually still in a sustaining-success situation at all.
-      <div class="ch-takeaway">Never assume shared understanding with your boss — negotiate it explicitly across situation, expectations, resources, style, and personal development, early and often. Then run the same conversations downward with your own team.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The Five Conversations framework · Matching Support to Your Situation table · The Five Conversations and Your Team worksheet</div>
+      <p>Introduces STARS: start-up, turnaround, accelerated growth, realignment and sustaining success. A table sets out the challenges and opportunities of each. A second table has you list the projects, products or units you own, assign each a STARS situation and allocate your effort across them, then check whether your own preferences are driving the allocation.</p>
+      <p>A third table contrasts turnarounds and realignments across six steps (organize to learn, define strategic intent, set priorities, build the leadership team, secure early wins, create alliances). A fourth reports survey results on which situation people find most challenging and which they prefer: realignment was named most challenging by 30.3% and start-up most preferred by 47.1%.</p>
+      <div class="ch-takeaway">There is no universal first-90-days playbook; identify the mix you are in and notice which part you would rather be doing.</div>
+      <div class="ch-tool"><strong>Tools:</strong> STARS model · Diagnosing your STARS portfolio · Turnarounds versus realignments · Challenges and preferences survey. See the STARS tab for a deeper treatment.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">5</div>
-      <div class="ch-title">Secure Early Wins</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">4</div><div class="ch-title">Negotiate Success <span class="badge-v ok">Title in publisher excerpt</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Early wins are the currency that funds everything else in a transition — they build your credibility, energize the people around you, and create the momentum that lets you tackle bigger challenges later. But Watkins is careful to distinguish real early wins from cosmetic ones, and this chapter is largely about how to tell the difference.
-      <br><br>
-      The chapter opens with the <strong>waves of change</strong> model — transition, immersion, reshaping, and consolidation stages that typically unfold over 12-18 months — situating early wins as belonging to the reshaping stage that follows an initial period of pure listening and learning. Move too fast into big changes before you've built understanding, and you risk the vicious cycle described in the Introduction. The chapter also catalogs the specific behavior patterns — lack of focus, lack of standards, lack of teamwork, lack of a sense of urgency — that most commonly plague underperforming groups, since early-win candidates often cluster around fixing exactly these patterns.
-      <br><br>
-      The practical core of the chapter is two tools used together: the <strong>Early Wins Evaluation Tool</strong>, which scores candidate projects on focal-point value, achievability with current resources, and their contribution to bigger goals; and <strong>FOGLAMP</strong> (Focus, Oversight, Goals, Leadership, Abilities, Means, Process) — a comprehensive checklist for planning any early-win project once you've selected it. Watkins closes with a diagnostic framework for managing change more broadly — assessing whether there's genuine awareness of the need for change, a thorough diagnosis, a solid vision, a detailed plan, and critical mass of support — with a specific corrective action prescribed for whichever element is missing.
-      <div class="ch-takeaway">Not every quick win is a good early win. The right ones are achievable with current resources, build genuine long-term capability, and are executed by a well-led team using a clear, well-resourced process — that's what FOGLAMP is for.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Waves of Change model · Problematic Behavior Patterns table · Early Wins Evaluation Tool · The FOGLAMP Project Checklist · Diagnostic Framework for Managing Change</div>
+      <p>Focused on the relationship with your new boss. The Five Conversations table gives an agenda: situation (how does your boss see your STARS portfolio), expectations, resources, style, and personal development. For each you record the current status and priorities for the next 30 days.</p>
+      <p>A second table lists typical roles for your boss by STARS situation (for example, support for tough personnel calls in a turnaround, or constant reality testing in sustaining success), and a third repeats the five conversations for each of your team members.</p>
+      <div class="ch-takeaway">Treat the boss relationship as something you build deliberately, then run the same agenda downward.</div>
+      <div class="ch-tool"><strong>Tools:</strong> The five conversations · Matching support to your situation · The five conversations and your team</div>
+    </div>
+  </div>
+
+  <div class="part-header">Chapters 5 to 8</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">Secure Early Wins <span class="badge-v ok">Title in book's Table 9-1</span></div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>Starts from a waves-of-change diagram: four stages (transition, immersion, reshaping, consolidation) plotted as the intensity of change you institute across about 18 months. A table of problematic behaviour patterns lists symptoms of missing focus, standards, teamwork and urgency; its text did not extract cleanly from the PDF, so I am not summarizing its entries.</p>
+      <p>The practical tools are an early-wins evaluation tool (four questions scored 0 to 4, so 0 to 16 in total, used to compare candidate focal points and not as a precise measure), the FOGLAMP project checklist (focus, oversight, goals, leadership, abilities, means, process), and a diagnostic flowchart for managing change that asks in turn about awareness, diagnosis, vision, plan and support, with a different action if a step is missing.</p>
+      <div class="ch-takeaway">Score candidate wins before committing, then plan the chosen one with the checklist.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Waves of change · Problematic behaviour patterns · Early wins evaluation · FOGLAMP · Diagnostic framework for managing change</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">6</div>
-      <div class="ch-title">Achieve Alignment</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Achieve Alignment <span class="badge-v ok">Title in book's Table 9-1</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      As leaders move from individual and team-level thinking to organizational-level thinking, this chapter provides the lens: <strong>organizational architecture</strong>, the interlocking set of strategic direction, structure, core processes, skill bases, and culture that determines how well an organization actually functions — all operating within an external environment of customers, competitors, suppliers, regulators, and other stakeholders.
-      <br><br>
-      Watkins's key insight is that misalignments between these elements are enormously common and enormously costly, and new leaders — with fresh eyes and no personal history in the current setup — are uniquely positioned to spot them. A strategy that calls for speed but a structure that requires five signatures to approve anything is misaligned. A culture that prizes consensus paired with a compensation system that rewards individual heroics is misaligned. Diagnosing these mismatches, rather than simply reorganizing reflexively, is the chapter's central skill.
-      <br><br>
-      Two concrete diagnostic methods anchor the practical work: <strong>process analysis</strong>, which separates an organization's activities into production/service-delivery processes, support processes, and business processes so you can see where a specific process actually breaks down; and <strong>process mapping</strong>, which traces a process step-by-step across the different groups and handoffs involved, exposing exactly where delays, errors, or misunderstandings occur. The chapter is explicit that alignment work should follow, not precede, your early learning — you need to understand what's really going on before you start rewiring how the organization works.
-      <div class="ch-takeaway">New leaders have a limited window of fresh perspective before they become acclimated to the organization's quirks. Use process analysis and process mapping early to spot architecture misalignments that insiders have stopped noticing.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Elements of Organizational Architecture diagram · Process Analysis framework · The Process Map</div>
-    </div>
-  </div>
-
-  <div class="part-header">Part III — Leading and Scaling Impact</div>
-
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">7</div>
-      <div class="ch-title">Build Your Team</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      New leaders almost always inherit a team rather than building one from scratch — which makes team assessment and restructuring one of the highest-stakes and most emotionally charged parts of any transition. This chapter gives that process a structure so it isn't driven purely by gut feel or personal chemistry.
-      <br><br>
-      Watkins's evaluation framework rests on six criteria: competence, judgment, energy, focus, relationships, and trust — with an important instruction to designate certain criteria as <em>threshold</em> issues, meaning a low score there disqualifies someone regardless of how well they score elsewhere (a brilliant but untrustworthy team member is not "brilliant on balance"; they're a liability). The chapter is candid that team restructuring decisions need to happen deliberately and relatively early — delaying difficult personnel calls to avoid short-term discomfort almost always produces worse outcomes than making a clear decision, communicated honestly, sooner.
-      <br><br>
-      Beyond who's on the team, the chapter addresses how to motivate them, contrasting <strong>push tools</strong> (incentives, reporting systems, planning processes, procedures) with <strong>pull tools</strong> (mission statements, shared visions, teamwork) — arguing that sustainable high performance requires both, not a reliance on one to the exclusion of the other. It closes with a rich set of inspirations for crafting a genuine team or organizational vision statement — organized around what actually motivates people: commitment to an ideal, achieving great results, making a contribution, being part of a team, individual growth, control of one's destiny, and trust and integrity — a reminder that vision statements fail when they're generic rather than genuinely tied to what the people in the room care about.
-      <div class="ch-takeaway">Evaluate your inherited team on competence, judgment, energy, focus, relationships, and trust — with some as non-negotiable thresholds — and make necessary changes decisively rather than delaying them out of discomfort.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Synchronizing Architectural Alignment and Team Restructuring model · Assessment of Evaluative Criteria · Push vs. Pull Motivational Tools · Inspirations for Vision Statements</div>
+      <p>Looks at the organization as an architecture: strategic direction, structure, core processes, skill bases and the internal climate and culture, sitting inside an external environment of customers, competitors, suppliers, distributors, investors, media, governments and NGOs.</p>
+      <p>A process-analysis table sorts activities into production or service-delivery, support, and business processes, using a credit-card business as the worked example, and a process map shows one order passing across customer relations, accounts receivable and fulfilment. The idea, as I read it, is to find where the pieces do not fit together.</p>
+      <div class="ch-takeaway">A fresh pair of eyes can spot misalignments that insiders have stopped seeing.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Elements of organizational architecture · Process analysis · Process map</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">8</div>
-      <div class="ch-title">Create Coalitions</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Build Your Team <span class="badge-v ok">Title in book's Table 9-1</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      This chapter tackles the reality that most new leaders would prefer to avoid: nothing important gets accomplished in an organization through formal authority alone. Influence, alliances, and coalition-building are not optional political extras — they are core leadership work, especially for anyone leading laterally or influencing beyond their direct reporting line.
-      <br><br>
-      Watkins provides a systematic method for mapping the influence landscape: identifying influential players, understanding what specifically you need from each of them and by when, and — using the chapter's influence-diagram technique (illustrated through a detailed case example) — visualizing who supports you, who's undecided, who opposes you, and critically, which existing alliances among other people could turn into a blocking coalition against your initiatives if you're not careful. A companion tool digs into pivotal players' motivations, the driving and restraining forces acting on them, and their perceived alternatives — because people's resistance to your ideas is almost always rational given what they believe their options are, even when that resistance looks irrational from the outside.
-      <br><br>
-      The chapter's most practically useful section is on <strong>framing arguments</strong> using the classical rhetorical triad: logos (data and reasoned argument), ethos (appeals to principle, policy, and legitimate authority), and pathos (emotional and values-based appeals). Different stakeholders respond to different combinations, and Watkins's guidance is to diagnose which mix will actually move a specific person rather than defaulting to whichever style feels most natural to you personally — a data-driven leader's instinct to lead with logos will fail with a stakeholder who's moved primarily by loyalty or fairness.
-      <div class="ch-takeaway">Influence work is not a distraction from "real" leadership — it is real leadership. Map who supports and opposes you, understand their actual motivations and alternatives, and tailor your argument's mix of logic, principle, and emotion to the specific person you're trying to move.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> Identifying Influential Players worksheet · The Influence Diagram · Analyzing Motivations, Driving/Restraining Forces, and Alternatives · Framing Arguments (Logos/Ethos/Pathos)</div>
+      <p>Links organizational alignment with restructuring the team: assess what is, decide what should be, plan how to get there, then implement. An assessment table has you divide 100 points across six evaluative criteria (competence, judgment, energy, focus, relationships, trust) and mark any that are threshold issues.</p>
+      <p>A diagram contrasts push tools (incentives, reporting systems, planning processes, procedures) with pull tools (mission statement, shared vision, teamwork). A final table gathers inspirations for vision statements, grouped by what motivates people: commitment to an ideal, great results, contribution, being part of a team, individual growth, control of one's destiny, and trust and integrity.</p>
+      <div class="ch-takeaway">Weight your criteria before you judge people, and decide which failures disqualify.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Alignment and team restructuring · Evaluative criteria · Push and pull tools · Inspirations for vision statements</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">9</div>
-      <div class="ch-title">Keep Your Balance</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">Create Coalitions (some listings: Create Alliances) <span class="badge-v warn">Title varies by source</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      A transition is not just a professional test — it is a sustained period of elevated stress, isolation, and uncertainty, and Watkins argues that managing yourself through it is as much a leadership skill as any of the more "external" chapters. Leaders who neglect this chapter's advice are the ones who make their best decisions in month one and their worst in month four, once fatigue and isolation compound.
-      <br><br>
-      The <strong>Yerkes-Dodson human performance curve</strong> anchors the chapter's core argument: performance rises with stress up to a point, then falls off a cliff into burnout territory. New leaders, wanting to prove themselves, routinely push past their peak-performance zone and don't notice until the "going over the top" phase is already well underway — showing up as impaired judgment, shorter fuses, and isolation from the very people whose support they need most. The chapter's core-challenges assessment tool has you honestly diagnose, chapter by chapter, whether you're actually executing on preparation, learning, situational matching, negotiating success, early wins, alignment, and team-building — or just believe you are.
-      <br><br>
-      The practical antidote is building a deliberate <strong>advice-and-counsel network</strong> spanning three distinct roles: technical advisers (expert analysis on markets, technology, strategy), cultural interpreters (help understanding the new organization's unwritten rules), and political counselors (a sounding board for navigating relationships and testing your read on situations before you act on it). Watkins is specific that you need both internal and external versions of each — internal advisers understand the immediate context, external ones can be more candid because they have nothing to lose by telling you the truth. Most new leaders build zero of these deliberately; the chapter's assessment tool forces you to see the gaps.
-      <div class="ch-takeaway">Stress rises with the demands of a new role, and performance rises with it — until it doesn't. Build your advice-and-counsel network (technical, cultural, and political; internal and external) before you need it, not after you've already made the mistakes it could have prevented.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The Yerkes-Dodson Performance Curve · Assessment of Core Challenges · Types of Advisers (technical, cultural, political) · Assessment of Your Advice-and-Counsel Network</div>
+      <p>About influence beyond formal authority. Tools: a table for identifying influential players (who, what you need from them, and when); an influence diagram built around a worked example with a fictional manager, showing who supports, who is undecided, who opposes, and where a winning or blocking alliance might form; and a table for the motivations, driving and restraining forces, and perceived alternatives of pivotal players.</p>
+      <p>A framing-arguments table uses the classical triad: logos (data and reasoned argument), ethos (principles, policies and other rules) and pathos (emotions and meaning), each with questions to ask about the person you want to persuade.</p>
+      <div class="ch-takeaway">Work out what each pivotal person believes their alternatives are before you argue your case.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Identifying influential players · Influence diagram · Motivations and alternatives · Framing arguments</div>
     </div>
   </div>
 
-  <div class="part-header">Part IV — Beyond Your Own Transition</div>
+  <div class="part-header">Chapters 9 and 10</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">10</div>
-      <div class="ch-title">Expedite Everyone — Onboarding at Scale</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">9</div><div class="ch-title">Keep Your Balance <span class="badge-v warn">Title from summary sites</span></div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      The signature new chapter of the Updated and Expanded edition, and a genuine change in altitude: everything so far has been about accelerating <em>your own</em> transition, but as a leader you are always surrounded by other people also in transition — new hires, newly promoted peers, people relocating, people absorbing an acquisition. This chapter reframes transition acceleration as an organizational capability, not just a personal skill.
-      <br><br>
-      The centerpiece tool is the <strong>Transition Heat Map</strong>: a way of surveying every unit, group, or project under your influence, noting major change events happening in each (turnaround, acquisition, rapid growth), and rating the intensity of different transition types — onboarding, promotion, geographic moves, lateral moves — occurring simultaneously. The result is a single view that tells you where transition risk is concentrated across your whole organization, so you can direct support where it's actually needed rather than spreading generic onboarding programs evenly.
-      <br><br>
-      Watkins is unusually direct about why organizational onboarding fails: insufficient clarity about expectations, failing to tailor support to the specific STARS situation, pushing new leaders to make big changes too fast, and — his sharpest observation — a "Darwinian leadership culture" where struggling through transitions unsupported is treated as a rite of passage rather than an organizational failure worth fixing. The chapter distinguishes <strong>transition coaching</strong> (helping someone assess a new business situation and build a plan for it) from <strong>developmental coaching</strong> (helping someone build durable competencies and correct dysfunctional behaviors) — two related but genuinely different interventions that get conflated in most corporate coaching programs. It closes with the <strong>development grid</strong>, a tool for mapping someone's entire career trajectory across functions and STARS situations to reveal blind spots — for example, someone with a decade of experience but no realignment or turnaround exposure may be dangerously unprepared for their next assignment.
-      <div class="ch-takeaway">Your own transition is never happening in isolation — use the Transition Heat Map to see where transition intensity is concentrated across your organization, and build deliberate transition support (not just generic onboarding) into how you lead.</div>
-      <div class="ch-tool"><strong>Key tools:</strong> The Transition Heat Map · Reasons for Transition Failures · Transition vs. Developmental Coaching · Linking Recruiting and Onboarding · The Development Grid</div>
+      <p>The personal chapter. A Yerkes-Dodson performance curve plots performance against stress, from peak performance to "going over the top" and burnout. An assessment of core challenges turns the eight earlier challenges into diagnostic questions you ask yourself.</p>
+      <p>A table of adviser types names technical advisers, cultural interpreters and political counselors, and a grid asks you to fill in internal and external names for each. Summary sites describe the chapter as being about disciplined execution and a support system.</p>
+      <div class="ch-takeaway">Build the adviser grid before you need it, and check honestly which challenges you are neglecting.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Performance curve · Assessment of core challenges · Types of advisers · Advice-and-counsel network</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">10</div><div class="ch-title">Accelerate Everyone <span class="badge-v warn">Title from one outline</span></div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>Turns from your own transition to everybody else's. The previous page called this "Expedite Everyone"; I could not confirm that wording, and one study outline gives "Accelerate Everyone". Treat the title as unverified. The companion PDF shows the tools: a Transition Heat Map, a table of reasons transitions fail (some for all transitions, some specific to promotion or onboarding), a comparison of transition coaching and developmental coaching, a diagram linking recruiting and onboarding, and a development grid.</p>
+      <p>The heat map lists organizational units, notes the major change events in each (rapid growth, turnaround, acquisition) and rates the intensity of onboarding, promotion, geographic moves and lateral moves. The development grid charts the functions you have worked in against the five STARS situations to show blank cells, which the book frames as possible blind spots.</p>
+      <div class="ch-takeaway">Use the heat map to see where transition risk is concentrated before spreading support evenly.</div>
+      <div class="ch-tool"><strong>Tools:</strong> Transition Heat Map · Reasons for transition failures · Transition versus developmental coaching · Linking recruiting and onboarding · Development grid</div>
     </div>
   </div>
 
 </div>
 
-<!-- ════════════════════════════════════════════
-     FRAMEWORK & TOOLKIT
-════════════════════════════════════════════ -->
+<!-- ═══════════════ FRAMEWORK ═══════════════ -->
 <div id="framework" class="panel">
+  <div class="section-header"><h2>STARS and the Five Conversations, In Depth</h2><div class="section-line"></div></div>
+  <p class="lead">The book's central pair of ideas: first diagnose which situation you are in (STARS), then negotiate your boss's support for that situation (the Five Conversations). The definitions, challenges, opportunities and boss-support roles below follow the book's own tables, as reproduced in the companion PDF. The sample questions, scenarios and slider tool are my own illustrations, not the book's.</p>
 
-  <div class="section-header">
-    <h2>The STARS Model</h2>
-    <div class="section-line"></div>
+  <div class="m-nav">
+    <a class="m-pill o" onclick="jumpM('m-s')">S Start-up</a>
+    <a class="m-pill o" onclick="jumpM('m-t')">T Turnaround</a>
+    <a class="m-pill o" onclick="jumpM('m-a')">A Accelerated growth</a>
+    <a class="m-pill o" onclick="jumpM('m-r')">R Realignment</a>
+    <a class="m-pill o" onclick="jumpM('m-ss')">S Sustaining success</a>
+    <a class="m-pill y" onclick="jumpM('m-5c')">Five Conversations</a>
+    <a class="m-pill l" onclick="jumpM('m-cmp')">Side-by-Side</a>
+    <a class="m-pill" onclick="jumpM('m-try')">Try It</a>
   </div>
-  <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6;">The book's central diagnostic: identify which situation (or mix of situations) you've actually inherited before choosing a leadership approach. Most leaders default to whichever approach they personally prefer — usually a costly mismatch.</p>
 
   <div class="stars-grid">
-    <div class="stars-tile">
-      <div class="s-letter">S</div>
-      <h4>Start-Up</h4>
-      <p>Assembling people, financing, and technology from scratch</p>
+    <div class="stars-tile"><div class="s-letter">S</div><h4>Start-Up</h4><p>Getting a new business or initiative off the ground</p></div>
+    <div class="stars-tile"><div class="s-letter">T</div><h4>Turnaround</h4><p>Saving something widely acknowledged to be in serious trouble</p></div>
+    <div class="stars-tile"><div class="s-letter">A</div><h4>Accelerated Growth</h4><p>Managing a rapidly expanding business</p></div>
+    <div class="stars-tile"><div class="s-letter">R</div><h4>Realignment</h4><p>Reenergizing a once-successful organization that now faces problems</p></div>
+    <div class="stars-tile"><div class="s-letter">S</div><h4>Sustaining Success</h4><p>Preserving the vitality of a successful organization and taking it further</p></div>
+  </div>
+
+  <div class="m-section" id="m-s">
+    <div class="m-head k"><div class="dials">Situation 1 of 5</div><h3>Start-Up</h3><div class="tag">Assembling the people, financing and technology to get something off the ground.</div></div>
+    <div class="m-body">
+      <h4>What the book's table says</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Challenges</h5><ul>
+          <li>Building strategy, structures and systems from scratch, with no clear framework or boundaries</li>
+          <li>Recruiting and welding together a high-performing team</li>
+          <li>Making do with limited resources</li>
+        </ul></div>
+        <div class="q-card"><h5>Opportunities</h5><ul>
+          <li>You can do things right from the beginning</li>
+          <li>People are energized by the possibilities</li>
+          <li>There are no rigid preconceptions</li>
+        </ul></div>
+      </div>
+      <h4>Support to ask your boss for</h4>
+      <p>Help getting needed resources quickly, clear measurable goals, guidance at strategic breakpoints, and help staying focused (Table 4-2). The other four situations start from this same list and add to it.</p>
+      <h4>My reading</h4>
+      <p>The risk is not lack of ideas but lack of edges. Without boundaries, every request looks equally urgent, so the boss conversation about goals and focus matters more here than in any other case.</p>
     </div>
-    <div class="stars-tile">
-      <div class="s-letter">T</div>
-      <h4>Turnaround</h4>
-      <p>Saving a business or initiative in acknowledged serious trouble</p>
+  </div>
+
+  <div class="m-section" id="m-t">
+    <div class="m-head o"><div class="dials">Situation 2 of 5</div><h3>Turnaround</h3><div class="tag">Saving a business or initiative that everyone agrees is in serious trouble.</div></div>
+    <div class="m-body">
+      <h4>What the book's table says</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Challenges</h5><ul>
+          <li>Reenergizing demoralized employees and other stakeholders</li>
+          <li>Making effective decisions under time pressure</li>
+          <li>Going deep enough with painful cuts and personnel choices</li>
+        </ul></div>
+        <div class="q-card"><h5>Opportunities</h5><ul>
+          <li>Everyone recognizes that change is necessary</li>
+          <li>Affected constituencies offer significant external support</li>
+          <li>A little success goes a long way</li>
+        </ul></div>
+      </div>
+      <h4>Support to ask your boss for</h4>
+      <p>Everything in start-up, plus support for tough personnel calls, for correcting the external image, and for cutting deeply enough and fast enough.</p>
+      <h4>My reading</h4>
+      <p>This is the situation where acting fast is the plan, not the mistake. The failure mode is under-cutting out of kindness and having to do it twice.</p>
     </div>
-    <div class="stars-tile">
-      <div class="s-letter">A</div>
-      <h4>Accelerated Growth</h4>
-      <p>Managing a rapidly expanding business at scale</p>
+  </div>
+
+  <div class="m-section" id="m-a">
+    <div class="m-head k"><div class="dials">Situation 3 of 5</div><h3>Accelerated Growth</h3><div class="tag">Managing a business that is expanding rapidly.</div></div>
+    <div class="m-body">
+      <h4>What the book's table says</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Challenges</h5><ul>
+          <li>Putting in place structures and systems that permit scaling</li>
+          <li>Integrating many new employees</li>
+        </ul></div>
+        <div class="q-card"><h5>Opportunities</h5><ul>
+          <li>The potential for growth helps to motivate people</li>
+          <li>People are inclined to stretch themselves and those who work for them</li>
+        </ul></div>
+      </div>
+      <h4>Support to ask your boss for</h4>
+      <p>Everything in start-up, plus support for getting investment to fuel growth at the right rate in the right ways, and help making the case for new systems and structures.</p>
+      <h4>My reading</h4>
+      <p>Growth hides weak systems because the numbers keep going up. The case for structure has to be made while things look fine, which is why the boss conversation about investment comes early.</p>
     </div>
-    <div class="stars-tile">
-      <div class="s-letter">R</div>
-      <h4>Realignment</h4>
-      <p>Reenergizing a once-successful org now facing problems</p>
+  </div>
+
+  <div class="m-section" id="m-r">
+    <div class="m-head o"><div class="dials">Situation 4 of 5</div><h3>Realignment</h3><div class="tag">Reenergizing a once-successful organization that now faces problems, often with people unconvinced there is a problem.</div></div>
+    <div class="m-body">
+      <h4>What the book's table says</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Challenges</h5><ul>
+          <li>Convincing employees that change is necessary</li>
+          <li>Carefully restructuring the top team and refocusing the organization</li>
+        </ul></div>
+        <div class="q-card"><h5>Opportunities</h5><ul>
+          <li>The organization has significant pockets of strength</li>
+          <li>People want to continue to see themselves as successful</li>
+        </ul></div>
+      </div>
+      <h4>Support to ask your boss for</h4>
+      <p>Everything in start-up, plus help making the case for change, especially if you are from outside.</p>
+      <h4>Why it matters</h4>
+      <p>In the book's survey (Table 3-4), realignment was the situation most often called the most challenging, at 30.3%, while only 12.7% said they would prefer it. The book contrasts this with start-up: 13.5% called it most challenging and 47.1% most preferred. I do not know the sample or how the survey was run, so treat the percentages as the author's data, not as established fact.</p>
     </div>
-    <div class="stars-tile">
-      <div class="s-letter">S</div>
-      <h4>Sustaining Success</h4>
-      <p>Preserving vitality and taking a healthy org to the next level</p>
+  </div>
+
+  <div class="m-section" id="m-ss">
+    <div class="m-head k"><div class="dials">Situation 5 of 5</div><h3>Sustaining Success</h3><div class="tag">Preserving the vitality of a successful organization and taking it to the next level.</div></div>
+    <div class="m-body">
+      <h4>What the book's table says</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Challenges</h5><ul>
+          <li>Living in the shadow of the former leader and managing the team they created</li>
+          <li>Playing good defense before embarking on too many new initiatives</li>
+          <li>Finding ways to take the business to the next level</li>
+        </ul></div>
+        <div class="q-card"><h5>Opportunities</h5><ul>
+          <li>A strong team may already be in place</li>
+          <li>People are motivated to continue their history of success</li>
+          <li>A foundation for continued success, such as a long product pipeline, may exist</li>
+        </ul></div>
+      </div>
+      <h4>Support to ask your boss for</h4>
+      <p>Everything in start-up, plus constant reality testing (is this really sustaining success, or a realignment in disguise?), support for playing good defense, and help finding ways to reach a new level.</p>
+      <h4>My reading</h4>
+      <p>The trap is mislabelling. A leader who walks into a slowly declining unit and calls it "healthy" is in the wrong playbook, which is why the book has the boss test that label.</p>
     </div>
   </div>
 
-  <div class="section-header">
-    <h2>The Five Conversations</h2>
-    <div class="section-line"></div>
-  </div>
-  <p style="font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6;">A structured negotiation to run with your new boss — and again with each of your own direct reports.</p>
-
-  <div class="conv-flow">
-    <div class="conv-card"><div class="conv-num">1</div><h4>Situation</h4><p>How does your boss see the STARS portfolio you've inherited?</p></div>
-    <div class="conv-card"><div class="conv-num">2</div><h4>Expectations</h4><p>What are you specifically expected to accomplish, and by when?</p></div>
-    <div class="conv-card"><div class="conv-num">3</div><h4>Resources</h4><p>What people, budget, and authority do you actually have?</p></div>
-    <div class="conv-card"><div class="conv-num">4</div><h4>Style</h4><p>How can you best work together day to day?</p></div>
-    <div class="conv-card"><div class="conv-num">5</div><h4>Development</h4><p>What's going well, and what needs to change?</p></div>
-  </div>
-
-  <div class="section-header">
-    <h2>FOGLAMP — Early-Win Project Planning</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="code-block">
-    <span class="comment">// FOGLAMP: cut through the haze on any early-win project</span><br><br>
-    <span class="keyword">Focus:</span>      <span class="value">What's the goal? What do you actually want to achieve?</span><br>
-    <span class="keyword">Oversight:</span>  <span class="value">How will you supervise this? Who else needs to be involved?</span><br>
-    <span class="keyword">Goals:</span>      <span class="value">What are the intermediate milestones and timeframes?</span><br>
-    <span class="keyword">Leadership:</span> <span class="value">Who will lead it? What training do they need to succeed?</span><br>
-    <span class="keyword">Abilities:</span>  <span class="value">What mix of skills and representation needs to be included?</span><br>
-    <span class="keyword">Means:</span>      <span class="value">What additional resources (funding, facilitation) are needed?</span><br>
-    <span class="keyword">Process:</span>    <span class="value">Are there change processes the team should use?</span><br><br>
-    <span class="comment">// Run this for every candidate early-win project before you commit to it</span>
+  <div class="m-section" id="m-5c">
+    <div class="m-head y"><div class="dials">The negotiation</div><h3>The Five Conversations</h3><div class="tag">An agenda for your new boss, repeated for each team member. The book's table records current status and priorities for the next 30 days for each.</div></div>
+    <div class="m-body">
+      <h4>The five, with the book's guiding questions</h4>
+      <div class="conv-flow">
+        <div class="conv-card"><div class="conv-num">1</div><h4>Situation</h4><p>How does your boss see your STARS portfolio?</p></div>
+        <div class="conv-card"><div class="conv-num">2</div><h4>Expectations</h4><p>What are you expected to accomplish?</p></div>
+        <div class="conv-card"><div class="conv-num">3</div><h4>Resources</h4><p>What resources do you have at your disposal?</p></div>
+        <div class="conv-card"><div class="conv-num">4</div><h4>Style</h4><p>How can you best work together?</p></div>
+        <div class="conv-card"><div class="conv-num">5</div><h4>Development</h4><p>What is going well, and what do you need to do differently?</p></div>
+      </div>
+      <h4>Sample follow-up questions (my own, not from the book)</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Situation and expectations</h5><ul>
+          <li>Which parts of my remit would you call a turnaround, and which healthy?</li>
+          <li>What would a good first 90 days look like to you, in outcomes?</li>
+          <li>What would make you think this is going badly?</li>
+        </ul></div>
+        <div class="q-card"><h5>Resources, style and development</h5><ul>
+          <li>Which of these resources are fixed and which can I make a case for?</li>
+          <li>Do you prefer updates in writing or in person, and how often?</li>
+          <li>When should we first check how I am doing?</li>
+        </ul></div>
+      </div>
+      <h4>Where it goes wrong</h4>
+      <p>Treating it as a single onboarding chat. The table format, with a column for the next 30 days, suggests the book expects you to return to it. Skipping the situation conversation is the costly omission, because everything else depends on the label you agree.</p>
+    </div>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Key Concepts &amp; Tools</h2>
-    <div class="section-line"></div>
+  <div class="m-section" id="m-cmp">
+    <div class="m-head l"><div class="dials">Compare</div><h3>Side-by-Side</h3><div class="tag">The five STARS situations from the book's tables, then turnaround against realignment.</div></div>
+    <div class="m-body">
+      <h4>All five at a glance</h4>
+      <div class="cmp-wrap"><table class="cmp">
+        <thead><tr><th class="blank"></th><th class="a">Start-up</th><th class="b">Turnaround</th><th class="c">Accelerated growth</th><th class="d">Realignment</th><th class="e">Sustaining success</th></tr></thead>
+        <tbody>
+          <tr><td class="rowh">In one line</td><td>Build from scratch</td><td>Save what is in serious trouble</td><td>Manage rapid expansion</td><td>Reenergize a once-successful organization</td><td>Keep a successful one healthy and take it further</td></tr>
+          <tr><td class="rowh">A key challenge</td><td>No framework or boundaries</td><td>Deciding fast and cutting deep enough</td><td>Systems that let it scale</td><td>Convincing people change is needed</td><td>Follow a well-regarded predecessor</td></tr>
+          <tr><td class="rowh">A key opportunity</td><td>Do it right from the start</td><td>Everyone knows change is needed</td><td>Growth motivates people</td><td>Real pockets of strength</td><td>A strong team and track record</td></tr>
+          <tr><td class="rowh">Boss support, beyond the basics</td><td>Resources, clear goals, focus</td><td>Tough personnel calls, deep cuts</td><td>Investment, case for new systems</td><td>Making the case for change</td><td>Reality testing, playing defense</td></tr>
+        </tbody>
+      </table></div>
+      <h4>Turnaround versus realignment (the book's six steps)</h4>
+      <div class="cmp-wrap"><table class="cmp" style="min-width:640px;">
+        <thead><tr><th class="blank"></th><th class="a">Turnaround</th><th class="d">Realignment</th></tr></thead>
+        <tbody>
+          <tr><td class="rowh">1 Organize to learn</td><td>Technical learning; prepare to act quickly</td><td>Cultural and political learning; prepare to act deliberately</td></tr>
+          <tr><td class="rowh">2 Strategic intent</td><td>Prune non-core businesses</td><td>Hone and leverage existing capabilities; stimulate innovation</td></tr>
+          <tr><td class="rowh">3 A-item priorities</td><td>Faster, bolder moves; focus on strategy and structure</td><td>Slower, more deliberate moves; focus on systems, skills and culture</td></tr>
+          <tr><td class="rowh">4 Leadership team</td><td>Clean house at the top; recruit external talent</td><td>Make a few important changes; promote high potentials from within</td></tr>
+          <tr><td class="rowh">5 Early wins</td><td>Shift the mind-set from despair to hope</td><td>Shift the mind-set from denial to awareness</td></tr>
+          <tr><td class="rowh">6 Alliances</td><td>Gain support from bosses and stakeholders to invest the required resources</td><td>Build alliances sideways and down to ensure better execution</td></tr>
+        </tbody>
+      </table></div>
+      <p>Two points to hold on to. The situations are not interchangeable, and the two that look most alike (turnaround and realignment) call for nearly opposite pacing. And your portfolio is usually a mix, so the real discipline is allocating your effort rather than picking one label.</p>
+    </div>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Model</div>
-    <h4>The Break-Even Point</h4>
-    <p>The moment in any transition when your cumulative value produced overtakes your cumulative value consumed. Early on, the organization is investing in you — providing training, tolerance for mistakes, and time to learn — before you're returning that investment. The entire book is organized around reaching this point faster and more safely, without cutting corners that put you in the vicious cycle instead.</p>
-  </div>
+  <div class="m-section" id="m-try">
+    <div class="m-head r"><div class="dials">Interactive</div><h3>Try It</h3><div class="tag">Rate your own situation, then test your eye on five scenarios.</div></div>
+    <div class="m-body">
+      <h4>Which STARS mix am I in?</h4>
+      <p style="margin-bottom:14px;">A tool of my own, not the book's (the book's version is the portfolio table in Chapter 3). Slide each statement from 0 (not true of my new remit) to 10 (very true).</p>
+      <div class="map-box">
+        <div id="map-sliders"></div>
+        <div class="mix-bars" id="mix-bars"></div>
+        <div class="map-out" id="map-out"><h5 id="map-title"></h5><div id="map-text"></div></div>
+      </div>
 
-  <div class="method-card">
-    <div class="tag">Model</div>
-    <h4>The Vicious and Virtuous Cycles</h4>
-    <p>Two self-reinforcing loops that determine whether a transition compounds toward success or failure. The virtuous cycle: focused learning → informed strategy and good decisions → increasing credibility → supportive alliances → early wins → more learning. The vicious cycle: inadequate learning → bad decisions → lost credibility → resistance → ineffective relationship-building → even worse decisions. Small early choices about how much to learn before acting determine which cycle takes hold.</p>
+      <h4>Which situation is this?</h4>
+      <p style="margin-bottom:12px;">Five scenarios, all invented by me. Tap the STARS situation each one really is.</p>
+      <div id="quiz"></div>
+      <div class="quiz-score" id="quiz-score"></div>
+    </div>
   </div>
+</div>
 
-  <div class="method-card">
-    <div class="tag">Tool</div>
-    <h4>The Transition Heat Map</h4>
-    <p>A tool for leaders managing multiple people or units in transition simultaneously — new hires, promotions, geographic moves, lateral moves, acquisitions. Plotting transition intensity across your organization reveals where support is most urgently needed, replacing generic, evenly-spread onboarding with targeted intervention where the actual risk is concentrated.</p>
-  </div>
-
-  <div class="method-card">
-    <div class="tag">Framework</div>
-    <h4>Logos, Ethos, Pathos in Coalition-Building</h4>
-    <p>Watkins borrows the classical rhetorical triad to structure influence conversations: logos (data and reasoned argument), ethos (appeals to principle and legitimate policy), and pathos (appeals to values, loyalty, and meaning). Effective coalition-building means diagnosing which mix will move a specific stakeholder — not defaulting to whichever style of persuasion feels most natural to you.</p>
-  </div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>The Companion Toolkit — Figures, Tables &amp; Exercises</h2>
-    <div class="section-line"></div>
-  </div>
+<!-- ═══════════════ TOOLKIT ═══════════════ -->
+<div id="toolkit" class="panel">
+  <div class="section-header"><h2>The Toolkit</h2><div class="section-line"></div></div>
+  <p class="lead">The book's practical tools gathered in one place. Each is a table or figure in the companion PDF. The practice plan at the bottom is my own suggestion.</p>
 
   <div class="resource-notice">
-    <strong>48-Page Reference Workbook</strong>
-    Watkins' book references dozens of assessments, checklists, and diagnostic tools throughout the text. This companion PDF collects every one of them in printable form — the exact document to work through during your first 90 days rather than trying to recreate each tool from memory.
+    <strong>Companion workbook, 48 pages</strong>
+    The <em>Figures, Tables and Exercises</em> PDF reproduces the book's figures and tables by chapter (Introduction to Chapter 10). It is a print-and-fill version of the tools described on this page.
     <br>
     <a href="pdfs/the-first-90-days-toolkit.pdf" class="resource-btn" target="_blank">📄 Download the Companion Toolkit (PDF)</a>
   </div>
 
-  <div class="toolkit-list">
-    <div class="toolkit-item"><div class="t-ic">📊</div><div><strong>Transition Risk Assessment</strong> — score your overall transition difficulty across 12 dimensions</div></div>
-    <div class="toolkit-item"><div class="t-ic">✅</div><div><strong>Onboarding Checklists</strong> — business, stakeholder, expectations, and cultural adaptation</div></div>
-    <div class="toolkit-item"><div class="t-ic">🧭</div><div><strong>STARS Portfolio Diagnosis</strong> — map every project you own to a STARS situation</div></div>
-    <div class="toolkit-item"><div class="t-ic">🤝</div><div><strong>The Five Conversations Planner</strong> — for your boss and for each direct report</div></div>
-    <div class="toolkit-item"><div class="t-ic">🏆</div><div><strong>Early Wins Evaluation Tool</strong> — score candidate projects before committing</div></div>
-    <div class="toolkit-item"><div class="t-ic">🗺️</div><div><strong>FOGLAMP Project Checklist</strong> — plan any early-win initiative end to end</div></div>
-    <div class="toolkit-item"><div class="t-ic">🏗️</div><div><strong>Process Analysis &amp; Process Map</strong> — diagnose organizational architecture misalignments</div></div>
-    <div class="toolkit-item"><div class="t-ic">👥</div><div><strong>Team Evaluative Criteria</strong> — competence, judgment, energy, focus, relationships, trust</div></div>
-    <div class="toolkit-item"><div class="t-ic">🔗</div><div><strong>Influence Diagram &amp; Player Mapping</strong> — visualize coalitions, blockers, and undecideds</div></div>
-    <div class="toolkit-item"><div class="t-ic">🧠</div><div><strong>Advice-and-Counsel Network Assessment</strong> — technical, cultural, and political advisers</div></div>
-    <div class="toolkit-item"><div class="t-ic">🌡️</div><div><strong>Transition Heat Map</strong> — spot concentrated transition risk across your organization</div></div>
-    <div class="toolkit-item"><div class="t-ic">📈</div><div><strong>The Development Grid</strong> — chart your career trajectory and spot blind spots</div></div>
+  <div class="method-card"><div class="tag">Diagnostic</div><h4>Transition Risk Assessment (Table I-1)</h4>
+    <p>Twelve kinds of transition to tick and rate from 1 to 10 for difficulty; the total is your Transition Risk Index. Useful for seeing which dimensions to focus on.</p></div>
+
+  <div class="method-card"><div class="tag">Model</div><h4>STARS portfolio (Tables 3-1 and 3-2)</h4>
+    <p>List the projects, processes or units you own, assign each a STARS situation, and split 100% of your next-90-days effort across them. The table then asks which situation you most prefer, to check your preferences are not setting your priorities.</p></div>
+
+  <div class="method-card"><div class="tag">Agenda</div><h4>The Five Conversations (Tables 4-1 to 4-3)</h4>
+    <ul>
+      <li>Situation, expectations, resources, style, personal development</li>
+      <li>Record current status and priorities for the next 30 days</li>
+      <li>Repeat for each team member</li>
+    </ul></div>
+
+  <div class="method-card"><div class="tag">Checklist</div><h4>FOGLAMP (Table 5-3)</h4>
+    <ul>
+      <li><strong>Focus:</strong> what is the goal for the project?</li>
+      <li><strong>Oversight:</strong> how will you oversee it, and who else should take part?</li>
+      <li><strong>Goals:</strong> what are the goals, intermediate milestones and timeframes?</li>
+      <li><strong>Leadership:</strong> who leads it, and what training do they need?</li>
+      <li><strong>Abilities:</strong> what mix of skills and representation is needed?</li>
+      <li><strong>Means:</strong> what extra resources, such as facilitation, are needed?</li>
+      <li><strong>Process:</strong> are there change or structured processes the team should use?</li>
+    </ul></div>
+
+  <div class="method-card"><div class="tag">Scoring</div><h4>Early Wins Evaluation (Table 5-2)</h4>
+    <p>Four questions scored 0 to 4, giving 0 to 16, to compare candidate wins. The book itself says to use common sense: a zero on the first question outweighs good scores on the rest.</p></div>
+
+  <div class="method-card"><div class="tag">Tools</div><h4>Other worksheets by chapter</h4>
+    <ul>
+      <li><strong>Ch 1:</strong> four onboarding checklists; problem-preference assessments</li>
+      <li><strong>Ch 2:</strong> sources of knowledge; structured learning methods</li>
+      <li><strong>Ch 6:</strong> organizational architecture; process analysis and process map</li>
+      <li><strong>Ch 7:</strong> evaluative criteria; push and pull tools; vision-statement inspirations</li>
+      <li><strong>Ch 8:</strong> influential players; influence diagram; motivations and alternatives; framing arguments</li>
+      <li><strong>Ch 9:</strong> core-challenges assessment; adviser types and network grid</li>
+      <li><strong>Ch 10:</strong> Transition Heat Map; transition versus developmental coaching; development grid</li>
+    </ul></div>
+
+  <div class="code-block">
+    <span class="comment">// My own shorthand for using the book, not text from it</span><br>
+    <span class="keyword">Before day 1:</span> <span class="value">risk assessment, onboarding checklists</span><br>
+    <span class="keyword">First weeks:</span> <span class="value">learning plan, five conversations, STARS portfolio</span><br>
+    <span class="keyword">Then:</span> <span class="value">score early wins, plan the best with FOGLAMP</span><br>
+    <span class="keyword">Throughout:</span> <span class="value">adviser grid, core-challenges check</span>
   </div>
 
+  <div class="section-header" style="margin-top:30px;"><h2>A 30-Day Practice Plan</h2><div class="section-line"></div></div>
+  <div class="note-box">This plan is my own suggestion (the reviewer's), not drawn from the book.</div>
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div class="t-ic">🗓️</div><div><strong>Week 1:</strong> Fill in the risk assessment. Hold the situation and expectations conversations with your boss and write down what you agreed.</div></div>
+    <div class="toolkit-item"><div class="t-ic">🧭</div><div><strong>Week 2:</strong> Build your STARS portfolio table and split your effort. Note which part you would rather be doing.</div></div>
+    <div class="toolkit-item"><div class="t-ic">🔎</div><div><strong>Week 3:</strong> Pick two learning methods and run them with the same questions. Start the adviser grid with one name per cell.</div></div>
+    <div class="toolkit-item"><div class="t-ic">🏆</div><div><strong>Week 4:</strong> Score three candidate early wins, choose one, plan it with FOGLAMP, and revisit the five conversations.</div></div>
+  </div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     VERDICT
-════════════════════════════════════════════ -->
+<!-- ═══════════════ KEY PHRASES ═══════════════ -->
+<div id="quotes" class="panel">
+  <div class="section-header"><h2>Key Phrases &amp; Ideas</h2><div class="section-line"></div></div>
+  <div class="note-box">These are the book's signature terms with short paraphrases. I have not reproduced passages from the text. The earlier version of this page showed several "quotes" I could not verify, and they have been removed. Add your own favourite lines from your copy here.</div>
+
+  <div class="quote-block"><p>Break-even point.</p><div class="attr">— When the value you have produced matches the value you have consumed</div></div>
+  <div class="quote-block"><p>Vicious and virtuous cycles.</p><div class="attr">— Two self-reinforcing loops that decide whether a transition builds or erodes credibility</div></div>
+  <div class="quote-block"><p>STARS.</p><div class="attr">— Start-up, Turnaround, Accelerated growth, Realignment, Sustaining success</div></div>
+  <div class="quote-block"><p>The five conversations.</p><div class="attr">— Situation, expectations, resources, style, personal development</div></div>
+  <div class="quote-block"><p>FOGLAMP.</p><div class="attr">— Focus, oversight, goals, leadership, abilities, means, process</div></div>
+  <div class="quote-block"><p>Transition Heat Map.</p><div class="attr">— A one-page view of where transition intensity is concentrated across units</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
+  <p class="lead">Paraphrases, not direct quotes.</p>
+  <div class="quote-block"><p>Work out which situation you are really in before choosing how to lead.</p><div class="attr">— Paraphrase of STARS</div></div>
+  <div class="quote-block"><p>Do not leave the relationship with your boss to chance.</p><div class="attr">— Paraphrase of the five conversations</div></div>
+  <div class="quote-block"><p>Score a candidate win before you commit to it.</p><div class="attr">— Paraphrase of the early wins evaluation</div></div>
+  <div class="quote-block"><p>Your own transition is one of many in the organization.</p><div class="attr">— Paraphrase of the final chapter's theme</div></div>
+</div>
+
+<!-- ═══════════════ RATINGS & VERDICT ═══════════════ -->
 <div id="verdict" class="panel">
-  <div class="verdict-banner">
-    <h3>⭐ 4.6 / 5</h3>
-    <p>The definitive operating manual for any career transition — dense with tools, disciplined in structure, and immediately usable from page one</p>
-    <div class="rating-row">
-      <div class="rating-item">
-        <div class="r-score">4.5</div>
-        <div class="r-label">Accessibility</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.9</div>
-        <div class="r-label">Practicality</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.6</div>
-        <div class="r-label">Breadth</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.4</div>
-        <div class="r-label">Originality</div>
-      </div>
-    </div>
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">3.0<small> / 5</small></div><div class="cmp-sub">Dan's own rating. His category average is 2.88, so his overall is 0.12 above it.</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Reader consensus</div><div class="cmp-score pending">n/a</div><div class="cmp-sub">Goodreads figures could not be retrieved (checked 11 Nov 2026). See the note below.</div></div>
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.8<small> / 5</small></div><div class="cmp-sub">Category average 3.75. A strong working manual with thin independent evidence.</div></div>
   </div>
+  <div class="note-box">Claude's scores are a judgment, not Dan's opinion and not reader data. Claude has not read the whole book: they rest on the companion tools PDF, published descriptions and the reviews linked below. The three views are kept separate on purpose.</div>
 
-  <div class="section-header">
-    <h2>Strengths &amp; Limitations</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <div class="cat-wrap"><table class="cat-table">
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">4.0</td><td class="num">3.0</td><td>STARS and the break-even framing are memorable and widely cited. Several other tools (the logos, ethos and pathos triad, the stress curve) are borrowed and applied.</td></tr>
+    <tr><td>Readability</td><td class="num">3.5</td><td class="num">2.5</td><td>Clearly organized, one challenge per chapter, but about 250 pages of tables and frameworks. One reviewer found it dull and stopped a quarter of the way in.</td></tr>
+    <tr><td>Actionability</td><td class="num">4.5</td><td class="num">3.0</td><td>Almost every chapter ends in a fill-in worksheet, and the companion PDF collects them. This is the book's strongest point.</td></tr>
+    <tr><td>Evidence</td><td class="num">3.0</td><td class="num">3.0</td><td>Support comes mainly from the author's experience, case examples and one preference survey whose sample I could not check. I did not verify the cases.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.75</td><td class="num">2.88</td><td>Claude's overall is 3.8. There is no verified Goodreads average to compare against; a search snippet suggested about 3.85, which I could not open, so I will not lean on it. If that figure is right, the two are within 0.1. Dan's overall of 3.0 sits just 0.12 above his own category average of 2.88. He scores below Claude on Ideas, Readability and Actionability (3.0 vs 4.0, 2.5 vs 3.5, and 3.0 vs 4.5), with the biggest gap on Actionability, and matches Claude on Evidence (3.0).</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence. Dan's column holds his own scores.</p>
 
+  <div class="section-header"><h2>What Other Readers Say</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>Goodreads: not available.</strong> I tried three Goodreads pages for this title (book IDs 74813, 18186599 and 19251897). The fetch tool returned empty content each time, so I have no verified average, rating count or star distribution, and I have not guessed any. A search-result snippet for the author's Goodreads page appeared to show about 3.85 from roughly 38,000 ratings, and a third-party site listed 3.86 for this edition; I could not open either to check, so they are not used. Blinkist shows 2.9 from 671 ratings, but that is its own summary product, not Goodreads. Amazon was not used. Please check Goodreads directly for the live figures. Checked 11 Nov 2026.</div>
   <div class="pro-con-grid">
-    <div class="pro-list">
-      <h4>Strengths</h4>
-      <div class="list-item"><div class="dot"></div><div>Genuinely comprehensive — covers diagnosis, learning, negotiation, early wins, alignment, team, coalitions, and self-management as one integrated system rather than disconnected tips</div></div>
-      <div class="list-item"><div class="dot"></div><div>Every chapter ends in a usable tool, not just a concept — the book functions as a working manual, not just a set of ideas to admire</div></div>
-      <div class="list-item"><div class="dot"></div><div>The STARS model and Five Conversations are genuinely load-bearing frameworks that hold up in real organizations, not consultant jargon</div></div>
-      <div class="list-item"><div class="dot"></div><div>The Updated edition's Chapter 10 is a meaningful, non-cosmetic addition — it extends the book's value from "help yourself" to "help your whole organization"</div></div>
-      <div class="list-item"><div class="dot"></div><div>Refreshingly honest about the emotional and physical toll of transitions, rather than pretending it's a purely intellectual exercise</div></div>
-      <div class="list-item"><div class="dot"></div><div>Works equally well for external hires and internal promotions — a distinction many transition books ignore</div></div>
+    <div class="pro-list"><h4>What reviewers praise</h4>
+      <div class="list-item"><div class="dot"></div><div>A reviewer at Sources of Insight calls it "one of the best books" on being effective in a new role and a "survivor's guide" for new leaders</div></div>
+      <div class="list-item"><div class="dot"></div><div>Structured, practical tools: STARS, the five conversations, a checklist approach (ClickUp's review, which is a vendor blog and entirely favourable)</div></div>
+      <div class="list-item"><div class="dot"></div><div>Breadth, from onboarding and delegation to team assessment and early wins (same ClickUp review)</div></div>
     </div>
-    <div class="con-list">
-      <h4>Limitations</h4>
-      <div class="list-item"><div class="dot"></div><div>Density is a double-edged sword — trying to apply every tool in every chapter in your actual first 90 days is unrealistic; readers need to prioritize</div></div>
-      <div class="list-item"><div class="dot"></div><div>Corporate-leadership framing throughout — individual contributors, freelancers, or very small-team transitions will need to translate some tools rather than apply them directly</div></div>
-      <div class="list-item"><div class="dot"></div><div>Some of the assessment tools (STARS portfolio, Transition Risk Assessment) work best with quiet reflection time that a genuinely chaotic first week rarely allows</div></div>
-      <div class="list-item"><div class="dot"></div><div>Case examples, while useful, are drawn overwhelmingly from large-company executive contexts — smaller-organization leaders may need to scale the advice down</div></div>
-      <div class="list-item"><div class="dot"></div><div>The sheer number of named frameworks (STARS, FOGLAMP, the Five Conversations, the Development Grid, and more) can feel like acronym overload on a first read</div></div>
+    <div class="con-list"><h4>What reviewers criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>One 1-out-of-5 reader review (a reader blog (ybrikman.com)) found the advice platitudes and obvious points, and the checklists incomplete</div></div>
+      <div class="list-item"><div class="dot"></div><div>The same reviewer felt the guidance suits large, old-style corporations, and found the jargon heavy</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Sources of Insight review's caveat: the framework takes a lot of practice, and a cheat sheet is no substitute for re-reading</div></div>
     </div>
   </div>
-
-  <div class="section-header">
-    <h2>Who Should Read This</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone starting a new leadership role</strong> — externally hired or internally promoted — within the next 90 days. This is the single highest-value moment to read the book.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Newly promoted managers and executives</strong> specifically — the promotion-specific material in Chapter 1 and the STARS model directly address the "what got me here won't keep me here" trap.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>HR, talent, and people-development leaders</strong> designing onboarding programs — Chapter 10 and the Transition Heat Map are built exactly for this use case.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Executive coaches and mentors</strong> supporting leaders through transitions — the Five Conversations, FOGLAMP, and advice-network tools give structure to what's often unstructured coaching conversation.</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Individual contributors without direct reports</strong> will get value from the learning-acceleration and self-management chapters but should expect to adapt the team- and coalition-building content.</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Leaders already 6+ months into a role</strong> can still benefit — especially from STARS diagnosis and the alignment/coalition chapters — but the earlier the book is read relative to the transition, the more of its value is realized.</div></div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Memorable Quotes</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="quote-block">
-    <p>The actions you take during your first few months in a new role will largely determine whether you succeed or fail.</p>
-    <div class="attr">— Michael D. Watkins, The First 90 Days</div>
-  </div>
-
-  <div class="quote-block">
-    <p>What got you here won't necessarily get you there. The skills, relationships, and habits that made you successful in your previous role may be exactly the wrong ones for this one.</p>
-    <div class="attr">— Michael D. Watkins, The First 90 Days</div>
-  </div>
-
-  <div class="quote-block">
-    <p>Early wins build your credibility and generate momentum. But early wins built on the wrong foundation are worse than no wins at all — they cost you the trust you'll need for everything that comes after.</p>
-    <div class="attr">— Michael D. Watkins, The First 90 Days</div>
-  </div>
-
-  <div class="quote-block">
-    <p>You are never the only person in transition. As a leader, part of your job is accelerating everyone else's transitions too.</p>
-    <div class="attr">— Michael D. Watkins, The First 90 Days</div>
-  </div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>The Single Most Important Insight</h2>
-    <div class="section-line"></div>
-  </div>
   <div class="summary-block">
-    <p>If the book has one idea worth carrying forward above all others, it's the vicious-versus-virtuous cycle model from the Introduction. It reframes the entire first 90 days not as a list of tasks to complete, but as a single ongoing choice, repeated daily: learn first, or act first? Every other tool in the book — STARS, the Five Conversations, FOGLAMP, the alignment and coalition frameworks — exists to help you make that choice correctly and consistently, under time pressure, when the temptation to skip learning and just start acting is strongest.</p>
-    <p>What makes this insight durable rather than merely clever is how self-reinforcing both cycles are. A leader who learns first tends to make a good early decision, which builds credibility, which earns the benefit of the doubt on the next decision, which buys more time to learn before the next choice — a compounding advantage. A leader who acts first without adequate learning makes a worse decision, burns credibility, faces more resistance, and — critically — has less standing to ask the questions that would let them learn and correct course. The gap between the two leaders widens every week, which is exactly why the book insists the first weeks matter disproportionately.</p>
-    <p>Watkins's practical contribution is refusing to leave "learn first" as vague advice. Every subsequent chapter operationalizes it: specific learning methods, specific diagnostic questions, specific conversations to have before acting. That's the throughline that makes an otherwise dense, tool-heavy book cohere into a single argument rather than a grab-bag of separately useful techniques.</p>
+    <p><strong>What you may have missed:</strong> the survey on which the "realignment is hardest, start-up is preferred" finding rests is presented as the author's data; the companion tools PDF gives no sample size or method, so it is a vivid but unchecked statistic.</p>
+    <p>Also, the 90 days in the title is a framing. The book's own waves-of-change diagram (Figure 5-1) spans about 18 months, with reshaping and consolidation coming after the early learning stages. That is my reading of the diagram, not a published criticism. And the one harshly negative review I read stopped about a quarter of the way through, so it says little about the later chapters.</p>
+  </div>
+  <div class="src-list"><strong>Sources (read 11 Nov 2026):</strong>
+    <a href="https://sourcesofinsight.com/doing-the-first-90-days/">Sources of Insight</a> (praise) &middot;
+    <a href="https://clickup.com/blog/the-first-90-days-summary/">ClickUp summary and review</a> (vendor blog, favourable) &middot;
+    <a href="https://www.ybrikman.com/blog/2018/11/30/the-first-90-days/">a reader blog (ybrikman.com)</a> (1/5 criticism; lists the ten core tasks) &middot;
+    <a href="https://www.imd.org/research-knowledge/books/first-90-days/">IMD book listing</a> (edition description) &middot;
+    <a href="https://www.goodreads.com/book/show/74813.The_First_90_Days">Goodreads</a> (could not be read).
+    Summaries are from page text. The O'Reilly, Goodreads and SuperSummary pages blocked or returned nothing: not available.</div>
+
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Dan rates <em>The First 90 Days</em> 3 out of 5. He had high hopes for it, but found that many of its concepts amount to almost bulldozing your way through the first 90 days to get as much return on investment as possible, and he doesn't wholeheartedly agree with that.</p>
+    <p>His biggest takeaway was the people side: getting to know people and understanding who they are, being a team player, and knowing that you are not the most important person on the team, nor the one who understands things the most, so you need to rely on others.</p>
+    <p>He rates Ideas 3. He struggled to get through it (readability 2.5). Actionability is 3, and he scored Evidence 3 because there are a lot of compelling arguments. His summary: glad he read it, but not one he will go back to in order to stay on top of things. It was good to read once and take the knowledge from it.</p>
+    <p style="font-size:12px;color:var(--muted);">Written up from Dan's own words (11 Nov 2026). He gave category scores but no overall number, and chose 3.0 as the overall when asked. His view stands apart from the Claude and reader views above.</p></div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Broad coverage as one system: diagnosis, learning, boss, early wins, alignment, team, alliances and self-management</div></div>
+      <div class="list-item"><div class="dot"></div><div>Almost every chapter has a usable worksheet, and the companion PDF collects them</div></div>
+      <div class="list-item"><div class="dot"></div><div>STARS gives a vocabulary for saying "this part needs speed, that part needs patience"</div></div>
+      <div class="list-item"><div class="dot"></div><div>Covers both external hires and promotions, and extends to onboarding others in the final chapter</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Dense: doing every worksheet in a real first quarter is unrealistic, so you have to prioritize</div></div>
+      <div class="list-item"><div class="dot"></div><div>Evidence is mostly experience and examples, and one survey I could not check</div></div>
+      <div class="list-item"><div class="dot"></div><div>A corporate frame; individual contributors and very small organizations will need to adapt the tools (one critic's view, too)</div></div>
+      <div class="list-item"><div class="dot"></div><div>Many named frameworks can feel like acronym overload on a first read</div></div>
+    </div>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Overall Summary</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone about to start a leadership role</strong>, hired or promoted. Read it before the start date if you can.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Newly promoted managers</strong>, for the promotion challenges table and the STARS diagnosis.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>HR and talent leaders</strong> designing onboarding, who can use the final chapter's heat map and coaching comparison.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Individual contributors</strong> will get most from the learning and self-management material and should adapt the team and alliance tools.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>People already months into a role</strong> can still use the STARS portfolio and alliance tools, but the early-phase material will matter less.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
   <div class="summary-block">
-    <p><strong>The First 90 Days</strong> earns its reputation as the standard reference on leadership transitions because it treats the problem with the seriousness it deserves. Watkins doesn't offer inspiration or war stories dressed up as advice — he offers a genuinely comprehensive system, chapter by chapter, tool by tool, for the specific high-stakes period when a leader's habits, relationships, and credibility are all being formed simultaneously and under pressure.</p>
-    <p>The Updated and Expanded edition earns its update. The STARS model alone justifies picking up this version over the original, and the new Chapter 10 meaningfully extends the book's usefulness beyond personal survival into organizational capability — a natural and valuable expansion for readers who've since become the ones doing the hiring and promoting.</p>
-    <p>The book's density is real, and no one should expect to execute every tool in every chapter during an actual, chaotic first quarter. The right way to use it is as a reference you return to repeatedly — reading the whole thing once for the map, then re-reading specific chapters (Match Strategy to Situation before you diagnose your new role, Negotiate Success before your first real one-on-one with your new boss, Secure Early Wins once you're past the pure-learning phase) exactly when their tools become relevant.</p>
-    <p>The honest recommendation: read this before you start a new role, not after you're three months in and things have already gone sideways. If you're past that window, read it anyway — the STARS diagnosis and coalition-building chapters remain valuable at any point in a role — but the compounding advantage of the virtuous cycle is real, and it's easiest to claim from day one.</p>
+    <p>Name the situation before you pick the playbook. STARS turns "be a good leader" into a question you can answer in an afternoon: which of my responsibilities are start-ups, turnarounds, growth, realignments or sustaining success, and which of them do I have a bias toward? Everything else in the book, from the boss agenda to the choice of early wins, changes depending on the answer.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>The First 90 Days</strong> is best read as a manual: a set of diagnostics and worksheets organized around the first months of a role. Its strengths are breadth, structure and practicality. Its weaker side is thin independent evidence and a density that rewards dipping in over reading straight through.</p>
+    <p>Use the whole book once for the map, then return to a chapter's tools when you need them: STARS before you plan, the five conversations before you meet your boss, the early-wins scoring before you commit. Pair it with a critical eye on the survey and case material.</p>
   </div>
 </div>
 
@@ -1048,10 +1193,86 @@
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     el.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 1 });
   }
-  function toggleChapter(card) {
-    card.classList.toggle('open');
+  function toggleChapter(card) { card.classList.toggle('open'); }
+  function jumpM(id) {
+    const tab = Array.from(document.querySelectorAll('.tab')).find(t => t.textContent.includes('STARS'));
+    if (!document.getElementById('framework').classList.contains('active')) { showTab('framework', tab); }
+    setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
   }
+
+  /* STARS mix sliders */
+  const items = [
+    ['We are building most things from scratch: team, process, tools', 'Start-up', 'Ask your boss for resources, clear measurable goals and help staying focused.'],
+    ['Everyone agrees we are in serious trouble and time is short', 'Turnaround', 'Plan to move quickly and cut deep enough; line up your boss for tough personnel calls.'],
+    ['Demand is growing faster than our structures can handle', 'Accelerated growth', 'Make the case for systems and structure now, and plan how to integrate new people.'],
+    ['We used to win, results are slipping, and people disagree there is a problem', 'Realignment', 'Spend time on cultural and political learning and build the case for change before big moves.'],
+    ['Things are healthy and the job is to protect and extend that', 'Sustaining success', 'Reality-test the label with your boss, play defense first, then look for the next level.']
+  ];
+  const wrap = document.getElementById('map-sliders');
+  const bars = document.getElementById('mix-bars');
+  items.forEach((it, i) => {
+    const row = document.createElement('div'); row.className = 'slider-row';
+    row.innerHTML = '<label><span>' + it[0] + '</span><span class="lean" id="lean-' + i + '">0</span></label><input type="range" class="map-in" id="dom-' + i + '" min="0" max="10" value="0">';
+    wrap.appendChild(row);
+    const b = document.createElement('div'); b.className = 'mix-row';
+    b.innerHTML = '<span class="nm">' + it[1] + '</span><div class="bar"><i id="bar-' + i + '" style="width:0%"></i></div><span class="pc" id="pc-' + i + '">0%</span>';
+    bars.appendChild(b);
+  });
+  function updateMap() {
+    const vals = Array.from(document.querySelectorAll('.map-in')).map(el => +el.value);
+    const total = vals.reduce((a, b) => a + b, 0);
+    vals.forEach((v, i) => {
+      document.getElementById('lean-' + i).textContent = v;
+      const pc = total ? Math.round(v * 100 / total) : 0;
+      document.getElementById('bar-' + i).style.width = pc + '%';
+      document.getElementById('pc-' + i).textContent = pc + '%';
+    });
+    const t = document.getElementById('map-title'), x = document.getElementById('map-text');
+    if (!total) { t.textContent = 'Move the sliders'; x.textContent = 'The bars show how your 100% of effort could split if you followed your own ratings. This is a rough prompt, not a diagnosis.'; return; }
+    const order = vals.map((v, i) => i).sort((a, b) => vals[b] - vals[a]);
+    const top = order[0], second = order[1];
+    if (vals[top] - vals[second] <= 1) {
+      t.textContent = 'A mixed portfolio: ' + items[top][1] + ' and ' + items[second][1];
+      x.textContent = 'Two situations score about the same, which is common. Split your effort deliberately, and ask yourself which one you would prefer to spend time on. ' + items[top][2];
+    } else {
+      t.textContent = 'Mostly ' + items[top][1];
+      x.textContent = items[top][2] + (vals[second] >= 5 ? ' ' + items[second][1] + ' is also strong, so do not ignore it.' : '');
+    }
+  }
+  document.querySelectorAll('.map-in').forEach(el => el.addEventListener('input', updateMap));
+  updateMap();
+
+  /* Quiz */
+  const opts = ['Start-up', 'Turnaround', 'Accelerated growth', 'Realignment', 'Sustaining success'];
+  const quizData = [
+    { q: 'You are asked to open a regional office. There are no staff, no processes and a small budget.', a: 'Start-up', why: 'Building capabilities from nothing, with limited resources, is the start-up situation.' },
+    { q: 'A product line has nearly run out of cash, the board has said it must change within a year, and staff expect cuts.', a: 'Turnaround', why: 'Widely acknowledged serious trouble, with time pressure, is a turnaround.' },
+    { q: 'Sales have doubled in a year. Hiring, support and tooling are all straining to keep up.', a: 'Accelerated growth', why: 'A rapidly expanding business that needs structures that scale is accelerated growth.' },
+    { q: 'A once-dominant division is still profitable but losing share, and many staff think nothing is wrong.', a: 'Realignment', why: 'A previously successful organization with developing problems, and denial, is realignment.' },
+    { q: 'A well-run unit has strong results and a motivated team, and your job is to keep it healthy and extend it.', a: 'Sustaining success', why: 'Preserving vitality and taking a healthy unit further is sustaining success. Test the label first, as the book suggests.' }
+  ];
+  const quiz = document.getElementById('quiz');
+  let answered = 0, correct = 0;
+  quizData.forEach((d, i) => {
+    const card = document.createElement('div'); card.className = 'quiz-card';
+    card.innerHTML = '<div class="q"><span class="n">' + (i + 1) + '.</span>' + d.q + '</div><div class="quiz-opts"></div><div class="quiz-exp"></div>';
+    const o = card.querySelector('.quiz-opts'), exp = card.querySelector('.quiz-exp');
+    opts.forEach(k => {
+      const b = document.createElement('button'); b.textContent = k;
+      b.onclick = () => {
+        o.querySelectorAll('button').forEach(x => { x.disabled = true; if (x.textContent === d.a) x.classList.add('right'); });
+        if (k !== d.a) b.classList.add('wrong'); else correct++;
+        answered++;
+        exp.textContent = (k === d.a ? 'Correct. ' : 'Not quite: it is ' + d.a + '. ') + d.why;
+        exp.classList.add('show');
+        if (answered === quizData.length) document.getElementById('quiz-score').textContent = 'Score: ' + correct + ' / ' + quizData.length;
+      };
+      o.appendChild(b);
+    });
+    quiz.appendChild(card);
+  });
 </script>
 </body>
 </html>
