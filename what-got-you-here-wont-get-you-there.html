@@ -294,7 +294,50 @@
     .hero-inner { padding: 28px 20px 28px; flex-wrap: wrap; }
     .bestseller-bar { padding: 8px 20px; }
   }
+
+  /* ── Six-tab standard additions ── */
+  :root { --muted: #526080; --line: rgba(20,40,63,0.13); }
+  .lead { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+  .note-box { background: rgba(20,40,63,0.04); border: 1.5px dashed var(--muted); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; line-height: 1.6; color: var(--ink-light); margin-bottom: 22px; }
+  .map-box { background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 26px; }
+  .scan-item { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; font-size: 13px; line-height: 1.5; cursor: pointer; }
+  .scan-item input { margin-top: 3px; accent-color: var(--blue); flex-shrink: 0; }
+  .map-out { border-radius: 10px; padding: 14px 16px; color: #fff; font-size: 13.5px; line-height: 1.6; margin-top: 14px; background: var(--ink-deep); }
+  .map-out h5 { font-weight: 800; font-size: 16px; margin-bottom: 4px; }
+  .quiz-card { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+  .quiz-card .q { font-size: 14px; line-height: 1.6; margin-bottom: 10px; font-weight: 500; }
+  .quiz-card .q .n { font-weight: 800; color: var(--blue-dark); margin-right: 6px; }
+  .quiz-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .quiz-opts button { padding: 7px 14px; border-radius: 18px; border: 1.5px solid var(--ink); background: #fff; font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 700; cursor: pointer; text-align: left; }
+  .quiz-opts button:hover:not(:disabled) { background: var(--blue-dim); }
+  .quiz-opts button.right { background: #1d6b3a; color: #fff; border-color: #1d6b3a; }
+  .quiz-opts button.wrong { background: #b3281a; color: #fff; border-color: #b3281a; }
+  .quiz-exp { display: none; margin-top: 10px; font-size: 12.5px; line-height: 1.6; color: var(--ink-light); background: rgba(20,40,63,.05); padding: 10px 12px; border-radius: 6px; }
+  .quiz-exp.show { display: block; }
+  .quiz-score { font-weight: 700; font-size: 14px; color: var(--blue-dark); margin-top: 8px; }
+  .cmp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+  .cmp-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px 16px; text-align: center; }
+  .cmp-card.you { border-top: 4px solid var(--rust); }
+  .cmp-card.crowd { border-top: 4px solid var(--blue); }
+  .cmp-card.me { border-top: 4px solid var(--ink); }
+  .cmp-label { font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+  .cmp-score { font-weight: 800; font-size: 38px; color: var(--ink); line-height: 1; }
+  .cmp-score small { font-size: 15px; color: var(--muted); font-weight: 500; }
+  .cmp-score.pending { color: var(--muted); }
+  .cmp-sub { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+  .cat-wrap { overflow-x: auto; margin-bottom: 8px; }
+  .cat-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); font-size: 13px; }
+  .cat-table th, .cat-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cat-table th { font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); background: var(--cream); }
+  .cat-table td.num { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cat-table tr.avg td { font-weight: 800; background: var(--cream); }
+  .cat-table tr.avg td:last-child { font-weight: 500; }
+  .src-list { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; overflow-wrap: anywhere; }
+  .src-list a { color: var(--blue-dark); }
+  .chapter-body { overflow-wrap: anywhere; }
+  @media (max-width: 560px) { .cmp-grid { grid-template-columns: 1fr; } .chapter-body { padding-left: 18px; } }
 </style>
+
 </head>
 <body>
 
@@ -302,7 +345,7 @@
      HERO — white cover canvas + rust ladder-rung motif + navy-blue gradient title + cover art
 ════════════════════════════════════════════ -->
 <div class="hero">
-  <div class="bestseller-bar">New York Times &amp; Wall Street Journal Bestseller</div>
+  <div class="bestseller-bar">Executive Coaching &middot; Hyperion, 2007</div>
   <div class="hero-inner">
     <div class="hero-motif">
       <svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -324,7 +367,7 @@
     <div class="hero-text">
       <div class="book-label">Book Review &amp; Field Guide</div>
       <h1>What Got You Here Won't Get You There<em>How Successful People Become Even More Successful!</em></h1>
-      <div class="author">by <span>Marshall Goldsmith</span> with Mark Reiter &nbsp;·&nbsp; Over 1 Million Copies Sold &nbsp;·&nbsp; Hyperion</div>
+      <div class="author">by <span>Marshall Goldsmith</span> with Mark Reiter &nbsp;·&nbsp; Hyperion</div>
       <div class="hero-meta">
         <div class="meta-pill">Executive Coaching</div>
         <div class="meta-pill">Leadership</div>
@@ -347,514 +390,407 @@
 <div class="tabs">
   <div class="tab active" onclick="showTab('overview', this)">Overview</div>
   <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
-  <div class="tab" onclick="showTab('framework', this)">Framework &amp; Toolkit</div>
-  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+  <div class="tab" onclick="showTab('habits', this)">The 20 Habits</div>
+  <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
+  <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
+  <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     OVERVIEW
-════════════════════════════════════════════ -->
+<!-- ════════ OVERVIEW ════════ -->
 <div id="overview" class="panel active">
 
-  <div class="section-header">
-    <h2>What This Book Is About</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
 
   <div class="overview-grid">
     <div class="stat-card">
       <div class="stat-label">Core Focus</div>
-      <div class="stat-value">The Interpersonal Habits That Cap Careers at the Top</div>
-      <div class="stat-desc">A field guide to the small, everyday behavioral quirks — not skill or effort gaps — that keep successful executives from becoming truly great leaders</div>
+      <div class="stat-value">Interpersonal Habits That Cap Careers at the Top</div>
+      <div class="stat-desc">Small everyday behaviours, not skill gaps, that hold successful professionals back from being seen as great leaders.</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Central Promise</div>
-      <div class="stat-value">What Made You Successful Isn't What Will Make You More Successful</div>
-      <div class="stat-desc">At the top, the game changes from individual skill to influencing others — and the habits that built your career can actively work against you now</div>
+      <div class="stat-value">The Behaviours That Made You Successful May Not Take You Further</div>
+      <div class="stat-desc">The title is the thesis: further progress depends on how you deal with other people, and some of your habits work against that.</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Primary Framework</div>
-      <div class="stat-value">Feedback → Apologizing → Advertising → Listening → Thanking → Following Up → Feedforward</div>
-      <div class="stat-desc">A seven-step behavioral process for soliciting input, changing visibly, and proving the change is real and durable</div>
+      <div class="stat-label">Structure</div>
+      <div class="stat-value">Four Sections, Fourteen Chapters</div>
+      <div class="stat-desc">The trouble with success, twenty habits (plus a twenty-first), how to change, and pulling out the stops.</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Best For</div>
-      <div class="stat-value">Successful People Who Are Told They're Difficult, or Suspect They Might Be</div>
-      <div class="stat-desc">Executives, managers, and high performers who've hit a ceiling that skill alone can't explain</div>
+      <div class="stat-value">Experienced Professionals Who Suspect a Blind Spot</div>
+      <div class="stat-desc">Managers, senior individual contributors and executives whose results are strong but whose working relationships are not.</div>
     </div>
   </div>
 
+  <div class="note-box"><strong>How this page was built:</strong> I have not read the book closely. The section and chapter titles and the list of twenty habits come from contents listings and summaries found through a web search (checked 12 Nov 2026; sources on the Ratings &amp; Verdict tab). Chapter summaries are reconstructed from those titles and the book's well-documented themes, not from a close reading, so treat details as approximate. Examples I invent are labelled as my own illustrations. The publisher, publication date and author details are as listed by the retailers and library records I found.</div>
+
   <div class="summary-block">
-    <p><strong>What Got You Here Won't Get You There</strong> is built on a single, deceptively simple observation from Marshall Goldsmith's decades as an executive coach to CEOs and their leadership teams: the people he works with are almost never held back by a lack of talent, drive, or intelligence. They're held back by small, habitual, interpersonal behaviors — needing to win every argument, adding one unnecessary comment too many, starting sentences with "no," "but," or "however" — that were often harmless or even useful earlier in their careers, and have quietly become liabilities now that their success depends on other people's cooperation rather than their own individual output.</p>
-    <p>The book's opening move is diagnosing why successful people are so bad at recognizing this. Goldsmith argues that success breeds four interlocking beliefs — <em>I have succeeded, I have the ability to succeed, I will succeed, I choose to succeed</em> — that together create a kind of superstition: if I did X and I succeeded, then X must be why I succeeded, so I should keep doing X forever. That superstition is exactly what makes it so hard for accomplished people to hear, let alone act on, feedback about behaviors that no longer serve them.</p>
-    <p>From there, the book catalogs twenty specific habits Goldsmith has seen derail otherwise brilliant careers, then spends its second half on a practical, repeatable process — feedback, apologizing, publicly advertising your intent to change, listening, thanking, following up, and his signature technique, <strong>feedforward</strong> — for actually changing a behavior and, just as importantly, getting the people around you to notice and believe that you have.</p>
+    <p><strong>What Got You Here Won't Get You There</strong>, by Marshall Goldsmith with Mark Reiter (Hyperion, 2007), is a short, practical argument from an executive coach: successful people are rarely held back by a lack of talent. They are held back by habits in how they treat colleagues, habits that were tolerated or even rewarded on the way up and that become a drag once success depends on other people's willingness to follow, share and cooperate.</p>
+    <p>The first section explains why successful people struggle to see this. Goldsmith describes four beliefs that success tends to produce (I have succeeded, I have the ability to succeed, I will succeed, I choose to succeed) and argues they add up to a delusion: because the behaviours were present when I won, they must be part of why I won. The second section is a catalogue of twenty habits, plus a "twenty-first" (goal obsession). The third turns to change: gather feedback, apologise, tell people what you are working on, listen, say thank you, follow up, and use "feedforward". The last section covers the rules for making change stick and the extra challenges of being the person in charge.</p>
+    <p>The book is about <em>behaviour that other people see</em>. It does not claim that the habits are character flaws, and its remedy is mostly about how you respond to people rather than about introspection.</p>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Core Ideas at a Glance</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
 
-  <div class="key-idea"><div class="icon">🪜</div><div><strong>The success delusion.</strong> Successful people believe their past behaviors caused their success, so they keep doing them — even the ones that are now holding them back.</div></div>
-  <div class="key-idea"><div class="icon">📋</div><div><strong>The Twenty Habits.</strong> A menu of specific interpersonal behaviors — winning too much, passing judgment, withholding information, and more — that quietly sabotage otherwise excellent leaders.</div></div>
-  <div class="key-idea"><div class="icon">🎯</div><div><strong>Goal obsession.</strong> The twenty-first habit: pursuing a goal so single-mindedly that you damage the relationships and priorities that actually matter more.</div></div>
-  <div class="key-idea"><div class="icon">🙏</div><div><strong>Apologizing disarms.</strong> A short, sincere apology for past behavior — with no excuses attached — is one of the most powerful, underused tools a leader has.</div></div>
-  <div class="key-idea"><div class="icon">📣</div><div><strong>Advertise the change.</strong> Telling people what you're working on lets them notice your improvement — without the announcement, real change often goes invisible.</div></div>
-  <div class="key-idea"><div class="icon">👂</div><div><strong>Listening is a discipline.</strong> Most successful people think they listen well; measured against how well they actually listen, almost none of them do.</div></div>
-  <div class="key-idea"><div class="icon">🔁</div><div><strong>Feedforward, not feedback.</strong> Ask people for ideas about your future behavior instead of dissecting your past — nobody gets defensive about advice for what hasn't happened yet.</div></div>
-  <div class="key-idea"><div class="icon">🧑‍🎓</div><div><strong>Growing up.</strong> Real change means outgrowing the adolescent need to prove you're the smartest, funniest, or most powerful person in every room.</div></div>
+  <div class="key-idea"><div class="icon">🪜</div><div><strong>The success delusion.</strong> Success breeds the belief that everything you did caused it, which makes people resist changing even the behaviours that now cost them.</div></div>
+  <div class="key-idea"><div class="icon">📋</div><div><strong>Twenty habits.</strong> Specific, nameable interpersonal behaviours, such as winning too much, adding too much value or not listening, that damage trust without the person noticing.</div></div>
+  <div class="key-idea"><div class="icon">🎯</div><div><strong>Goal obsession.</strong> A twenty-first habit: chasing a goal so hard that the way you pursue it harms people and priorities that matter more.</div></div>
+  <div class="key-idea"><div class="icon">🙏</div><div><strong>Change is visible and social.</strong> You do not change alone: you apologise, tell people what you are working on, ask for ideas, thank them, and keep checking in.</div></div>
+  <div class="key-idea"><div class="icon">🔁</div><div><strong>Feedforward over feedback.</strong> Ask for suggestions about the future rather than a verdict on the past; nobody can dispute a suggestion about something that has not happened yet.</div></div>
+  <div class="key-idea"><div class="icon">👂</div><div><strong>Listening and thanking are skills.</strong> Two of the simplest behaviours in the book are also the two it treats as most underused.</div></div>
 
 </div>
 
-<!-- ════════════════════════════════════════════
-     CHAPTERS
-════════════════════════════════════════════ -->
+<!-- ════════ ALL CHAPTERS ════════ -->
 <div id="chapters" class="panel">
 
-  <div class="part-header">Introduction</div>
+  <div class="note-box"><strong>How to read this tab:</strong> the section and chapter titles follow a table of contents found in a 2008 blog post that reproduces it, with chapters 1 to 3 and 13 to 14 also appearing in other summaries returned by search (the title of chapter 13 is given as "Changing the Rules" in one listing and "Changing: The Rules" in another). I could not retrieve the publisher's own contents page, so check numbering against your copy. The summaries below are <strong>reconstructed from those titles and the book's well-known themes, not from a close reading</strong>. I have not quoted the book, and where I could not tell what a chapter contains I say so.</div>
+
+  <div class="part-header">Section One: The Trouble with Success</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num intro">I</div>
-      <div class="ch-title">Introduction: What Got You Here</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">You Are Here</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Goldsmith opens by describing his practice: he's brought in — usually at great expense — to work one-on-one with senior executives whom their companies consider brilliant, valuable, and almost impossible to work with. His pay is contingent on measurable behavioral improvement, confirmed by the very colleagues who nominated the executive for coaching, which forces the book's whole approach to be ruthlessly practical rather than theoretical.
-      <br><br>
-      He sets up the book's title as its thesis: the specific skills, instincts, and even personality quirks that propelled someone to the top of their field are frequently not the skills that will take them further, and in many cases have already become the ceiling. Success, paradoxically, makes this harder to see and accept — which is the problem the rest of the book is built to solve.
-      <div class="ch-takeaway">The behaviors that built your career and the behaviors that will build your next level of success are often not the same behaviors — and success itself makes that hard to notice.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Success as a trap for self-awareness</div>
-    </div>
-  </div>
-
-  <div class="part-header">Part One — The Trouble with Success</div>
-
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">1</div>
-      <div class="ch-title">You Are Here</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      Goldsmith identifies four beliefs that virtually all successful people share: <strong>I have succeeded</strong> (a general sense of past accomplishment), <strong>I have the ability to succeed</strong> (confidence I can do whatever I set my mind to), <strong>I will succeed</strong> (optimism that things will work out), and <strong>I choose to succeed</strong> (a strong sense that my behaviors are the deliberate result of my own choices, not luck or circumstance).
-      <br><br>
-      Individually useful, these four beliefs combine into a kind of superstition: because I believe my past behaviors caused my success, and because I believe I chose those behaviors deliberately, I conclude I should keep doing exactly what I've always done — including the abrasive, controlling, or credit-hoarding habits that happened to be present along the way, whether or not they actually contributed. This is why successful people are so resistant to changing behaviors that outside observers can see clearly aren't working.
-      <div class="ch-takeaway">Success creates a superstition: "I do X, I succeed, therefore X causes my success" — even when X had nothing to do with it, and is quietly costing you now.</div>
-      <div class="ch-tool"><strong>Key concept:</strong> The Four Beliefs of Successful People</div>
+      Sets up the premise from the title: a reader who has been doing well is looking at a different problem from one who is struggling. The point of the opening is that the reader's skills are not in doubt, and that the question is whether habits that helped earlier are now working against them.
+      <div class="ch-takeaway">Success is the starting point, not the proof that nothing needs to change.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> thin. The title and the book's framing are verified; the detail is my reconstruction.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">2</div>
-      <div class="ch-title">The Twenty Habits That Hold You Back from the Top</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">2</div><div class="ch-title">Enough About You</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      The book's centerpiece: a diagnostic catalog of twenty specific interpersonal habits Goldsmith has repeatedly observed in otherwise high-performing leaders. None of them are character flaws or moral failings — they're transactional flaws, small behavioral habits enacted in everyday exchanges that erode trust, discourage input, and quietly damage the relationships a leader now depends on.
-      <br><br>
-      He's explicit that almost nobody has all twenty, and most successful people have only a handful — but those handful are usually invisible to the person exhibiting them and glaringly obvious to everyone around them, which is exactly why 360-degree feedback (covered in Part Two) becomes essential rather than optional.
-      <div class="habit-row"><div class="habit-num">1</div><div><strong>Winning too much</strong> — the need to win at all costs, even when the stakes are trivial or the argument doesn't matter.</div></div>
-      <div class="habit-row"><div class="habit-num">2</div><div><strong>Adding too much value</strong> — the urge to improve every idea someone brings you, even good ones, which teaches people to stop bringing you ideas at all.</div></div>
-      <div class="habit-row"><div class="habit-num">3</div><div><strong>Passing judgment</strong> — rating other people's ideas and behaviors against your own standard, whether or not anyone asked for your opinion.</div></div>
-      <div class="habit-row"><div class="habit-num">4</div><div><strong>Making destructive comments</strong> — sarcastic or cutting remarks meant to be funny or incisive that actually just wound.</div></div>
-      <div class="habit-row"><div class="habit-num">5</div><div><strong>Starting with "No," "But," or "However"</strong> — opening words that signal "I'm right, you're wrong" no matter what follows.</div></div>
-      <div class="habit-row"><div class="habit-num">6</div><div><strong>Telling the world how smart we are</strong> — the need to prove you're the smartest person in the room, whether or not it's relevant or true.</div></div>
-      <div class="habit-row"><div class="habit-num">7</div><div><strong>Speaking when angry</strong> — using emotional volatility as a management tool, then justifying it afterward.</div></div>
-      <div class="habit-row"><div class="habit-num">8</div><div><strong>Negativity, or "Let me explain why that won't work"</strong> — leading with why an idea will fail rather than exploring it.</div></div>
-      <div class="habit-row"><div class="habit-num">9</div><div><strong>Withholding information</strong> — hoarding information as a subtle (or not-so-subtle) source of power over others.</div></div>
-      <div class="habit-row"><div class="habit-num">10</div><div><strong>Failing to give proper recognition</strong> — being unable or unwilling to credit others' contributions.</div></div>
-      <div class="habit-row"><div class="habit-num">11</div><div><strong>Claiming credit that we don't deserve</strong> — overstating your own role in a team's success.</div></div>
-      <div class="habit-row"><div class="habit-num">12</div><div><strong>Making excuses</strong> — reflexively re-framing your own flaws as unavoidable or somebody else's fault.</div></div>
-      <div class="habit-row"><div class="habit-num">13</div><div><strong>Clinging to the past</strong> — using old grievances or history to explain present behavior rather than owning it.</div></div>
-      <div class="habit-row"><div class="habit-num">14</div><div><strong>Playing favorites</strong> — visibly rewarding people you personally like over people who perform well.</div></div>
-      <div class="habit-row"><div class="habit-num">15</div><div><strong>Refusing to express regret</strong> — being unable to apologize, or to acknowledge that you contributed to a problem.</div></div>
-      <div class="habit-row"><div class="habit-num">16</div><div><strong>Not listening</strong> — the most passive-aggressive of the habits, and one of the most common at senior levels.</div></div>
-      <div class="habit-row"><div class="habit-num">17</div><div><strong>Failing to express gratitude</strong> — one of the simplest behaviors to fix, and one of the most under-practiced.</div></div>
-      <div class="habit-row"><div class="habit-num">18</div><div><strong>Punishing the messenger</strong> — lashing out at people who bring you bad news, teaching everyone to stop telling you the truth.</div></div>
-      <div class="habit-row"><div class="habit-num">19</div><div><strong>Passing the buck</strong> — blaming anyone and everyone except yourself when something goes wrong.</div></div>
-      <div class="habit-row"><div class="habit-num">20</div><div><strong>An excessive need to be "me"</strong> — using "that's just who I am" to defend behavior you have no actual interest in changing.</div></div>
-      <div class="ch-takeaway">You almost certainly don't have all twenty — but the two or three you do have are probably invisible to you and obvious to everyone around you.</div>
-      <div class="ch-tool"><strong>Key framework:</strong> The Twenty Habits — a diagnostic checklist, not a list of character flaws</div>
+      From the title and the book's approach, this chapter turns attention from the reader's own view of themselves to how they are experienced by others, since the book's measure of progress is what colleagues notice. I could not verify more than that, and I am not certain what examples it uses.
+      <div class="ch-takeaway">Your opinion of your behaviour matters less than what the people around you observe.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> low. Title verified in two listings; content is inferred.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">3</div>
-      <div class="ch-title">The Twenty-First Habit: Goal Obsession</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">3</div><div class="ch-title">The Success Delusion, or Why We Resist Change</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Goldsmith adds a bonus habit that doesn't fit neatly into the first twenty because it's less a specific behavior than a state of mind: pursuing a goal so single-mindedly that everything else — relationships, judgment, even the original purpose behind the goal — gets sacrificed to it. He illustrates this with executives so fixated on hitting a number or winning a specific outcome that they damage the very team or relationships they'll need for the next goal.
+      The book's main diagnosis. Goldsmith describes four beliefs that accompany success: <strong>I have succeeded</strong>, <strong>I have the ability to succeed</strong>, <strong>I will succeed</strong> and <strong>I choose to succeed</strong>. Each is useful on its own and helps explain ambition and drive.
       <br><br>
-      The chapter's warning is that goal obsession is often praised, not penalized, in the short term — driven people who "never give up" are celebrated right up until the obsession costs them a marriage, a key employee, or their own health, at which point it's reframed as a flaw everyone should have seen coming.
-      <div class="ch-takeaway">The same intensity that helps you achieve a goal can, taken past a point, quietly destroy the things that made the goal worth achieving in the first place.</div>
-      <div class="ch-tool"><strong>Key concept:</strong> Goal Obsession as an invisible, celebrated habit</div>
+      Together, he argues, they produce a superstition: I did these things, I won, so these things (including the abrasive or controlling ones) must be why I won. That makes feedback feel like an attack on a winning formula, and it is why capable people are slow to change. The summaries I found also mention that you can motivate change by appealing to what successful people already care about, such as status and reputation. I have not confirmed how the chapter develops that.
+      <div class="ch-takeaway">Success creates a story about why you succeeded, and that story protects behaviours that may no longer pay off.</div>
+      <div class="ch-tool"><strong>Key concept:</strong> the four beliefs of successful people (well documented in secondary sources).</div>
     </div>
   </div>
 
-  <div class="part-header">Part Two — How We Can Change for the Better</div>
+  <div class="part-header">Section Two: The Twenty Habits That Hold You Back from the Top</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">4</div>
-      <div class="ch-title">Feedback</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">4</div><div class="ch-title">The Twenty Habits</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Goldsmith makes the case for structured, solicited feedback — most often 360-degree feedback gathered from bosses, peers, and direct reports — as the essential starting point for change, because the gap between how successful people see themselves and how others experience them is almost always larger than they expect. Without it, people default to defending the behaviors they already believe caused their success.
+      The catalogue at the heart of the book. Each habit is a named, everyday behaviour in conversations and meetings, not a moral failing. The twenty are listed in full on the <strong>The 20 Habits</strong> tab, with a quick self-scan and a short quiz.
       <br><br>
-      He's candid that feedback alone changes almost nothing; its real value is breaking through denial and creating the specific, credible starting point ("these are the actual behaviors, from these actual people") that the rest of the process — apologizing, listening, following up — is built on top of.
-      <div class="ch-takeaway">You cannot change what you don't believe is real. Structured feedback exists to make the gap between self-image and reputation impossible to deny.</div>
-      <div class="ch-tool"><strong>Key tool:</strong> 360-Degree Feedback</div>
+      The names run from the obvious (winning too much, making destructive comments, speaking when angry) to the subtler (adding too much value, withholding information, an excessive need to be "me"). The book's logic is that most people recognise a few of them and that a couple are probably costing you more than you know.
+      <div class="ch-takeaway">Habits are specific and observable, which makes them fixable in a way "be a better leader" is not.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> the list of twenty names is verified in two summaries. The one-line explanations on the habits tab are my paraphrase.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">5</div>
-      <div class="ch-title">Apologizing</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">The Twenty-First Habit: Goal Obsession</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      A genuine apology — short, sincere, and free of excuses or justification — is, in Goldsmith's experience, one of the single most powerful and most underused tools available to a leader. Successful people resist it because they mistake apologizing for weakness, when in practice it does the opposite: it disarms resentment, signals humility, and gives other people permission to stop relitigating the past.
-      <br><br>
-      He offers a simple script — acknowledge the specific behavior, say you're sorry, and commit to trying to do better — with no caveats, no "but," and no explanation of why the behavior happened. Any qualification, he warns, turns an apology back into an excuse and undoes its entire effect.
-      <div class="ch-takeaway">A real apology has no "but" attached to it. The moment you explain yourself, you've turned an apology back into an excuse.</div>
-      <div class="ch-tool"><strong>Key script:</strong> Acknowledge → Apologize → Commit — nothing added</div>
+      An extra habit that sits outside the list of twenty: being so focused on the goal that you lose sight of the people and purpose around it. The idea is that ambition, the thing that took you to the top, can distort priorities when it is applied everywhere, including to small decisions where winning is not worth the cost.
+      <div class="ch-takeaway">The drive behind your success can itself be a habit that needs managing.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> title verified; detail reconstructed from the title and a summary of the book's themes.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Section Three: How We Can Change for the Better</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Feedback</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      The first step of the change process is finding out what others actually see. Because the habits tend to be invisible to the person who has them, the chapter makes the case for collecting honest input from the people you work with, rather than relying on your own sense of yourself.
+      <div class="ch-takeaway">You cannot choose which habit to work on until you hear what others observe.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> moderate. The chapter's position in the process is verified; the details are reconstructed.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">6</div>
-      <div class="ch-title">Telling the World... and Trumpeting</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Apologizing</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      After apologizing, Goldsmith advises publicly announcing what specific behavior you're working to change — telling colleagues, direct reports, even your family — and explicitly asking for their ongoing help noticing and calling out both slips and progress. Change that happens silently, he argues, usually goes unnoticed and uncredited, no matter how real it is.
-      <br><br>
-      "Trumpeting," the companion habit, means periodically reminding people of the change you're working on rather than announcing it once and assuming it's remembered — because without repeated, visible reinforcement, people default back to their old picture of who you are, regardless of what you've actually changed.
-      <div class="ch-takeaway">Invisible change doesn't get credit. Telling people what you're working on — and reminding them — is what turns real change into a recognized reputation shift.</div>
-      <div class="ch-tool"><strong>Key practice:</strong> Publicly advertising your target behavior, then trumpeting progress</div>
+      Apologise for the behaviour, plainly and without attaching reasons. The apology is not about the single incident; it acknowledges the pattern and clears the way for people to take your attempt to change seriously.
+      <div class="ch-takeaway">A short, excuse-free apology resets how people read your next move.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> moderate.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">7</div>
-      <div class="ch-title">Listening</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">Telling the World, or Advertising</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Goldsmith calls listening the hardest habit on the list to actually change, because nearly every successful person already believes they're a good listener — the gap between self-perception and reality here is often the widest of any behavior in the book. Genuine listening means resisting the urge to interrupt, finish someone's sentence, or immediately offer your own take.
-      <br><br>
-      His practical fix is almost mechanical: pause before responding, ask a question instead of making a statement, and specifically resist the compulsion to comment on everything said to you — recognizing that not every remark requires your input, and that silence is often the more powerful response.
-      <div class="ch-takeaway">Thinking you listen well and actually listening well are two entirely different skills — and successful people are usually much better at the first than the second.</div>
-      <div class="ch-tool"><strong>Key discipline:</strong> Pause, ask instead of tell, resist commenting on everything</div>
+      Tell the people around you what you are trying to change. Without that, colleagues have no reason to look for improvement and your effort goes unnoticed; with it, they become observers and, ideally, allies. This is the step many readers find most uncomfortable, because it is public.
+      <div class="ch-takeaway">Change that nobody knows about will not change anyone's opinion of you.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> moderate.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">8</div>
-      <div class="ch-title">Thanking</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">9</div><div class="ch-title">Listening</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      A simple "thank you" — regardless of whether you agree with the input, or even find it useful — is, Goldsmith argues, one of the cheapest and most effective ways to keep feedback flowing. Debating, correcting, or dismissing feedback in the moment teaches people to stop offering it; thanking them, unconditionally, teaches them the opposite.
-      <br><br>
-      He extends the principle beyond formal feedback to everyday interactions, arguing that leaders chronically under-thank the people around them relative to how much those people actually contribute — and that this single, low-cost habit change often produces outsized goodwill for very little effort.
-      <div class="ch-takeaway">Thank people for feedback whether you agree with it or not. Disagreeing in the moment guarantees you'll never hear that kind of honesty again.</div>
-      <div class="ch-tool"><strong>Key rule:</strong> Say thank you — never "yes, but"</div>
+      Treats listening as a discipline rather than a trait. The practical moves are the small ones: pause before replying, do not judge or interrupt, and resist the urge to correct or add to what you hear. It reads as a rebuke of the earlier habits (adding value, passing judgment, starting with "no" or "but").
+      <div class="ch-takeaway">Much of the book's advice reduces to saying less and hearing more.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> moderate.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">9</div>
-      <div class="ch-title">Following Up</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">10</div><div class="ch-title">Thanking</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Goldsmith treats change as a process that has to be checked, not a one-time event that's declared finished after a single apology or announcement. His method is regular, structured follow-up — periodically asking the same stakeholders who gave the original feedback how you're actually doing on the specific behavior you targeted.
-      <br><br>
-      Consistent follow-up does double duty: it catches backsliding early, while it's still a small correction rather than a full relapse, and it proves to the people watching that the change wasn't a performance for the feedback process but an ongoing commitment — which is usually what finally convinces skeptics that the new behavior is real.
-      <div class="ch-takeaway">Change that isn't checked tends to quietly decay. Regular follow-up with the same people who gave you feedback is what keeps a new behavior from sliding back into the old one.</div>
-      <div class="ch-tool"><strong>Key practice:</strong> Scheduled check-ins with the original feedback group</div>
+      Thank people for their input, including the input you did not want. It is presented as the cheapest and most underused behaviour in the book and as a counter to the habit of failing to express gratitude. The effect is practical as well as polite: people who are thanked keep telling you things.
+      <div class="ch-takeaway">Gratitude keeps the flow of honest information open.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> moderate.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">10</div>
-      <div class="ch-title">Feedforward</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">11</div><div class="ch-title">Following Up</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Goldsmith's signature contribution: instead of asking people for feedback on your past behavior — which they often soften, and which you can't do anything about anyway, since the past is fixed — ask them for <strong>feedforward</strong>: specific suggestions for what you could do differently going forward. People are dramatically more willing to offer candid, constructive ideas about the future than they are to relitigate the past.
-      <br><br>
-      He describes the exercise in practical, almost mechanical detail: pick a behavior you want to improve, ask someone for two suggestions, listen without commenting or defending, say only "thank you," and repeat with several different people — collecting a range of forward-looking ideas without ever triggering the defensiveness that backward-looking feedback usually does.
-      <div class="ch-takeaway">You can't change the past, so stop asking people to relitigate it. Ask for ideas about the future instead, say thank you, and nothing else.</div>
-      <div class="ch-tool"><strong>Key exercise:</strong> The Feedforward exercise — ask, listen, say thank you, nothing more</div>
+      Check back with the same people over time to ask how you are doing. One summary I found describes this as a regular, monthly check-in over a year or more; I have not confirmed the exact period in the book, so check your copy. The idea is that habits return, and the follow-up is what turns a burst of effort into a lasting change.
+      <div class="ch-takeaway">Change is judged over months, by the people who were watching, not by the day you decided.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> moderate for the idea, low for the exact timeframe.</div>
     </div>
   </div>
 
-  <div class="part-header">Part Three — Pulling It All Together</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">12</div><div class="ch-title">Practicing Feedforward</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      Goldsmith's signature technique. Instead of discussing how you behaved, you ask others for suggestions about how you could behave in future, and you respond only with thanks. It sidesteps the defensiveness feedback tends to trigger, since nobody can argue about a future that has not happened. See the Toolkit tab for a paraphrased script.
+      <div class="ch-takeaway">Ask for ideas about what to do next, not a review of what went wrong.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> good for the concept; the exact steps on the Toolkit tab are my paraphrase.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Section Four: Pulling Out the Stops</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num intro">C</div>
-      <div class="ch-title">The Value of Growing Up</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">13</div><div class="ch-title">Changing the Rules (listed elsewhere as "Changing: The Rules")</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Goldsmith closes with an extended case study of coaching a talented but resistant executive through the entire process — feedback that was initially dismissed, a grudging apology, visible backsliding, and eventually real, sustained change once follow-up and feedforward became routine rather than a one-time event.
-      <br><br>
-      The chapter's larger argument is that most of the twenty habits are, at bottom, adolescent defense mechanisms — the need to win, to be the smartest person in the room, to never apologize — that served a purpose earlier in life and simply never got outgrown. "Growing up," in Goldsmith's final framing, means consciously retiring those defenses once they've stopped earning their keep, which is less a management technique than a form of genuine maturity.
-      <div class="ch-takeaway">Most of the twenty habits are adolescent defense mechanisms that never got outgrown. Real, lasting change is less a management technique than a form of growing up.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Behavioral change as maturity, not just management</div>
+      One summary describes this section as offering rules for putting the change into practice. I do not know the specific rules and will not guess at them. Check your copy.
+      <div class="ch-takeaway">Not summarised in detail: I could not verify the contents.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> very low. Title verified, content unknown.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">14</div><div class="ch-title">Special Challenges for People in Charge</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      A reader's review describes this as a short closing chapter advising managers on the particular problems of leading others. From the title it addresses how these habits show up differently, and carry more weight, when you hold authority.
+      <div class="ch-takeaway">When you are in charge, your habits shape everyone else's behaviour.</div>
+      <div class="ch-tool"><strong>Confidence:</strong> low.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Closing Material</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">+</div><div class="ch-title">Coda: You Are Here Now, and Appendix: Global Leadership Inventory</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      The contents listing I found ends with a short coda and an appendix titled Global Leadership Inventory. I do not know what the appendix contains and have not tried to describe it.
+      <div class="ch-tool"><strong>Confidence:</strong> titles only, from one listing.</div>
     </div>
   </div>
 
 </div>
 
-<!-- ════════════════════════════════════════════
-     FRAMEWORK & TOOLKIT
-════════════════════════════════════════════ -->
-<div id="framework" class="panel">
+<!-- ════════ THE 20 HABITS ════════ -->
+<div id="habits" class="panel">
 
-  <div class="section-header">
-    <h2>The Seven-Step Change Process</h2>
-    <div class="section-line"></div>
+  <div class="section-header"><h2>The Success Delusion</h2><div class="section-line"></div></div>
+  <p class="lead">The four beliefs from Chapter 3. Each is helpful alone; together, Goldsmith argues, they are why capable people resist change.</p>
+
+  <div class="method-card"><div class="tag">Belief 1</div><h4>I Have Succeeded</h4><p>A sense of past accomplishment that makes every earlier behaviour feel validated, whether or not it contributed.</p></div>
+  <div class="method-card"><div class="tag">Belief 2</div><h4>I Have the Ability to Succeed</h4><p>Confidence that you can do what you set out to do. Good for ambition, but it can wave off feedback that says otherwise.</p></div>
+  <div class="method-card"><div class="tag">Belief 3</div><h4>I Will Succeed</h4><p>Optimism that things will work out, which can make warning signs easy to dismiss.</p></div>
+  <div class="method-card"><div class="tag">Belief 4</div><h4>I Choose to Succeed</h4><p>A strong sense that your behaviour is the product of your own choices, which supports the idea that every habit was deliberate and therefore worth keeping.</p></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Twenty Habits</h2><div class="section-line"></div></div>
+  <p class="lead">Names are as given in summaries of the book (verified in two sources, checked 12 Nov 2026). The one-line explanations are my paraphrase, and my grouping below is my own, not the book's.</p>
+  <div id="habit-groups"></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Twenty-First Habit</h2><div class="section-line"></div></div>
+  <div class="method-card"><div class="tag">Chapter 5</div><h4>Goal Obsession</h4><p>Pursuing a goal so intensely that you damage relationships and priorities that matter more. It is the only habit the book gives its own chapter.</p></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Self-Scan: Which Might Be You?</h2><div class="section-line"></div></div>
+  <div class="note-box">This is my own exercise, not one from the book. It is also a weak instrument: the book's central claim is that these habits are invisible to the person who has them, so use your ticks as a list of questions to put to colleagues, not as a diagnosis.</div>
+  <div class="map-box">
+    <div id="scan-list"></div>
+    <div class="map-out" id="scan-out"><h5 id="scan-title">Nothing ticked yet</h5><div id="scan-text">Tick any habit you suspect others would say you show. Be honest, then ask someone who works with you.</div></div>
   </div>
-  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Goldsmith's method for turning honest feedback into behavior change other people actually believe is real.</p>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Name That Habit</h2><div class="section-line"></div></div>
+  <div class="note-box">All six scenarios are my own illustrations, invented to practise the vocabulary. They are not taken from the book.</div>
+  <div id="quiz"></div>
+  <div class="quiz-score" id="quiz-score"></div>
+
+</div>
+
+<!-- ════════ TOOLKIT ════════ -->
+<div id="toolkit" class="panel">
+
+  <div class="section-header"><h2>The Change Process</h2><div class="section-line"></div></div>
+  <p class="lead">The chapters in Section Three give a sequence of steps. Names follow the contents listing; the one-line descriptions are my paraphrase.</p>
 
   <div class="steps-wrap">
-    <div class="step-card">
-      <div class="s-num">Step 1</div>
-      <div class="s-title">Feedback</div>
-      <div class="s-desc">Gather honest input from bosses, peers, and reports to close the self-perception gap</div>
-    </div>
+    <div class="step-card"><div class="s-num">Step 1</div><div class="s-title">Feedback</div><div class="s-desc">Find out what colleagues see</div></div>
     <div class="step-arrow">→</div>
-    <div class="step-card">
-      <div class="s-num">Step 2</div>
-      <div class="s-title">Apologizing</div>
-      <div class="s-desc">A short, sincere apology for the specific behavior — with no excuses attached</div>
-    </div>
+    <div class="step-card"><div class="s-num">Step 2</div><div class="s-title">Apologize</div><div class="s-desc">Own the pattern, no excuses</div></div>
     <div class="step-arrow">→</div>
-    <div class="step-card">
-      <div class="s-num">Step 3</div>
-      <div class="s-title">Advertising</div>
-      <div class="s-desc">Publicly announce the exact behavior you're working to change, and keep reminding people</div>
-    </div>
+    <div class="step-card"><div class="s-num">Step 3</div><div class="s-title">Advertise</div><div class="s-desc">Tell people what you are working on</div></div>
     <div class="step-arrow">→</div>
-    <div class="step-card">
-      <div class="s-num">Step 4</div>
-      <div class="s-title">Listening</div>
-      <div class="s-desc">Pause, ask instead of tell, and resist the urge to comment on everything</div>
-    </div>
+    <div class="step-card"><div class="s-num">Step 4</div><div class="s-title">Listen</div><div class="s-desc">Pause, ask, do not correct</div></div>
   </div>
   <div class="steps-wrap" style="margin-top:8px;">
-    <div class="step-card">
-      <div class="s-num">Step 5</div>
-      <div class="s-title">Thanking</div>
-      <div class="s-desc">Say thank you for every piece of input, whether or not you agree with it</div>
-    </div>
+    <div class="step-card"><div class="s-num">Step 5</div><div class="s-title">Thank</div><div class="s-desc">Thank people for every piece of input</div></div>
     <div class="step-arrow">→</div>
-    <div class="step-card">
-      <div class="s-num">Step 6</div>
-      <div class="s-title">Following Up</div>
-      <div class="s-desc">Check back regularly with the same people so slips get caught early</div>
-    </div>
+    <div class="step-card"><div class="s-num">Step 6</div><div class="s-title">Follow Up</div><div class="s-desc">Check in again, over months</div></div>
     <div class="step-arrow">→</div>
-    <div class="step-card">
-      <div class="s-num">Step 7</div>
-      <div class="s-title">Feedforward</div>
-      <div class="s-desc">Ask for future-facing suggestions instead of relitigating the past</div>
-    </div>
+    <div class="step-card"><div class="s-num">Step 7</div><div class="s-title">Feedforward</div><div class="s-desc">Ask for ideas about the future</div></div>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>The Feedforward Exercise in Practice</h2>
-    <div class="section-line"></div>
-  </div>
-  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">A structured swap that gets candid, future-focused suggestions without triggering defensiveness.</p>
-
+  <div class="section-header" style="margin-top:28px;"><h2>Feedforward, Step by Step</h2><div class="section-line"></div></div>
+  <div class="note-box">This is my paraphrase of the technique as it is generally described, not the book's wording. Check your copy for Goldsmith's own version.</div>
   <div class="code-block">
-    <span class="comment">// pick a behavior you want to improve, then ask each person:</span><br>
-    <span class="keyword">ASK</span> <span class="value">"Can you give me two suggestions for the future that might help me be a better [leader/listener/communicator]?"</span><br><br>
+    <span class="comment">// choose one behaviour you want to improve, then ask a colleague:</span><br>
+    <span class="keyword">ASK</span> <span class="value">for a couple of suggestions that might help you do better at it in future</span><br><br>
     <span class="comment">// while they answer:</span><br>
-    <span class="keyword">RULE</span> <span class="value">no commenting, no defending, no rating the suggestion</span><br><br>
-    <span class="comment">// the only permitted response:</span><br>
-    <span class="keyword">SAY</span> <span class="value">"Thank you."</span><br><br>
-    <span class="keyword">REPEAT</span> <span class="value">with 5–10 different people, then look for patterns across their suggestions</span>
+    <span class="keyword">DO</span> <span class="value">listen; do not defend, rate, or explain</span><br><br>
+    <span class="comment">// the only reply:</span><br>
+    <span class="keyword">SAY</span> <span class="value">thank you</span><br><br>
+    <span class="keyword">REPEAT</span> <span class="value">with several different people, then look for patterns</span>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>The Four Beliefs of Successful People</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="method-card">
-    <div class="tag">Belief 1</div>
-    <h4>I Have Succeeded</h4>
-    <p>A general, reinforcing sense of past accomplishment that makes every past behavior feel validated, whether or not it actually contributed.</p>
-  </div>
-  <div class="method-card">
-    <div class="tag">Belief 2</div>
-    <h4>I Have the Ability to Succeed</h4>
-    <p>Confidence that you can succeed at whatever you set your mind to — useful for ambition, dangerous when it overrides feedback that says otherwise.</p>
-  </div>
-  <div class="method-card">
-    <div class="tag">Belief 3</div>
-    <h4>I Will Succeed</h4>
-    <p>An optimism bias that things will work out, which can make current warning signs easy to dismiss or discount.</p>
-  </div>
-  <div class="method-card">
-    <div class="tag">Belief 4</div>
-    <h4>I Choose to Succeed</h4>
-    <p>A strong sense of agency over your own behaviors — the belief that underpins the superstition that every past behavior was a deliberate cause of success.</p>
-  </div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Quick-Reference: The Twenty Habits</h2>
-    <div class="section-line"></div>
-  </div>
-
+  <div class="section-header" style="margin-top:28px;"><h2>A One-Habit, Thirty-Day Plan</h2><div class="section-line"></div></div>
+  <div class="note-box">This plan is my own suggestion for putting the book to work, not something drawn from it.</div>
   <div class="toolkit-list">
-    <div class="toolkit-item"><div class="t-ic">🏆</div><div><strong>1. Winning too much</strong> — needing to win even trivial arguments</div></div>
-    <div class="toolkit-item"><div class="t-ic">➕</div><div><strong>2. Adding too much value</strong> — improving every idea, even good ones</div></div>
-    <div class="toolkit-item"><div class="t-ic">⚖️</div><div><strong>3. Passing judgment</strong> — rating others by your own standard, unasked</div></div>
-    <div class="toolkit-item"><div class="t-ic">💥</div><div><strong>4. Destructive comments</strong> — sarcasm dressed up as wit or insight</div></div>
-    <div class="toolkit-item"><div class="t-ic">🚫</div><div><strong>5. Starting with "No/But/However"</strong> — signaling "you're wrong" upfront</div></div>
-    <div class="toolkit-item"><div class="t-ic">🧠</div><div><strong>6. Telling the world how smart we are</strong> — needing to prove it constantly</div></div>
-    <div class="toolkit-item"><div class="t-ic">🔥</div><div><strong>7. Speaking when angry</strong> — using emotion as a management tool</div></div>
-    <div class="toolkit-item"><div class="t-ic">👎</div><div><strong>8. Negativity</strong> — leading with why an idea won't work</div></div>
-    <div class="toolkit-item"><div class="t-ic">🔒</div><div><strong>9. Withholding information</strong> — hoarding it as leverage</div></div>
-    <div class="toolkit-item"><div class="t-ic">🙈</div><div><strong>10. Failing to give recognition</strong> — not crediting others</div></div>
-    <div class="toolkit-item"><div class="t-ic">🎖️</div><div><strong>11. Claiming undeserved credit</strong> — overstating your own role</div></div>
-    <div class="toolkit-item"><div class="t-ic">🤷</div><div><strong>12. Making excuses</strong> — reframing flaws as unavoidable</div></div>
-    <div class="toolkit-item"><div class="t-ic">📜</div><div><strong>13. Clinging to the past</strong> — using history to explain today</div></div>
-    <div class="toolkit-item"><div class="t-ic">⭐</div><div><strong>14. Playing favorites</strong> — rewarding liking over performance</div></div>
-    <div class="toolkit-item"><div class="t-ic">🚷</div><div><strong>15. Refusing to express regret</strong> — never apologizing</div></div>
-    <div class="toolkit-item"><div class="t-ic">🙉</div><div><strong>16. Not listening</strong> — the most common senior-level habit</div></div>
-    <div class="toolkit-item"><div class="t-ic">🤐</div><div><strong>17. Failing to express gratitude</strong> — the easiest one to fix</div></div>
-    <div class="toolkit-item"><div class="t-ic">📯</div><div><strong>18. Punishing the messenger</strong> — killing honest bad news</div></div>
-    <div class="toolkit-item"><div class="t-ic">➡️</div><div><strong>19. Passing the buck</strong> — blaming everyone but yourself</div></div>
-    <div class="toolkit-item"><div class="t-ic">🪞</div><div><strong>20. Excessive need to be "me"</strong> — "that's just who I am" as a shield</div></div>
+    <div class="toolkit-item"><div class="t-ic">1️⃣</div><div><strong>Days 1 to 3: choose.</strong> Ask two or three colleagues which single habit costs you most. Pick one.</div></div>
+    <div class="toolkit-item"><div class="t-ic">2️⃣</div><div><strong>Day 4: apologise.</strong> Say sorry for the pattern in one or two sentences, no excuses.</div></div>
+    <div class="toolkit-item"><div class="t-ic">3️⃣</div><div><strong>Day 5: say what you are changing.</strong> Tell the team the one thing you are working on.</div></div>
+    <div class="toolkit-item"><div class="t-ic">4️⃣</div><div><strong>Days 6 to 30: practise.</strong> In every conversation, pause, listen, and thank people for what they say.</div></div>
+    <div class="toolkit-item"><div class="t-ic">5️⃣</div><div><strong>Weekly: feedforward.</strong> Ask one person for two ideas about the future. Say thank you.</div></div>
+    <div class="toolkit-item"><div class="t-ic">6️⃣</div><div><strong>Day 30 onwards: follow up.</strong> Put a monthly check-in in your diary with the same people.</div></div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Pocket Checklist: In the Moment</h2><div class="section-line"></div></div>
+  <div class="note-box">These prompts are my own distillation of the habits, not the book's.</div>
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div class="t-ic">⏸️</div><div>Before replying, ask: does this need to be said, and does it need to be said by me?</div></div>
+    <div class="toolkit-item"><div class="t-ic">🔠</div><div>If your sentence starts with "no", "but" or "however", try opening with something else.</div></div>
+    <div class="toolkit-item"><div class="t-ic">👏</div><div>Who contributed to this result? Name them first.</div></div>
+    <div class="toolkit-item"><div class="t-ic">📣</div><div>Someone brought you bad news. Thank them before reacting.</div></div>
+    <div class="toolkit-item"><div class="t-ic">🙇</div><div>If you were wrong, say so in a sentence.</div></div>
+    <div class="toolkit-item"><div class="t-ic">🔒</div><div>Is there information you are holding that others need?</div></div>
   </div>
 
 </div>
 
-<!-- ════════════════════════════════════════════
-     VERDICT
-════════════════════════════════════════════ -->
+<!-- ════════ KEY PHRASES ════════ -->
+<div id="quotes" class="panel">
+  <div class="note-box">These are the book's signature terms and short paraphrases of its main arguments. I have not reproduced passages from the text. Add your own favourite lines from your copy.</div>
+
+  <div class="method-card"><div class="tag">Title idea</div><h4>What got you here won't get you there</h4><p>The title is also the thesis: the behaviours behind your past success are not guaranteed to produce the next level of it.</p></div>
+  <div class="method-card"><div class="tag">Chapter 3</div><h4>The success delusion</h4><p>Believing that everything you did caused your success, and therefore that nothing needs to change.</p></div>
+  <div class="method-card"><div class="tag">Chapter 4</div><h4>The twenty habits</h4><p>The named list of everyday interpersonal behaviours that hold capable people back.</p></div>
+  <div class="method-card"><div class="tag">Chapter 5</div><h4>Goal obsession</h4><p>The twenty-first habit: pursuing the goal at the expense of what matters more.</p></div>
+  <div class="method-card"><div class="tag">Chapter 7</div><h4>Apologizing</h4><p>Taking responsibility for the pattern without explaining it away.</p></div>
+  <div class="method-card"><div class="tag">Chapter 8</div><h4>Advertising</h4><p>Letting people know what you are working on so they can notice the change.</p></div>
+  <div class="method-card"><div class="tag">Chapter 12</div><h4>Feedforward</h4><p>Asking for suggestions about future behaviour instead of discussing the past.</p></div>
+  <div class="method-card"><div class="tag">Habit</div><h4>Adding too much value</h4><p>Improving every idea someone brings you, until they stop bringing you ideas.</p></div>
+  <div class="method-card"><div class="tag">Habit</div><h4>An excessive need to be "me"</h4><p>Defending a harmful behaviour on the grounds that it is simply who you are.</p></div>
+</div>
+
+<!-- ════════ RATINGS & VERDICT ════════ -->
 <div id="verdict" class="panel">
-  <div class="verdict-banner">
-    <h3>⭐ 4.6 / 5</h3>
-    <p>A precise, humbling field guide to the interpersonal habits that quietly cap otherwise brilliant careers — and a genuinely usable process for fixing them</p>
-    <div class="rating-row">
-      <div class="rating-item">
-        <div class="r-score">4.8</div>
-        <div class="r-label">Practicality</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.5</div>
-        <div class="r-label">Actionability</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.4</div>
-        <div class="r-label">Evidence Base</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.7</div>
-        <div class="r-label">Readability</div>
-      </div>
-    </div>
-  </div>
 
-  <div class="section-header">
-    <h2>Strengths &amp; Limitations</h2>
-    <div class="section-line"></div>
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">4.5<small> / 5</small></div><div class="cmp-sub">Dan's own rating. His category average is 3.75, so his overall is 0.75 above it.</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Reader consensus</div><div class="cmp-score">3.95<small> / 5</small></div><div class="cmp-sub">Goodreads, 32,326 ratings (checked 12 Nov 2026). About 70% gave 4 or 5 stars; about 8% gave 1 or 2.</div></div>
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.5<small> / 5</small></div><div class="cmp-sub">Category average 3.5. A little below the crowd, mainly on evidence.</div></div>
   </div>
+  <div class="note-box">Claude's scores are a judgment, not Dan's opinion and not reader data. Claude has not read the book itself: they rest on its contents and themes, reader reviews and the critiques linked below. The three views are kept separate on purpose.</div>
 
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <div class="cat-wrap"><table class="cat-table">
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">3.5</td><td class="num">4.0</td><td>The success delusion and feedforward are memorable and well named; much of the rest is familiar advice on manners and listening.</td></tr>
+    <tr><td>Readability</td><td class="num">4.0</td><td class="num">3.5</td><td>Short, clearly organised into four sections, and written for busy readers; some readers say it repeats itself.</td></tr>
+    <tr><td>Actionability</td><td class="num">4.0</td><td class="num">4.5</td><td>The apologise, advertise, listen, thank, follow-up sequence can be started the same day; it is aimed at people with colleagues to ask.</td></tr>
+    <tr><td>Evidence</td><td class="num">2.5</td><td class="num">3.0</td><td>It rests mostly on the author's coaching experience and stories; reviewers describe it as anecdote over analysis, and one wanted footnotes or further reading.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.5</td><td class="num">3.75</td><td>Claude's overall 3.5 is 0.45 below the Goodreads 3.95, within the usual margin. Dan's overall of 4.5 sits above his own category average of 3.75; against Claude he scores Ideas, Actionability and Evidence 0.5 higher, and Readability 0.5 lower (3.5 vs 4.0). The gap comes from Evidence: readers rate on usefulness, which the book delivers; I weigh how well its claims are supported, which is its weakest area.</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence. Dan's column will be filled in once he supplies his scores.</p>
+
+  <div class="section-header"><h2>What Other Readers Say</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Goodreads (<em>What Got You Here Won't Get You There</em>, Marshall Goldsmith, all editions combined; title and author confirmed on the page): 3.95 average, 32,326 ratings, about 1,400 reviews. Star split: 5&#9733; 34% (11,154), 4&#9733; 35% (11,455), 3&#9733; 22% (7,218), 2&#9733; 5% (1,815), 1&#9733; 2% (684). Checked 12 Nov 2026. A first fetch returned a different, unrelated book and was discarded.</p>
   <div class="pro-con-grid">
-    <div class="pro-list">
-      <h4>Strengths</h4>
-      <div class="list-item"><div class="dot"></div><div>The Twenty Habits list is precise and instantly recognizable — most readers will spot themselves, or their boss, within the first few</div></div>
-      <div class="list-item"><div class="dot"></div><div>Feedforward is a genuinely novel, low-friction technique that solves a real problem with traditional feedback</div></div>
-      <div class="list-item"><div class="dot"></div><div>Drawn from decades of real executive coaching engagements, with unusually candid, specific anecdotes</div></div>
-      <div class="list-item"><div class="dot"></div><div>The apologizing/advertising/following-up sequence is concrete enough to start using the same day</div></div>
-      <div class="list-item"><div class="dot"></div><div>Refreshingly blunt, funny, and free of corporate euphemism for a leadership book</div></div>
+    <div class="pro-list"><h4>What readers praise</h4>
+      <div class="list-item"><div class="dot"></div><div>Practical, usable steps: apologise, listen, follow up, and a "stop doing" mindset</div></div>
+      <div class="list-item"><div class="dot"></div><div>Recognising their own habits in the twenty-item list</div></div>
+      <div class="list-item"><div class="dot"></div><div>Accessible writing and a good entry point to leadership books</div></div>
     </div>
-    <div class="con-list">
-      <h4>Limitations</h4>
-      <div class="list-item"><div class="dot"></div><div>Built almost entirely on case studies and anecdote rather than controlled research or data</div></div>
-      <div class="list-item"><div class="dot"></div><div>Assumes a specific context — senior, already-successful executives with access to formal 360 feedback and an executive coach</div></div>
-      <div class="list-item"><div class="dot"></div><div>Some of the twenty habits overlap heavily and could be consolidated without losing meaning</div></div>
-      <div class="list-item"><div class="dot"></div><div>Offers little on habits rooted in genuine insecurity or mental health, versus simple behavioral inattention</div></div>
-      <div class="list-item"><div class="dot"></div><div>The closing "growing up" framing is compelling but arrives briefly, after the more procedural chapters have done the heavy lifting</div></div>
+    <div class="con-list"><h4>What readers criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>Not new: many call the lessons common sense or basic manners</div></div>
+      <div class="list-item"><div class="dot"></div><div>Repetitive, and could be much shorter</div></div>
+      <div class="list-item"><div class="dot"></div><div>Anecdotes over evidence, with frequent client name-dropping</div></div>
     </div>
   </div>
-
-  <div class="section-header">
-    <h2>Who Should Read This</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="who-card"><div class="ic">✅</div><div><strong>Successful people who've been told they're "difficult"</strong> — or suspect it — and want a specific, non-judgmental diagnostic instead of vague criticism.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Executive coaches and HR leaders</strong> looking for a structured, repeatable process to run with clients or high-potential leaders.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Anyone who dreads giving or receiving feedback</strong> — the feedforward technique alone is worth the read.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Managers newly promoted into roles where influence, not individual output, is now what matters</strong>.</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers early in their careers</strong> may find less to recognize — the book is written specifically for people who are already succeeding.</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting rigorous, data-backed research</strong> should treat this as practitioner wisdom rather than an academic text.</div></div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Memorable Lines</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="quote-block">
-    <p>What got you here won't get you there.</p>
-    <div class="attr">— Marshall Goldsmith, What Got You Here Won't Get You There</div>
-  </div>
-
-  <div class="quote-block">
-    <p>Successful people have four beliefs that get in the way of change: I have succeeded, I have the ability to succeed, I will succeed, I choose to succeed.</p>
-    <div class="attr">— Marshall Goldsmith, What Got You Here Won't Get You There</div>
-  </div>
-
-  <div class="quote-block">
-    <p>Feedback is about the past. Feedforward is about the future.</p>
-    <div class="attr">— Marshall Goldsmith, What Got You Here Won't Get You There</div>
-  </div>
-
-  <div class="quote-block">
-    <p>Apologizing is one of the most powerful — and underused — tools we have available to us.</p>
-    <div class="attr">— Marshall Goldsmith, What Got You Here Won't Get You There</div>
-  </div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>The Single Most Important Insight</h2>
-    <div class="section-line"></div>
-  </div>
   <div class="summary-block">
-    <p>If the book has one idea worth carrying forward above all others, it's that success is not proof your current behavior is optimal — it's proof your current behavior was good enough to get you here, which is a much lower and more temporary bar than it feels like from the inside. The habits that cap careers at the top are rarely dramatic failures; they're small, repeated, socially costly behaviors that nobody with authority over you is likely to name out loud.</p>
-    <p>This is what separates <em>What Got You Here Won't Get You There</em> from most leadership advice: it isn't asking you to learn a new skill, it's asking you to stop doing something you're already good at doing, because being good at it is no longer the point. Feedforward is the book's most exportable idea precisely because it sidesteps the defensiveness that makes this kind of change so hard to start.</p>
-    <p>The closing case study's real point is that none of this is really about management technique at all — it's about outgrowing the adolescent need to win, to be the smartest person in the room, to never say sorry. The habits are just where that immaturity happens to show up once you're senior enough for it to matter.</p>
+    <p><strong>What you may have missed:</strong> several reviewers say the advice is aimed at senior corporate leaders, and some find its examples dated or stereotyped in how they portray women. One reviewer describes it as written for a past era. Another would have liked footnotes or a reading list so the research behind the claims could be checked. A few note that it helps people hold on to success more than reach it.</p>
+    <p>These points come from reading a summary of reader reviews and two individual reviews; I have not audited the research the book relies on.</p>
+  </div>
+  <div class="src-list"><strong>Sources (checked 12 Nov 2026):</strong>
+    <a href="https://www.goodreads.com/book/show/84525.What_Got_You_Here_Won_t_Get_You_There">Goodreads, <em>What Got You Here Won't Get You There</em></a> (rating numbers, star split and the recurring review themes, from a read of the page text) &middot;
+    <a href="https://www.truscore.com/resources/got-wont-get-book-review">TruScore review</a> (read; praise for the listening advice, wish for more supporting research) &middot;
+    <a href="https://allenc.com/review-what-got-you-here-wont-get-you-there">Allen C. review</a> (search snippet only: the "written for a past era" point; the page itself was not read) &middot;
+    <a href="https://bookitreader.blogspot.com/2008/05/what-got-you-here-won-get-you-there.html">2008 blog post reproducing the table of contents</a> (section and chapter titles) &middot;
+    <a href="https://alper.bearblog.dev/what-got-you-here-wont-get-you-there-by-marshall-goldsmith/">Bearblog summary</a> (names of the twenty habits and the change steps).
+    The table of contents and habit names each rest largely on a single page, partly corroborated by search snippets. Amazon was not used and SuperSummary returned an error (429): not available.</div>
+
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Dan rates <em>What Got You Here Won't Get You There</em> 4.5 out of 5. He scores the ideas 4, readability 3.5, actionability 4.5 and evidence 3. The book got him thinking about which strengths got him to where he is, which ones he will need next, and how a person can be promoted to a point of incompetence (the Peter Principle).</p>
+    <p>The twenty habits are what he expects to keep returning to as a reminder, and the main lesson he takes is not to assume that what got him here will keep carrying him. He disliked the repetition, saying he got the point in the first few passes. He also wants to be careful with the book's examples: they worked in their own situations, many come from larger companies, and he needs to apply the principles to his own case at a small company.</p>
+    <p style="font-size:12px;color:var(--muted);">Written up from Dan's own words (12 Nov 2026). His view stands apart from the Claude and reader views above.</p></div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>The list of twenty habits is concrete, nameable and easy to recognise in yourself or a boss</div></div>
+      <div class="list-item"><div class="dot"></div><div>The success delusion explains why smart people resist feedback, which most advice ignores</div></div>
+      <div class="list-item"><div class="dot"></div><div>Feedforward is a simple technique that lowers defensiveness</div></div>
+      <div class="list-item"><div class="dot"></div><div>The change steps are social and specific enough to start the same week</div></div>
+      <div class="list-item"><div class="dot"></div><div>Short, with a clear four-section structure</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Rests on coaching stories rather than data or cited research</div></div>
+      <div class="list-item"><div class="dot"></div><div>Aimed at senior, already-successful people with colleagues willing to give feedback</div></div>
+      <div class="list-item"><div class="dot"></div><div>Readers describe it as repetitive and, in places, dated</div></div>
+      <div class="list-item"><div class="dot"></div><div>Many of the habits overlap and could be merged</div></div>
+      <div class="list-item"><div class="dot"></div><div>Says little about habits rooted in stress, culture or power imbalances rather than inattention</div></div>
+    </div>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Overall Summary</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Experienced professionals who have been told they are hard to work with</strong>, or suspect it, and want specifics instead of vague criticism.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Newly promoted managers</strong> whose success now depends on others rather than their own output.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Coaches and HR leads</strong> looking for a shared vocabulary of habits and a simple process to run with clients.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Early-career readers</strong> may find less that applies, since the book is written for people who are already succeeding.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting rigorous evidence</strong> should treat it as a practitioner's playbook, not a research text.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
   <div class="summary-block">
-    <p><strong>What Got You Here Won't Get You There</strong> earns its reputation as one of the sharpest, most quotable books on executive behavior change by refusing to complicate a simple observation: the habits that built your career can be exactly what's capping it now, and almost nobody at the top can see that on their own. The Twenty Habits list works because it's specific enough to be uncomfortable, and the seven-step process — feedback through feedforward — works because every step is something you can actually do this week, not just believe in.</p>
-    <p>Its comparative weakness is evidentiary rather than practical: this is a coach's playbook built from decades of case studies, not a peer-reviewed research program, and it assumes a reader senior enough to have access to real 360 feedback and the standing to ask for it. Readers earlier in their careers, or wanting a more rigorously evidenced treatment of behavior change, will want to look elsewhere.</p>
-    <p>The practical recommendation: don't try to fix all twenty habits, or even several. Pick the one habit you suspect is costing you the most, apologize for it once, tell people you're working on it, and run the feedforward exercise with five people you trust. The book's real promise was never a personality overhaul — it's that a handful of specific, correctable habits, actually corrected, is usually all that stands between successful and truly great.</p>
+    <p>Past success is not evidence that your current behaviour is good; it only shows it was good enough. The habits that got you here are the ones you are least able to see, so the most useful step is to ask the people around you which one to drop, say thank you for the answer, and then keep checking in.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>What Got You Here Won't Get You There</strong> is a short, usable book built around a sharp diagnosis: success makes people defend the habits that now hold them back. Its catalogue of habits and its feedforward technique are the parts most likely to stay with you.</p>
+    <p>It is a coach's playbook rather than a research programme, and many readers find the ideas familiar. Choose one habit, ask a few colleagues about it, apologise once and tell people what you are changing, then follow up monthly.</p>
   </div>
 </div>
 
@@ -864,10 +800,103 @@
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     el.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 1 });
   }
-  function toggleChapter(card) {
-    card.classList.toggle('open');
+  function toggleChapter(card) { card.classList.toggle('open'); }
+
+  /* Habits (names per summaries; descriptions are paraphrase; grouping is the reviewer's own) */
+  const habits = [
+    [1, 'Winning too much', 'needing to win even when the stakes are trivial'],
+    [2, 'Adding too much value', 'improving every idea you hear, so people stop sharing them'],
+    [3, 'Passing judgment', 'rating other people\'s ideas against your own standard, unasked'],
+    [4, 'Making destructive comments', 'cutting remarks that feel clever and land as wounds'],
+    [5, 'Starting with "No," "But," or "However"', 'opening lines that tell people they are wrong before they finish'],
+    [6, 'Telling the world how smart we are', 'needing to show you know more than everyone'],
+    [7, 'Speaking when angry', 'letting temper steer what you say'],
+    [8, 'Negativity, or "Let me explain why that won\'t work"', 'leading with the reasons an idea will fail'],
+    [9, 'Withholding information', 'holding back what others need to do their jobs'],
+    [10, 'Failing to give proper recognition', 'not crediting the people who contributed'],
+    [11, 'Claiming credit that we don\'t deserve', 'overstating your own part in a result'],
+    [12, 'Making excuses', 'explaining your flaws away instead of owning them'],
+    [13, 'Clinging to the past', 'using history to explain or defend what you do now'],
+    [14, 'Playing favorites', 'rewarding people you like over people who deliver'],
+    [15, 'Refusing to express regret', 'being unable to say sorry'],
+    [16, 'Not listening', 'tuning out, interrupting, or only waiting to talk'],
+    [17, 'Failing to express gratitude', 'not saying thank you'],
+    [18, 'Punishing the messenger', 'reacting badly to people who bring bad news'],
+    [19, 'Passing the buck', 'blaming others when something goes wrong'],
+    [20, 'An excessive need to be "me"', 'defending behaviour as "just who I am"']
+  ];
+  const groups = [
+    ['Taking over the conversation', [1, 2, 3, 5, 6, 8]],
+    ['Hurting people in the moment', [4, 7, 18]],
+    ['Information and credit', [9, 10, 11, 19]],
+    ['Accountability and relationships', [12, 13, 14, 15, 16, 17, 20]]
+  ];
+  const gWrap = document.getElementById('habit-groups');
+  groups.forEach(g => {
+    const h = document.createElement('div'); h.className = 'part-header'; h.textContent = g[0] + ' (my grouping)';
+    gWrap.appendChild(h);
+    g[1].forEach(n => {
+      const x = habits[n - 1];
+      const r = document.createElement('div'); r.className = 'habit-row';
+      r.innerHTML = '<div class="habit-num">' + x[0] + '</div><div><strong></strong> <span></span></div>';
+      r.querySelector('strong').textContent = x[1];
+      r.querySelector('span').textContent = ': ' + x[2] + '.';
+      gWrap.appendChild(r);
+    });
+  });
+
+  /* Self-scan */
+  const scanList = document.getElementById('scan-list');
+  habits.forEach(x => {
+    const l = document.createElement('label'); l.className = 'scan-item';
+    l.innerHTML = '<input type="checkbox" class="scan-cb" value="' + x[0] + '"><span></span>';
+    l.querySelector('span').textContent = x[0] + '. ' + x[1];
+    scanList.appendChild(l);
+  });
+  function updateScan() {
+    const on = Array.from(document.querySelectorAll('.scan-cb:checked'));
+    const n = on.length;
+    const t = document.getElementById('scan-title'), d = document.getElementById('scan-text');
+    if (n === 0) { t.textContent = 'Nothing ticked yet'; d.textContent = 'Tick any habit you suspect others would say you show. Be honest, then ask someone who works with you.'; return; }
+    const names = on.map(c => habits[+c.value - 1][1]);
+    t.textContent = n + (n === 1 ? ' habit ticked' : ' habits ticked');
+    d.textContent = (n > 3 ? 'That is a lot to tackle at once, and the book does not suggest trying. ' : '') +
+      'Ticked: ' + names.join('; ') + '. Ask two or three colleagues which one costs you most, and start there.';
   }
+  document.querySelectorAll('.scan-cb').forEach(c => c.addEventListener('change', updateScan));
+
+  /* Quiz: scenarios are the reviewer's own illustrations */
+  const quizData = [
+    { q: 'A teammate shares a plan. You reply with three tweaks, every time, even when the plan was already good.', a: 1, opts: ['Passing judgment', 'Adding too much value', 'Withholding information'], why: 'Improving good ideas out of habit teaches people to stop sharing them.' },
+    { q: 'Someone tells you a deadline will slip. You snap at them, and next time they stay quiet until it is too late.', a: 1, opts: ['Speaking when angry', 'Punishing the messenger', 'Negativity'], why: 'The cost is that people stop telling you bad news. Anger is the tool, but the habit is how the messenger is treated.' },
+    { q: 'You present the team\'s result to senior management and use "I" for every success.', a: 0, opts: ['Claiming credit that we don\'t deserve', 'Playing favorites', 'Winning too much'], why: 'Overstating your own part is claiming credit.' },
+    { q: 'A colleague gently flags a habit of yours. You say, "That is just how I am. Take it or leave it."', a: 1, opts: ['Making excuses', 'An excessive need to be "me"', 'Clinging to the past'], why: 'Treating the behaviour as identity is the shield this habit describes.' },
+    { q: 'Every time a report offers an idea you start your reply with "But".', a: 2, opts: ['Passing judgment', 'Negativity', 'Starting with "No," "But," or "However"'], why: 'The opening word signals "you are wrong" before the idea is heard.' },
+    { q: 'After a failed launch you say it was the vendor and finance, not your call.', a: 1, opts: ['Making excuses', 'Passing the buck', 'Refusing to express regret'], why: 'Moving the blame to others is passing the buck, though it often comes with excuses and a refusal to say sorry.' }
+  ];
+  const quiz = document.getElementById('quiz');
+  let answered = 0, correct = 0;
+  quizData.forEach((d, i) => {
+    const card = document.createElement('div'); card.className = 'quiz-card';
+    card.innerHTML = '<div class="q"><span class="n">' + (i + 1) + '.</span><span class="qt"></span></div><div class="quiz-opts"></div><div class="quiz-exp"></div>';
+    card.querySelector('.qt').textContent = d.q;
+    const opts = card.querySelector('.quiz-opts'), exp = card.querySelector('.quiz-exp');
+    d.opts.forEach((o, k) => {
+      const b = document.createElement('button'); b.textContent = o;
+      b.onclick = () => {
+        opts.querySelectorAll('button').forEach((x, j) => { x.disabled = true; if (j === d.a) x.classList.add('right'); });
+        if (k !== d.a) b.classList.add('wrong'); else correct++;
+        answered++;
+        exp.textContent = (k === d.a ? 'Right. ' : 'Closer to: ' + d.opts[d.a] + '. ') + d.why;
+        exp.classList.add('show');
+        if (answered === quizData.length) document.getElementById('quiz-score').textContent = 'Score: ' + correct + ' / ' + quizData.length;
+      };
+      opts.appendChild(b);
+    });
+    quiz.appendChild(card);
+  });
 </script>
 </body>
 </html>
