@@ -1,707 +1,473 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Generations — Book Review</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
   :root {
-    --ink:       #1a1a1a;
-    --paper:     #ffffff;
-    --cream:     #f8f7f4;
-    --muted:     #6b6b6b;
-    --border:    rgba(0,0,0,0.09);
+    --ink:#1f1f2b; --ink-soft:#3b3b4d; --paper:#f4f3ea; --card:#ffffff; --muted:#5f5f70;
+    --green:#2fb585; --green-d:#1f8a63; --red:#e5473f; --red-d:#b8322b; --yellow:#dcb81f; --yellow-d:#8f760a;
+    --orange:#e8762b; --slate:#5b5a7e; --slate-d:#44435f; --line:#e3e1d3; --cream:#faf9f2;
+  }
+  body { font-family:'DM Sans',sans-serif; background:var(--paper); color:var(--ink); min-height:100vh; overflow-x:hidden; }
+  .back-bar { padding:12px 24px; background:var(--cream); border-bottom:1px solid var(--line); }
+  .back-link { color:var(--slate-d); text-decoration:none; font-size:13px; font-weight:700; font-family:'Poppins',sans-serif; }
+  .back-link:hover { color:var(--red); }
 
-    /* Generation palette — pulled from the book cover */
-    --gz:  #5a9e1e;   /* Gen Z — green        */
-    --mm:  #d64040;   /* Millennials — red     */
-    --gx:  #2c2c2c;   /* Gen X — charcoal      */
-    --bb:  #e07820;   /* Boomers — orange      */
-    --si:  #9a8070;   /* Silents — taupe       */
-  }
+  /* HERO */
+  .hero { background:var(--paper); position:relative; overflow:hidden; border-bottom:5px solid transparent; border-image:linear-gradient(90deg,var(--green) 0 20%,var(--red) 20% 40%,var(--yellow) 40% 60%,var(--orange) 60% 80%,var(--slate) 80% 100%) 1; }
+  .hero-inner { padding:38px 32px 40px; display:flex; align-items:center; gap:32px; max-width:1000px; margin:0 auto; position:relative; z-index:2; }
+  .hero-text { flex:1; min-width:0; }
+  .book-label { display:inline-block; background:var(--ink); color:#fff; font-family:'Poppins',sans-serif; font-size:11px; letter-spacing:2.5px; text-transform:uppercase; padding:5px 13px; border-radius:3px; margin-bottom:14px; font-weight:700; }
+  .wordmark { font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(40px,10vw,80px); letter-spacing:-2px; line-height:1; text-transform:lowercase; display:flex; flex-wrap:wrap; }
+  .wordmark span { mix-blend-mode:multiply; margin-right:-.03em; }
+  .wordmark span:nth-child(5n+1){color:var(--yellow)} .wordmark span:nth-child(5n+2){color:var(--red)} .wordmark span:nth-child(5n+3){color:var(--green)} .wordmark span:nth-child(5n+4){color:var(--slate)} .wordmark span:nth-child(5n+5){color:var(--orange)}
+  .tagline { margin-top:12px; font-size:clamp(14px,2.4vw,17px); color:var(--ink-soft); max-width:520px; line-height:1.45; }
+  .author { margin-top:10px; font-family:'Poppins',sans-serif; font-weight:600; font-size:14px; letter-spacing:1.5px; text-transform:uppercase; }
+  .author small { font-weight:500; color:var(--muted); text-transform:none; letter-spacing:0; }
+  .hero-meta { margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; }
+  .meta-pill { background:#fff; border:1px solid var(--line); color:var(--slate-d); font-size:11px; font-weight:700; padding:4px 11px; border-radius:20px; font-family:'Poppins',sans-serif; }
+  .book-cover-wrap { flex-shrink:0; }
+  .book-cover-wrap img { width:150px; display:block; border-radius:3px; transform:rotate(4deg); box-shadow:8px 12px 28px rgba(31,31,43,.28); transition:transform .3s; }
+  .book-cover-wrap img:hover { transform:rotate(0) scale(1.04); }
+  .hero-dots { position:absolute; inset:0; pointer-events:none; z-index:1; }
+  @media (max-width:500px){ .book-cover-wrap{display:none} .hero-inner{padding:28px 16px 30px} }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-  }
+  /* GEN BAND */
+  .gen-band { display:flex; max-width:1000px; margin:0 auto; }
+  .gen-chip { flex:1; text-align:center; padding:9px 4px; font-family:'Poppins',sans-serif; font-weight:700; font-size:11.5px; color:#fff; line-height:1.25; }
+  .gen-chip .yrs { display:block; font-weight:500; font-size:10px; opacity:.9; }
+  .c-si{background:var(--slate)} .c-bb{background:var(--orange)} .c-gx{background:var(--yellow);color:#3a3000} .c-mm{background:var(--red)} .c-gz{background:var(--green-d)} .c-pl{background:var(--ink)}
+  @media (max-width:500px){ .gen-chip{font-size:9.5px;padding:7px 1px} .gen-chip .yrs{font-size:8.5px} }
 
-  /* ── HERO ── */
-  .hero {
-    background: #ffffff;
-    border-bottom: 1px solid var(--border);
-    padding: 56px 40px 44px;
-    display: flex;
-    align-items: flex-start;
-    gap: 36px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg,
-      var(--gz) 0%   20%,
-      var(--mm) 20%  40%,
-      var(--gx) 40%  60%,
-      var(--bb) 60%  80%,
-      var(--si) 80%  100%
-    );
-  }
-  .hero-text { flex: 1; }
+  /* TABS */
+  .tabs { display:flex; gap:2px; background:var(--cream); border-bottom:1px solid var(--line); overflow-x:auto; position:sticky; top:0; z-index:20; padding:0 12px; -webkit-overflow-scrolling:touch; }
+  .tab { padding:14px 16px; font-family:'Poppins',sans-serif; font-size:12.5px; font-weight:600; color:var(--muted); cursor:pointer; white-space:nowrap; border-bottom:3px solid transparent; }
+  .tab:hover { color:var(--ink); }
+  .tab.active { color:var(--ink); border-bottom-color:var(--red); }
+  .tab.hot { color:var(--green-d); }
+  .panel { display:none; max-width:1000px; margin:0 auto; padding:28px 20px 60px; }
+  .panel.active { display:block; }
+  @media (max-width:500px){ .panel{padding:22px 16px 48px} }
 
-  /* The "generations" wordmark — each letter in a generation color */
-  .wordmark {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(38px, 7vw, 72px);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -1px;
-    margin-bottom: 10px;
-  }
-  .wordmark span:nth-child(1)  { color: var(--gz); }  /* g */
-  .wordmark span:nth-child(2)  { color: var(--mm); }  /* e */
-  .wordmark span:nth-child(3)  { color: var(--gx); }  /* n */
-  .wordmark span:nth-child(4)  { color: var(--bb); }  /* e */
-  .wordmark span:nth-child(5)  { color: var(--si); }  /* r */
-  .wordmark span:nth-child(6)  { color: var(--gz); }  /* a */
-  .wordmark span:nth-child(7)  { color: var(--mm); }  /* t */
-  .wordmark span:nth-child(8)  { color: var(--gx); }  /* i */
-  .wordmark span:nth-child(9)  { color: var(--bb); }  /* o */
-  .wordmark span:nth-child(10) { color: var(--si); }  /* n */
-  .wordmark span:nth-child(11) { color: var(--gz); }  /* s */
+  .section-header { display:flex; align-items:center; gap:14px; margin:26px 0 14px; }
+  .section-header:first-child { margin-top:0; }
+  .section-header h2 { font-family:'Poppins',sans-serif; font-weight:700; font-size:19px; color:var(--ink); }
+  .section-line { flex:1; height:2px; background:linear-gradient(90deg,var(--line),transparent); }
+  .summary-block { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:16px; }
+  .summary-block p { font-size:14px; line-height:1.7; color:#33333f; margin-bottom:10px; }
+  .summary-block p:last-child { margin-bottom:0; }
+  .note-box { background:#fff8dc; border:1px solid #ecd98a; border-left:4px solid var(--yellow); border-radius:8px; padding:13px 16px; font-size:13px; line-height:1.6; color:#4a4120; margin-bottom:18px; }
+  .note-box.red { background:#fdeceb; border-color:#f1b9b5; border-left-color:var(--red); color:#5a1f1b; }
+  .overview-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:18px; }
+  .stat-card { background:var(--card); border:1px solid var(--line); border-top:4px solid var(--green); border-radius:10px; padding:16px; }
+  .stat-card:nth-child(2){border-top-color:var(--red)} .stat-card:nth-child(3){border-top-color:var(--yellow)} .stat-card:nth-child(4){border-top-color:var(--slate)}
+  .stat-label { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:1.8px; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .stat-value { font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; margin:6px 0 4px; }
+  .stat-desc { font-size:12.5px; color:var(--muted); line-height:1.55; }
+  .key-idea { display:flex; gap:12px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:13px 16px; margin-bottom:8px; font-size:13.5px; line-height:1.6; }
+  .key-idea .icon { font-size:20px; flex-shrink:0; }
 
-  .hero-subtitle {
-    font-size: 13px;
-    color: var(--muted);
-    max-width: 520px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    font-style: italic;
-  }
-  .author-line {
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: 0.5px;
-    margin-bottom: 22px;
-  }
-  .author-line strong { color: var(--ink); }
+  /* chapter cards */
+  .ch-card { background:var(--card); border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden; }
+  .ch-head { display:flex; align-items:center; gap:12px; padding:14px 16px; cursor:pointer; }
+  .ch-head:hover { background:var(--cream); }
+  .ch-num { width:34px; height:34px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:13px; color:#fff; }
+  .ch-title { flex:1; min-width:0; }
+  .ch-title h3 { font-family:'Poppins',sans-serif; font-size:15px; font-weight:700; }
+  .ch-title span { font-size:12px; color:var(--muted); }
+  .ch-arrow { color:var(--muted); font-size:20px; transition:transform .2s; }
+  .ch-card.open .ch-arrow { transform:rotate(90deg); }
+  .ch-body { display:none; padding:2px 18px 18px 62px; border-top:1px solid var(--line); }
+  .ch-card.open .ch-body { display:block; }
+  .ch-body p { font-size:13.5px; line-height:1.7; color:#33333f; margin-top:10px; }
+  .ch-body .watch { margin-top:10px; font-size:12.5px; line-height:1.6; background:var(--cream); border-left:3px solid var(--slate); padding:9px 12px; border-radius:0 6px 6px 0; color:var(--ink-soft); }
+  @media (max-width:500px){ .ch-body{padding:2px 14px 16px 14px} }
 
-  .hero-meta { display: flex; gap: 10px; flex-wrap: wrap; }
-  .meta-pill {
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: var(--cream);
-  }
+  /* tables */
+  .tbl-wrap { overflow-x:auto; margin-bottom:12px; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); font-size:13px; min-width:420px; }
+  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.55; }
+  th { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); background:var(--cream); }
 
-  .book-cover-wrap {
-    flex-shrink: 0;
-    display: flex;
-    align-items: flex-start;
-    padding-top: 4px;
-  }
-  .book-cover-wrap img {
-    width: 110px;
-    border-radius: 3px;
-    box-shadow: -3px 5px 24px rgba(0,0,0,0.18);
-    transform: rotate(-6deg);
-    transition: transform 0.3s ease;
-  }
-  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
-  @media (max-width: 480px) { .book-cover-wrap { display: none; } }
+  /* interactive */
+  .tool { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; margin-bottom:18px; }
+  .tool h3 { font-family:'Poppins',sans-serif; font-size:15px; margin-bottom:6px; }
+  .tool p.help { font-size:12.5px; color:var(--muted); line-height:1.55; margin-bottom:12px; }
+  .by-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .by-row input { font-family:'DM Sans',sans-serif; font-size:16px; padding:9px 12px; border:2px solid var(--line); border-radius:8px; width:130px; background:#fff; color:var(--ink); }
+  .by-row input:focus { outline:none; border-color:var(--green); }
+  .by-out { margin-top:14px; border-radius:10px; padding:14px 16px; font-size:13.5px; line-height:1.65; background:var(--cream); border:1px solid var(--line); border-left:6px solid var(--line); }
+  .quiz-card { border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:10px; background:#fff; }
+  .quiz-card .q { font-size:13.5px; line-height:1.6; margin-bottom:10px; }
+  .quiz-card .q .n { font-weight:800; color:var(--red); margin-right:6px; }
+  .quiz-opts { display:flex; gap:8px; flex-wrap:wrap; }
+  .quiz-opts button { font-family:'Poppins',sans-serif; font-weight:600; font-size:12px; padding:8px 14px; border-radius:20px; border:2px solid var(--line); background:#fff; cursor:pointer; color:var(--ink); }
+  .quiz-opts button:hover:not(:disabled) { border-color:var(--slate); }
+  .quiz-opts button.right { background:#dff5ec; border-color:var(--green); }
+  .quiz-opts button.wrong { background:#fdeceb; border-color:var(--red); }
+  .quiz-exp { display:none; margin-top:10px; font-size:12.5px; line-height:1.6; color:var(--ink-soft); }
+  .quiz-exp.show { display:block; }
+  .quiz-score { font-family:'Poppins',sans-serif; font-weight:700; margin-top:6px; min-height:20px; }
 
-  /* ── GEN COLOUR BAND ── */
-  .gen-band {
-    display: flex;
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .gen-band::-webkit-scrollbar { display: none; }
-  .gen-chip {
-    flex: 1;
-    min-width: 120px;
-    padding: 14px 16px 12px;
-    text-align: center;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #fff;
-    white-space: nowrap;
-  }
-  .gen-chip .years { display: block; font-size: 10px; opacity: 0.75; margin-top: 2px; letter-spacing: 0.5px; }
-  .chip-gz { background: var(--gz); }
-  .chip-mm { background: var(--mm); }
-  .chip-gx { background: var(--gx); }
-  .chip-bb { background: var(--bb); }
-  .chip-si { background: var(--si); }
+  .pro-con-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
+  @media (max-width:640px){ .pro-con-grid{grid-template-columns:1fr} }
+  .pro-list,.con-list { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  .pro-list h4 { color:var(--green-d); } .con-list h4 { color:var(--red-d); }
+  .pro-list h4,.con-list h4 { font-family:'Poppins',sans-serif; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
+  .list-item { display:flex; gap:8px; align-items:flex-start; font-size:13px; line-height:1.55; margin-bottom:8px; color:#33333f; }
+  .list-item .dot { margin-top:6px; width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .pro-list .dot{background:var(--green)} .con-list .dot{background:var(--red)}
+  .who-card { display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:13px 16px; margin-bottom:8px; font-size:13.5px; line-height:1.6; }
+  .who-card .ic { font-size:19px; flex-shrink:0; }
 
-  /* ── TABS ── */
-  .tabs {
-    display: flex;
-    background: var(--cream);
-    border-bottom: 2px solid var(--border);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab {
-    padding: 14px 22px;
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: var(--muted);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
-  .tab:hover { color: var(--ink); }
-  .tab.active { color: var(--ink); border-bottom-color: var(--ink); }
+  .toolkit-item { display:flex; gap:12px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:13px 16px; margin-bottom:8px; font-size:13.5px; line-height:1.6; }
+  .toolkit-item .ic { font-size:19px; flex-shrink:0; }
+  .term-card { background:var(--card); border:1px solid var(--line); border-left:5px solid var(--green); border-radius:8px; padding:13px 16px; margin-bottom:10px; }
+  .term-card:nth-child(5n+2){border-left-color:var(--red)} .term-card:nth-child(5n+3){border-left-color:var(--yellow)} .term-card:nth-child(5n+4){border-left-color:var(--orange)} .term-card:nth-child(5n+5){border-left-color:var(--slate)}
+  .term-card h4 { font-family:'Poppins',sans-serif; font-size:14px; margin-bottom:4px; }
+  .term-card p { font-size:13px; line-height:1.6; color:#33333f; }
 
-  /* ── PANELS ── */
-  .panel { display: none; padding: 32px 32px 56px; max-width: 860px; }
-  .panel.active { display: block; }
-
-  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; }
-  .section-line { flex: 1; height: 1px; background: var(--border); }
-
-  /* ── OVERVIEW ── */
-  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 28px; }
-  .stat-card {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 18px 20px;
-  }
-  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .stat-value { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
-  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
-
-  .summary-block {
-    background: var(--cream);
-    border-left: 3px solid var(--ink);
-    border-radius: 0 8px 8px 0;
-    padding: 20px 22px;
-    margin-bottom: 20px;
-    font-size: 14.5px;
-    line-height: 1.8;
-    color: #1a1a1a;
-  }
-  .summary-block p + p { margin-top: 12px; }
-
-  .key-idea {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    padding: 14px 18px;
-    background: var(--cream);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 13.5px;
-    line-height: 1.6;
-  }
-  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
-
-  /* ── GENERATIONS TAB ── */
-  .gen-card {
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 14px;
-    border: 1px solid var(--border);
-  }
-  .gen-card-header {
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    cursor: pointer;
-  }
-  .gen-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .gen-card-header h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    flex: 1;
-  }
-  .gen-years {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.5px;
-  }
-  .gen-arrow { font-size: 16px; transition: transform 0.25s; color: var(--muted); }
-  .gen-card.open .gen-arrow { transform: rotate(90deg); }
-  .gen-card-body {
-    display: none;
-    padding: 18px 20px 22px;
-    border-top: 1px solid var(--border);
-    background: var(--paper);
-  }
-  .gen-card.open .gen-card-body { display: block; }
-  .gen-card-body p {
-    font-size: 14px;
-    line-height: 1.8;
-    color: #2a2a2a;
-    margin-bottom: 12px;
-  }
-  .gen-trait-list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
-  }
-  .gen-trait-list li {
-    font-size: 11px;
-    letter-spacing: 0.5px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    color: #fff;
-  }
-
-  /* ── KEY IDEAS TAB ── */
-  .idea-card {
-    background: var(--cream);
-    border-radius: 10px;
-    padding: 20px 22px;
-    margin-bottom: 14px;
-    border: 1px solid var(--border);
-  }
-  .idea-card h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 17px;
-    margin-bottom: 8px;
-  }
-  .idea-card p { font-size: 13.5px; line-height: 1.7; color: #3a3a3a; }
-
-  /* ── VERDICT TAB ── */
-  .verdict-banner {
-    background: var(--ink);
-    border-radius: 12px;
-    padding: 32px;
-    margin-bottom: 22px;
-    text-align: center;
-  }
-  .verdict-banner h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
-    color: #fff;
-    margin-bottom: 6px;
-  }
-  .verdict-banner p { color: rgba(255,255,255,0.55); font-size: 13px; }
-  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
-  .rating-item {
-    text-align: center;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 8px;
-    padding: 12px 18px;
-    min-width: 100px;
-  }
-  .rating-item .r-score { font-size: 22px; font-weight: 700; color: #ffffff; }
-  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-top: 3px; text-transform: uppercase; }
-
-  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
-  .pro-list, .con-list {
-    background: var(--cream);
-    border-radius: 10px;
-    padding: 18px 20px;
-  }
-  .pro-list h4, .con-list h4 {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .pro-list h4 { color: var(--gz); }
-  .con-list h4 { color: var(--mm); }
-  .pro-list li, .con-list li {
-    font-size: 13px;
-    line-height: 1.6;
-    color: #2a2a2a;
-    padding-left: 18px;
-    position: relative;
-    margin-bottom: 8px;
-    list-style: none;
-  }
-  .pro-list li::before { content: '+'; position: absolute; left: 0; color: var(--gz); font-weight: 700; }
-  .con-list li::before { content: '−'; position: absolute; left: 0; color: var(--mm); font-weight: 700; }
-
-  .who-for {
-    background: var(--cream);
-    border-radius: 10px;
-    padding: 20px 22px;
-    margin-bottom: 14px;
-  }
-  .who-for h4 {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-  .who-for p { font-size: 14px; line-height: 1.75; color: #2a2a2a; }
-
-  .back-link {
-    display: inline-block;
-    margin: 32px 32px 0;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--muted);
-    transition: color 0.2s;
-  }
-  .back-link:hover { color: var(--ink); }
-  .back-link::before { content: '← '; }
-
-  @media (max-width: 600px) {
-    .hero { padding: 36px 20px 44px; }
-    .panel { padding: 20px 20px 48px; }
-    .overview-grid, .pro-con-grid { grid-template-columns: 1fr; }
-  }
+  /* ratings */
+  .cmp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
+  .cmp-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 16px; text-align:center; }
+  .cmp-card.you { border-top:4px solid var(--red); } .cmp-card.crowd { border-top:4px solid var(--green); } .cmp-card.me { border-top:4px solid var(--slate); }
+  .cmp-label { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--muted); margin-bottom:8px; }
+  .cmp-score { font-family:'Poppins',sans-serif; font-weight:800; font-size:36px; line-height:1.1; }
+  .cmp-score small { font-size:15px; color:var(--muted); font-weight:500; }
+  .cmp-score.pending { font-size:19px; color:var(--muted); padding:9px 0; }
+  .cmp-sub { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.5; }
+  td.num { font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  tr.avg td { font-weight:700; background:var(--cream); }
+  .src-list { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:22px; }
+  .src-list a, .summary-block a { color:var(--slate-d); }
+  @media (max-width:560px){ .cmp-grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
 
-<a href="index.html" class="back-link">Library</a>
-
-<!-- HERO -->
 <div class="hero">
-  <div class="hero-text">
-    <div class="wordmark">
-      <span>g</span><span>e</span><span>n</span><span>e</span><span>r</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span><span>s</span>
+  <svg class="hero-dots" aria-hidden="true" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="80" cy="250" r="34" fill="#dcb81f" opacity=".16"/><circle cx="120" cy="262" r="34" fill="#e5473f" opacity=".14"/>
+    <circle cx="770" cy="60" r="48" fill="#2fb585" opacity=".14"/><circle cx="820" cy="80" r="48" fill="#5b5a7e" opacity=".12"/>
+    <circle cx="700" cy="270" r="22" fill="#e8762b" opacity=".16"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Field Guide</div>
+      <div class="wordmark" aria-label="generations"><span>g</span><span>e</span><span>n</span><span>e</span><span>r</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span><span>s</span></div>
+      <p class="tagline">The real differences between Gen Z, Millennials, Gen X, Boomers and Silents, and what they mean for America's future</p>
+      <div class="author">Jean M. Twenge, PhD <small>· Atria Books · 2023</small></div>
+      <div class="hero-meta"><span class="meta-pill">Social Science</span><span class="meta-pill">Psychology</span><span class="meta-pill">Generational Research</span></div>
     </div>
-    <p class="hero-subtitle">The Real Differences Between Gen Z, Millennials, Gen X, Boomers, and Silents — and What They Mean for The Future</p>
-    <p class="author-line">by <strong>Jean M. Twenge, PhD</strong> · 2023</p>
-    <div class="hero-meta">
-      <span class="meta-pill">Social Science</span>
-      <span class="meta-pill">Psychology</span>
-      <span class="meta-pill">Culture</span>
-      <span class="meta-pill">4.3 / 5</span>
-    </div>
-  </div>
-  <div class="book-cover-wrap">
-    <img src="images/generations-cover.jpg" alt="Generations book cover" onerror="this.style.display='none'">
+    <div class="book-cover-wrap"><img src="images/generations-cover.jpg" alt="Generations by Jean M. Twenge book cover" onerror="this.style.display='none'"></div>
   </div>
 </div>
-
-<!-- GEN BAND -->
 <div class="gen-band">
-  <div class="gen-chip chip-si">Silents<span class="years">1925–1945</span></div>
-  <div class="gen-chip chip-bb">Boomers<span class="years">1946–1964</span></div>
-  <div class="gen-chip chip-gx">Gen X<span class="years">1965–1979</span></div>
-  <div class="gen-chip chip-mm">Millennials<span class="years">1980–1994</span></div>
-  <div class="gen-chip chip-gz">Gen Z<span class="years">1995–2012</span></div>
+  <div class="gen-chip c-si">Silents<span class="yrs">1925–45</span></div>
+  <div class="gen-chip c-bb">Boomers<span class="yrs">1946–64</span></div>
+  <div class="gen-chip c-gx">Gen X<span class="yrs">1965–79</span></div>
+  <div class="gen-chip c-mm">Millennials<span class="yrs">1980–94</span></div>
+  <div class="gen-chip c-gz">Gen Z<span class="yrs">1995–2012</span></div>
+  <div class="gen-chip c-pl">Polars<span class="yrs">2013–29</span></div>
 </div>
+<div class="back-bar"><a href="index.html" class="back-link">← Back to Library</a></div>
 
-<!-- TABS -->
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('overview', this)">Overview</div>
-  <div class="tab" onclick="switchTab('generations', this)">The Generations</div>
-  <div class="tab" onclick="switchTab('ideas', this)">Key Ideas</div>
-  <div class="tab" onclick="switchTab('verdict', this)">Verdict</div>
+  <div class="tab active" onclick="showTab('overview', this)">Overview</div>
+  <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
+  <div class="tab hot" onclick="showTab('cohorts', this)">Reading Generations</div>
+  <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
+  <div class="tab" onclick="showTab('terms', this)">Key Phrases</div>
+  <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
-<!-- OVERVIEW PANEL -->
-<div class="panel active" id="panel-overview">
-  <div class="section-header">
-    <h2>What This Book Is About</h2>
-    <div class="section-line"></div>
-  </div>
-
+<!-- ═══ OVERVIEW ═══ -->
+<div id="overview" class="panel active">
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
   <div class="overview-grid">
-    <div class="stat-card">
-      <div class="stat-label">Core Argument</div>
-      <div class="stat-value">Technology shapes us</div>
-      <div class="stat-desc">Smartphones and social media have fundamentally altered how generations form, faster than any prior cultural force.</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Method</div>
-      <div class="stat-value">55+ years of data</div>
-      <div class="stat-desc">Twenge draws on longitudinal surveys tracking hundreds of thousands of Americans across five decades.</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Generations Covered</div>
-      <div class="stat-value">5 living generations</div>
-      <div class="stat-desc">From Silents through Gen Z — plus a look at Polars (Gen Alpha, born 2013+) just entering the picture.</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Dan's Read</div>
-      <div class="stat-value">★★★★☆ 4.3</div>
-      <div class="stat-desc">Dense with data, occasionally repetitive, but one of the most useful lenses on the workforce and culture I've read.</div>
-    </div>
+    <div class="stat-card"><div class="stat-label">Core Argument</div><div class="stat-value">Technology drives it</div><div class="stat-desc">Twenge argues technology is the strongest force separating generations, and links it to a "slower" life pace and more individualism (per the author's own site).</div></div>
+    <div class="stat-card"><div class="stat-label">Method</div><div class="stat-value">24 national datasets</div><div class="stat-desc">Long-running, government-funded surveys, with 282 charts, according to the author's site. Retail listings quote different participant totals, so I give no headcount.</div></div>
+    <div class="stat-card"><div class="stat-label">Scope</div><div class="stat-value">Six generations</div><div class="stat-desc">Silents, Boomers, Gen X, Millennials, Gen Z and "Polars" (born 2013–2029), plus a closing chapter on the future.</div></div>
+    <div class="stat-card"><div class="stat-label">Shape</div><div class="stat-value">8 chapters + 4 interludes</div><div class="stat-desc">One scene-setting chapter, six generation profiles, one forward-looking chapter, and short interludes on major events. About 560 pages per retailer listings.</div></div>
   </div>
 
-  <div class="section-header">
-    <h2>The Thesis in Plain English</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="note-box"><strong>How these summaries were made.</strong> Chapter titles come from the author's own site and the generation boundaries are hers. Everything else in the chapter summaries is reconstructed from that verified table of contents, the author's description of the book, and published reviews. It is not a close reading, and Claude has not read the book itself. Examples labelled "reviewer's illustration" are mine, not Twenge's.</div>
 
+  <div class="section-header"><h2>The Thesis in Plain English</h2><div class="section-line"></div></div>
   <div class="summary-block">
-    <p>Jean Twenge's central claim is deceptively simple: generations are real, measurable, and shaped primarily by the technology and cultural forces that were ambient during childhood and adolescence. Not by parenting. Not by personal choice. The world you grew up in wires certain expectations and behaviors in — and those patterns persist across a lifetime.</p>
-    <p>The most striking finding is the speed of the post-2012 shift. When smartphones became widespread and social media moved from desktop to pocket, something broke in the adolescent experience — particularly for girls. Mental health metrics that had been broadly stable for decades collapsed in a span of a few years. Twenge calls this the most dramatic and sudden change in the psychological well-being of young people ever recorded.</p>
-    <p>The book isn't alarmist, though. It's analytical. Each generation gets a fair reading: their defining context, their strengths, their blind spots, and how they're misread by the generations adjacent to them. The Boomer-Millennial antagonism, Twenge argues, is largely a story of structural misunderstanding — one generation that had it easier than any in history judging another that inherited a far harder deck of cards.</p>
+    <p>Twenge, a psychologist, compares what different birth cohorts say and do when surveyed at the same age. She reports differences in areas including mental health, politics, sexual behaviour, gender identity, race attitudes, life goals, substance use, income, trust and materialism.</p>
+    <p>Her explanation is that generations differ mainly because the technology of their youth differs, rather than because of a single defining event in their teens. Reviewers describe this as the book's distinctive claim, and it is also where critics push hardest (see the Reading Generations and Ratings tabs).</p>
+    <p>A second thread is "slow life": longer schooling and lifespans push marriage, children and independence later, which she ties to the rise of individualism. A reviewer for <em>Inside Story</em> credits her with separating age, period and cohort effects, which many generational writers skip.</p>
   </div>
 
-  <div class="section-header">
-    <h2>Why I Read It</h2>
-    <div class="section-line"></div>
+  <div class="section-header"><h2>Which Book Is This?</h2><div class="section-line"></div></div>
+  <div class="key-idea"><div class="icon">📚</div><div>This is Twenge's 2023 <em>Generations</em> (cover shown above). It is <strong>not</strong> the 1991 book of the same name by William Strauss and Neil Howe, which proposed a recurring cycle of generational "archetypes". The two are often mentioned together, and Twenge's reviewers sometimes compare her approach to theirs. Treat them as separate works.</div></div>
+</div>
+
+<!-- ═══ CHAPTERS ═══ -->
+<div id="chapters" class="panel">
+  <div class="section-header"><h2>All Chapters</h2><div class="section-line"></div></div>
+  <div class="note-box">Chapter titles are verified from the <a href="https://www.jeantwenge.com/generations-book-by-dr-jean-twenge/">author's site</a>. Summaries are reconstructed from that list, the book's stated themes and published reviews, not a close reading. The author's site also lists four event interludes (the AIDS epidemic, 9/11 and the new war, the Great Recession and its aftermath, COVID-19); I could not verify where they sit between chapters, so they have their own card at the end.</div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--ink)">1</div><div class="ch-title"><h3>The How and Why of Generations</h3><span>Method, definitions, the case for technology</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>The set-up chapter. It explains why Twenge thinks generations are worth studying, how birth cohorts are defined, and what the surveys can and cannot show. This is where her main argument is introduced: that technology, more than discrete events, shapes a generation.</p>
+      <p>Her stated approach is to compare generations at the same age, across decades of survey waves. A reviewer notes she also admits generations can be too broad, since people born ten years apart in one group may have lived through different cultures.</p>
+      <div class="watch"><strong>Read critically:</strong> this chapter carries the weight of the whole book. If you are unconvinced here that cohort labels capture something real, the rest is a long catalogue of differences you may attribute to class, age or period.</div>
+    </div></div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--slate)">2</div><div class="ch-title"><h3>Silents (Born 1925–1945)</h3><span>The oldest group in the book</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>The first generation profile and the baseline for the others. A reviewer reports that Twenge finds Silents marrying and having children earlier than later generations, which fits her "slow life" thread: the pace of life transitions lengthens generation by generation.</p>
+      <div class="watch"><strong>Read critically:</strong> older cohorts are measured at a different point in their lives than younger ones, so check how the book handles comparing different life stages.</div>
+    </div></div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--orange)">3</div><div class="ch-title"><h3>Boomers (Born 1946–1964)</h3><span>The most-discussed cohort</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>Profiles the postwar baby-boom cohort. One reviewer notes the book reports Boomers' higher alcohol and drug use persisting as they aged. The span is nearly two decades long, which is the usual target of boundary criticism.</p>
+      <div class="watch"><strong>Read critically:</strong> economist John Quiggin argues the demographic baby boom (to the early 1960s) does not line up with a break in cultural and economic history, which came in the early 1970s. He suggests many people labelled Boomers have more in common with the cohort after them.</div>
+    </div></div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--yellow);color:#3a3000">4</div><div class="ch-title"><h3>Generation X (Born 1965–1979)</h3><span>The shorter, in-between cohort</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>The 15-year cohort between Boomers and Millennials. I could not verify specific findings from this chapter beyond its place in the structure and the survey topics the book covers overall, so I have not invented any.</p>
+      <div class="watch"><strong>What to look for:</strong> whether the data shows Gen X as a distinct group or as a bridge between its neighbours, and how many of the claims rest on cohort differences rather than age differences.</div>
+    </div></div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--red)">5</div><div class="ch-title"><h3>Millennials (Born 1980–1994)</h3><span>Coming of age at the internet's rise</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>The cohort that grew up as the internet became mainstream and reached adulthood during the Great Recession era. As with Gen X, I could not verify chapter-specific claims, so this is a pointer to what the structure implies, not a summary.</p>
+      <div class="watch"><strong>What to look for:</strong> how the technology argument is applied to a generation that met the web in adolescence, versus the next group who grew up with smartphones.</div>
+    </div></div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--green-d)">6</div><div class="ch-title"><h3>Generation Z (Born 1995–2012)</h3><span>Smartphone adolescence</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>Likely the chapter where the technology thesis is tested hardest, since this is the cohort that grew up with smartphones and social media. It builds on Twenge's earlier book on this age group (<em>iGen</em>, shown on the cover as "author of iGen"). A <em>Goodreads</em> reader quoted in search results felt the Gen Z coverage was incomplete; I have not verified that.</p>
+      <div class="watch"><strong>Read critically:</strong> an earlier reviewer of <em>iGen</em> in the <em>American Journal of Psychology</em> warned that some described changes may be modest rather than robust. That review is about the earlier book, not this one, but it flags the same kind of claim to check.</div>
+    </div></div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--ink)">7</div><div class="ch-title"><h3>Polars (Born 2013–2029)</h3><span>The youngest group, still growing up</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>Twenge's name for the generation others call Alpha. Most of its members are children as I write, so any claims here are necessarily projections from early signals rather than adult outcomes.</p>
+      <div class="watch"><strong>Read critically:</strong> the group runs to 2029 per the author's site, so the book is describing a cohort that has not finished being born. Treat conclusions as provisional.</div>
+    </div></div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--ink)">8</div><div class="ch-title"><h3>The Future</h3><span>Workplace, consumers, births, politics</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>Per the author's description, the closing chapter looks ahead at trends in the workplace, consumer behaviour, birth rates and politics. Reviewers describe it as pointing to possibilities for how public opinion may shift as younger cohorts age into the electorate.</p>
+      <div class="watch"><strong>Read critically:</strong> forecasts from cohort data assume cohorts keep their distinct character as they age. That assumption is exactly what the age-period-cohort problem makes hard to test.</div>
+    </div></div>
+
+  <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--muted)">★</div><div class="ch-title"><h3>Event Interludes (four)</h3><span>AIDS, 9/11, Great Recession, COVID-19</span></div><div class="ch-arrow">›</div></div>
+    <div class="ch-body">
+      <p>The author's site lists four short interludes: the AIDS epidemic; 9/11 and the new war; the Great Recession and its aftermath; and the COVID-19 pandemic. They appear to give space to major events even though Twenge argues technology matters more than events. I could not verify their exact placement or content.</p>
+    </div></div>
+</div>
+
+<!-- ═══ CORE FRAMEWORK ═══ -->
+<div id="cohorts" class="panel">
+  <div class="section-header"><h2>Reading Generations: Age, Period, Cohort</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p>Any claim that "generation X does this" must survive a three-way question: is the difference due to <strong>age</strong> (everyone does this at that stage of life), <strong>period</strong> (everyone in a given year changed, whatever their age), or <strong>cohort</strong> (people born in a given span differ and carry it forward)? Only the third supports a generational story. Twenge's method of comparing groups at the same age and across survey years aims to isolate it, and a reviewer credits her for attending to the distinction. This is my own framing of that idea, not a chapter from the book.</p>
+  </div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Effect</th><th>Means</th><th>Reviewer's illustration (invented)</th></tr>
+    <tr><td><strong>Age</strong></td><td>Tied to life stage, repeats for every generation</td><td>Twenty-somethings in every decade have less savings than fifty-somethings.</td></tr>
+    <tr><td><strong>Period</strong></td><td>Affects everyone at one point in time</td><td>After a new streaming service launches, viewers of all ages watch more TV online.</td></tr>
+    <tr><td><strong>Cohort</strong></td><td>Differs by birth span and persists</td><td>People born after a given year still report a habit as adults that older cohorts did not have at the same age.</td></tr>
+  </table></div>
+
+  <div class="section-header"><h2>Two Ways to Explain Generations</h2><div class="section-line"></div></div>
+  <div class="tbl-wrap"><table>
+    <tr><th></th><th>Event-driven view</th><th>Twenge's technology view</th></tr>
+    <tr><td><strong>Main driver</strong></td><td>Shared events at impressionable ages</td><td>Technology of the childhood era</td></tr>
+    <tr><td><strong>Reviewer pushback</strong></td><td>Strauss and Howe-style theories cover a whole era of youth, not one event, so Twenge's summary of them is questioned</td><td>Technology is built by earlier generations, so credit may circle back to them; and class is downplayed</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:8px;">Based on reviews by <a href="https://insidestory.org.au/can-generational-analysis-be-saved/" style="color:var(--slate-d)">John Quiggin</a> and Matthew Ewer (read via a search summary only).</p>
+
+  <div class="section-header"><h2>Try It: Where Do You Fall?</h2><div class="section-line"></div></div>
+  <div class="tool">
+    <h3>Birth-year lookup</h3>
+    <p class="help">Enter a birth year to see which of the book's six groups it falls in, using the boundaries from the author's site. Near a boundary, the label is shaky, which is part of the boundary criticism.</p>
+    <div class="by-row"><label for="by" style="font-size:13px;font-weight:700;">Birth year</label><input id="by" type="number" inputmode="numeric" min="1900" max="2035" value="1985" aria-label="Birth year"></div>
+    <div class="by-out" id="by-out" aria-live="polite"></div>
   </div>
 
-  <div class="key-idea">
-    <div class="icon">👥</div>
-    <div>We manage and hire across three or four generations simultaneously. Understanding the actual research — not stereotypes — behind how different cohorts relate to work, authority, feedback, and technology is directly useful.</div>
-  </div>
-  <div class="key-idea">
-    <div class="icon">📊</div>
-    <div>Twenge is a serious researcher. This isn't pop-psychology generational content — it's grounded in fifty-plus years of survey data. I wanted the source, not the summary.</div>
-  </div>
-  <div class="key-idea">
-    <div class="icon">🧭</div>
-    <div>Raising kids who are Gen Z / early Polars made this personal. Understanding the smartphone-and-mental-health data felt necessary, not optional.</div>
+  <div class="tool">
+    <h3>Age, period or cohort?</h3>
+    <p class="help">Six invented scenarios (the reviewer's own, not from the book). Pick the effect each most looks like.</p>
+    <div id="quiz"></div>
+    <div class="quiz-score" id="quiz-score"></div>
   </div>
 </div>
 
-<!-- GENERATIONS PANEL -->
-<div class="panel" id="panel-generations">
-  <div class="section-header">
-    <h2>Generation by Generation</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <!-- Silents -->
-  <div class="gen-card" id="gc-si" onclick="toggleGen('gc-si')">
-    <div class="gen-card-header">
-      <div class="gen-dot" style="background:var(--si)"></div>
-      <h3 style="color:var(--si)">Silents</h3>
-      <span class="gen-years">Born 1925–1945</span>
-      <span class="gen-arrow">›</span>
-    </div>
-    <div class="gen-card-body">
-      <p>Formed by the Great Depression and World War II, the Silents were defined by scarcity, conformity, and the deep satisfaction of stability. They didn't rebel — they built. They married young, had children early, and considered duty and loyalty foundational virtues, not constraints.</p>
-      <p>Their slow-life strategy was a rational response to a dangerous world: grow up fast, get settled, minimize risk. The payoff was a cohort with high civic engagement, strong institutional trust, and — paradoxically — the highest self-reported happiness of any generation Twenge studied.</p>
-      <p>Their biggest miscommunication with later generations: they read others' boundary-setting and self-expression as ingratitude. They built the stability that made later generations' individualism possible, and got little credit for it.</p>
-      <ul class="gen-trait-list">
-        <li style="background:var(--si)">Conformist</li>
-        <li style="background:var(--si)">Civic-minded</li>
-        <li style="background:var(--si)">Institutional trust</li>
-        <li style="background:var(--si)">Duty-oriented</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Boomers -->
-  <div class="gen-card" id="gc-bb" onclick="toggleGen('gc-bb')">
-    <div class="gen-card-header">
-      <div class="gen-dot" style="background:var(--bb)"></div>
-      <h3 style="color:var(--bb)">Boomers</h3>
-      <span class="gen-years">Born 1946–1964</span>
-      <span class="gen-arrow">›</span>
-    </div>
-    <div class="gen-card-body">
-      <p>The most studied and most stereotyped generation. Born into postwar prosperity, they grew up when individualism — self-expression, personal fulfillment, challenging authority — was first becoming a cultural norm rather than an aberration.</p>
-      <p>Early Boomers really did march, protest, and upend the established order. Later Boomers absorbed the individualism without the radicalism, channelling it into careers, consumption, and — after Reagan — economic conservatism. The generational split within the Boomer cohort is wider than most people acknowledge.</p>
-      <p>What the data shows: Boomers benefitted from the most structurally favourable economic conditions in US history — cheap housing, expanding employment, low student debt, rising markets. They often mistake their outcomes for their character, which makes them harder on younger generations than the evidence warrants.</p>
-      <ul class="gen-trait-list">
-        <li style="background:var(--bb)">Individualistic</li>
-        <li style="background:var(--bb)">Optimistic</li>
-        <li style="background:var(--bb)">Self-expressive</li>
-        <li style="background:var(--bb)">Career-focused</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Gen X -->
-  <div class="gen-card" id="gc-gx" onclick="toggleGen('gc-gx')">
-    <div class="gen-card-header">
-      <div class="gen-dot" style="background:var(--gx)"></div>
-      <h3 style="color:var(--gx)">Gen X</h3>
-      <span class="gen-years">Born 1965–1979</span>
-      <span class="gen-arrow">›</span>
-    </div>
-    <div class="gen-card-body">
-      <p>The latchkey generation. Divorce rates peaked during their childhoods, mothers flooded the workforce, and the cultural message was: figure it out yourself. They did. Gen X developed independence, self-reliance, and a healthy scepticism of institutions — all things they weren't given but had to build.</p>
-      <p>Twenge's most interesting finding about Gen X: they entered adulthood with the lowest expectations of any generation studied, and ended up with some of the highest life satisfaction. When you expect little, reality tends to pleasantly surprise you.</p>
-      <p>They're the forgotten middle child of generational analysis — too small to dominate discourse, too cynical to lobby for attention. Their management style tends toward autonomy: they don't need hand-holding, and they're genuinely puzzled by Millennials who do.</p>
-      <ul class="gen-trait-list">
-        <li style="background:var(--gx)">Independent</li>
-        <li style="background:var(--gx)">Cynical</li>
-        <li style="background:var(--gx)">Self-reliant</li>
-        <li style="background:var(--gx)">Pragmatic</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Millennials -->
-  <div class="gen-card" id="gc-mm" onclick="toggleGen('gc-mm')">
-    <div class="gen-card-header">
-      <div class="gen-dot" style="background:var(--mm)"></div>
-      <h3 style="color:var(--mm)">Millennials</h3>
-      <span class="gen-years">Born 1980–1994</span>
-      <span class="gen-arrow">›</span>
-    </div>
-    <div class="gen-card-body">
-      <p>The most hyped and most maligned generation in history. Millennials grew up in an era of intensive parenting, participation trophies, and the message that they were special — then graduated into the worst financial crisis since the Depression. The whiplash was severe.</p>
-      <p>They delayed every traditional adult milestone — marriage, homeownership, children — not out of immaturity but because the economics made those milestones inaccessible. Boomers read this as arrested development; the data reads it as rational adaptation to a structurally hostile environment.</p>
-      <p>Millennials are the most politically and socially progressive generation in US history on most measures, and also the most psychologically fragile — a consequence, Twenge argues, of childhood insulation from failure and rejection. The expectation of safety in all environments was baked in early; the working world didn't get the memo.</p>
-      <ul class="gen-trait-list">
-        <li style="background:var(--mm)">Progressive</li>
-        <li style="background:var(--mm)">Optimistic (early)</li>
-        <li style="background:var(--mm)">Debt-burdened</li>
-        <li style="background:var(--mm)">Purpose-driven</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Gen Z -->
-  <div class="gen-card" id="gc-gz" onclick="toggleGen('gc-gz')">
-    <div class="gen-card-header">
-      <div class="gen-dot" style="background:var(--gz)"></div>
-      <h3 style="color:var(--gz)">Gen Z</h3>
-      <span class="gen-years">Born 1995–2012</span>
-      <span class="gen-arrow">›</span>
-    </div>
-    <div class="gen-card-body">
-      <p>The first generation to grow up with smartphones from adolescence. The data here is unambiguous and disturbing: starting around 2012, rates of anxiety, depression, loneliness, and self-harm among teenagers — particularly girls — began climbing steeply and haven't stopped.</p>
-      <p>Gen Z is paradoxical: the most politically progressive generation on social issues (LGBTQ+ rights, racial equity, climate) yet more economically conservative than Millennials were at the same age. They've watched Millennials be crushed by student debt and housing costs, and they're adjusting accordingly.</p>
-      <p>They're safer in their physical lives — they drive less, drink less, have sex later, fight less — but more endangered in their mental lives. Social comparison that used to happen at school now happens 24/7 in their pockets. The anxiety isn't irrational; the inputs are just relentless. Twenge's prescription: phone-free schools, later phone access, and more unstructured outdoor time — things that once happened naturally and now require active engineering.</p>
-      <ul class="gen-trait-list">
-        <li style="background:var(--gz)">Anxious</li>
-        <li style="background:var(--gz)">Digital-native</li>
-        <li style="background:var(--gz)">Pragmatic</li>
-        <li style="background:var(--gz)">Inclusive</li>
-      </ul>
-    </div>
-  </div>
+<!-- ═══ TOOLKIT ═══ -->
+<div id="toolkit" class="panel">
+  <div class="section-header"><h2>Toolkit</h2><div class="section-line"></div></div>
+  <div class="note-box">These are the reviewer's own suggestions for using generational claims sensibly, not techniques from the book.</div>
+  <div class="toolkit-item"><div class="ic">🔍</div><div><strong>Sort every claim: age, period, or cohort.</strong> Before repeating "Gen Z is X", ask whether older people were X at the same age.</div></div>
+  <div class="toolkit-item"><div class="ic">📏</div><div><strong>Treat labels near a boundary as soft.</strong> Someone born in 1979 or 1980 may have more in common with the neighbouring group.</div></div>
+  <div class="toolkit-item"><div class="ic">💼</div><div><strong>Use generation as a hypothesis, not a hiring filter.</strong> At work, ask individuals what they prefer rather than inferring from a birth year.</div></div>
+  <div class="toolkit-item"><div class="ic">🧮</div><div><strong>Look for the class and background split.</strong> Reviewers say differences of class, race and gender can matter more than cohort. Check whether a comparison is broken out that way.</div></div>
+  <div class="toolkit-item"><div class="ic">📱</div><div><strong>Test the technology claim on one example.</strong> Pick a habit the book attributes to a device and ask what else changed in the same years.</div></div>
+  <div class="toolkit-item"><div class="ic">📖</div><div><strong>Read it chapter-first, not cover-to-cover.</strong> Chapter 1 and your own generation's chapter, then the future chapter, give most of the value for a reader short on time.</div></div>
 </div>
 
-<!-- KEY IDEAS PANEL -->
-<div class="panel" id="panel-ideas">
-  <div class="section-header">
-    <h2>Five Ideas Worth Carrying</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="idea-card">
-    <h4>1. Slow-Life vs. Fast-Life Strategy</h4>
-    <p>When the world feels dangerous, humans develop quickly — reach adulthood fast, reproduce early, prioritise survival. When it feels safe, they slow down — take more time to grow up, delay milestones, invest more in fewer children. Each generation's pace of development is a rational response to how perilous or secure the world seemed during childhood. This single framework explains dozens of "generational" puzzles that otherwise seem like laziness or entitlement.</p>
-  </div>
-
-  <div class="idea-card">
-    <h4>2. Individualism Is a Long March, Not a Millennial Invention</h4>
-    <p>The shift from collective to individual values has been moving in one direction since the 1960s — through Boomers, Gen X, Millennials, and Gen Z. No generation invented it; each cohort simply inherited a world slightly further along the spectrum than the last. Blaming Millennials or Gen Z for entitlement is blaming the destination, not the fifty-year journey that got there.</p>
-  </div>
-
-  <div class="idea-card">
-    <h4>3. 2012 Is a Turning Point</h4>
-    <p>Twenge dates the current mental health crisis to roughly 2012 — when smartphone adoption crossed a critical threshold and social media migrated from desktop to pocket. The timing correlation across countries, genders, and demographics is striking enough to be causal, not coincidental. This is the single most important empirical finding in the book, and has significant implications for parents, schools, and policymakers.</p>
-  </div>
-
-  <div class="idea-card">
-    <h4>4. Generational Conflict Is Often Structural Misread</h4>
-    <p>Most intergenerational friction isn't about values — it's about structural conditions that neither side can fully see. Boomers who "worked hard and made it" did so in an economy that no longer exists. Millennials who "can't afford houses" are competing in a market that has structurally excluded them. Both sides take credit or blame for outcomes that were largely outside their control. The compassion gap here is expensive — for families and for organisations.</p>
-  </div>
-
-  <div class="idea-card">
-    <h4>5. The Prescription Is Boring and Correct</h4>
-    <p>Twenge's recommendations for reversing the Gen Z mental health crisis aren't glamorous: phone-free schools, no social media before 16, more unstructured outdoor play, later school start times. None of it is new. All of it has good evidence. The reason it hasn't happened is political will, not ignorance. The book is a useful prompt to stop treating this as a lifestyle preference and start treating it as a public health emergency.</p>
-  </div>
+<!-- ═══ KEY PHRASES ═══ -->
+<div id="terms" class="panel">
+  <div class="section-header"><h2>Key Phrases</h2><div class="section-line"></div></div>
+  <div class="note-box">Paraphrased terms and ideas, not direct quotes from the book.</div>
+  <div class="term-card"><h4>Cohort effect</h4><p>A difference tied to when a group was born, which stays with that group as it ages.</p></div>
+  <div class="term-card"><h4>Slow life</h4><p>Twenge's label for the trend toward later marriage, children and independence as schooling and lifespans lengthen.</p></div>
+  <div class="term-card"><h4>Individualism</h4><p>The growing emphasis on self over group that she links to technology and the slow-life shift. A critic says this overlooks the decline of admiration for "rugged individualism" in the US.</p></div>
+  <div class="term-card"><h4>Polars</h4><p>Her term for the generation born 2013 to 2029, otherwise called Generation Alpha.</p></div>
+  <div class="term-card"><h4>Same-age comparison</h4><p>Comparing generations when they were the same age, using repeated surveys, to separate cohort effects from age.</p></div>
+  <div class="term-card"><h4>Generation Jones</h4><p>Not from the book. A label Quiggin uses for people born 1954 to 1963, whom he argues are poorly served by the Boomer label.</p></div>
 </div>
 
-<!-- VERDICT PANEL -->
-<div class="panel" id="panel-verdict">
-  <div class="section-header">
-    <h2>Final Verdict</h2>
-    <div class="section-line"></div>
+<!-- ═══ RATINGS & VERDICT ═══ -->
+<div id="verdict" class="panel">
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.5<small> / 5</small></div><div class="cmp-sub">Category average 3.5. Strong data and good question; weaker on causal proof and practical use.</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Consensus</div><div class="cmp-score pending">Not available</div><div class="cmp-sub">The Goodreads page could not be read when checked (12 Nov 2026), so I give no reader average. See the critic sources below.</div></div>
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">5.0<small> / 5</small></div><div class="cmp-sub">Dan's own rating. His category average is 4.25, so his overall is 0.75 above it.</div></div>
   </div>
+  <div class="note-box">Claude's scores are a judgment, not Dan's opinion and not reader data. Claude has not read the book itself: they rest on its description, structure, the reviews linked below and general knowledge of the topic. The three views are kept separate on purpose.</div>
 
-  <div class="verdict-banner">
-    <h3>★★★★☆ 4.3 / 5</h3>
-    <p>Dense, data-grounded, and genuinely useful — the best serious book on generations I've read.</p>
-    <div class="rating-row">
-      <div class="rating-item">
-        <div class="r-score">5</div>
-        <div class="r-label">Research Depth</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4</div>
-        <div class="r-label">Readability</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4</div>
-        <div class="r-label">Actionability</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.5</div>
-        <div class="r-label">Lasting Value</div>
-      </div>
-    </div>
-  </div>
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <div class="tbl-wrap"><table>
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">3.5</td><td class="num">4.5</td><td>Same-age comparison and the technology thesis are worth testing; the thesis is contested and class is underweighted.</td></tr>
+    <tr><td>Readability</td><td class="num">3.5</td><td class="num">5.0</td><td>Clear structure, one chapter per group; at about 560 pages and 282 charts it is dense, and one reviewer says the data overwhelms the message.</td></tr>
+    <tr><td>Actionability</td><td class="num">3.0</td><td class="num">3.0</td><td>Useful for understanding trends in work and parenting, but offers few concrete steps, and acting on birth-year stereotypes is risky.</td></tr>
+    <tr><td>Evidence</td><td class="num">4.0</td><td class="num">4.5</td><td>24 national datasets is a real strength, and a reviewer credits the age/period/cohort care; causal claims about technology remain interpretive.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.5</td><td class="num">4.25</td><td>Claude's overall 3.5 matches the category average. No Goodreads figure was readable, so there is no crowd gap to explain. Dan's overall of 5.0 sits 0.75 above his own category average of 4.25. Against Claude he scores Ideas 1.0 higher, Readability 1.5 higher and Evidence 0.5 higher; Actionability is the same (3.0).</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence.</p>
 
+  <div class="section-header"><h2>What Other Readers and Critics Say</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;"><strong>Goodreads:</strong> average, rating count and star distribution are <strong>not available</strong>. I tried the book's Goodreads page (the correct edition-merged ID for Twenge's <em>Generations</em> came from a search) but it returned no readable content. I give no numbers rather than estimate them. Amazon was not used. Checked 12 Nov 2026.</p>
   <div class="pro-con-grid">
-    <div class="pro-list">
-      <h4>What Works</h4>
-      <ul>
-        <li>Fifty-plus years of longitudinal survey data — not anecdotes</li>
-        <li>Each generation gets a generous, contextualised read</li>
-        <li>The 2012 smartphone inflection point is compellingly argued</li>
-        <li>Explodes most lazy generational stereotypes</li>
-        <li>The structural-conditions framing is immediately applicable to leadership</li>
-      </ul>
+    <div class="pro-list"><h4>What critics praise</h4>
+      <div class="list-item"><div class="dot"></div><div>Separates age, time and cohort effects and compares groups at the same age (Quiggin, <em>Inside Story</em>)</div></div>
+      <div class="list-item"><div class="dot"></div><div>Data-rich survey of six living generations with thought-provoking forecasts (Bowman, <em>The Dispatch</em>; excerpt only)</div></div>
+      <div class="list-item"><div class="dot"></div><div>Concedes generations can be too broad (Quiggin)</div></div>
     </div>
-    <div class="con-list">
-      <h4>What Doesn't</h4>
-      <ul>
-        <li>Chapters are long — some arguments get made four or five times</li>
-        <li>US-centric; the data doesn't always export cleanly</li>
-        <li>The Gen Z mental health chapter is essential but relentlessly bleak</li>
-        <li>The Polars chapter feels speculative — too early to have real data</li>
-      </ul>
+    <div class="con-list"><h4>What critics criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>Downplays class, a common flaw in generational writing (Quiggin)</div></div>
+      <div class="list-item"><div class="dot"></div><div>Technology as the master explanation is questioned; Ewer argues technology is itself built by earlier generations</div></div>
+      <div class="list-item"><div class="dot"></div><div>Sheer volume of data can swamp the central message (a reviewer in <em>The Dispatch</em>, as summarised in search; not verified at source)</div></div>
+    </div>
+  </div>
+  <div class="summary-block">
+    <p><strong>What you may have missed: the scholarly critique of generational theory.</strong> Quiggin, a professor of economics, argues generations of 15 to 20 years are too large to share a common experience and that race, class and gender often matter more than birth cohort. He notes the Pew Research Center said in May 2023 it would no longer emphasise the generational lens, and compares the Strauss and Howe model to a more respectable astrology. His suggested remedy is five-year birth cohorts broken out by race, gender and class background.</p>
+    <p>Single-source caveat: I could not find a formal demographer's critique of the age-period-cohort methods in <em>this</em> book. Most of what I found is from reviewers and commentators, not peer-reviewed analyses, and the Pew and astrology points come through Quiggin's article alone. The 2017 <em>American Journal of Psychology</em> review concerns Twenge's earlier <em>iGen</em>, not this book. I did not read the underlying survey data.</p>
+  </div>
+  <div class="src-list"><strong>Sources (checked 12 Nov 2026):</strong>
+    <a href="https://insidestory.org.au/can-generational-analysis-be-saved/">John Quiggin, <em>Inside Story</em></a> (read in full via summary) &middot;
+    <a href="https://www.jeantwenge.com/generations-book-by-dr-jean-twenge/">Author's site</a> (chapter list, scope) &middot;
+    <a href="https://thedispatch.com/?p=45087">Karlyn Bowman, <em>The Dispatch</em></a> (introduction excerpt only) &middot;
+    <a href="https://matthewe.com/tag/review">Matthew Ewer review</a> (search summary only) &middot;
+    <a href="https://nas.org/academic-questions/37/1/do-generations-truly-differ">Academic Questions</a> (returned 403, not read) &middot;
+    <a href="https://www.goodreads.com/book/show/61272291">Goodreads</a> (page unreadable: not available).</div>
+
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Dan rates <em>Generations</em> 5 out of 5. He scores the ideas 4.5 (he did not give a number, so this was confirmed with him), readability 5, actionability 3 and evidence 4.5. Doctor friends recommended it while he was in Costa Rica. It is the first and only book he has read that gave him a picture of how each generation thinks and acts and why, and he found it enjoyable, resonant and something he talks to people about all the time.</p>
+    <p>He listened to it and found it great for understanding why the generations are the way they are, how they have grown into who they are, how they have changed over time and how each generation shaped the next. It helps him see where people may be coming from when talking about groups in general, including what to expect from colleagues in the workplace. He couldn't put it down.</p>
+    <p>He scores actionability 3 because it has few action items: it is a book for understanding, not one to keep going back to, though it prompts thinking. He rates the evidence well because it rests on several datasets and a lot of research. The only downside he could name is that the data is strictly American, so it doesn't speak to specifically Canadian generational change, though he feels Canada's societal landmarks are close to the US's, and the book itself points out the limitation.</p>
+    <p style="font-size:12px;color:var(--muted);">Written up from Dan's own words (12 Nov 2026). His view stands apart from the Claude and reader views above.</p></div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>Built on large, long-running national surveys rather than anecdote</div></div>
+      <div class="list-item"><div class="dot"></div><div>Compares generations at the same age</div></div>
+      <div class="list-item"><div class="dot"></div><div>Clear one-chapter-per-generation structure that is easy to dip into</div></div>
+      <div class="list-item"><div class="dot"></div><div>Offers a testable alternative to events-based theories</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Generation labels are broad and boundaries are debatable</div></div>
+      <div class="list-item"><div class="dot"></div><div>The technology explanation is interpretive, not proven</div></div>
+      <div class="list-item"><div class="dot"></div><div>Class and other group differences are underweighted, according to reviewers</div></div>
+      <div class="list-item"><div class="dot"></div><div>Long and chart-heavy; forecasts for Polars are provisional</div></div>
     </div>
   </div>
 
-  <div class="who-for">
-    <h4>Who Should Read This</h4>
-    <p>Anyone who manages across generations, parents a Gen Z child, or wants to replace instinct with data when thinking about workforce dynamics. Also useful for anyone frustrated by generational discourse that leans on stereotypes — this is the antidote. It's a long read, but the first two chapters (framing) and the Gen Z chapter alone are worth the time.</p>
-  </div>
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Managers, marketers and educators</strong> who want survey data behind the generational talk they already hear.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Parents of teenagers</strong> curious about what long-running surveys say about adolescence.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Skeptics of generational theory</strong> should read it alongside Quiggin's critique and use it as a case to test, not a conclusion.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers wanting a quick answer</strong> may find 560 pages too much; read Chapter 1 and your own generation's chapter.</div></div>
 
-  <div class="who-for">
-    <h4>One Sentence</h4>
-    <p><em>The most rigorous, data-grounded examination of generational difference available — read it before forming another opinion about why younger employees work differently than you do.</em></p>
-  </div>
+  <div class="section-header"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Before accepting any claim about a generation, ask whether it is really about age, period or cohort. Twenge's contribution is to compare groups at the same age with large surveys; her critics' contribution is to remind you that a birth-year label still hides class, race and gender. Hold both.</p></div>
 </div>
 
 <script>
-  function switchTab(id, el) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  function showTab(id, el) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
     el.classList.add('active');
-    document.getElementById('panel-' + id).classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 1 });
   }
-  function toggleGen(id) {
-    document.getElementById(id).classList.toggle('open');
+  function toggleCh(head) { head.parentElement.classList.toggle('open'); }
+
+  /* Birth-year lookup (boundaries from the author's site) */
+  const GENS = [
+    { n:'Silents', a:1925, b:1945, c:'var(--slate)' }, { n:'Boomers', a:1946, b:1964, c:'var(--orange)' },
+    { n:'Gen X', a:1965, b:1979, c:'var(--yellow)' }, { n:'Millennials', a:1980, b:1994, c:'var(--red)' },
+    { n:'Gen Z', a:1995, b:2012, c:'var(--green)' }, { n:'Polars', a:2013, b:2029, c:'var(--ink)' }
+  ];
+  function lookup() {
+    const out = document.getElementById('by-out');
+    const y = parseInt(document.getElementById('by').value, 10);
+    if (isNaN(y)) { out.style.borderLeftColor = 'var(--line)'; out.textContent = 'Enter a four-digit birth year.'; return; }
+    const g = GENS.find(g => y >= g.a && y <= g.b);
+    if (!g) { out.style.borderLeftColor = 'var(--line)'; out.textContent = y < 1925 ? 'Before 1925: older than the six groups in the book.' : 'After 2029: beyond the book\'s Polars range.'; return; }
+    const edge = (y - g.a <= 1) ? 'You are within a year of the start of this group, so your neighbours\' label may fit you equally well.' : (g.b - y <= 1) ? 'You are within a year of the end of this group, so the next label may fit you equally well.' : 'You sit well inside this group\'s boundaries, though a span of ' + (g.b - g.a + 1) + ' years is still a long time to share one label.';
+    out.style.borderLeftColor = g.c;
+    out.innerHTML = '<strong>' + g.n + '</strong> (' + g.a + '–' + g.b + '). ' + edge;
   }
+  document.getElementById('by').addEventListener('input', lookup);
+  lookup();
+
+  /* Age / period / cohort quiz (reviewer's own invented scenarios) */
+  const quizData = [
+    { q:'In every decade, 18-year-olds are more likely than 60-year-olds to say they want to travel the world.', a:'age', why:'It recurs for every generation at the same life stage.' },
+    { q:'After a new law passes, adults of all ages report changing the same habit that year.', a:'period', why:'Everyone shifted at once, regardless of birth year.' },
+    { q:'People born after a given year still report a habit as adults that earlier cohorts lacked at the same age, in every survey year.', a:'cohort', why:'The difference is tied to birth span and persists as the group ages.' },
+    { q:'Young adults in every era are more likely to rent than people in their 50s.', a:'age', why:'It repeats with life stage, so it is not about a particular generation.' },
+    { q:'After a recession, workers of every age report feeling less secure in their jobs.', a:'period', why:'A shock to the whole economy in one window, hitting all cohorts.' },
+    { q:'Compared at age 30, people born in the 1980s are less likely to be married than those born in the 1950s, and the gap looks stable across years.', a:'cohort', why:'Same-age comparison across birth spans isolates a cohort difference, though it would still need checking for period effects.' }
+  ];
+  const names = { age:'Age', period:'Period', cohort:'Cohort' };
+  const quiz = document.getElementById('quiz');
+  let answered = 0, correct = 0;
+  quizData.forEach((d, i) => {
+    const card = document.createElement('div'); card.className = 'quiz-card';
+    card.innerHTML = '<div class="q"><span class="n">' + (i + 1) + '.</span>' + d.q + '</div><div class="quiz-opts"></div><div class="quiz-exp"></div>';
+    const opts = card.querySelector('.quiz-opts'), exp = card.querySelector('.quiz-exp');
+    Object.keys(names).forEach(k => {
+      const b = document.createElement('button'); b.textContent = names[k] + ' effect';
+      b.onclick = () => {
+        opts.querySelectorAll('button').forEach(x => { x.disabled = true; if (x.textContent === names[d.a] + ' effect') x.classList.add('right'); });
+        if (k !== d.a) b.classList.add('wrong'); else correct++;
+        answered++;
+        exp.textContent = (k === d.a ? 'Correct. ' : 'Not quite: it looks like a ' + names[d.a].toLowerCase() + ' effect. ') + d.why;
+        exp.classList.add('show');
+        if (answered === quizData.length) document.getElementById('quiz-score').textContent = 'Score: ' + correct + ' / ' + quizData.length;
+      };
+      opts.appendChild(b);
+    });
+    quiz.appendChild(card);
+  });
 </script>
 </body>
 </html>
