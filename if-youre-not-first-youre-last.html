@@ -299,12 +299,45 @@
   .strategy-card p { font-size:13px; line-height:1.65; color:var(--gray-dark); }
   .strategy-card .try { margin-top:10px; background:var(--blue-dim); border-radius:6px; padding:9px 12px; font-size:12.5px; color:var(--blue-dark); font-weight:700; line-height:1.5; }
   .note-box { background:var(--ink-dim); border:1px dashed var(--gray); border-radius:8px; padding:12px 16px; font-size:12px; line-height:1.6; color:var(--gray-dark); margin-bottom:22px; }
+  /* Three-way ratings */
+  .cmp-wrap { overflow-x:auto; border-radius:10px; margin-bottom:18px; }
+  .cmp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
+  .cmp-card { background:#fbf4de; border:1px solid #e3d2a0; border-radius:12px; padding:18px 16px; text-align:center; }
+  .cmp-card.you { border-top:4px solid var(--rust); }
+  .cmp-card.crowd { border-top:4px solid var(--blue); }
+  .cmp-card.me { border-top:4px solid var(--ink-deep); }
+  .cmp-label { font-size:10.5px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--gray-dark); margin-bottom:8px; }
+  .cmp-score { font-family:'Oswald',sans-serif; font-weight:700; font-size:38px; color:var(--ink-deep); line-height:1; }
+  .cmp-score small { font-size:15px; color:var(--gray-dark); font-weight:400; }
+  .cmp-score.pending { color:var(--gray-dark); font-family:'DM Sans',sans-serif; }
+  .cmp-sub { font-size:12px; color:var(--gray-dark); margin-top:8px; line-height:1.5; }
+  .cat-wrap { overflow-x:auto; margin-bottom:8px; }
+  .cat-table { width:100%; border-collapse:collapse; background:#fbf4de; border:1px solid #e3d2a0; font-size:13px; min-width:520px; }
+  .cat-table th, .cat-table td { padding:10px 12px; text-align:left; border-bottom:1px solid #eadcb2; vertical-align:top; }
+  .cat-table th { font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gray-dark); background:var(--cream); }
+  .cat-table td.num { font-weight:700; font-variant-numeric:tabular-nums; }
+  .cat-table tr.avg td { font-weight:700; background:var(--cream); }
+  .src-list { font-size:12px; color:var(--gray-dark); line-height:1.7; margin-bottom:22px; overflow-wrap:anywhere; }
+  .src-list a { color:var(--blue-dark); }
+  .gr-bars { margin-bottom:10px; }
+  .gr-row { display:grid; grid-template-columns:58px 1fr 84px; gap:10px; align-items:center; font-size:12px; color:var(--gray-dark); margin-bottom:6px; }
+  .gr-track { background:var(--ink-dim); border-radius:4px; height:12px; overflow:hidden; }
+  .gr-fill { background:var(--blue); height:100%; }
+  .aud-row { display:grid; grid-template-columns:1fr 120px 24px; gap:12px; align-items:center; font-size:13px; padding:8px 0; border-bottom:1px solid #eadcb2; }
+  .aud-row input { width:100%; accent-color:var(--blue); }
+  .aud-row output { font-weight:700; text-align:right; }
+  #audit-out { margin-top:14px; }
+  .code-block { overflow-wrap:anywhere; }
+  .chapter-body { overflow-wrap:anywhere; }
+  .tab { padding:14px 16px; }
+  @media (max-width: 700px) { .cmp-grid { grid-template-columns:1fr; } }
+  @media (max-width: 560px) { .aud-row { grid-template-columns:1fr 24px; } .aud-row label { grid-column:1 / -1; } .chapter-body { padding-left:18px; } }
 </style>
 </head>
 <body>
 
 <div class="hero">
-  <div class="bestseller-bar">New York Times Bestseller</div>
+  <div class="bestseller-bar">A recession-era sales manual</div>
   <div class="hero-inner">
     <div class="hero-motif">
       <svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -338,38 +371,41 @@
 <div class="tabs">
   <div class="tab active" onclick="showTab('overview', this)">Overview</div>
   <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
-  <div class="tab" onclick="showTab('playbook', this)">Sales Strategies</div>
-  <div class="tab" onclick="showTab('quotes', this)">Notable Quotes</div>
-  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+  <div class="tab" onclick="showTab('framework', this)">Advance &amp; Conquer</div>
+  <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
+  <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
+  <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
 <div id="overview" class="panel active">
   <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
-
   <div class="overview-grid">
-    <div class="stat-card"><div class="stat-label">Core Focus</div><div class="stat-value">Selling Aggressively When Everyone Else Retreats</div><div class="stat-desc">A tactical sales manual written in the aftermath of the 2008–09 recession, aimed at taking market share when competitors are cutting back</div></div>
-    <div class="stat-card"><div class="stat-label">Central Promise</div><div class="stat-value">Number One Is a Position You Earn by Activity</div><div class="stat-desc">Revenue follows effort, follow-up, service, and attitude, regardless of the economy</div></div>
-    <div class="stat-card"><div class="stat-label">Primary Framework</div><div class="stat-value">Advance and Conquer</div><div class="stat-desc">Reactivate your network and past clients, convert the unsold, multiply existing accounts, defend price, and protect your selling time</div></div>
-    <div class="stat-card"><div class="stat-label">Best For</div><div class="stat-value">Salespeople, Owners, and Managers Who Need More Revenue Now</div><div class="stat-desc">Anyone whose growth depends on picking up the phone and asking for business</div></div>
+    <div class="stat-card"><div class="stat-label">Core Focus</div><div class="stat-value">Selling Aggressively When Others Retreat</div><div class="stat-desc">A sales manual written for the post-2008 recession, aimed at taking market share when competitors cut back</div></div>
+    <div class="stat-card"><div class="stat-label">Central Promise</div><div class="stat-value">Number One Is Earned by Activity</div><div class="stat-desc">Revenue follows effort, follow-up, service and attitude, whatever the economy is doing</div></div>
+    <div class="stat-card"><div class="stat-label">Primary Framework</div><div class="stat-value">Advance and Conquer</div><div class="stat-desc">The book's own label for its offensive response, set against three other responses to a downturn</div></div>
+    <div class="stat-card"><div class="stat-label">Best For</div><div class="stat-value">Salespeople, Owners and Managers</div><div class="stat-desc">Anyone whose growth depends on picking up the phone and asking for business</div></div>
   </div>
-
+  <div class="overview-grid" style="margin-top:-8px;">
+    <div class="stat-card"><div class="stat-label">Publisher &amp; Year</div><div class="stat-value">Wiley, 2010</div><div class="stat-desc">Retailer listings give May 2010 (hardcover, about 272 pages)</div></div>
+    <div class="stat-card"><div class="stat-label">Structure</div><div class="stat-value">19 Chapters + Conclusion</div><div class="stat-desc">With an Introduction, Afterword, Glossary and Index</div></div>
+  </div>
   <div class="summary-block">
-    <p><strong>If You're Not First, You're Last</strong> is Grant Cardone's argument that sales is the one activity every business depends on, and that a downturn is the best moment to take ground from competitors. Where most advice about a weak economy counsels caution, Cardone counsels offence: contact more people, follow up harder, serve better, and refuse to discount your way out of trouble.</p>
-    <p>The book works through nineteen chapters that move from who to sell to (your power base, past clients, the unsold, existing accounts) to how to sell (the call, the wow-level delivery, the second sale, the value-added proposition, repackaging), and finally to the habits and mindset underneath it all: the Power Schedule, an advance-and-conquer attitude, a freedom financial plan, closing, and the unreasonable attitude.</p>
-    <p>It is energetic, repetitive by design, and unapologetically motivational. The tone is closer to a pep talk from a sales manager than a research text, and that is both its appeal and its limit.</p>
+    <p><strong>If You're Not First, You're Last</strong> is Grant Cardone's argument that selling is the activity every business depends on, and that a downturn is the best moment to take ground from competitors. Where most advice about a weak economy counsels caution, the book counsels offence: contact more people, follow up harder, serve better and avoid discounting your way out of trouble.</p>
+    <p>Judging from the verified table of contents, the chapters move from <em>who</em> to sell to (your personal network, past clients, the unsold, existing accounts), through <em>how</em> to sell (the call, service, price, the second sale, the value-added proposition, marketing, repackaging), to the habits underneath (a protected schedule, attitude, personal finances, a core skill, and the "unreasonable" attitude).</p>
+    <p><strong>Claude's judgment, not a verified fact:</strong> from its structure and how it is described, it reads as energetic, repetitive by design and motivational, closer to a sales manager's pep talk than a research text. That is both its appeal and its limit.</p>
   </div>
-
   <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
   <div class="key-idea"><div class="icon">🏁</div><div><strong>Position over comfort.</strong> Market position is won through daily effort and lost through hesitation.</div></div>
-  <div class="key-idea"><div class="icon">📞</div><div><strong>Reactivate before you prospect.</strong> Your network, past clients, and unsold leads are the cheapest revenue you have.</div></div>
-  <div class="key-idea"><div class="icon">🔁</div><div><strong>Multiply what you've got.</strong> Referrals, second sales, and expansion inside existing accounts beat constantly chasing strangers.</div></div>
-  <div class="key-idea"><div class="icon">💎</div><div><strong>Hold your price, add value.</strong> Discounting is a symptom of weak selling; build value instead.</div></div>
-  <div class="key-idea"><div class="icon">🗓️</div><div><strong>Protect selling time.</strong> The Power Schedule puts revenue activity first and keeps admin from eating the day.</div></div>
-  <div class="key-idea"><div class="icon">🔥</div><div><strong>Attitude drives activity.</strong> Act hungry, be unreasonable, and treat effort as the controllable variable.</div></div>
+  <div class="key-idea"><div class="icon">📞</div><div><strong>Reactivate before you prospect.</strong> Your network, past clients and unsold leads are the cheapest revenue you have.</div></div>
+  <div class="key-idea"><div class="icon">🔁</div><div><strong>Multiply what you have.</strong> Second sales and expansion inside existing accounts beat constantly chasing strangers.</div></div>
+  <div class="key-idea"><div class="icon">💎</div><div><strong>Hold your price, add value.</strong> The chapter titles pair price with value-added offers rather than discounting.</div></div>
+  <div class="key-idea"><div class="icon">🗓️</div><div><strong>Protect selling time.</strong> The Power Schedule is described as a daily formula for personal success.</div></div>
+  <div class="key-idea"><div class="icon">🔥</div><div><strong>Attitude drives activity.</strong> Act hungry, hold an advance-and-conquer attitude, and be "unreasonable".</div></div>
+  <div class="note-box" style="margin-top:18px;"><strong>Sourcing.</strong> The author, publisher, year and table of contents are verified from publisher-sourced retailer and library listings. Reader numbers are from Goodreads (see the last tab). The descriptions of what each idea means are reconstructed from titles, the published description and themes; Claude has not read the book.</div>
 </div>
 
 <div id="chapters" class="panel">
-  <div class="note-box">Chapter titles follow the publisher's table of contents. The summaries are written from the book's themes and chapter headings, not from a line-by-line reading, so check specifics against your copy before relying on them.</div>
+  <div class="note-box"><strong>How these summaries were built.</strong> Chapter titles and order are verified against the publisher-sourced table of contents (Booktopia and Everand listings, plus Perlego). The chapter summaries are <strong>reconstructed from the verified table of contents, the book's published description and its recurring themes. They are not a close reading</strong>, and Claude has not read the book. Where I add a worked example it is marked as <em>Reviewer's own illustration</em>, which means it is mine, not the author's. Check specifics against your copy.</div>
   <div class="part-header">Introduction</div>
   <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header">
@@ -383,21 +419,19 @@
       <div class="ch-tool"><strong>Key idea:</strong> Offence over defence</div>
     </div>
   </div>
-  <div class="part-header">Part One — Respond to the Market (Ch. 1)</div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header">
       <div class="ch-num ">1</div>
       <div class="ch-title">Four Responses to Economic Contractions</div>
       <div class="ch-arrow">›</div>
     </div>
     <div class="chapter-body">
-      Cardone frames the downturn as a fork in the road. Businesses can freeze, retreat, cut and wait, or they can commit to taking market share while competitors are distracted. He makes the case that contractions are when leaders are made and when weak competitors leave customers up for grabs.<br><br>The chapter sets the tone for everything that follows: the economy is a condition, not an excuse, and the only variable fully under your control is how hard and how smartly you sell.
+      The contents list this chapter's sections as four named responses: the Cheerleader, Old School, Quitter and Advance and Conquer. Cardone sets the first three against the fourth and argues for the last: committing to take market share while competitors hesitate. He makes the case that contractions are when leaders are made and when weak competitors leave customers up for grabs.<br><br>The chapter sets the tone for everything that follows: the economy is a condition, not an excuse, and the only variable fully under your control is how hard and how smartly you sell.
       <div class="ch-takeaway">The market you are in is not the problem; your response to it is the variable.</div>
-      <div class="ch-tool"><strong>Key concept:</strong> Advance and conquer vs. retreat and wait</div>
+      <div class="ch-tool"><strong>Key concept:</strong> Four responses, one of which is Advance and Conquer</div>
     </div>
   </div>
-  <div class="part-header">Part Two — Sell More to Who You Already Have (Ch. 2–9)</div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header">
       <div class="ch-num ">2</div>
       <div class="ch-title">Power Base Reactivation</div>
@@ -405,7 +439,8 @@
     </div>
     <div class="chapter-body">
       Your power base is the network of people who already know, like, and trust you: friends, family, former colleagues, acquaintances, vendors. Cardone argues most salespeople ignore this group because it feels awkward to sell to people they know, yet it is the fastest, cheapest source of new business.<br><br>He pushes readers to build the list, contact everyone on it, and ask directly for business or introductions rather than hinting.
-      <div class="ch-takeaway">Your fastest revenue is usually sitting in your own contacts list.</div>
+      <div class="ch-tool" style="border-left-color:var(--rust)"><strong>Reviewer's own illustration:</strong> a consultant lists 40 former colleagues and sends each a two-line note naming one problem she now solves, asking for either work or an introduction.</div>
+<div class="ch-takeaway">Your fastest revenue is usually sitting in your own contacts list.</div>
       <div class="ch-tool"><strong>Key tool:</strong> The Power Base list</div>
     </div>
   </div>
@@ -417,7 +452,8 @@
     </div>
     <div class="chapter-body">
       Past clients have already bought from you once, which makes them the warmest prospects you have. Cardone calls out the common failure of treating a closed sale as the end of the relationship, then wondering where repeat business went.<br><br>The chapter is a push to dig up every dormant account, call them, find out what has changed, and re-engage with a specific offer rather than a vague "just checking in."
-      <div class="ch-takeaway">A client you have already sold once costs far less to sell again than a stranger.</div>
+      <div class="ch-tool" style="border-left-color:var(--rust)"><strong>Reviewer's own illustration:</strong> a plumbing firm sorts its customer list by last job date and calls the oldest 20 with a seasonal service offer instead of a generic check-in.</div>
+<div class="ch-takeaway">A client you have already sold once costs far less to sell again than a stranger.</div>
       <div class="ch-tool"><strong>Key tool:</strong> Dormant-account reactivation calls</div>
     </div>
   </div>
@@ -428,7 +464,7 @@
       <div class="ch-arrow">›</div>
     </div>
     <div class="chapter-body">
-      Here Cardone gets tactical about the phone. He treats the call as the core unit of sales activity and argues that volume, speed, and persistence matter more than script perfection. The goal of the call is to move the prospect to the next concrete step, not just have a pleasant conversation.<br><br>He stresses preparation, a clear purpose for each call, and the willingness to ask for the appointment or the order without apology.
+      From the title and themes, this is the book's tactical chapter on the sales call, which Cardone treats as a core unit of selling activity. The goal of the call is to move the prospect to the next concrete step, not just have a pleasant conversation.<br><br>Expect emphasis on purpose, persistence and asking for the next step directly (my reading of the theme, not a checked detail).
       <div class="ch-takeaway">Every call should end with a clear next step, not a pleasant goodbye.</div>
       <div class="ch-tool"><strong>Key practice:</strong> Purposeful, high-volume calling</div>
     </div>
@@ -440,8 +476,9 @@
       <div class="ch-arrow">›</div>
     </div>
     <div class="chapter-body">
-      Most of the pipeline is made of people who said no, not yet, or nothing at all. Cardone argues that an unsold prospect is not a dead prospect: it is an unfinished sale. He describes following up on old quotes, stalled deals, and warm leads that went quiet.<br><br>The underlying belief is that a no usually means the prospect lacks information, urgency, or confidence, all of which a persistent, helpful seller can address.
-      <div class="ch-takeaway">"No" is usually a timing or information problem, not a verdict.</div>
+      Most of the pipeline is made of people who said no, not yet, or nothing at all. Cardone argues that an unsold prospect is not a dead prospect: it is an unfinished sale. The chapter title points to following up on prospects who did not buy first time.<br><br>The underlying belief is that a no usually means the prospect lacks information, urgency, or confidence, all of which a persistent, helpful seller can address.
+      <div class="ch-tool" style="border-left-color:var(--rust)"><strong>Reviewer's own illustration:</strong> a software rep reopens every quote from the last quarter that went silent and emails each with one new fact, such as a changed price or feature.</div>
+<div class="ch-takeaway">"No" is usually a timing or information problem, not a verdict.</div>
       <div class="ch-tool"><strong>Key concept:</strong> Treat the unsold as unfinished sales</div>
     </div>
   </div>
@@ -477,7 +514,8 @@
     </div>
     <div class="chapter-body">
       Cardone tackles the reflex to cut price when sales slow. He argues discounting is often a symptom of weak selling, and that price is rarely the only factor buyers weigh when the seller has built enough value and trust.<br><br>The chapter pushes sellers to hold their price, explain the value behind it, and treat price objections as a prompt to sell more, not to give more away.
-      <div class="ch-takeaway">Cutting price is the easiest move and often the most expensive one.</div>
+      <div class="ch-tool" style="border-left-color:var(--rust)"><strong>Reviewer's own illustration:</strong> before offering a 10% discount, the seller lists three benefits the buyer has not yet heard and offers those first.</div>
+<div class="ch-takeaway">Cutting price is the easiest move and often the most expensive one.</div>
       <div class="ch-tool"><strong>Key idea:</strong> Defend price by building value</div>
     </div>
   </div>
@@ -489,12 +527,12 @@
     </div>
     <div class="chapter-body">
       After the first sale comes the second: the add-on, upgrade, or companion product the client did not know they needed. Cardone argues that the best moment to sell more is right after a customer has said yes, when trust and momentum are highest.<br><br>He encourages sellers to plan the second sale before the first closes, so it is part of the process rather than an afterthought.
-      <div class="ch-takeaway">The sale is not over when the customer says yes. It is just starting.</div>
+      <div class="ch-tool" style="border-left-color:var(--rust)"><strong>Reviewer's own illustration:</strong> a gym that sells memberships decides in advance to offer a personal-training starter pack at the moment of signing.</div>
+<div class="ch-takeaway">The sale is not over when the customer says yes. It is just starting.</div>
       <div class="ch-tool"><strong>Key tool:</strong> Planned add-on and upsell offers</div>
     </div>
   </div>
-  <div class="part-header">Part Three — Win Share from Competitors (Ch. 10–14)</div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header">
       <div class="ch-num ">10</div>
       <div class="ch-title">The Value-Added Proposition</div>
@@ -526,7 +564,8 @@
     </div>
     <div class="chapter-body">
       When business slows, Cardone argues sellers should widen who they are willing to serve. Many companies unknowingly restrict themselves to a narrow ideal customer, ignoring adjacent segments that would buy gladly.<br><br>The chapter pushes readers to revisit assumptions about who qualifies and to go after the clients they previously dismissed as too small, too different, or too unlikely.
-      <div class="ch-takeaway">If you are short on revenue, check how narrowly you have defined a customer.</div>
+      <div class="ch-tool" style="border-left-color:var(--rust)"><strong>Reviewer's own illustration:</strong> a firm that only serves companies over 100 staff tests one outreach week to firms of 20 to 50.</div>
+<div class="ch-takeaway">If you are short on revenue, check how narrowly you have defined a customer.</div>
       <div class="ch-tool"><strong>Key exercise:</strong> Widen the target client profile</div>
     </div>
   </div>
@@ -554,8 +593,7 @@
       <div class="ch-tool"><strong>Key tool:</strong> Bundling and repositioning</div>
     </div>
   </div>
-  <div class="part-header">Part Four — Attitude, Schedule & Skill (Ch. 15–19)</div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header">
       <div class="ch-num ">15</div>
       <div class="ch-title">The Power Schedule to Advance and Conquer</div>
@@ -563,7 +601,8 @@
     </div>
     <div class="chapter-body">
       Cardone argues that time is the sales professional's most mismanaged asset. The Power Schedule is a structured plan that blocks the day and week around selling activities, with prospecting and client contact protected from interruptions and admin work.<br><br>He insists that a calendar full of non-selling activity is the clearest sign that a seller is not serious about results.
-      <div class="ch-takeaway">What is in your calendar is what you actually value.</div>
+      <div class="ch-tool" style="border-left-color:var(--rust)"><strong>Reviewer's own illustration:</strong> a manager blocks 8 to 10 each morning for calls only and moves email and admin to the afternoon.</div>
+<div class="ch-takeaway">What is in your calendar is what you actually value.</div>
       <div class="ch-tool"><strong>Key tool:</strong> The Power Schedule</div>
     </div>
   </div>
@@ -598,7 +637,7 @@
       <div class="ch-arrow">›</div>
     </div>
     <div class="chapter-body">
-      Cardone names the one skill he considers essential: the ability to close, to ask for the business and drive to a decision. Product knowledge, rapport, and presentation count for little if the seller can't secure commitment.<br><br>The chapter encourages sellers to practise closing, expect objections, and see each one as part of the process instead of a rejection.
+      The title promises a single essential skill. The sources I could read did not state it, so treat my reading as unverified: it is almost certainly about closing, meaning asking for the business and driving to a decision.<br><br>The likely message is to practise it, expect objections and treat them as part of the process.
       <div class="ch-takeaway">The ability to ask for the order and handle the objection is the skill beneath all the others.</div>
       <div class="ch-tool"><strong>Key skill:</strong> Closing</div>
     </div>
@@ -623,7 +662,7 @@
       <div class="ch-arrow">›</div>
     </div>
     <div class="chapter-body">
-      Cardone closes by tying the pieces together: activity, follow-up, service, price discipline, and attitude. He argues that market position is not given, it is earned and defended every day by the people willing to out-work and out-serve the competition.<br><br>The afterword and glossary reinforce the book's vocabulary so readers can apply the terms in their own organizations.
+      Cardone closes by tying the pieces together: activity, follow-up, service, price discipline, and attitude. He argues that market position is not given, it is earned and defended every day by the people willing to out-work and out-serve the competition.<br><br>The contents also list an Afterword and a Glossary after the conclusion.
       <div class="ch-takeaway">Number one is not a title you win once. It is a position you keep earning.</div>
       <div class="ch-tool"><strong>Key idea:</strong> Position is maintained by daily activity</div>
     </div>
@@ -631,98 +670,193 @@
 
 </div>
 
-<div id="playbook" class="panel">
-  <div class="section-header"><h2>Sales Strategies to Try</h2><div class="section-line"></div></div>
-  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Fourteen tactics pulled from across the book, each with a small experiment you can run this week.</p>
-  <div class="strategy-card"><div class="s-tag">Reactivate</div><h4>Power Base Sweep</h4><p>Build a list of every person who knows you professionally or personally. Contact each one with a specific ask: business, an introduction, or a referral.</p><div class="try">Try it: Block one hour this week, list 50 names, and call or message ten of them with a clear ask.</div></div>
-  <div class="strategy-card"><div class="s-tag">Reactivate</div><h4>Dormant Client Revival</h4><p>Pull every past client who has not bought in 6–12 months. Lead with something new (an offer, an update, a problem you can now solve) instead of a generic check-in.</p><div class="try">Try it: Export your customer list, sort by last purchase date, and call the oldest 20.</div></div>
-  <div class="strategy-card"><div class="s-tag">Pipeline</div><h4>Convert the Unsold</h4><p>Revisit every quote, proposal, and stalled deal. Reach out with new information or a new reason to act now.</p><div class="try">Try it: Review last quarter's open quotes and send each one a fresh, specific follow-up.</div></div>
-  <div class="strategy-card"><div class="s-tag">Pipeline</div><h4>The Purposeful Call</h4><p>Make high volumes of calls, each with a defined objective and a next step booked before you hang up.</p><div class="try">Try it: Before every call, write one sentence on the next step you will ask for.</div></div>
-  <div class="strategy-card"><div class="s-tag">Grow Accounts</div><h4>Multiply Through Clients</h4><p>Ask each happy client what else they need and who else they know who would benefit.</p><div class="try">Try it: End every successful delivery with, "Who else do you know who should be hearing about this?"</div></div>
-  <div class="strategy-card"><div class="s-tag">Grow Accounts</div><h4>Plan the Second Sale</h4><p>Decide in advance which add-on or upgrade you will offer immediately after the first yes.</p><div class="try">Try it: Write down the one logical add-on for each product you sell and offer it at close.</div></div>
-  <div class="strategy-card"><div class="s-tag">Value</div><h4>Wow Delivery</h4><p>Find small, visible ways to exceed expectations so clients talk about you without being asked.</p><div class="try">Try it: Add one unexpected touch to your next five client deliveries.</div></div>
-  <div class="strategy-card"><div class="s-tag">Value</div><h4>Hold the Price</h4><p>Respond to price objections by rebuilding value rather than discounting. Add benefits before subtracting dollars.</p><div class="try">Try it: Before offering a discount, list three value points you have not yet mentioned.</div></div>
-  <div class="strategy-card"><div class="s-tag">Value</div><h4>Value-Added Proposition</h4><p>Bundle service, guarantees, or bonuses that competitors don't offer so you are not compared on price alone.</p><div class="try">Try it: Create one bonus that costs you little but is worth a lot to the buyer.</div></div>
-  <div class="strategy-card"><div class="s-tag">Market</div><h4>Widen the Client Profile</h4><p>Question who you currently consider an ideal customer, and test selling to adjacent segments you have been ignoring.</p><div class="try">Try it: List three customer types you have turned away and approach one of them this month.</div></div>
-  <div class="strategy-card"><div class="s-tag">Market</div><h4>Repackage the Offer</h4><p>Change how products and services are bundled or positioned to raise perceived value and sale size.</p><div class="try">Try it: Combine two existing offers into a single premium package and test it.</div></div>
-  <div class="strategy-card"><div class="s-tag">Habits</div><h4>The Power Schedule</h4><p>Block calendar time for selling and protect it from admin and meetings. Do the revenue activities first.</p><div class="try">Try it: Reserve your best two hours each morning for prospecting only.</div></div>
-  <div class="strategy-card"><div class="s-tag">Habits</div><h4>Act Hungry</h4><p>Show visible energy and eagerness to earn the business. Follow up fast and keep asking.</p><div class="try">Try it: Respond to every inquiry within an hour for one week.</div></div>
-  <div class="strategy-card"><div class="s-tag">Mindset</div><h4>Unreasonable Targets</h4><p>Set goals well beyond what feels comfortable, then back-solve the daily activity required.</p><div class="try">Try it: Double one monthly target on paper and write the daily call count that would hit it.</div></div>
+<div id="framework" class="panel">
+  <div class="section-header"><h2>The Advance and Conquer Framework</h2><div class="section-line"></div></div>
+  <div class="note-box">Verified from the table of contents: Chapter 1 sets out four responses to a downturn named the Cheerleader, Old School, Quitter and Advance and Conquer. The publisher description also names four key concepts: converting the unsold to sold, the Power Schedule, the Freedom Financial Plan and the unreasonable selling attitude. <strong>Everything else on this tab is my interpretation</strong> of those names, not a close reading.</div>
 
+  <div class="part-header">The four responses to a downturn</div>
+  <div class="method-card"><span class="tag">Response 1</span><h4>The Cheerleader</h4><p>By name, the response of staying upbeat and hoping conditions improve. <em>My reading of the label, not checked against the text.</em></p></div>
+  <div class="method-card"><span class="tag">Response 2</span><h4>Old School</h4><p>By name, carrying on with the methods that worked in good times. <em>My reading of the label.</em></p></div>
+  <div class="method-card"><span class="tag">Response 3</span><h4>The Quitter</h4><p>By name, giving up or scaling down. <em>My reading of the label.</em></p></div>
+  <div class="method-card"><span class="tag" style="background:var(--blue-dark)">Response 4 (the book's pick)</span><h4>Advance and Conquer</h4><p>The aggressive response the rest of the book builds out: more contact, better service, disciplined price and time, and a deliberately ambitious attitude.</p></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>How the Chapters Fit Together</h2><div class="section-line"></div></div>
+  <div class="note-box">This grouping is <strong>my own</strong>, made to help navigation. The book's contents list chapters in one run with no parts.</div>
+  <div class="cmp-wrap"><table class="cat-table" style="min-width:480px;">
+    <tr><th>Cluster (reviewer's grouping)</th><th>Chapters</th><th>Question it answers</th></tr>
+    <tr><td>Respond</td><td>1</td><td>Which stance do I take in a downturn?</td></tr>
+    <tr><td>Who to sell to</td><td>2, 3, 5, 6, 12</td><td>Who is already within reach?</td></tr>
+    <tr><td>How to sell</td><td>4, 7, 8, 9, 10, 13, 14</td><td>What do I do on the call, in service, on price and in the offer?</td></tr>
+    <tr><td>How to stay driven</td><td>11, 15, 16, 17, 18, 19</td><td>What habits and attitude keep the activity going?</td></tr>
+  </table></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Try It: Selling-Week Audit</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>Reviewer's own tool, not from the book.</strong> Rate yourself from 1 (rarely) to 5 (every week) on six practices the chapter titles point to. It shows your weakest area and which chapter to open first. Nothing is saved or sent.</div>
+  <div id="audit" class="method-card">
+    <div class="aud-row"><label for="a1">Contact people from my personal network (Ch. 2)</label><input type="range" id="a1" min="1" max="5" value="3" data-ch="Chapter 2, Power Base Reactivation"><output>3</output></div>
+    <div class="aud-row"><label for="a2">Re-engage past clients (Ch. 3)</label><input type="range" id="a2" min="1" max="5" value="3" data-ch="Chapter 3, Past Client Reactivation"><output>3</output></div>
+    <div class="aud-row"><label for="a3">Follow up on quotes that went quiet (Ch. 5)</label><input type="range" id="a3" min="1" max="5" value="3" data-ch="Chapter 5, Converting the Unsold"><output>3</output></div>
+    <div class="aud-row"><label for="a4">Offer a second sale to existing clients (Ch. 6, 9)</label><input type="range" id="a4" min="1" max="5" value="3" data-ch="Chapters 6 and 9, Multiply through Existing Clients and Activate Second Sale"><output>3</output></div>
+    <div class="aud-row"><label for="a5">Defend price by adding value (Ch. 8, 10)</label><input type="range" id="a5" min="1" max="5" value="3" data-ch="Chapters 8 and 10, The Importance of Price and The Value-Added Proposition"><output>3</output></div>
+    <div class="aud-row"><label for="a6">Protect selling time on my calendar (Ch. 15)</label><input type="range" id="a6" min="1" max="5" value="3" data-ch="Chapter 15, The Power Schedule"><output>3</output></div>
+    <div class="ch-takeaway" id="audit-out" aria-live="polite">Move the sliders to see your weakest area.</div>
+  </div>
+</div>
+
+<div id="toolkit" class="panel">
+  <div class="section-header"><h2>Toolkit: Sales Strategies to Try</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>Labelling.</strong> Each strategy is tied to a verified chapter title. The "Try it" experiments are <strong>my own suggestions</strong>, not instructions from the book.</div>
+  <div class="strategy-card"><div class="s-tag">Reactivate &middot; Ch. 2</div><h4>Power Base Sweep</h4><p>List everyone who knows you professionally or personally and contact them with a specific ask: business, an introduction or a referral.</p><div class="try">Try it (reviewer's suggestion): block one hour, list 50 names and message ten with a clear ask.</div></div>
+  <div class="strategy-card"><div class="s-tag">Reactivate &middot; Ch. 3</div><h4>Dormant Client Revival</h4><p>Pull past clients who have not bought recently and lead with something new rather than a generic check-in.</p><div class="try">Try it (reviewer's suggestion): sort your customer list by last purchase date and call the oldest 20.</div></div>
+  <div class="strategy-card"><div class="s-tag">Pipeline &middot; Ch. 5</div><h4>Convert the Unsold</h4><p>Revisit every quote and stalled deal and reach out with new information or a new reason to act.</p><div class="try">Try it (reviewer's suggestion): send each open quote from last quarter one specific follow-up.</div></div>
+  <div class="strategy-card"><div class="s-tag">Pipeline &middot; Ch. 4</div><h4>The Purposeful Call</h4><p>Make each call with a defined objective and a next step.</p><div class="try">Try it (reviewer's suggestion): write one sentence on the next step you will ask for before each call.</div></div>
+  <div class="strategy-card"><div class="s-tag">Grow Accounts &middot; Ch. 6, 9</div><h4>Multiply and Plan the Second Sale</h4><p>Ask existing clients what else they need and decide in advance which add-on you will offer after the first yes.</p><div class="try">Try it (reviewer's suggestion): write down the one logical add-on for each product you sell.</div></div>
+  <div class="strategy-card"><div class="s-tag">Value &middot; Ch. 7, 8, 10</div><h4>Wow Delivery, Price and Added Value</h4><p>Find small, visible ways to over-deliver, and answer price objections by adding value before cutting the number.</p><div class="try">Try it (reviewer's suggestion): before any discount, list three value points you have not yet mentioned.</div></div>
+  <div class="strategy-card"><div class="s-tag">Market &middot; Ch. 12, 14</div><h4>Widen the Client Profile and Repackage</h4><p>Question who you consider an ideal customer and test different bundles of what you already sell.</p><div class="try">Try it (reviewer's suggestion): list three customer types you turn away and approach one; combine two offers into a premium package.</div></div>
+  <div class="strategy-card"><div class="s-tag">Habits &middot; Ch. 11, 15</div><h4>The Power Schedule and Act Hungry</h4><p>Block calendar time for selling, protect it from admin, and respond to prospects quickly and visibly eagerly.</p><div class="try">Try it (reviewer's suggestion): reserve the best two hours of each morning for prospecting and reply to every inquiry within an hour for a week.</div></div>
+  <div class="strategy-card"><div class="s-tag">Mindset &middot; Ch. 19</div><h4>Unreasonable Targets</h4><p>Set goals well beyond what feels comfortable, then work back to the daily activity they would require.</p><div class="try">Try it (reviewer's suggestion): double one monthly target on paper and compute the daily call count it implies.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>A One-Page Weekly Plan</h2><div class="section-line"></div></div>
+  <div class="note-box">Reviewer's own template, assembled from the strategies above.</div>
+  <div class="code-block"><span class="comment">// Monday</span><br><span class="keyword">Reactivate:</span> <span class="value">10 network contacts, 10 past clients</span><br><span class="comment">// Tuesday to Thursday</span><br><span class="keyword">Follow up:</span> <span class="value">every open quote, one fresh fact each</span><br><span class="keyword">Offer:</span> <span class="value">one planned add-on per new sale</span><br><span class="comment">// Friday</span><br><span class="keyword">Review:</span> <span class="value">calls made, next steps booked, deals revived</span></div>
 </div>
 
 <div id="quotes" class="panel">
-  <div class="section-header"><h2>Notable Lines &amp; Phrases</h2><div class="section-line"></div></div>
-  <div class="note-box">These are the book's signature phrases and chapter titles. Add your own favourite passages from your copy to this tab; I've deliberately not invented word-for-word quotations.</div>
-  <div class="quote-block"><p>If you're not first, you're last.</p><div class="attr">— Grant Cardone, the book's title and central claim</div></div>
-  <div class="quote-block"><p>Advance and conquer.</p><div class="attr">— Cardone's recurring call to action, used across the book</div></div>
-  <div class="quote-block"><p>Act hungry.</p><div class="attr">— Chapter 11 title, and a short summary of the whole attitude</div></div>
-  <div class="quote-block"><p>Deliver at "wow" levels.</p><div class="attr">— Chapter 7 title</div></div>
-  <div class="quote-block"><p>Be unreasonable.</p><div class="attr">— Paraphrase of Chapter 19 (The Unreasonable Attitude)</div></div>
-
+  <div class="section-header"><h2>Key Phrases</h2><div class="section-line"></div></div>
+  <div class="note-box">These are the book's title and chapter titles, which are verified, plus short paraphrases of its arguments. They are not direct quotations from the text.</div>
+  <div class="quote-block"><p>If you're not first, you're last.</p><div class="attr">The book's title and central claim</div></div>
+  <div class="quote-block"><p>Advance and conquer.</p><div class="attr">The label for the book's preferred response (Chapters 1, 4, 15, 16 and 18 use it in their titles)</div></div>
+  <div class="quote-block"><p>Act hungry.</p><div class="attr">Chapter 11 title</div></div>
+  <div class="quote-block"><p>Delivering at "wow" levels.</p><div class="attr">Chapter 7 title</div></div>
+  <div class="quote-block"><p>The unreasonable attitude.</p><div class="attr">Chapter 19 title</div></div>
+  <div class="quote-block"><p>Your freedom financial plan.</p><div class="attr">Chapter 17 title</div></div>
   <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
-  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Paraphrases of the book's main arguments, not direct quotes.</p>
-  <div class="quote-block"><p>A sale you have already made once is worth more than a stranger you have not met yet.</p><div class="attr">— Paraphrase of Chapters 3 and 6</div></div>
-  <div class="quote-block"><p>If you are cutting your price, you may be cutting your selling.</p><div class="attr">— Paraphrase of Chapter 8</div></div>
-  <div class="quote-block"><p>What is on your calendar is what you are really committed to.</p><div class="attr">— Paraphrase of Chapter 15</div></div>
-  <div class="quote-block"><p>Attitude drives activity, and activity drives income.</p><div class="attr">— Paraphrase of Chapter 16</div></div>
-
+  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Paraphrases of the book's main arguments, based on titles and themes. Not direct quotes.</p>
+  <div class="quote-block"><p>Someone who has bought once is easier to sell to than a stranger.</p><div class="attr">Paraphrase of Chapters 3 and 6</div></div>
+  <div class="quote-block"><p>Before you cut the price, add the value.</p><div class="attr">Paraphrase of Chapters 8 and 10</div></div>
+  <div class="quote-block"><p>Your calendar shows what you are really committed to.</p><div class="attr">Paraphrase of Chapter 15</div></div>
+  <div class="quote-block"><p>Attitude drives activity, and activity drives income.</p><div class="attr">Paraphrase of Chapter 16</div></div>
 </div>
 
 <div id="verdict" class="panel">
-  <div class="verdict-banner">
-    <h3>⭐ 3.9 / 5</h3>
-    <p>A high-energy, activity-first sales manual: practical and motivating, light on evidence, and best taken as a kick in the pants</p>
-    <div class="rating-row">
-      <div class="rating-item"><div class="r-score">4.3</div><div class="r-label">Motivation</div></div>
-      <div class="rating-item"><div class="r-score">4.0</div><div class="r-label">Actionability</div></div>
-      <div class="rating-item"><div class="r-score">3.0</div><div class="r-label">Evidence Base</div></div>
-      <div class="rating-item"><div class="r-score">4.2</div><div class="r-label">Readability</div></div>
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.1<small> / 5</small></div><div class="cmp-sub">Category average 3.13. Motivating and practical in spirit, thin on evidence.</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Consensus (Goodreads)</div><div class="cmp-score">4.13<small> / 5</small></div><div class="cmp-sub">2,166 ratings, 174 reviews. Checked 12 Nov 2026.</div></div>
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">3.0<small> / 5</small></div><div class="cmp-sub">Dan's own rating. His category average is 3.38, so his overall is 0.38 below it.</div></div>
+  </div>
+  <div class="note-box">Claude's scores are a judgment, not Dan's opinion and not reader data. Claude has not read the book: they rest on the verified table of contents, published descriptions and the reader data below. The three views are kept separate on purpose.</div>
+
+  <div class="section-header"><h2>Goodreads Breakdown</h2><div class="section-line"></div></div>
+  <div class="gr-bars">
+    <div class="gr-row"><span>5 stars</span><div class="gr-track"><div class="gr-fill" style="width:43.7%"></div></div><span>947 (43%)</span></div>
+    <div class="gr-row"><span>4 stars</span><div class="gr-track"><div class="gr-fill" style="width:34.5%"></div></div><span>747 (34%)</span></div>
+    <div class="gr-row"><span>3 stars</span><div class="gr-track"><div class="gr-fill" style="width:15.2%"></div></div><span>329 (15%)</span></div>
+    <div class="gr-row"><span>2 stars</span><div class="gr-track"><div class="gr-fill" style="width:4.2%"></div></div><span>92 (4%)</span></div>
+    <div class="gr-row"><span>1 star</span><div class="gr-track"><div class="gr-fill" style="width:2.4%"></div></div><span>51 (2%)</span></div>
+  </div>
+  <p style="font-size:12px;color:var(--gray-dark);margin-bottom:24px;">Goodreads page for the main edition, matched on title and author (Grant Cardone); the fetched page showed a 272-page hardcover. Read 12 Nov 2026. Goodreads counts shift over time and across edition pages (a search snippet showed 2,161 and 2,104 for cached copies), so check the live page.</p>
+
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <div class="cat-wrap"><table class="cat-table">
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">3.0</td><td class="num">4.0</td><td>Reactivation, follow-up and holding price are sound but widely taught sales basics; the framing as an offensive downturn response is the distinctive part.</td></tr>
+    <tr><td>Readability</td><td class="num">3.5</td><td class="num">4.5</td><td>Short chapters with plain, direct titles make it easy to dip into, but readers describe the tone as aggressive and the message as repeated.</td></tr>
+    <tr><td>Actionability</td><td class="num">4.0</td><td class="num">3.0</td><td>The chapter list reads like a to-do list (reactivate contacts, call, follow up, add a second sale, protect the calendar) that can be started this week.</td></tr>
+    <tr><td>Evidence</td><td class="num">2.0</td><td class="num">2.0</td><td>As described, it rests on the author's conviction and experience rather than research or data. I could not check how the examples are sourced.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.13</td><td class="num">3.38</td><td>Claude's overall is 3.1, which is 1.0 below the Goodreads average of 4.13, more than the 0.5 tolerance. Likely reasons: a Goodreads average for a motivational author mostly reflects self-selected fans rating the energy and usefulness of the message, whereas I weight evidence and repetition as a sceptical reader would. I am not claiming the readers are wrong; the two views measure different things. Dan's overall of 3.0 sits 0.38 below his own category average of 3.38. Against Claude he scores Ideas 1.0 higher and Readability 1.0 higher, Actionability 1.0 lower, and Evidence the same (2.0).</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--gray-dark);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence. Dan's column stays empty until he supplies scores.</p>
+
+  <div class="section-header"><h2>What Other Readers Say</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>Thin sourcing.</strong> Goodreads is the only source with usable numbers. Beyond it I found one readable blog review and one summary page; I could not open reviews on Amazon, Blinkist, LibraryThing or O'Reilly (blocked or empty), so no numbers are taken from them. The praise and criticism below rest on very few sources and should be read as indicative.</div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>What readers praise</h4>
+      <div class="list-item"><div class="dot"></div><div>Motivating and mindset-shifting: a Desertcart reader and a blog reviewer (Dre "DreAllDay" Baldwin) both describe it in positive, mindset-focused terms</div></div>
+      <div class="list-item"><div class="dot"></div><div>Practices seen as simple but demanding; the blog reviewer says they would work for those who apply them</div></div>
+      <div class="list-item"><div class="dot"></div><div>77% of Goodreads ratings are 4 or 5 stars (947 plus 747 of 2,166)</div></div>
+    </div>
+    <div class="con-list"><h4>What readers criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>A summary page (Happy Coders) warns that the direct, aggressive tone may not suit everyone</div></div>
+      <div class="list-item"><div class="dot"></div><div>A search snippet of a Goodreads review says it repeats itself every chapter; I could not confirm which edition it was about</div></div>
+      <div class="list-item"><div class="dot"></div><div>Goodreads reviewers also split on value: the snippet I saw included a one-star review for only a couple of good ideas (single reader, unverified)</div></div>
     </div>
   </div>
+  <div class="summary-block">
+    <p><strong>What you may have missed:</strong> the most positive blog review I could read is by someone who has publicly followed Cardone since around 2013 or 2014, so it is an enthusiast's view, and the page is a hosted copy of a personal blog, not independent criticism.</p>
+    <p>Also, Cardone narrates the audiobook himself and reviewers often mention it, so some Goodreads enthusiasm may be for the delivery rather than the printed text (my inference from the snippet, not a verified finding). The sources I found did not weigh the book against more research-based sales methods; that comparison is mine.</p>
+  </div>
+  <div class="src-list"><strong>Sources (read 12 Nov 2026):</strong>
+    <a href="https://www.goodreads.com/book/show/7902256-if-you-re-not-first-you-re-last">Goodreads</a> (rating figures) &middot;
+    <a href="https://www.booktopia.com.au/if-you-re-not-first-you-re-last-grant-cardone/book/9780470624357.html">Booktopia</a> (contents, pages, date) &middot;
+    <a href="https://www.everand.com/book/32249210/If-You-re-Not-First-You-re-Last-Sales-Strategies-to-Dominate-Your-Market-and-Beat-Your-Competition">Everand</a> and
+    <a href="https://www.perlego.com/book/1007935/if-youre-not-first-youre-last-sales-strategies-to-dominate-your-market-and-beat-your-competition-pdf">Perlego</a> (contents, section names) &middot;
+    <a href="https://www.barnesandnoble.com/w/if-youre-not-first-youre-last-grant-cardone/1100294793">Barnes &amp; Noble</a> (overview) &middot;
+    <a href="https://www.dreallday.com/blog/book-review-if-you-re-not-first-you-re-last-by-grant-cardone-grantcardone">DreAllDay blog review</a> (single reviewer, no date shown) &middot;
+    <a href="https://www.happycoders.eu/books/if-you-re-not-first-you-re-last">Happy Coders</a> (tone note, via search snippet) &middot;
+    <a href="https://www.aibrary.ai/podcasts/if-youre-not-first-youre-last/summary-if-youre-not-first-youre-last">Aibrary summary</a> (themes only; its headings are not the book's chapters).
+    Amazon, Blinkist, O'Reilly, LibraryThing and NewsBlaze: not available (blocked).</div>
+
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Dan rates <em>If You're Not First, You're Last</em> 3 out of 5. He scores the ideas 4, readability 4.5, actionability 3 and evidence 2. He says it is not a book he would have picked up on his own; it came through his book club. He listened to the audiobook and found the narration very readable.</p>
+    <p>What he took from it is the idea of staying first of mind: if you don't have enough touchpoints for people to think of you first, you do badly in a downturn, and that means being more proactive than is comfortable about reaching out and keeping relationships up. The book prompted a lot of actions, but he found it too salesy and aggressive to adopt as a whole, so actionability loses points.</p>
+    <p>He disliked the in-your-face tone and the insistence that the reader think the way the author does. He rates the evidence low because it is one person's view of selling, and he found it inconsistent that the author tells readers to ignore science where it doesn't suit his point and then cites science-backed studies where it does. He also noted the author's worldview differs from his own. Overall there are still a fair few points worth taking, mainly on relationship-building and the sales side.</p>
+    <p style="font-size:12px;color:var(--muted);">Written up from Dan's own words (12 Nov 2026). His view stands apart from the Claude and reader views above.</p></div>
 
   <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
   <div class="pro-con-grid">
     <div class="pro-list"><h4>Strengths</h4>
-      <div class="list-item"><div class="dot"></div><div>Immediately actionable: reactivation calls, follow-up on old quotes, and referral asks can start today</div></div>
-      <div class="list-item"><div class="dot"></div><div>Focuses on existing assets (network, past clients, unsold leads) before expensive new prospecting</div></div>
-      <div class="list-item"><div class="dot"></div><div>Clear, short chapters that are easy to dip into</div></div>
-      <div class="list-item"><div class="dot"></div><div>Strong message on protecting selling time and not discounting by reflex</div></div>
+      <div class="list-item"><div class="dot"></div><div>Actionable by design: reactivation, follow-up and referral-style asks can start today</div></div>
+      <div class="list-item"><div class="dot"></div><div>Focuses on existing assets (network, past clients, the unsold) before expensive new prospecting</div></div>
+      <div class="list-item"><div class="dot"></div><div>Short, clearly titled chapters that are easy to dip into</div></div>
+      <div class="list-item"><div class="dot"></div><div>Separate chapters on price and on protecting selling time</div></div>
     </div>
     <div class="con-list"><h4>Limitations</h4>
-      <div class="list-item"><div class="dot"></div><div>Anecdote and conviction in place of data or research</div></div>
-      <div class="list-item"><div class="dot"></div><div>Repetitive, with the same call to out-work competitors repeated throughout</div></div>
-      <div class="list-item"><div class="dot"></div><div>A high-pressure style that may not suit relationship-led or consultative sales</div></div>
-      <div class="list-item"><div class="dot"></div><div>Written for the post-2008 economy, so some references and examples feel dated</div></div>
+      <div class="list-item"><div class="dot"></div><div>Appears to lean on conviction and anecdote rather than research (unchecked, from published descriptions)</div></div>
+      <div class="list-item"><div class="dot"></div><div>Readers describe repetition and a high-pressure tone</div></div>
+      <div class="list-item"><div class="dot"></div><div>May suit transactional sales better than long, consultative ones (my inference)</div></div>
+      <div class="list-item"><div class="dot"></div><div>Written for the post-2008 economy, so context may feel dated</div></div>
     </div>
   </div>
 
   <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Salespeople stuck in a slow patch</strong> who need a push to start calling again.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Owners and managers</strong> looking for revenue levers beyond new advertising spend.</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Recruiters, staffing and service sellers</strong> whose growth depends on re-engaging past clients and referrals.</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers who dislike high-pressure sales language</strong> will find the tone grating.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Salespeople in a slow patch</strong> who need a push to start calling again.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Owners and managers</strong> looking for revenue levers beyond advertising spend.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Service and staffing sellers</strong> whose growth depends on re-engaging past clients.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers who dislike high-pressure sales language</strong> will likely find the tone grating.</div></div>
 
   <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
   <div class="summary-block">
-    <p>Most revenue you need already exists in your contacts, your past clients, and your open quotes. The book's best advice is simply to go back to those people, ask directly, and keep following up, instead of assuming new leads are the only way to grow.</p>
-  </div>
-
-  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
-  <div class="summary-block">
-    <p><strong>If You're Not First, You're Last</strong> is a motivational sales playbook more than a rigorous strategy text. Its value is in the discipline it demands: reactivate, follow up, over-deliver, hold price, and protect your selling time.</p>
-    <p>Take the tactics (the Power Base sweep, dormant-client calls, second-sale planning, and the Power Schedule) and leave the bravado. Run two or three of the experiments in the Sales Strategies tab for a month and measure what changes.</p>
+    <p>Much of the revenue you need may already sit in your contacts, past clients and open quotes. The book's most useful instruction, going by its chapter order, is to go back to those people, ask directly and keep following up, rather than assuming new leads are the only route to growth. This is Claude's reading of the contents.</p>
   </div>
 </div>
 
 <script>
-  function showTab(id, el) {
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    el.classList.add('active');
+function showTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+function toggleChapter(card) { card.classList.toggle('open'); }
+(function () {
+  var rows = document.querySelectorAll('#audit input[type=range]');
+  function update() {
+    var low = null;
+    rows.forEach(function (r) {
+      r.nextElementSibling.textContent = r.value;
+      if (low === null || +r.value < +low.value) low = r;
+    });
+    var out = document.getElementById('audit-out');
+    var allSame = Array.prototype.every.call(rows, function (r) { return r.value === rows[0].value; });
+    out.textContent = allSame
+      ? 'All six are level at ' + rows[0].value + '. Pick the chapter that fits your current bottleneck.'
+      : 'Weakest area: ' + low.getAttribute('data-ch') + ' (you rated it ' + low.value + '). Start there.';
   }
-  function toggleChapter(card) { card.classList.toggle('open'); }
+  rows.forEach(function (r) { r.addEventListener('input', update); });
+  update();
+})();
 </script>
 </body>
 </html>

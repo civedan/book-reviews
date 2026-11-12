@@ -242,14 +242,26 @@
   .quote-block .attr { font-size: 11.5px; color: var(--muted); margin-top: 8px; text-align: right; }
 
   /* ── Verdict ── */
-  .verdict-banner { background: linear-gradient(135deg, #141414 0%, #2b2110 100%); border-radius: 12px; padding: 30px 28px; margin-bottom: 22px; text-align: center; position: relative; overflow: hidden; }
-  .verdict-banner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(var(--gold), var(--gold)) 50% 0/3px 100% no-repeat, linear-gradient(var(--gold), var(--gold)) 0 50%/100% 3px no-repeat; opacity: .13; }
-  .verdict-banner h3 { font-family: 'Permanent Marker', cursive; font-weight: 400; font-size: 36px; color: var(--gold); margin-bottom: 6px; position: relative; }
-  .verdict-banner p { color: rgba(255,255,255,.8); font-size: 13.5px; position: relative; max-width: 560px; margin: 0 auto; line-height: 1.55; }
-  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; position: relative; }
-  .rating-item { text-align: center; background: rgba(251,177,37,.16); border: 1px solid rgba(251,177,37,.45); border-radius: 8px; padding: 10px 16px; min-width: 96px; }
-  .rating-item .r-score { font-size: 21px; font-weight: 800; color: var(--gold); }
-  .rating-item .r-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: rgba(255,255,255,.65); letter-spacing: 1.5px; margin-top: 2px; text-transform: uppercase; }
+  .cmp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
+  .cmp-card { background:#fff; border:1px solid var(--card-line); border-radius:12px; padding:18px 16px; text-align:center; }
+  .cmp-card.you { border-top:4px solid var(--red); }
+  .cmp-card.crowd { border-top:4px solid var(--q-re); }
+  .cmp-card.me { border-top:4px solid var(--ink); }
+  .cmp-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; letter-spacing:2.5px; text-transform:uppercase; font-weight:700; color:var(--muted); margin-bottom:8px; }
+  .cmp-score { font-family:'Permanent Marker',cursive; font-size:38px; color:var(--ink); line-height:1.1; }
+  .cmp-score small { font-family:'DM Sans',sans-serif; font-size:15px; color:var(--muted); font-weight:500; }
+  .cmp-score.pending { font-size:22px; color:var(--muted); line-height:1.3; padding:6px 0; }
+  .cmp-sub { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.5; }
+  .cat-wrap { overflow-x:auto; margin-bottom:8px; border-radius:10px; }
+  .cat-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--card-line); font-size:13px; min-width:560px; }
+  .cat-table th, .cat-table td { padding:10px 12px; text-align:left; border-bottom:1px solid #f3dea4; vertical-align:top; line-height:1.5; }
+  .cat-table th { font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); background:#fff6df; }
+  .cat-table td.num { font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .cat-table td.pend { color:var(--muted); font-style:italic; white-space:nowrap; }
+  .cat-table tr.avg td { font-weight:800; background:#fff6df; }
+  .src-list { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:22px; }
+  .src-list a { color:var(--red-dark); }
+  @media (max-width: 560px) { .cmp-grid { grid-template-columns:1fr; } }
   .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
   @media (max-width: 560px) { .pro-con-grid { grid-template-columns: 1fr; } .panel { padding: 20px 16px 44px; } .hero-inner { padding: 28px 20px; flex-wrap: wrap; } .bestseller-bar { padding: 8px 20px; letter-spacing: 3px; font-size: 11px; } }
   .pro-list, .con-list { background: var(--card); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--card-line); }
@@ -309,7 +321,7 @@
   <div class="tab hot" onclick="showTab('quadrants', this)">The Four Quadrants</div>
   <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
   <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
-  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+  <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
 <!-- ═══════════════ OVERVIEW ═══════════════ -->
@@ -326,7 +338,7 @@
   <div class="summary-block">
     <p><strong>Radical Candor</strong> is Kim Scott's management handbook, drawn from her years leading teams at Google and Apple and running her own startup. Her argument is that most workplace dysfunction starts with bosses who can't, or won't, tell people the truth, and that the usual advice ("be nice" or "be tough") gets the problem wrong. The real axes are <em>how much you care about the person</em> and <em>how willing you are to challenge them</em>.</p>
     <p>Those two dimensions produce four quadrants. <strong>Radical Candor</strong> sits where both are high. The three ways of failing are <strong>Ruinous Empathy</strong> (caring but not challenging), <strong>Obnoxious Aggression</strong> (challenging but not caring), and <strong>Manipulative Insincerity</strong> (doing neither). The book is built around helping you recognise which one you slip into, and why.</p>
-    <p>The fully revised and updated edition, as I read its structure, keeps the core of the 2017 original (a four-chapter philosophy half and a four-chapter tools half) and adds a new preface, a "Radical Candor on Radical Candor" section, an afterword on rolling the approach out across an organisation, and a bonus chapter on performance reviews.</p>
+    <p>The fully revised and updated edition keeps the structure of the 2017 original (a four-chapter philosophy half and a four-chapter tools half). According to a library contents listing, the revised edition adds a new preface (titled "Radical Candor on Radical Candor"), an afterword titled "Rolling Out Radical Candor", and a bonus chapter on a radically candid performance review. I have not seen what the new sections say beyond their titles.</p>
   </div>
 
   <div class="section-header" style="margin-top:30px;"><h2>The Whole Book on One Grid</h2><div class="section-line"></div></div>
@@ -349,34 +361,23 @@
 
 <!-- ═══════════════ CHAPTERS ═══════════════ -->
 <div id="chapters" class="panel">
-  <div class="note-box"><strong>How to read this tab:</strong> the chapter order and titles follow the fully revised edition's published table of contents. The summaries are my reconstruction of each section's argument and tools, not a line-by-line transcription, so check specific stories, numbers, and exact wording against your own copy. Part titles are descriptive labels. I have not quoted the book directly.</div>
+  <div class="note-box"><strong>How to read this tab:</strong> the chapter order and titles follow a library catalogue contents listing for the revised edition (read 12 Nov 2026), cross-checked against an author's chapter notes for the 2017 first edition. Chapter 1 to 8 summaries are my reconstruction from those titles, the well-known framework, and reader and reviewer descriptions; I have not read the book closely. The cards for the new revised-edition sections (preface, afterword, bonus chapter) and for "How to Use This Book" and "Getting Started" are inferred mainly from their titles and are the least reliable. Check specific stories and wording against your own copy. I have not quoted the book.</div>
 
   <div class="part-header">Front Matter</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header"><div class="ch-num intro">P</div><div class="ch-title">Preface to the Revised Edition</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-header"><div class="ch-num intro">P</div><div class="ch-title">Preface to the Revised Edition: Radical Candor on Radical Candor</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>New to this edition. Scott looks back at how the original landed in the world: widely adopted, but also frequently misread. The preface sets up the revision's purpose, which is to protect the idea from being used as cover for bad behaviour and to sharpen what the framework actually asks of people.</p>
-      <div class="ch-takeaway">The idea has been misapplied; this edition exists partly to correct that.</div>
-      <div class="ch-tool"><strong>Watch for:</strong> a recurring theme that Radical Candor and "brutal honesty" are not the same thing</div>
-    </div>
-  </div>
-
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header"><div class="ch-num intro">R</div><div class="ch-title">Radical Candor on Radical Candor</div><div class="ch-arrow">›</div></div>
-    <div class="chapter-body">
-      <p>A short, self-referential section where Scott turns the framework on itself: what she has learned from watching people use it, where it has helped, and where it has been twisted. It is the revised edition's clearest statement that the two dimensions have to stay together, and that "challenge directly" is never a licence to skip "care personally."</p>
-      <p>It also nudges the reader to think about context: how power, culture, and personal background change how directness is received.</p>
-      <div class="ch-takeaway">Candor without care isn't Radical Candor; it's just Obnoxious Aggression with a better brand name.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> The framework is judged by how it lands on the other person, not by how honest the speaker feels</div>
+      <p>New to this edition; the contents listing gives the preface this title. I have not read it. Going by the title and by reader comments that the revised foreword reframes the idea, it appears to be Scott reflecting on how the framework has been used since 2017, including misuse. Treat that as an inference, not a summary.</p>
+      <div class="ch-takeaway">Unverified: the preface appears to exist partly to guard against misuse of the idea.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header"><div class="ch-num intro">I</div><div class="ch-title">Introduction</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>Scott opens with the case for why bosses matter. Bad bosses make work miserable; good ones are rare because nobody is trained to be one. She draws on her own career (a startup she helped run, then Google, then Apple) and on the feedback moments that changed her, most memorably the early Google conversation in which a senior leader told her bluntly how a verbal habit was undermining her, and then made sure it landed.</p>
-      <p>She introduces the three responsibilities of a boss that shape the rest of the book (guidance, team, results), built on a foundation of trusting relationships, and previews the two-dimension idea that becomes the quadrant model.</p>
+      <p>Scott opens with the case for why bosses matter. Bad bosses make work miserable; good ones are rare because nobody is trained to be one. She draws on her own career (a startup she helped run, then Google, then Apple) and, as I understand it, on a formative piece of feedback she received from a senior colleague at Google, which she credits with shaping her thinking. I have not verified the details of that story against the text.</p>
+      <p>The book's structure points to three responsibilities of a boss (guidance, team, results) built on trusting relationships, which map onto Chapters 2 to 4. The introduction also previews the two-dimension idea that becomes the quadrant model.</p>
       <div class="ch-takeaway">Good management is a teachable skill, and the foundation is relationships plus honest guidance.</div>
       <div class="ch-tool"><strong>Key framing:</strong> Relationships → Guidance → Team → Results</div>
     </div>
@@ -385,12 +386,12 @@
   <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header"><div class="ch-num intro">U</div><div class="ch-title">How to Use This Book</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>A reader's guide. The first half (philosophy) explains the thinking, and the second half (tools and techniques) turns that into practices you can try on Monday. Scott invites readers to treat the book as something to experiment with rather than absorb passively.</p>
+      <p>A short reader's guide, inferred from its title and from the book's two-part structure: the first half (philosophy) explains the thinking, and the second half (tools and techniques) turns it into practices. I have not read what it actually says.</p>
       <div class="ch-takeaway">Read it as a field manual: try something small, watch what happens, adjust.</div>
     </div>
   </div>
 
-  <div class="part-header">Part I — The Management Philosophy (Ch. 1–4)</div>
+  <div class="part-header">Part I — A New Management Philosophy (Ch. 1–4)</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">Building Radically Candid Relationships</div><div class="ch-arrow">›</div></div>
@@ -445,40 +446,40 @@
   <div class="part-header">Part II — Tools &amp; Techniques (Ch. 5–8)</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">Relationships: Establish Trust with Your Direct Reports</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">Relationships</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>Practical ways to build the trust Chapter 1 says everything depends on. The workhorse tool is the <strong>one-on-one</strong>: a regular meeting that belongs to the direct report, where they set the agenda and the boss mainly listens. Scott discusses how to run these so they build relationship and surface problems, rather than becoming status updates.</p>
-      <p>The chapter also gives approaches for asking for feedback about yourself in a way that actually gets a real answer, and for staying close to the people you manage without crossing professional lines.</p>
+      <p>Practical ways to build the trust Chapter 1 depends on. The workhorse tool is the <strong>one-on-one</strong>: a regular meeting that belongs to the direct report, where they set the agenda and the boss mainly listens. The aim is a meeting that builds the relationship and surfaces problems rather than becoming a status update.</p>
+      <p>The chapter also covers asking for feedback about yourself in a way that gets a real answer. I could not verify any further detail.</p>
       <div class="ch-takeaway">A good one-on-one is the single most useful trust-building habit a manager has.</div>
       <div class="ch-tool"><strong>Key tool:</strong> The direct-report-owned one-on-one</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Guidance: Praise and Criticism That Help People Grow</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Guidance: Ideas for Getting, Giving and Encouraging Praise and Criticism</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>The detailed mechanics of Chapter 2: how to actually word praise and criticism, how to time them, and how to keep them from collapsing into one of the three failure quadrants. Scott discusses specific, sincere praise (so people know what to repeat), and criticism delivered promptly and kindly.</p>
-      <p>She also addresses the emotional side: what to do when someone gets upset or defensive, why reacting emotionally doesn't mean you were wrong to speak up, and how to stay in the conversation instead of retreating into soft, vague language.</p>
+      <p>The detailed mechanics behind Chapter 2: how to word and time praise and criticism and keep them out of the three failure quadrants, with specific, sincere praise (so people know what to repeat) and criticism delivered promptly and kindly.</p>
+      <p>I would expect it to cover the emotional side too, such as handling someone getting upset or defensive; that is my inference, not something I confirmed.</p>
       <div class="ch-takeaway">Specific and sincere beats polished and vague, every time.</div>
       <div class="ch-tool"><strong>Key practice:</strong> Say the specific thing, soon, in person, then stay for the reaction</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Team: Avoid Boredom and Burnout, Hire, Promote, and Fire Well</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Team</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>This chapter turns Growth Management into practice. It covers how to avoid boredom (Rock Stars stuck on a treadmill, Superstars with nowhere to go) and burnout, and how to make decisions about hiring, promotion, and, where needed, letting someone go.</p>
-      <p>Scott's thread here is that Ruinous Empathy shows up most painfully in people decisions: tolerating poor fit for too long, or promoting the wrong person to avoid a hard conversation. Handling these moments with care <em>and</em> clarity is, in her view, kinder than letting problems fester.</p>
+      <p>This chapter turns Growth Management into practice. As I understand it, it covers matching people to roles and growth paces, and the people decisions that follow (promotion, hiring and, where needed, letting someone go). I could not verify the chapter's exact subtopics, so check against your copy.</p>
+      <p>A thread I would expect, given the book's argument, is that Ruinous Empathy shows up most painfully in people decisions: tolerating poor fit for too long, or promoting the wrong person to avoid a hard conversation. That is my inference from the framework, not a verified summary of this chapter.</p>
       <div class="ch-takeaway">Dodging a hard people decision doesn't spare anyone; it just delays the pain.</div>
       <div class="ch-tool"><strong>Key practice:</strong> Match roles and growth pace to each person, and act when there's a mismatch</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">Results: Get Stuff Done Faster</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">Results</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>The operational counterpart to Chapter 4. Scott describes a rhythm of meetings that supports the GSD wheel: one-on-ones, regular staff meetings, dedicated "big debate" and "big decision" sessions, quick updates, and protected time to think. The point is to separate debating from deciding from informing, so each gets the right kind of room.</p>
-      <p>It also deals with the pacing of work, making sure speed doesn't come at the cost of the quality of conversations that make teams effective.</p>
+      <p>The operational counterpart to Chapter 4. Reviewers describe a rhythm of meetings that supports the GSD wheel: one-on-ones, staff meetings, separate "big debate" and "big decision" sessions, and protected think time. The point is to separate debating from deciding from informing, so each gets the right kind of room.</p>
+      <p></p>
       <div class="ch-takeaway">Different meetings do different jobs; mixing them is how teams get slow.</div>
       <div class="ch-tool"><strong>Key tool:</strong> A deliberate meeting rhythm built around the GSD wheel</div>
     </div>
@@ -489,24 +490,24 @@
   <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header"><div class="ch-num intro">G</div><div class="ch-title">Getting Started</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>A short send-off aimed at helping readers turn the book into behaviour. The practical spirit is to start small: pick one relationship, one habit, one conversation, rather than trying to overhaul everything at once. Asking for feedback about yourself is the natural first move.</p>
-      <div class="ch-takeaway">You don't need to be perfect at it. You need to start.</div>
+      <p>A short closing section, inferred from its title. I have not verified its content; the "start small" advice here is my own suggestion in the spirit of the book.</p>
+      <div class="ch-takeaway">Unverified: presumably a push to start applying the ideas.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
     <div class="chapter-header"><div class="ch-num intro">A</div><div class="ch-title">Afterword: Rolling Out Radical Candor</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>New in this edition. Where the main text is about an individual boss, the afterword is about an organisation: how to introduce a shared language of Radical Candor across a team or company without it feeling like a mandate. The underlying lesson is that culture change begins with leaders modelling the behaviour, not with a training programme or a poster on the wall.</p>
-      <div class="ch-takeaway">A shared vocabulary helps, but only if leaders go first.</div>
+      <p>New in this edition; the contents listing titles it "Rolling Out Radical Candor". Going by the title, it moves from the individual boss to an organisation. I have not read it, so I cannot say what it recommends.</p>
+      <div class="ch-takeaway">Unverified: appears to be about spreading the approach beyond one team.</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header"><div class="ch-num intro">B</div><div class="ch-title">Bonus Chapter: Performance Reviews</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-header"><div class="ch-num intro">B</div><div class="ch-title">Bonus Chapter: A Radically Candid Performance Review</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      <p>New in this edition. Applies the framework to the formal review. The central principle is that nothing in a review should surprise the person, because guidance has been flowing all year. Where reviews go wrong, it's usually because the manager was Ruinously Empathic through the year and tries to compensate in one painful hour, or because the process becomes a box-ticking exercise disconnected from growth.</p>
-      <div class="ch-takeaway">A review should summarise an ongoing conversation, not be the first time it happens.</div>
+      <p>New in this edition; listed as "A radically candid performance review". Presumably it applies the framework to the formal review. The idea that a review should hold no surprises is my inference from the book's emphasis on early, frequent guidance, not a verified summary of the chapter.</p>
+      <div class="ch-takeaway">Inference from the book's themes, not verified against the chapter.</div>
     </div>
   </div>
 </div>
@@ -729,7 +730,7 @@
         <div class="q-card"><h5>To people and the organisation</h5><ul>
           <li>Talent leaves, often the best, who have options</li>
           <li>Anxiety and burnout rise</li>
-          <li>The behaviour can cross a line into bullying or harassment, which Scott addresses explicitly in the revised edition's framing</li>
+          <li>The behaviour can cross a line into bullying, and some readers say the word "radical" invites that misuse (a reader complaint; I did not verify how the book addresses it)</li>
         </ul></div>
       </div>
 
@@ -846,7 +847,7 @@
             <tr><td class="rowh">Praise looks like</td><td>Specific and sincere: "here's what worked and why"</td><td>Vague or inflated: "great job!"</td><td>Rare, grudging, or backhanded</td><td>Flattery, or false praise to your face</td></tr>
             <tr><td class="rowh">Criticism looks like</td><td>Timely, specific, kind, about the work</td><td>Withheld, softened to nothing, or delayed</td><td>Harsh, public, personal</td><td>Said behind your back, or passive-aggressive</td></tr>
             <tr><td class="rowh">Feels like</td><td>"They're on my side"</td><td>"I think I'm fine…?"</td><td>"I'm under attack"</td><td>"I can't tell what they think"</td></tr>
-            <tr><td class="rowh">Typical line</td><td>"I'm telling you because I think you can be great."</td><td>"It's fine, don't worry about it."</td><td>"Don't take this personally, but this is garbage."</td><td>"Love it!" (then the opposite elsewhere)</td></tr>
+            <tr><td class="rowh">Sample line (mine)</td><td>"I'm telling you because I think you can be great."</td><td>"It's fine, don't worry about it."</td><td>"Don't take this personally, but this is garbage."</td><td>"Love it!" (then the opposite elsewhere)</td></tr>
             <tr><td class="rowh">Main cost</td><td>Discomfort in the moment</td><td>Stalled growth; blindsiding</td><td>Fear; lost information; attrition</td><td>Collapse of trust</td></tr>
             <tr><td class="rowh">The antidote</td><td>Keep going; stay humble</td><td>Add challenge</td><td>Add care, not silence</td><td>Care first, then be honest in person</td></tr>
           </tbody>
@@ -1007,32 +1008,69 @@
   <div class="quote-block"><p>A review should hold no surprises.</p><div class="attr">— Paraphrase of the bonus chapter</div></div>
 </div>
 
-<!-- ═══════════════ VERDICT ═══════════════ -->
+<!-- ═══════════════ RATINGS & VERDICT ═══════════════ -->
 <div id="verdict" class="panel">
-  <div class="verdict-banner">
-    <h3>⭐ 4.6 / 5</h3>
-    <p>A clear, memorable, immediately usable model of feedback. Its two-axis grid gives managers a shared language for something most never learn to name.</p>
-    <div class="rating-row">
-      <div class="rating-item"><div class="r-score">4.9</div><div class="r-label">Framework</div></div>
-      <div class="rating-item"><div class="r-score">4.5</div><div class="r-label">Actionability</div></div>
-      <div class="rating-item"><div class="r-score">3.6</div><div class="r-label">Evidence Base</div></div>
-      <div class="rating-item"><div class="r-score">4.4</div><div class="r-label">Readability</div></div>
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">4.0<small> / 5</small></div><div class="cmp-sub">Dan's own rating. His category average is 3.38, so his overall is 0.62 above it.</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Reader consensus</div><div class="cmp-score">4.04<small> / 5</small></div><div class="cmp-sub">Goodreads, 62,574 ratings (checked 12 Nov 2026). 74% gave 4 or 5 stars; 4% gave 1 or 2.</div></div>
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.8<small> / 5</small></div><div class="cmp-sub">Category average 3.75. Slightly below the crowd, mainly on evidence.</div></div>
+  </div>
+  <div class="note-box">Claude's scores are a judgment, not Dan's opinion and not reader data. Claude has not read the book itself: they rest on its contents and themes, reader reviews and the sources linked below. The three views are kept separate on purpose. The earlier version of this page showed a 4.6 / 5 verdict with sub-scores that were not Dan's ratings; they have been replaced by the layout below.</div>
+
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <div class="cat-wrap"><table class="cat-table">
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">4.0</td><td class="num">4.0</td><td>The care-and-challenge grid is memorable and names the "nice" failure most advice skips, but it repackages familiar feedback ideas rather than breaking new ground.</td></tr>
+    <tr><td>Readability</td><td class="num">4.0</td><td class="num">3.5</td><td>Clear structure and a conversational voice; readers still report repetition and some filler in the later chapters.</td></tr>
+    <tr><td>Actionability</td><td class="num">4.5</td><td class="num">3.0</td><td>One-on-ones, asking for criticism first, the Get Stuff Done wheel and a meeting rhythm are usable on Monday morning.</td></tr>
+    <tr><td>Evidence</td><td class="num">2.5</td><td class="num">3.0</td><td>Built on Scott's own career and stories rather than studies; I found no empirical test of the framework.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.75</td><td class="num">3.38</td><td>Claude's overall 3.8 is 0.3 below the Goodreads 4.04, within the usual margin. It sits below the crowd because the evidence score pulls it down; readers weight practical value more heavily. Dan's overall of 4.0 sits 0.62 above his own category average of 3.38. Against Claude he scores Readability 0.5 lower, Actionability 1.5 lower and Evidence 0.5 higher; Ideas is the same (4.0).</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence.</p>
+
+  <div class="section-header"><h2>What Other Readers Say</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Goodreads (<em>Radical Candor: Revised Edition</em> listing, which carries the same ratings as the other editions): 62,574 ratings, 4,641 reviews, average 4.04. Star split: 5&#9733; 34% (21,711), 4&#9733; 40% (25,580), 3&#9733; 19% (12,039), 2&#9733; 3% (2,486), 1&#9733; 1% (758). I checked the title and author on the page, and the counts add up to the total.</p>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>What readers praise</h4>
+      <div class="list-item"><div class="dot"></div><div>A clear, practical framework: care personally, challenge directly</div></div>
+      <div class="list-item"><div class="dot"></div><div>Concrete advice on one-on-ones, timely feedback, meetings and praise</div></div>
+      <div class="list-item"><div class="dot"></div><div>Especially useful for new managers</div></div>
+    </div>
+    <div class="con-list"><h4>What readers criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>Heavy name-dropping and examples centred on Google, Apple and Silicon Valley figures</div></div>
+      <div class="list-item"><div class="dot"></div><div>Repetitive or padded; one blog reviewer who rated it 4/5 called the delivery weaker than the content and suggested a talk would do</div></div>
+      <div class="list-item"><div class="dot"></div><div>Dated for remote or smaller organisations</div></div>
     </div>
   </div>
+  <div class="summary-block">
+    <p><strong>What you may have missed:</strong> several Goodreads reviewers say the book's hierarchical, top-down language sits awkwardly with its humane message, and that the word "radical" invites people to use the framework as a licence for harshness. Others note that it leans on anecdotes and that the stories are mostly positive examples with few counter-examples.</p>
+    <p>I looked for academic or empirical critiques and did not find any; the criticism above comes from reader reviews, so treat it as reader opinion rather than research. This is also why Claude's Evidence score is the lowest of the four.</p>
+  </div>
+  <div class="src-list"><strong>Sources (read 12 Nov 2026):</strong>
+    <a href="https://www.goodreads.com/book/show/44510000-radical-candor">Goodreads, <em>Radical Candor: Revised Edition</em></a> (ratings, star split and review themes; the criticism themes rest on this single source) &middot;
+    <a href="https://www.ybrikman.com/blog/2019/03/20/radical-candor/">Yevgeniy Brikman's review</a> (a 4/5 reader review) &middot;
+    <a href="https://search.centrecountylibrary.org/Record/455436/TOC">Library catalogue contents listing</a> (chapter titles used on the All Chapters tab).
+    Summarised from page text; Amazon and some library pages returned errors (403) and were not used: not available. Other editions' Goodreads pages were not compared.</div>
+
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Dan rates <em>Radical Candor</em> 4 out of 5. He scores the ideas 4, readability 3.5, actionability 3 and evidence 3. He expects it to be one of the tougher books in this library to act on: he would need thicker skin for the conversations it describes. Even so, he finds many of its points valid for getting things across in a company without tiptoeing around issues, and says taking them head-on can be very good for a business.</p>
+    <p>On actionability he thinks that going back over a synopsis and the book again would make it more usable; for now it is a 3. He rates the evidence 3 because the revised edition acknowledges that the approach comes from the author's own experience and lands differently depending on who is giving and receiving it, including their role, gender and race. He sees that as growth and a sign she can look at her own ideas objectively. His main caveats are that it only works when both people buy in, which a company may not have, and that the "you can just go somewhere else" attitude fits tech, where companies are built to change, much more than most other workplaces. His takeaway is to apply it with a grain of salt and to know when it fits.</p>
+    <p style="font-size:12px;color:var(--muted);">Written up from Dan's own words (12 Nov 2026). His view stands apart from the Claude and reader views above.</p></div>
 
   <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
   <div class="pro-con-grid">
     <div class="pro-list"><h4>Strengths</h4>
       <div class="list-item"><div class="dot"></div><div>The quadrant model is simple enough to remember and precise enough to diagnose real situations</div></div>
-      <div class="list-item"><div class="dot"></div><div>Names the "nice" failure, Ruinous Empathy, which most management advice ignores</div></div>
+      <div class="list-item"><div class="dot"></div><div>Names the "nice" failure, Ruinous Empathy, which a lot of management advice ignores</div></div>
       <div class="list-item"><div class="dot"></div><div>Practical tools (one-on-ones, the GSD wheel, Growth Management) that go beyond the headline idea</div></div>
-      <div class="list-item"><div class="dot"></div><div>The revised edition directly addresses misuse and adds an organisation-level rollout and review guidance</div></div>
+      <div class="list-item"><div class="dot"></div><div>The revised edition adds new front and back matter and a performance-review chapter, according to its contents listing</div></div>
     </div>
     <div class="con-list"><h4>Limitations</h4>
       <div class="list-item"><div class="dot"></div><div>Built mainly on personal stories and experience rather than research</div></div>
-      <div class="list-item"><div class="dot"></div><div>Heavily shaped by tech-industry settings; culture and power dynamics vary elsewhere</div></div>
-      <div class="list-item"><div class="dot"></div><div>Easy to take "Challenge Directly" and skip the "Care Personally" half, as the author herself notes</div></div>
-      <div class="list-item"><div class="dot"></div><div>Some repetition between the philosophy half and the tools half</div></div>
+      <div class="list-item"><div class="dot"></div><div>Examples are heavily tilted to big-tech settings; culture and power dynamics vary elsewhere</div></div>
+      <div class="list-item"><div class="dot"></div><div>Easy to take "Challenge Directly" and skip the "Care Personally" half</div></div>
+      <div class="list-item"><div class="dot"></div><div>Readers report some repetition between the philosophy half and the tools half</div></div>
     </div>
   </div>
 
