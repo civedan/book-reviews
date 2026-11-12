@@ -5,720 +5,868 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Building a Second Brain — Book Review</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=DM+Sans:wght@300;400;500;700;900&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
+  /* Palette taken from the cover: flat jade-teal field, near-black navy type, cream "Second", pale-gold circuit lines */
   :root {
-    --ink: #0a1a15;
-    --paper: #f0faf8;
-    --cream: #ddf2ee;
-    --amber: #c8a030;
-    --amber-light: #e2ba48;
-    --amber-pale: #f5e8b0;
-    --teal: #0da89e;
-    --teal-deep: #0a7f76;
-    --teal-light: #12bfb4;
-    --rust: #d4821a;
-    --muted: #3a6b65;
+    --ink:        #0b1c24;
+    --ink-soft:   #2c4048;
+    --paper:      #ffffff;
+    --cream:      #f3faf6;
+    --cream-hi:   #fffdf2;
+    --teal:       #2eb29c;
+    --teal-light: #5fcdb9;
+    --teal-dark:  #1d8a78;
+    --teal-deep:  #0e5a4e;
+    --teal-pale:  #d3f0e8;
+    --teal-dim:   rgba(46,178,156,0.11);
+    --gold:       #e3c56f;
+    --gold-dark:  #a98727;
+    --gold-dim:   rgba(227,197,111,0.22);
+    --rust:       #c0553d;
+    --muted:      #546b66;
+    --border:     rgba(46,178,156,0.28);
+    --line:       #d9efe8;
   }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
 
-  .hero {
-    background: linear-gradient(135deg, #0a8a82 0%, #0da89e 60%, #12bfb4 100%);
-    padding: 48px 40px 36px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    gap: 32px;
+  /* ───────── HERO ───────── */
+  .hero { background: var(--teal); position: relative; overflow: hidden; border-bottom: 4px solid var(--gold); }
+  .cover-bar {
+    padding: 9px 40px; text-align: center; position: relative; z-index: 2;
+    font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--cream-hi); border-bottom: 1px solid rgba(255,253,242,.35);
   }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 280px; height: 280px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(212,168,67,0.22) 0%, transparent 70%);
-  }
-  .hero-text { flex: 1; }
-  .book-cover-wrap {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .book-cover-wrap img {
-    width: 110px;
-    border-radius: 4px;
-    transform: rotate(-8deg);
-    box-shadow: -4px 6px 20px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease;
-  }
+  .hero-inner { padding: 40px 40px 44px; position: relative; display: flex; align-items: center; gap: 36px; }
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hero-motif svg { width: 100%; height: 100%; display: block; }
+  .hero-text { flex: 1; position: relative; z-index: 2; }
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img { width: 140px; border-radius: 3px; border: 1px solid rgba(11,28,36,.25); transform: rotate(-5deg); box-shadow: -7px 12px 28px rgba(11,28,36,0.40); transition: transform .3s ease; display: block; }
   .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
-  @media (max-width: 480px) { .book-cover-wrap { display: none; } }
-  .book-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--amber);
-    margin-bottom: 12px;
-    font-weight: 500;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 5vw, 42px);
-    color: #ffffff;
-    line-height: 1.15;
-    max-width: 520px;
-  }
-  .hero h1 em { color: var(--amber-pale); font-style: italic; }
-  .author { margin-top: 14px; color: rgba(255,255,255,0.7); font-size: 13px; letter-spacing: 1px; }
-  .author span { color: var(--amber-light); }
-  .hero-meta { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
-  .meta-pill {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: #ffffff;
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
 
-  .tabs {
-    display: flex;
-    background: var(--cream);
-    border-bottom: 2px solid rgba(13,168,158,0.2);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
+  .book-label { display: inline-block; background: var(--ink); color: var(--gold); font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; padding: 5px 13px; border-radius: 3px; margin-bottom: 16px; font-weight: 700; }
+  .hero h1 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(34px, 7.5vw, 66px); line-height: 1.02; color: var(--ink); letter-spacing: -1.5px; }
+  .hero h1 .sec { color: var(--cream-hi); }
+  .hero .tagline { margin-top: 12px; font-size: clamp(15px, 2.4vw, 19px); color: var(--cream-hi); max-width: 480px; line-height: 1.4; font-weight: 500; }
+  .author { margin-top: 16px; font-family: 'Poppins', sans-serif; font-size: 15px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; color: var(--ink); }
+  .author small { font-size: 12px; letter-spacing: .5px; font-weight: 500; text-transform: none; color: var(--cream-hi); margin-left: 6px; font-family: 'DM Sans', sans-serif; }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; align-items: center; }
+  .meta-pill { background: rgba(11,28,36,.12); border: 1px solid rgba(11,28,36,.4); color: var(--ink); border-radius: 20px; padding: 5px 14px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+
+  /* ── Back bar & tabs ── */
+  .back-bar { background: var(--cream); padding: 10px 32px; border-bottom: 1px solid rgba(46,178,156,.2); }
+  .back-link { color: var(--muted); font-size: 12px; text-decoration: none; letter-spacing: .5px; transition: color .2s; }
+  .back-link:hover { color: var(--teal-dark); }
+  .back-link span { margin-right: 6px; }
+  .tabs { display: flex; background: var(--cream); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 20; }
   .tabs::-webkit-scrollbar { display: none; }
-  .tab {
-    padding: 14px 22px;
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-weight: 500;
-    color: var(--muted);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    white-space: nowrap;
-    transition: all 0.2s;
-  }
-  .tab:hover { color: var(--teal); }
-  .tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .tab { padding: 14px 20px; font-family: 'Poppins', sans-serif; font-size: 12.5px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all .2s; }
+  .tab:hover { color: var(--teal-dark); }
+  .tab.active { color: var(--ink); border-bottom-color: var(--teal); }
+  .tab.hot { color: var(--teal-deep); }
 
-  .panel { display: none; padding: 32px 32px 48px; }
+  .panel { display: none; padding: 32px 32px 56px; max-width: 1020px; margin: 0 auto; }
   .panel.active { display: block; }
 
-  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--ink); }
-  .section-line { flex: 1; height: 1px; background: rgba(13,168,158,0.25); }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .section-header h2 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 21px; color: var(--ink); letter-spacing: -.3px; }
+  .section-line { flex: 1; height: 2px; background: var(--border); }
+  .lead { font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+  .note-box { background: rgba(11,28,36,0.04); border: 1.5px dashed var(--muted); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; line-height: 1.6; color: var(--ink-soft); margin-bottom: 22px; }
 
+  /* ── Overview ── */
   .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
-  .stat-card {
-    background: var(--cream);
-    border: 1px solid rgba(13,168,158,0.25);
-    border-radius: 8px;
-    padding: 18px 20px;
-  }
-  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .stat-value { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--teal); }
-  .stat-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
-
-  .summary-block {
-    background: white;
-    border-left: 3px solid var(--teal);
-    border-radius: 0 8px 8px 0;
-    padding: 20px 22px;
-    margin-bottom: 20px;
-    font-size: 14.5px;
-    line-height: 1.75;
-    color: #0d2e28;
-  }
+  .stat-card { background: var(--cream); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-dark); margin-bottom: 6px; font-weight: 700; }
+  .stat-value { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 17px; color: var(--ink); line-height: 1.3; }
+  .stat-desc { font-size: 12.5px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+  .summary-block { background: var(--cream); border-left: 4px solid var(--teal); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: #14262d; }
   .summary-block p + p { margin-top: 12px; }
-
-  .key-idea {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    padding: 14px 18px;
-    background: var(--cream);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 13.5px;
-    line-height: 1.6;
-  }
+  .key-idea { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: #fff; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.6; }
   .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
 
-  .part-header {
-    background: var(--teal-deep);
-    color: #ffffff;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    margin-top: 24px;
-    font-weight: 500;
-  }
+  .axis-cap { font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .mini-four { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 4px 0 14px; }
+  .mini-c { border-radius: 10px; padding: 14px 14px 16px; cursor: pointer; transition: transform .15s; }
+  .mini-c:hover { transform: translateY(-2px); }
+  .mini-c .big { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 30px; line-height: 1; margin-bottom: 4px; }
+  .mini-c h4 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .mini-c p { font-size: 12px; line-height: 1.5; opacity: .93; }
+  .mini-c.c1 { background: var(--ink); color: #fff; } .mini-c.c1 .big { color: var(--gold); }
+  .mini-c.c2 { background: var(--teal); color: var(--ink); } .mini-c.c2 .big { color: var(--cream-hi); }
+  .mini-c.c3 { background: var(--teal-deep); color: #fff; } .mini-c.c3 .big { color: var(--gold); }
+  .mini-c.c4 { background: var(--gold); color: var(--ink); } .mini-c.c4 .big { color: var(--ink); }
+  .mini-para { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0 0 26px; }
+  .mini-p { border: 1.5px solid var(--teal); border-radius: 10px; padding: 12px 14px; background: var(--cream-hi); cursor: pointer; }
+  .mini-p b { font-family: 'Poppins', sans-serif; color: var(--teal-deep); font-size: 14px; display: block; margin-bottom: 3px; }
+  .mini-p span { font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
 
-  .chapter-card {
-    background: white;
-    border: 1px solid rgba(26,18,8,0.08);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .chapter-card:hover { box-shadow: 0 4px 16px rgba(13,168,158,0.15); }
+  /* ── Chapters ── */
+  .part-header { background: var(--ink); color: var(--gold); padding: 10px 18px; border-radius: 6px; font-family: 'Poppins', sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; margin: 26px 0 12px; font-weight: 700; }
+  .chapter-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px; overflow: hidden; cursor: pointer; transition: box-shadow .2s; }
+  .chapter-card:hover { box-shadow: 0 4px 16px rgba(46,178,156,.2); }
   .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; }
-  .ch-num {
-    width: 32px; height: 32px;
-    background: var(--teal);
-    color: white;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .ch-title { font-family: 'Playfair Display', serif; font-size: 16px; flex: 1; line-height: 1.3; }
-  .ch-arrow { color: var(--teal); font-size: 18px; transition: transform 0.25s; flex-shrink: 0; }
+  .ch-num { width: 34px; height: 34px; background: var(--teal); color: var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .ch-num.intro { background: var(--ink); color: var(--gold); }
+  .ch-title { font-weight: 700; font-size: 15px; flex: 1; line-height: 1.3; }
+  .ch-arrow { color: var(--teal-dark); font-size: 20px; transition: transform .25s; flex-shrink: 0; }
   .chapter-card.open .ch-arrow { transform: rotate(90deg); }
-  .chapter-body {
-    display: none;
-    padding: 14px 18px 18px 64px;
-    font-size: 13.5px;
-    line-height: 1.7;
-    color: #1a3a35;
-    border-top: 1px solid rgba(13,168,158,0.15);
-  }
+  .chapter-body { display: none; padding: 14px 20px 20px 66px; font-size: 13.5px; line-height: 1.75; color: #1f343b; border-top: 1px solid #e7f6f1; }
   .chapter-card.open .chapter-body { display: block; }
-  .ch-takeaway {
-    margin-top: 10px;
-    background: rgba(13,168,158,0.1);
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 12.5px;
-    color: var(--teal-deep);
-    font-weight: 500;
-  }
+  .chapter-body p + p { margin-top: 10px; }
+  .ch-takeaway { margin-top: 12px; background: var(--teal-dim); border-left: 4px solid var(--teal); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 13px; color: var(--teal-deep); font-weight: 600; }
+  .ch-tool { margin-top: 8px; background: var(--gold-dim); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 12.5px; color: var(--ink-soft); }
+  @media (max-width: 560px) { .chapter-body { padding-left: 20px; } }
 
-  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
-  .method-card {
-    background: white;
-    border: 1px solid rgba(13,168,158,0.2);
-    border-radius: 10px;
-    padding: 18px;
-    margin-bottom: 12px;
-  }
-  .method-card h4 { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--teal); margin-bottom: 8px; }
-  .method-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
-  .method-card .tag {
-    display: inline-block;
-    background: var(--teal);
-    color: white;
-    font-size: 10px;
-    letter-spacing: 1px;
-    padding: 3px 9px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
+  /* ───────── DEEP DIVE ───────── */
+  .m-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .m-pill { padding: 8px 16px; border-radius: 20px; font-family: 'Poppins', sans-serif; font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; color: #fff; cursor: pointer; border: none; }
+  .m-pill.code { background: var(--ink); } .m-pill.para { background: var(--teal-deep); } .m-pill.cmp { background: var(--teal-pale); color: var(--teal-deep); } .m-pill.try { background: var(--rust); }
 
-  .code-block {
-    background: var(--ink);
-    color: #d0f0ec;
-    border-radius: 8px;
-    padding: 20px;
-    font-family: monospace;
-    font-size: 13px;
-    line-height: 1.9;
-    margin-bottom: 16px;
-  }
-  .code-block .comment { color: rgba(13,168,158,0.55); }
-  .code-block .keyword { color: var(--amber-light); }
-  .code-block .value { color: #5dd8ce; }
+  .m-section { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 30px; scroll-margin-top: 70px; }
+  .m-head { padding: 24px 26px 20px; color: #fff; position: relative; overflow: hidden; }
+  .m-head.code { background: var(--ink); } .m-head.para { background: var(--teal-deep); }
+  .m-head .dials { font-family: 'Poppins', sans-serif; letter-spacing: 2px; text-transform: uppercase; font-size: 11.5px; font-weight: 600; opacity: .85; margin-bottom: 8px; }
+  .m-head h3 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(26px, 5vw, 38px); line-height: 1.05; letter-spacing: -1px; }
+  .m-head.code h3 { color: var(--gold); }
+  .m-head.para h3 { color: var(--cream-hi); }
+  .m-head .tag { margin-top: 10px; font-size: 14.5px; line-height: 1.55; max-width: 620px; opacity: .95; }
+  .m-head .stamp { position: absolute; right: 18px; top: 16px; font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; border: 2px solid currentColor; border-radius: 4px; padding: 4px 9px; transform: rotate(4deg); opacity: .8; }
+  @media (max-width: 560px) { .m-head .stamp { position: static; display: inline-block; margin-bottom: 10px; transform: none; } }
+  .m-body { padding: 22px 26px 26px; }
+  .m-body h4 { font-family: 'Poppins', sans-serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-dark); margin: 22px 0 8px; font-weight: 700; }
+  .m-body h4:first-child { margin-top: 0; }
+  .m-body p { font-size: 14px; line-height: 1.75; color: #14262d; }
+  .m-body p + p { margin-top: 10px; }
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 4px; }
+  @media (max-width: 700px) { .q-grid { grid-template-columns: 1fr; } }
+  .q-card { background: var(--cream); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .q-card h5 { font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+  .q-card .letter { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: var(--ink); text-align: center; line-height: 22px; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 800; margin-right: 6px; }
+  .q-card ul { list-style: none; }
+  .q-card li { position: relative; padding-left: 16px; font-size: 13px; line-height: 1.55; margin-bottom: 6px; color: #1f343b; }
+  .q-card li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+  .m-section.codes .q-card li::before { background: var(--gold-dark); }
+  .say-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px; }
+  @media (max-width: 700px) { .say-grid { grid-template-columns: 1fr; } }
+  .say { border-radius: 8px; padding: 14px 16px; font-size: 13.5px; line-height: 1.6; }
+  .say .lab { font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .say.bad { background: #fbeee9; border: 1px solid #efc6ba; color: #55261a; } .say.bad .lab { color: #9a4430; }
+  .say.good { background: var(--teal-dim); border: 1px solid rgba(46,178,156,.45); color: var(--teal-deep); } .say.good .lab { color: var(--teal-dark); }
+  .scenario { background: #fff; border: 1.5px dashed var(--muted); border-radius: 8px; padding: 14px 16px; font-size: 13.5px; line-height: 1.7; color: #1f343b; }
+  .scenario .lab { font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+  .way-out { background: var(--teal-dim); border-left: 4px solid var(--teal); border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 13.5px; line-height: 1.7; color: #0f3d34; }
+  .way-out ol { margin: 6px 0 0 20px; } .way-out li { margin-bottom: 5px; }
+  .callout { background: var(--ink); color: #fff; border-radius: 8px; padding: 14px 18px; font-size: 13.5px; line-height: 1.65; margin-top: 14px; }
+  .callout strong { color: var(--gold); }
 
-  .verdict-banner {
-    background: linear-gradient(135deg, #0a7f76 0%, #0da89e 100%);
-    border-radius: 12px;
-    padding: 28px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  .verdict-banner h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: #ffffff; margin-bottom: 6px; }
-  .verdict-banner p { color: rgba(255,255,255,0.7); font-size: 13px; }
-  .rating-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
-  .rating-item {
-    text-align: center;
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 8px;
-    padding: 10px 16px;
-    min-width: 90px;
-  }
-  .rating-item .r-score { font-size: 20px; font-weight: 700; color: var(--amber-light); }
-  .rating-item .r-label { font-size: 10px; color: rgba(255,255,255,0.6); letter-spacing: 1px; margin-top: 2px; text-transform: uppercase; }
+  .cmp-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 22px; }
+  table.cmp { width: 100%; border-collapse: collapse; background: #fff; min-width: 760px; font-size: 12.5px; line-height: 1.5; }
+  table.cmp th, table.cmp td { padding: 11px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid #e3f4ee; }
+  table.cmp th { font-family: 'Poppins', sans-serif; font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; color: #fff; }
+  table.cmp th.a { background: var(--ink); } table.cmp th.b { background: var(--teal-deep); } table.cmp th.c { background: var(--teal); color: var(--ink); } table.cmp th.d { background: var(--gold); color: var(--ink); } table.cmp th.blank { background: var(--teal-pale); }
+  table.cmp td.rowh { font-weight: 800; background: var(--cream); width: 120px; }
 
+  /* sliders */
+  .map-box { background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 26px; }
+  .slider-row { margin-bottom: 14px; }
+  .slider-row label { display: flex; justify-content: space-between; gap: 10px; font-family: 'Poppins', sans-serif; letter-spacing: .5px; font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .slider-row label .lean { font-weight: 500; color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .slider-row .sub { font-size: 12px; color: var(--muted); margin-bottom: 4px; line-height: 1.4; }
+  .slider-row input[type=range] { width: 100%; accent-color: var(--teal-dark); }
+  .scale-cap { display: flex; justify-content: space-between; font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-top: -2px; }
+  .map-out { border-radius: 10px; padding: 14px 16px; color: #fff; font-size: 13.5px; line-height: 1.6; margin-top: 16px; background: var(--teal-deep); }
+  .map-out h5 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 17px; margin-bottom: 4px; color: var(--gold); }
+
+  /* quiz */
+  .quiz-card { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 12px; }
+  .quiz-card .q { font-size: 14px; line-height: 1.6; margin-bottom: 10px; font-weight: 500; }
+  .quiz-card .q .n { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--teal-dark); margin-right: 6px; }
+  .quiz-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .quiz-opts button { padding: 7px 14px; border-radius: 18px; border: 1.5px solid var(--ink); background: #fff; font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .quiz-opts button:hover:not(:disabled) { background: var(--teal-pale); }
+  .quiz-opts button.right { background: #1d6b3a; color: #fff; border-color: #1d6b3a; }
+  .quiz-opts button.wrong { background: #b3281a; color: #fff; border-color: #b3281a; }
+  .quiz-exp { display: none; margin-top: 10px; font-size: 12.5px; line-height: 1.6; color: var(--ink-soft); background: rgba(11,28,36,.05); padding: 10px 12px; border-radius: 6px; }
+  .quiz-exp.show { display: block; }
+  .quiz-score { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: var(--teal-deep); margin-top: 8px; }
+
+  /* ── Toolkit ── */
+  .method-card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+  .method-card h4 { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 16px; color: var(--teal-deep); margin-bottom: 8px; }
+  .method-card p, .method-card li { font-size: 13.5px; line-height: 1.7; color: #1f343b; }
+  .method-card ul { margin: 8px 0 0 18px; } .method-card li { margin-bottom: 4px; }
+  .method-card .tag { display: inline-block; background: var(--teal); color: var(--ink); font-family: 'Poppins', sans-serif; font-size: 10.5px; letter-spacing: 1.5px; padding: 3px 10px; border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 700; }
+  .code-block { background: var(--ink); color: var(--teal-pale); border-radius: 8px; padding: 18px 20px; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; line-height: 1.85; margin-bottom: 14px; overflow-x: auto; }
+  .code-block .c { color: rgba(95,205,185,.6); } .code-block .k { color: var(--gold); } .code-block .r { color: #e9967f; }
+  .toolkit-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .toolkit-item { display: flex; gap: 10px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; line-height: 1.5; color: #1f343b; }
+  @media (max-width: 700px) { .mini-four, .mini-para { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .toolkit-list, .overview-grid, .mini-four, .mini-para { grid-template-columns: 1fr; } }
+
+  /* ── Quotes ── */
+  .quote-block { background: var(--cream); border-radius: 10px; padding: 18px 24px 14px; margin-bottom: 14px; border-left: 5px solid var(--gold); }
+  .quote-block p { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 17px; line-height: 1.4; color: var(--ink); }
+  .quote-block .attr { font-size: 11.5px; color: var(--muted); margin-top: 8px; text-align: right; }
+
+  /* ── Verdict ── */
   .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
-  .pro-list, .con-list {
-    background: white;
-    border-radius: 10px;
-    padding: 16px 18px;
-    border: 1px solid rgba(26,18,8,0.08);
-  }
-  .pro-list h4 { color: var(--teal); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-  .con-list h4 { color: var(--rust); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.5; margin-bottom: 8px; color: var(--muted); }
-  .list-item .dot { margin-top: 5px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .pro-list .dot { background: var(--teal); }
-  .con-list .dot { background: var(--rust); }
-
-  .quote-block {
-    background: var(--cream);
-    border-radius: 10px;
-    padding: 20px 24px;
-    margin-bottom: 14px;
-    position: relative;
-  }
-  .quote-block::before {
-    content: '\201C';
-    font-family: 'Playfair Display', serif;
-    font-size: 60px;
-    color: var(--teal);
-    position: absolute;
-    top: -8px; left: 16px;
-    line-height: 1;
-  }
-  .quote-block p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; line-height: 1.65; padding-left: 10px; margin-top: 16px; color: var(--ink); }
-  .quote-block .attr { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: right; font-style: normal; font-family: 'DM Sans', sans-serif; }
-
-  .who-card {
-    display: flex; gap: 12px; align-items: flex-start;
-    background: white;
-    border: 1px solid rgba(13,168,158,0.2);
-    border-radius: 8px;
-    padding: 14px 16px;
-    margin-bottom: 8px;
-    font-size: 13.5px;
-    line-height: 1.6;
-  }
+  @media (max-width: 560px) { .pro-con-grid { grid-template-columns: 1fr; } .panel { padding: 20px 16px 44px; } .hero-inner { padding: 28px 20px; flex-wrap: wrap; } .cover-bar { padding: 8px 20px; letter-spacing: 2px; font-size: 11px; } }
+  .pro-list, .con-list { background: #fff; border-radius: 10px; padding: 16px 18px; border: 1px solid var(--line); }
+  .pro-list h4, .con-list h4 { font-family: 'Poppins', sans-serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .pro-list h4 { color: var(--teal-dark); } .con-list h4 { color: var(--rust); }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.55; margin-bottom: 8px; color: #2f3f40; }
+  .list-item .dot { margin-top: 6px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--teal); } .con-list .dot { background: var(--rust); }
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.6; transition: border-color .2s; }
+  .who-card:hover { border-color: var(--teal); }
   .who-card .ic { font-size: 20px; flex-shrink: 0; }
 
-  @media (max-width: 560px) {
-    .overview-grid, .method-grid, .pro-con-grid { grid-template-columns: 1fr; }
-    .panel { padding: 20px 16px 40px; }
-    .hero { padding: 36px 20px 28px; }
-  }
+  /* ── Three-way ratings ── */
+  .cmp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
+  .cmp-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 16px; text-align:center; }
+  .cmp-card.you { border-top:4px solid var(--rust); }
+  .cmp-card.crowd { border-top:4px solid var(--teal); }
+  .cmp-card.me { border-top:4px solid var(--ink); }
+  .cmp-label { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:2px; text-transform:uppercase; font-weight:700; color:var(--muted); margin-bottom:8px; }
+  .cmp-score { font-family:'Poppins',sans-serif; font-weight:800; font-size:38px; color:var(--ink); line-height:1; }
+  .cmp-score small { font-size:15px; color:var(--muted); font-weight:500; }
+  .cmp-score.pending { color:var(--muted); }
+  .cmp-sub { font-size:12px; color:var(--muted); margin-top:8px; line-height:1.5; }
+  .cat-wrap { overflow-x:auto; margin-bottom:8px; }
+  .cat-table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); font-size:13px; min-width:560px; }
+  .cat-table th, .cat-table td { padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
+  .cat-table th { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); background:var(--cream); }
+  .cat-table td.num { font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .cat-table tr.avg td { font-weight:800; background:var(--cream); }
+  .src-list { font-size:12px; color:var(--muted); line-height:1.7; margin-bottom:22px; }
+  .src-list a { color:var(--teal-dark); }
+  .dist { margin: 0 0 14px; font-size:12px; color:var(--muted); }
+  .dist-row { display:flex; align-items:center; gap:8px; margin-bottom:3px; }
+  .dist-row .st { width:30px; font-weight:700; color:var(--ink-soft); }
+  .dist-row .bar { flex:1; height:10px; background:var(--line); border-radius:5px; overflow:hidden; }
+  .dist-row .bar i { display:block; height:100%; background:var(--teal); }
+  .dist-row .ct { width:130px; text-align:right; font-variant-numeric:tabular-nums; }
+  @media (max-width: 560px) { .cmp-grid { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
 
+<!-- ═══════════════ HERO ═══════════════ -->
 <div class="hero">
-  <div class="hero-text">
-    <div class="book-label">Book Review &amp; Reference Guide</div>
-    <h1>Building a <em>Second Brain</em></h1>
-    <div class="author">by <span>Tiago Forte</span> &nbsp;·&nbsp; Published 2022</div>
-    <div class="hero-meta">
-      <div class="meta-pill">Productivity</div>
-      <div class="meta-pill">Knowledge Management</div>
-      <div class="meta-pill">12 Chapters</div>
-      <div class="meta-pill">4 Parts</div>
+  <div class="cover-bar">Remember Everything, Achieve Anything</div>
+  <div class="hero-inner">
+    <div class="hero-motif" aria-hidden="true">
+      <svg viewBox="0 0 900 340" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- circuit traces with node dots, echoing the gold lines on the cover -->
+        <g fill="none" stroke="#e3c56f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".7">
+          <path d="M0 250 H70 Q90 250 90 270 V340"/>
+          <path d="M0 296 H44 Q60 296 60 312 V340"/>
+          <path d="M520 0 V40 Q520 60 540 60 H700 Q720 60 720 80 V150 Q720 170 740 170 H900"/>
+          <path d="M640 340 V292 Q640 272 660 272 H780 Q800 272 800 252 V220"/>
+          <path d="M860 340 V300 Q860 284 876 284 H900"/>
+        </g>
+        <g fill="#e3c56f" opacity=".9">
+          <circle cx="90" cy="268" r="6"/><circle cx="60" cy="312" r="5"/>
+          <circle cx="720" cy="82" r="6"/><circle cx="800" cy="222" r="6"/><circle cx="880" cy="170" r="5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <div class="book-label">Book Review &amp; Field Guide</div>
+      <h1>Building a <span class="sec">Second</span> Brain</h1>
+      <div class="tagline">A proven method to organise your digital life and unlock your creative potential</div>
+      <div class="author">Tiago Forte <small>· 2022</small></div>
+      <div class="hero-meta">
+        <div class="meta-pill">Productivity</div>
+        <div class="meta-pill">Knowledge Management</div>
+        <div class="meta-pill">CODE &amp; PARA</div>
+      </div>
+    </div>
+    <div class="book-cover-wrap">
+      <img src="images/building-a-second-brain-cover.jpg" alt="Building a Second Brain book cover">
     </div>
   </div>
-  <div class="book-cover-wrap">
-    <img src="images/building-a-second-brain-cover.jpg" alt="Building a Second Brain book cover">
-  </div>
 </div>
+
+<div class="back-bar"><a href="index.html" class="back-link"><span>←</span> Back to Library</a></div>
 
 <div class="tabs">
   <div class="tab active" onclick="showTab('overview', this)">Overview</div>
   <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
-  <div class="tab" onclick="showTab('method', this)">The Method</div>
-  <div class="tab" onclick="showTab('verdict', this)">Verdict</div>
+  <div class="tab hot" onclick="showTab('method', this)">CODE &amp; PARA</div>
+  <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
+  <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
+  <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
-<!-- OVERVIEW -->
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
 <div id="overview" class="panel active">
-  <div class="section-header">
-    <h2>What This Book Is About</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
 
   <div class="overview-grid">
-    <div class="stat-card">
-      <div class="stat-label">Core System</div>
-      <div class="stat-value">CODE + PARA</div>
-      <div class="stat-desc">Two interlocking frameworks for capture &amp; organization</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Central Promise</div>
-      <div class="stat-value">Digital PKM</div>
-      <div class="stat-desc">Personal Knowledge Management that reduces cognitive load</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Author Background</div>
-      <div class="stat-value">Tiago Forte</div>
-      <div class="stat-desc">Productivity coach, creator of the "Building a Second Brain" course</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Best For</div>
-      <div class="stat-value">Knowledge Workers</div>
-      <div class="stat-desc">Writers, researchers, creators drowning in information</div>
-    </div>
+    <div class="stat-card"><div class="stat-label">Core System</div><div class="stat-value">CODE + PARA</div><div class="stat-desc">A four-step workflow for information, and a four-folder structure for filing it</div></div>
+    <div class="stat-card"><div class="stat-label">Central Promise</div><div class="stat-value">Think More, Remember Less</div><div class="stat-desc">Let a trusted digital system hold your notes, so your head is free for ideas and decisions</div></div>
+    <div class="stat-card"><div class="stat-label">Primary Techniques</div><div class="stat-value">Progressive Summarization, Packets</div><div class="stat-desc">Plus the archipelago of ideas, Hemingway bridges and weekly reviews</div></div>
+    <div class="stat-card"><div class="stat-label">Best For</div><div class="stat-value">Knowledge Workers Drowning in Input</div><div class="stat-desc">Writers, researchers, consultants, students and anyone who reads far more than they use</div></div>
   </div>
 
   <div class="summary-block">
-    <p><strong>Building a Second Brain</strong> is Tiago Forte's definitive guide to creating a personal knowledge management (PKM) system using digital tools. The central premise is that our biological brains are not designed to store, organize, and retrieve the enormous volume of information we encounter in the modern world — but technology can serve as an external "second brain" that handles this for us.</p>
-    <p>Forte argues that most people are failing to leverage the notes, ideas, articles, and insights they consume every day. Rather than letting knowledge evaporate, he presents a methodology — built around two core frameworks (CODE and PARA) — to capture, organize, distill, and express information in ways that fuel creativity, productivity, and meaningful work.</p>
-    <p>The book is equal parts philosophy and practical system. Forte weaves in neuroscience, design thinking, and personal narrative to make the case that a well-maintained digital notebook isn't just a productivity tool — it's a creative partner, a memory prosthetic, and ultimately, an extension of your thinking self.</p>
+    <p><strong>Building a Second Brain</strong> is Tiago Forte's guide to a personal knowledge management (PKM) system built on ordinary digital notes apps. The idea is that your biological brain is for having ideas, not storing them, so you give it an external partner that holds the things you read, hear and think.</p>
+    <p>The system rests on two frameworks. <strong>CODE</strong> (Capture, Organize, Distill, Express) describes the lifecycle of a piece of information. <strong>PARA</strong> (Projects, Areas, Resources, Archive) is the folder structure, arranged by how actionable something is rather than by topic. Around those sit a handful of habits: summarising notes in layers, working in small reusable chunks, and reviewing the system weekly.</p>
+    <p>It is part manifesto and part manual. The manifesto half argues that notes should serve finished work, not become a hobby of their own. The manual half is tool-agnostic, so you can follow it in Notion, Evernote, Apple Notes or Obsidian.</p>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Core Ideas at a Glance</h2>
-    <div class="section-line"></div>
+  <div class="section-header" style="margin-top:30px;"><h2>The Whole Book on Two Grids</h2><div class="section-line"></div></div>
+  <div class="axis-cap"><span>CODE: how information flows</span><span>Tap to explore →</span></div>
+  <div class="mini-four">
+    <div class="mini-c c1" onclick="jumpM('m-code')"><div class="big">C</div><h4>Capture</h4><p>Keep what resonates</p></div>
+    <div class="mini-c c2" onclick="jumpM('m-code')"><div class="big">O</div><h4>Organize</h4><p>Save for actionability</p></div>
+    <div class="mini-c c3" onclick="jumpM('m-code')"><div class="big">D</div><h4>Distill</h4><p>Find the essence</p></div>
+    <div class="mini-c c4" onclick="jumpM('m-code')"><div class="big">E</div><h4>Express</h4><p>Show your work</p></div>
+  </div>
+  <div class="axis-cap"><span>PARA: where it lives</span><span></span></div>
+  <div class="mini-para">
+    <div class="mini-p" onclick="jumpM('m-para')"><b>Projects</b><span>Short-term goals with an end</span></div>
+    <div class="mini-p" onclick="jumpM('m-para')"><b>Areas</b><span>Ongoing responsibilities</span></div>
+    <div class="mini-p" onclick="jumpM('m-para')"><b>Resources</b><span>Topics of interest</span></div>
+    <div class="mini-p" onclick="jumpM('m-para')"><b>Archive</b><span>Inactive items from the rest</span></div>
   </div>
 
-  <div class="key-idea"><div class="icon">🧠</div><div><strong>Your brain is for having ideas, not storing them.</strong> Offload the remembering so you can focus on connecting, creating, and executing.</div></div>
-  <div class="key-idea"><div class="icon">♻️</div><div><strong>Information has a lifecycle.</strong> Capture → Organize → Distill → Express. Each stage transforms raw input into useful, shareable output.</div></div>
-  <div class="key-idea"><div class="icon">📂</div><div><strong>Organize by actionability, not by topic.</strong> PARA (Projects, Areas, Resources, Archive) is organized around your life, not a library taxonomy.</div></div>
-  <div class="key-idea"><div class="icon">✏️</div><div><strong>Progressive Summarization beats exhaustive note-taking.</strong> Layer highlights over time so the most important insights rise to the top.</div></div>
-  <div class="key-idea"><div class="icon">🎨</div><div><strong>You are a curator, not a collector.</strong> Save less, but save what resonates. Capture what's surprising, useful, or personally meaningful.</div></div>
-  <div class="key-idea"><div class="icon">🌊</div><div><strong>Intermediate Packets.</strong> Break creative work into small, reusable components so you're never starting from zero.</div></div>
+  <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
+  <div class="key-idea"><div class="icon">🧠</div><div><strong>Your brain is for having ideas, not holding them.</strong> Offload the remembering so attention goes to connecting and creating.</div></div>
+  <div class="key-idea"><div class="icon">♻️</div><div><strong>Information has a lifecycle.</strong> Capture, organise, distil, express: each stage turns raw input into something usable.</div></div>
+  <div class="key-idea"><div class="icon">📂</div><div><strong>File by actionability, not topic.</strong> PARA asks "where will I use this?" rather than "what is this about?"</div></div>
+  <div class="key-idea"><div class="icon">✏️</div><div><strong>Summarise in layers, only when you revisit.</strong> Progressive Summarization spends effort on notes that keep proving useful.</div></div>
+  <div class="key-idea"><div class="icon">🎨</div><div><strong>Curate, do not hoard.</strong> Save what resonates and what surprises you, not everything that might one day matter.</div></div>
+  <div class="key-idea"><div class="icon">🧩</div><div><strong>Work in small packets.</strong> Break creative work into reusable pieces so you are rarely starting from a blank page.</div></div>
 </div>
 
-<!-- CHAPTERS -->
+<!-- ═══════════════ CHAPTERS ═══════════════ -->
 <div id="chapters" class="panel">
+  <div class="note-box"><strong>How to read this tab:</strong> the structure (an Introduction, three Parts covering chapters 1 to 10, and a Conclusion) and the chapter titles come from a web search of library listings, summaries and reader notes (the Part titles and the titles of chapters 1 to 3, 4 to 7 and 8 to 10 are consistent across what I found). I could not open the publisher's own contents page (Simon &amp; Schuster returned an error), so check exact titles and the Conclusion's title against your copy. The summaries are my reconstruction of each chapter's themes, not a line-by-line reading, and I have not quoted the book. An earlier version of this page listed a twelve-chapter, four-part structure; that was wrong and has been replaced.</div>
 
-  <div class="part-header">Part I — The Foundation: Understanding What's Possible</div>
+  <div class="part-header">Introduction</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">1</div>
-      <div class="ch-title">Where It All Started</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num intro">I</div><div class="ch-title">The Promise of a Second Brain</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Forte opens with his personal story of chronic illness — a mysterious condition that left him unable to rely on his own memory. This forced him to externalise everything, leading to the discovery that writing things down and building external systems wasn't a crutch, but a superpower. The chapter establishes the emotional hook: our dependence on our biological brain to hold everything is fragile, stressful, and unnecessary. The Second Brain isn't about being smarter — it's about being more intentional.
-      <div class="ch-takeaway">Your note-taking system should be a relief — not another source of anxiety. Start from self-compassion, not productivity guilt.</div>
+      <p>Forte opens with the case for why anyone needs this. We consume far more information than we can hold, yet most of it vanishes unused. He introduces the Second Brain as an external, digital place to keep what matters so you can draw on it later.</p>
+      <p>He also frames what the book will and will not promise: a practical method rather than a new app, built to be used with whichever notes tool you already have.</p>
+      <div class="ch-takeaway">The point is not a tidier archive. It is turning the things you take in into things you make.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> A Second Brain as a thinking partner, not a filing cabinet</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part One: The Foundation (Ch. 1–3)</div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">Where It All Started</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <p>The origin story. Forte describes a long stretch of health problems that made it hard to rely on his memory and attention, and how that pushed him to build external systems for his notes. The method grew out of necessity before it became a course.</p>
+      <p>The chapter sets the tone for the whole book: this is meant to reduce stress, not add another system to feel guilty about.</p>
+      <div class="ch-takeaway">The system started as a way to cope, which is why it aims to be light enough to survive a bad week.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Externalising memory as relief, not as productivity pressure</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">2</div>
-      <div class="ch-title">What Is a Second Brain?</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">2</div><div class="ch-title">What Is a Second Brain?</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Forte defines the Second Brain concept: a personal, digital system for capturing and connecting ideas, insights, and information. He distinguishes it from simple note-taking or bookmarking. The Second Brain is dynamic — it grows, evolves, and feeds back into your creative work. He introduces the concept of PKM (Personal Knowledge Management) and makes the case that professional success in the information age requires intentional curation of what you know.
-      <div class="ch-takeaway">A Second Brain is not a filing cabinet — it's a living system that actively supports your thinking and creative output.</div>
+      <p>A definition and a pitch. A Second Brain is a personal, digital collection of the ideas and information that matter to you, organised so you can find and use them. Forte contrasts it with passively saving bookmarks or letting notes pile up unread.</p>
+      <p>He lists what it can do for you: hold ideas safely, let you connect material from different places, and support finished projects. It is also where he introduces personal knowledge management as the wider field this sits in.</p>
+      <div class="ch-takeaway">A Second Brain earns its keep only if it feeds your projects. Collecting for its own sake is the failure mode.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Second Brain vs bookmarks, vs plain note-taking</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">3</div>
-      <div class="ch-title">How a Second Brain Works</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">3</div><div class="ch-title">How a Second Brain Works</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      This chapter introduces the CODE framework — <strong>Capture, Organize, Distill, Express</strong> — as the core operating system of the Second Brain. Forte walks through each stage at a high level, explaining how information flows from the world into your system, gets sorted, refined, and eventually becomes output (writing, presentations, decisions, conversations). He frames this as a creative flywheel: the more you put in and the more you use it, the more valuable it becomes.
-      <div class="ch-takeaway">CODE is the heartbeat: Capture → Organize → Distill → Express. Every piece of information should eventually serve a project or goal.</div>
+      <p>The overview chapter that introduces <strong>CODE</strong>: Capture, Organize, Distill, Express. Information moves from the world into your system, gets filed, is refined into its essence, and finally comes out as something you share or use.</p>
+      <p>Forte presents it as a loop that gets more valuable the more you run it, and as a way to stay out of two common traps: saving everything and never touching it, or never saving anything and relying on memory.</p>
+      <div class="ch-takeaway">CODE is the spine of the book: every later chapter in Part Two is one letter of it.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> The CODE framework (see the CODE &amp; PARA tab)</div>
     </div>
   </div>
 
-  <div class="part-header">Part II — The Method: The Four Steps of CODE</div>
+  <div class="part-header">Part Two: The Method (Ch. 4–7)</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">4</div>
-      <div class="ch-title">Capture — Keep What Resonates</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">4</div><div class="ch-title">Capture: Keep What Resonates</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      The "C" of CODE. Forte tackles the first question: what's worth saving? His answer: whatever <em>resonates</em>. Not what seems objectively important, but what surprises you, contradicts your assumptions, or sparks your curiosity. He introduces saving for your "future self" — asking not "is this useful?" but "will future-me be glad to have this?" He also introduces the <strong>Capture Toolkit</strong>: a lightweight set of apps and habits (read-it-later apps, highlighters, voice memos) for frictionlessly getting ideas into your system.
-      <div class="ch-takeaway">Capture what resonates — not what's comprehensive. The filter is your intuition, not a checklist.</div>
+      <p>The first question is what is worth saving. Forte's answer is a deliberately loose filter: keep what resonates, meaning what surprises you, moves you, or feels useful. He pushes back on trying to capture everything, and frames you as a curator rather than a collector.</p>
+      <p>The chapter also covers practical capture habits, such as using a small number of capture tools and saving with your future self in mind.</p>
+      <div class="ch-takeaway">Capture less, and capture on instinct. The filter is whether it resonates, not whether it is comprehensive.</div>
+      <div class="ch-tool"><strong>Key ideas:</strong> Curator's mindset · A few capture tools, not many</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">5</div>
-      <div class="ch-title">Organize — Save for Actionability</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">Organize: Save for Actionability</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      The "O" of CODE. Forte introduces the <strong>PARA system</strong> — the organizational backbone of the Second Brain. PARA stands for: <strong>Projects</strong> (active, deadline-driven), <strong>Areas</strong> (ongoing responsibilities with no end date), <strong>Resources</strong> (topics of interest for future reference), and <strong>Archive</strong> (inactive items from the other three). The key insight is that PARA is organized by <em>actionability</em>, not topic. The question isn't "what category does this belong to?" but "how will I use this?"
-      <div class="ch-takeaway">PARA = Projects, Areas, Resources, Archive. Organize by how actionable something is, not what it's about.</div>
+      <p>This is where <strong>PARA</strong> arrives. Instead of organising by subject like a library, you organise by how soon you will act on something: <strong>Projects</strong> (short-term efforts with a goal), <strong>Areas</strong> (ongoing responsibilities), <strong>Resources</strong> (topics of interest) and <strong>Archive</strong> (things that are no longer active).</p>
+      <p>The structure is designed to be shallow and to mirror the way you actually work, so that the question at filing time is only "which project or area does this help?"</p>
+      <div class="ch-takeaway">File notes where they will be needed soonest, and let the project's end move them to Archive.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> PARA (see the CODE &amp; PARA tab)</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">6</div>
-      <div class="ch-title">Distill — Find the Essence</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Distill: Find the Essence</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      The "D" of CODE. This chapter introduces <strong>Progressive Summarization</strong> — Forte's signature technique for extracting the most valuable insights from saved notes over time. The process works in four layers: save the original passage → bold the most important sentences → highlight the most important of those → write a brief executive summary at the top. This creates a "discoverable" note — one where future-you can quickly scan and understand the essence without re-reading everything.
-      <div class="ch-takeaway">Progressive Summarization = layer bolding and highlighting over time, so the key insights float to the top without re-reading everything.</div>
+      <p>Forte's signature technique, <strong>Progressive Summarization</strong>. Rather than summarising everything up front, you add layers each time you revisit a note: first the saved passage, then bold on the key sentences, then highlight on the best of those, then a short summary in your own words.</p>
+      <p>The logic is that effort goes only into notes that keep getting reopened, and the layers make a note skimmable in seconds. The book describes a further step of remixing the distilled material into new work; check your copy for exactly how many layers it names.</p>
+      <div class="ch-takeaway">Do not summarise everything. Let usefulness decide which notes earn another layer.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Progressive Summarization (see the Toolkit tab)</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">7</div>
-      <div class="ch-title">Express — Show Your Work</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Express: Show Your Work</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      The "E" of CODE. The final step — turning accumulated knowledge into concrete output. Forte introduces two important concepts. First, <strong>Intermediate Packets (IPs)</strong> — small, discrete units of work (outlines, drafts, slides, research summaries) that can be assembled, recycled, and reused across projects. Second, he emphasises "working with the garage door up" — sharing work in progress, not just polished final products. Expression is the feedback loop that makes the whole system richer.
-      <div class="ch-takeaway">Create Intermediate Packets — small reusable chunks — so you're always building on past work, never starting from scratch.</div>
+      <p>The payoff stage. Forte argues the system exists to produce things, and introduces <strong>Intermediate Packets</strong>: small, reusable units of work such as an outline, a research summary or a slide that you can assemble into larger pieces.</p>
+      <p>He also encourages sharing work while it is still in progress, rather than waiting until it is polished, so that feedback arrives early and the packets keep circulating.</p>
+      <div class="ch-takeaway">Think in reusable packets and ship early, so each project leaves behind parts for the next.</div>
+      <div class="ch-tool"><strong>Key tool:</strong> Intermediate Packets (see the Toolkit tab)</div>
     </div>
   </div>
 
-  <div class="part-header">Part III — The Shift: Making Things Happen</div>
+  <div class="part-header">Part Three: The Shift (Ch. 8–10)</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">8</div>
-      <div class="ch-title">The Art of Creative Execution</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">The Art of Creative Execution</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Forte moves from system to psychology. This chapter tackles the creative process itself — specifically, why creative work often gets stuck and how a Second Brain solves that. He introduces the concept of <strong>Archipelago of Ideas</strong>: rather than starting with a blank page, you begin creative projects by gathering existing notes and ideas into a loose collection, then connecting them. He also introduces <strong>Hemingway Bridges</strong> — ending work sessions by writing a few sentences about where you'll pick up next, so future-you doesn't have to reconstruct your thinking from scratch.
-      <div class="ch-takeaway">Never start from blank. Use your Second Brain to assemble an "archipelago of ideas" before creating — lower the activation energy of creative work.</div>
+      <p>From system to practice. The chapter discusses how creative work alternates between diverging (gathering and exploring) and converging (narrowing and deciding), and how a Second Brain supports both. A key image is the <strong>archipelago of ideas</strong>: before drafting, you collect your relevant notes into a loose cluster of islands and look for how they connect.</p>
+      <p>A related habit is the <strong>Hemingway bridge</strong>: end a work session by leaving yourself a short note on where to pick up.</p>
+      <div class="ch-takeaway">Start from material you already have, and leave yourself a bridge so the next session begins at speed.</div>
+      <div class="ch-tool"><strong>Key tools:</strong> Archipelago of ideas · Hemingway bridge (check your copy for where the bridge is introduced)</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">9</div>
-      <div class="ch-title">The Essential Habits of Digital Organizers</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">9</div><div class="ch-title">The Essential Habits of Digital Organizers</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      A practical chapter on the maintenance routines that keep a Second Brain alive and useful. Forte introduces <strong>Project Checklists</strong> (what to do when starting and closing a project), <strong>Weekly Reviews</strong> (a 20–30 min weekly habit to process inbox, update PARA, and set intentions), and <strong>Monthly Reviews</strong> (bigger picture: are your projects aligned with your goals?). He frames these not as burdens but as the minimal viable maintenance required to keep the system functioning. He also covers how to avoid over-organizing — "just-in-time" organization beats "just-in-case."
-      <div class="ch-takeaway">Weekly and monthly reviews are the heartbeat of the system. Without them, even a great setup decays into clutter.</div>
+      <p>The maintenance chapter. A Second Brain decays without upkeep, so Forte describes light recurring habits: checklists for starting and finishing projects, a regular review of your inbox and project list, and periodic broader check-ins on whether what you are working on still matches what you want.</p>
+      <p>He leans toward organising just in time, when a project actually needs the material, rather than organising just in case.</p>
+      <div class="ch-takeaway">A short, regular review keeps the system useful. Skip it and even a good setup turns into clutter.</div>
+      <div class="ch-tool"><strong>Key ideas:</strong> Project checklists · Regular reviews · Just-in-time organising</div>
     </div>
   </div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">10</div>
-      <div class="ch-title">The Path of Self-Expression</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num">10</div><div class="ch-title">The Path of Self-Expression</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      A more philosophical chapter. Forte zooms out to ask: why does all this matter? His answer is that knowledge management ultimately serves self-expression — the ability to contribute your unique perspective, voice, and ideas to the world. He argues that most people have far more to offer than they realise, but they're held back by poor systems and fear. The Second Brain is, at its core, a system for discovering and articulating your authentic voice. He also addresses "I'm not creative" — arguing that creativity is a skill developed through consistent capture, connection, and expression.
-      <div class="ch-takeaway">Your Second Brain is ultimately about self-expression — helping you find, develop, and share your unique point of view.</div>
+      <p>The widest-angle chapter. Forte steps back from tools to the mindset he hopes goes with them: moving from a feeling of scarcity (fear of missing the right idea) toward abundance (confidence that your collected material and your own voice are enough to start with).</p>
+      <p>He ties the method to creative self-expression, arguing that steadily collecting, connecting and sharing is how people find what they have to say. I am less sure of this chapter's internal order than the others, so treat the detail as approximate.</p>
+      <div class="ch-takeaway">The deeper aim is not to be organised but to find and share your own perspective.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> From scarcity to abundance as the real shift</div>
     </div>
   </div>
 
-  <div class="part-header">Part IV — The Future</div>
+  <div class="part-header">Conclusion</div>
 
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">11</div>
-      <div class="ch-title">The Eleventh Hour</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num intro">★</div><div class="ch-title">Conclusion (title not verified)</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Forte addresses a common experience: many people build great systems but still feel the crunch of deadlines and creative pressure. This chapter reframes that experience — the "eleventh hour" feeling isn't a failure, it's often when your Second Brain does its best work. Under pressure, you're forced to be decisive: you stop curating and start creating. He argues that constraints and deadlines are productive forces, not enemies. The Second Brain doesn't eliminate pressure — it ensures you have rich raw material to work with when it arrives.
-      <div class="ch-takeaway">Deadlines are productive. Your Second Brain ensures that when pressure arrives, you have a rich body of material to draw on — not a blank page.</div>
-    </div>
-  </div>
-
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">12</div>
-      <div class="ch-title">The Promise of a Second Brain</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      The closing chapter is a vision of what's possible when a Second Brain becomes truly integrated into your life. Forte describes a future where knowledge workers don't lose ideas, don't start from scratch, and don't feel overwhelmed by information. He also broadens the lens — collective Second Brains (teams, communities, generations sharing knowledge) could transform how organizations and societies learn and innovate. The chapter ends with an invitation: start small, stay consistent, and trust that the system will compound over time.
-      <div class="ch-takeaway">Start small. The system compounds. What begins as a personal habit can evolve into a life-changing practice — and eventually, a collective intelligence.</div>
+      <p>Search results for the book's structure list a closing section after chapter 10, but I could not confirm its title or contents. Based on the book's themes, expect a wrap-up that encourages starting small and letting the habit compound. Treat this card as a placeholder and read the real conclusion in your copy.</p>
+      <div class="ch-takeaway">Not verified: included so the page matches the book's structure rather than inventing a chapter.</div>
     </div>
   </div>
 </div>
 
-<!-- METHOD -->
+<!-- ═══════════════ CODE & PARA (DEEP DIVE) ═══════════════ -->
 <div id="method" class="panel">
-  <div class="section-header">
-    <h2>The CODE Framework</h2>
-    <div class="section-line"></div>
+  <div class="section-header"><h2>CODE &amp; PARA, In Depth</h2><div class="section-line"></div></div>
+  <p class="lead">Two frameworks do most of the work. CODE says what to do with information over time; PARA says where to keep it. Below, each gets a per-element breakdown, then a side-by-side comparison, then two things to try. The sample situations are my own illustrations in the spirit of the book, not quotations from it.</p>
+
+  <div class="note-box"><strong>A note on how these fit:</strong> PARA is mainly the "Organize" step of CODE. Everything else in CODE (what you capture, how you summarise, what you produce) is shaped by the PARA folders, which is why the book treats them as one system.</div>
+
+  <div class="m-nav">
+    <a class="m-pill code" onclick="jumpM('m-code')">CODE</a>
+    <a class="m-pill para" onclick="jumpM('m-para')">PARA</a>
+    <a class="m-pill cmp" onclick="jumpM('m-cmp')">Side-by-Side</a>
+    <a class="m-pill try" onclick="jumpM('m-try')">Try It</a>
   </div>
 
-  <div class="method-grid">
-    <div class="method-card">
-      <div class="tag">C</div>
-      <h4>Capture</h4>
-      <p>Save what resonates — ideas, quotes, insights, passages — using a lightweight toolkit of tools. Filter by intuition, not comprehensiveness.</p>
+  <!-- CODE -->
+  <div class="m-section codes" id="m-code">
+    <div class="m-head code">
+      <div class="stamp">The Workflow</div>
+      <div class="dials">Four steps · one loop</div>
+      <h3>CODE</h3>
+      <div class="tag">Capture, Organize, Distill, Express. Information goes in raw and comes out as something finished.</div>
     </div>
-    <div class="method-card">
-      <div class="tag">O</div>
-      <h4>Organize</h4>
-      <p>Sort captured material into PARA (Projects, Areas, Resources, Archive). Ask "how will I use this?" not "what category is this?"</p>
-    </div>
-    <div class="method-card">
-      <div class="tag">D</div>
-      <h4>Distill</h4>
-      <p>Apply Progressive Summarization — layer bolding and highlighting over time so key insights surface quickly when you need them.</p>
-    </div>
-    <div class="method-card">
-      <div class="tag">E</div>
-      <h4>Express</h4>
-      <p>Create Intermediate Packets and share work in progress. Expression is the output that makes the whole system worthwhile.</p>
+    <div class="m-body">
+      <h4>What it is</h4>
+      <p>CODE is a pipeline for anything you read, hear or think. Each step has one job and one question, and the goal is to stop the pipeline clogging at the first step (saving) while nothing ever reaches the last (making). It is a loop rather than a straight line: finished work generates new things worth capturing.</p>
+
+      <h4>The four elements</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5><span class="letter">C</span>Capture</h5><ul>
+          <li><strong>Question:</strong> does this resonate?</li>
+          <li>Save what surprises, moves or sounds useful to future you</li>
+          <li>Use few capture tools so it stays frictionless</li>
+          <li><strong>Common slip:</strong> saving everything, which feels productive and is not</li>
+        </ul></div>
+        <div class="q-card"><h5><span class="letter">O</span>Organize</h5><ul>
+          <li><strong>Question:</strong> where will I use this first?</li>
+          <li>File into the PARA folders, shallow and fast</li>
+          <li>Do it at the moment of capture or in a weekly pass</li>
+          <li><strong>Common slip:</strong> building a perfect topic taxonomy that no project needs</li>
+        </ul></div>
+        <div class="q-card"><h5><span class="letter">D</span>Distill</h5><ul>
+          <li><strong>Question:</strong> what is the essence of this?</li>
+          <li>Add layers (bold, highlight, summary) only when you revisit a note</li>
+          <li>Aim for a note you can skim quickly</li>
+          <li><strong>Common slip:</strong> highlighting everything, which distils nothing</li>
+        </ul></div>
+        <div class="q-card"><h5><span class="letter">E</span>Express</h5><ul>
+          <li><strong>Question:</strong> what can I make or share with this?</li>
+          <li>Build small packets (outline, summary, slide) and reuse them</li>
+          <li>Share work in progress to get feedback sooner</li>
+          <li><strong>Common slip:</strong> endlessly collecting and never producing</li>
+        </ul></div>
+      </div>
+
+      <h4>What it feels like when it works</h4>
+      <p>Less pressure to remember, and a lower starting cost for new work: you open a project and the relevant notes are already there. When it does not work, it feels like a second inbox you are behind on.</p>
+
+      <h4>What it sounds like</h4>
+      <div class="say-grid">
+        <div class="say bad"><div class="lab">Stuck in Capture</div><em>"I'll clip this article and sort it out later."</em> (Hundreds of unsorted clips, none opened again.)</div>
+        <div class="say good"><div class="lab">A full CODE loop</div><em>"I'm writing the Q3 plan; this note supports it, so I'll file it there, bold two lines, and turn it into a one-slide summary."</em></div>
+      </div>
+
+      <h4>Illustrative scenario</h4>
+      <div class="scenario"><div class="lab">Example (mine, not the book's)</div>A consultant reads a long report on retail trends. She saves two passages (Capture), drops them in the folder for her client project (Organize), bolds the key figures when she next opens it (Distill), and reuses the finished one-paragraph summary in a proposal two weeks later (Express). The report's other 40 pages never enter her system, and that is the point.</div>
+
+      <h4>How to get it moving</h4>
+      <div class="way-out"><ol>
+        <li><strong>Find the clog.</strong> Which step do you skip? Most people over-capture and under-express.</li>
+        <li><strong>Pick one live project</strong> and run only that project through all four steps.</li>
+        <li><strong>Cap your capture.</strong> Save fewer, more deliberate items for a week.</li>
+        <li><strong>Make something small.</strong> A one-page summary counts as an Express step.</li>
+      </ol></div>
     </div>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>The PARA System</h2>
-    <div class="section-line"></div>
+  <!-- PARA -->
+  <div class="m-section" id="m-para">
+    <div class="m-head para">
+      <div class="stamp">The Structure</div>
+      <div class="dials">Four folders · by actionability</div>
+      <h3>PARA</h3>
+      <div class="tag">Projects, Areas, Resources, Archive. Organised by how soon you will act, not by what the note is about.</div>
+    </div>
+    <div class="m-body">
+      <h4>What it is</h4>
+      <p>PARA is a deliberately simple folder structure meant to work in any notes app. Its central claim is that a note's most useful property is not its topic but where it sits on the road to action. Something for a live deadline goes to the front; something you are merely curious about goes further back; finished things get out of the way.</p>
+
+      <h4>The four elements</h4>
+      <div class="q-grid">
+        <div class="q-card"><h5>Projects</h5><ul>
+          <li>A short-term effort with a clear goal and an end</li>
+          <li>Test: can you say what "done" looks like?</li>
+          <li>Examples (mine): launch the website, plan a trip, finish a report</li>
+          <li><strong>Common slip:</strong> vague "projects" with no end that are really areas</li>
+        </ul></div>
+        <div class="q-card"><h5>Areas</h5><ul>
+          <li>An ongoing responsibility with a standard to maintain, no end date</li>
+          <li>Test: would you be in trouble if you ignored it for a year?</li>
+          <li>Examples (mine): health, finances, a team you manage</li>
+          <li><strong>Common slip:</strong> mistaking a long project for an area</li>
+        </ul></div>
+        <div class="q-card"><h5>Resources</h5><ul>
+          <li>A topic or interest you may use later, with no active commitment</li>
+          <li>Test: useful someday, but nobody is waiting on it</li>
+          <li>Examples (mine): design inspiration, sleep research, recipes</li>
+          <li><strong>Common slip:</strong> using it as a dumping ground</li>
+        </ul></div>
+        <div class="q-card"><h5>Archive</h5><ul>
+          <li>Inactive material from the other three</li>
+          <li>Test: not needed now, but you would hate to lose it</li>
+          <li>Examples (mine): finished projects, retired interests</li>
+          <li><strong>Common slip:</strong> never moving anything there, so the active folders swell</li>
+        </ul></div>
+      </div>
+
+      <h4>What it feels like when it works</h4>
+      <p>Filing takes a few seconds because there are only four places to look, and the answer usually comes from your calendar rather than from a taxonomy. When it does not work, Projects and Areas blur together and the structure needs more upkeep than it saves.</p>
+
+      <h4>What it sounds like</h4>
+      <div class="say-grid">
+        <div class="say bad"><div class="lab">Topic thinking</div><em>"This is about marketing, so it goes in the Marketing folder."</em></div>
+        <div class="say good"><div class="lab">Actionability thinking</div><em>"I'm pitching next week, so this goes in the pitch project. If I never use it, it can sit in Resources."</em></div>
+      </div>
+
+      <h4>Illustrative scenario</h4>
+      <div class="scenario"><div class="lab">Example (mine, not the book's)</div>A teacher saves an article on classroom feedback. Under topic thinking it joins forty others in "Education". Under PARA she files it in the Project "Autumn term feedback policy", where it will be read this month. When the term ends the whole folder goes to Archive and the article leaves her way, still findable by search.</div>
+
+      <h4>How to get it moving</h4>
+      <div class="way-out"><ol>
+        <li><strong>List your live projects</strong> (aim for a short list) and create one folder for each.</li>
+        <li><strong>List your areas</strong> by asking what you must keep running.</li>
+        <li><strong>Move one old pile</strong> into Archive to see how light it feels.</li>
+        <li><strong>Review weekly</strong> and ask whether anything has changed type, such as a project that has become an area.</li>
+      </ol></div>
+    </div>
+  </div>
+
+  <!-- SIDE BY SIDE -->
+  <div class="m-section" id="m-cmp">
+    <div class="m-head" style="background:var(--teal-pale); color:var(--teal-deep);">
+      <div class="dials">All eight at once</div>
+      <h3>side-by-side</h3>
+      <div class="tag" style="color:var(--ink-soft);">PARA's four folders compared on the same questions, then CODE's four steps.</div>
+    </div>
+    <div class="m-body">
+      <h4>PARA containers</h4>
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead><tr><th class="blank"></th><th class="a">Projects</th><th class="b">Areas</th><th class="c">Resources</th><th class="d">Archive</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">What it holds</td><td>Short-term efforts with a goal</td><td>Ongoing responsibilities</td><td>Topics of interest</td><td>Inactive items</td></tr>
+            <tr><td class="rowh">Has an end?</td><td>Yes</td><td>No</td><td>No</td><td>Already ended</td></tr>
+            <tr><td class="rowh">Question to ask</td><td>"What am I delivering?"</td><td>"What must I keep up?"</td><td>"Might this be useful?"</td><td>"Do I need it now?"</td></tr>
+            <tr><td class="rowh">Review rhythm</td><td>Weekly</td><td>Periodic</td><td>Occasional</td><td>Rarely</td></tr>
+            <tr><td class="rowh">Typical slip</td><td>Project with no finish line</td><td>Confused with a project</td><td>Becomes a dumping ground</td><td>Never used, so folders bloat</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h4>CODE steps</h4>
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead><tr><th class="blank"></th><th class="a">Capture</th><th class="b">Organize</th><th class="c">Distill</th><th class="d">Express</th></tr></thead>
+          <tbody>
+            <tr><td class="rowh">Job</td><td>Get it in</td><td>Put it where it helps</td><td>Make it skimmable</td><td>Turn it into output</td></tr>
+            <tr><td class="rowh">Key question</td><td>Does it resonate?</td><td>Where will I use it?</td><td>What is the essence?</td><td>What can I make?</td></tr>
+            <tr><td class="rowh">Technique</td><td>Few capture tools</td><td>PARA</td><td>Progressive Summarization</td><td>Intermediate Packets</td></tr>
+            <tr><td class="rowh">Risk if skipped</td><td>Ideas evaporate</td><td>Notes cannot be found</td><td>Notes are too long to reuse</td><td>The system produces nothing</td></tr>
+            <tr><td class="rowh">Typical slip</td><td>Hoarding</td><td>Over-engineering</td><td>Highlighting everything</td><td>Collecting forever</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Two points are worth holding onto. First, PARA is a bet that <strong>time-to-action</strong> is the best filing logic for most working people. Second, the whole system is judged by what it lets you <strong>produce</strong>, which is why Express is the step the book keeps returning to.</p>
+    </div>
+  </div>
+
+  <!-- TRY IT -->
+  <div class="m-section" id="m-try">
+    <div class="m-head" style="background:var(--rust);">
+      <div class="dials">Interactive</div>
+      <h3>try it</h3>
+      <div class="tag">Find your weakest CODE step, then file six items into PARA.</div>
+    </div>
+    <div class="m-body">
+      <h4>Your CODE check-up</h4>
+      <p style="margin-bottom:14px;">A self-reflection sketch of my own, not a test from the book. Slide each bar to how well that step works for you today.</p>
+      <div class="map-box">
+        <div id="map-sliders"></div>
+        <div class="map-out" id="map-out"><h5 id="map-title"></h5><div id="map-text"></div></div>
+      </div>
+
+      <h4>File it in PARA</h4>
+      <p style="margin-bottom:12px;">Six notes, all invented by me. Tap where you would file each one. There is some judgement involved, so read the explanation.</p>
+      <div id="quiz"></div>
+      <div class="quiz-score" id="quiz-score"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOOLKIT ═══════════════ -->
+<div id="toolkit" class="panel">
+  <div class="section-header"><h2>The Toolkit</h2><div class="section-line"></div></div>
+  <p class="lead">The book's main practical techniques gathered in one place. They are described from my reading of its structure and themes; the practice plan at the bottom is my own suggestion, not the author's.</p>
+
+  <div class="method-card"><div class="tag">Distill</div><h4>Progressive Summarization</h4>
+    <p>Add layers to a note only when you come back to it, so effort lands where the value is.</p>
+    <ul>
+      <li><strong>Layer 1:</strong> the saved passage as you captured it</li>
+      <li><strong>Layer 2:</strong> bold the best sentences</li>
+      <li><strong>Layer 3:</strong> highlight the best of the bold</li>
+      <li><strong>Layer 4:</strong> a short summary in your own words at the top</li>
+      <li>Check your copy for the book's exact layer count and any final remix step.</li>
+    </ul>
   </div>
 
   <div class="code-block">
-    <span class="comment">// PARA — organized by actionability, not topic</span><br><br>
-    <span class="keyword">Projects</span>   → <span class="value">Active work with a deadline &amp; goal</span><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">e.g. "Write Q3 report", "Launch website"</span><br><br>
-    <span class="keyword">Areas</span>      → <span class="value">Ongoing responsibilities (no end date)</span><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">e.g. "Health", "Finances", "Parenting"</span><br><br>
-    <span class="keyword">Resources</span>  → <span class="value">Topics of interest for future use</span><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">e.g. "Design systems", "Sleep research"</span><br><br>
-    <span class="keyword">Archive</span>    → <span class="value">Inactive items from the above 3</span><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="comment">e.g. Completed projects, old interests</span>
+    <span class="c"># A note after three visits (my illustration)</span><br>
+    <span class="k">Summary:</span> Customers churn at onboarding, not renewal.<br>
+    <span class="c">...passage...</span> <span class="k">**bolded lines**</span> <span class="r">==highlighted line==</span><br>
+    <span class="c"># Each visit adds one layer, never all at once.</span>
   </div>
 
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Key Techniques</h2>
-    <div class="section-line"></div>
+  <div class="method-card"><div class="tag">Express</div><h4>Intermediate Packets</h4>
+    <p>Treat every small piece of work as an asset you can reuse, not as a step towards one big deliverable.</p>
+    <ul>
+      <li>Outlines, summaries, slide drafts, checklists and research notes all count</li>
+      <li>Save finished packets where you can find them for the next project</li>
+      <li>Share them early to get feedback before the whole thing is finished</li>
+    </ul>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Technique</div>
-    <h4>Progressive Summarization</h4>
-    <p>Layer 1: Save the passage. Layer 2: Bold the most important sentences. Layer 3: Highlight the most important of those. Layer 4 (optional): Write a brief summary at the top. Each layer is applied only when you revisit a note — not upfront. The goal is a "discoverable" note you can skim in 30 seconds.</p>
+  <div class="method-card"><div class="tag">Execution</div><h4>Archipelago of Ideas</h4>
+    <ul>
+      <li>Before drafting, gather the relevant notes into one temporary space</li>
+      <li>Look for how the "islands" connect before writing a word</li>
+      <li>Start from the structure that emerges, not from a blank page</li>
+    </ul>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Technique</div>
-    <h4>Intermediate Packets (IPs)</h4>
-    <p>Break creative work into small, discrete deliverables: an outline, a research summary, a slide deck, a draft section. These can be reused, shared, combined, and recombined across projects. IPs reduce the terror of the blank page and let you make progress incrementally.</p>
+  <div class="method-card"><div class="tag">Execution</div><h4>Hemingway Bridge</h4>
+    <p>End a work session by writing a few lines on where you stopped, what comes next and what is still open. Your next session starts there instead of with a warm-up.</p>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Technique</div>
-    <h4>Archipelago of Ideas</h4>
-    <p>Before creating anything, spend time collecting relevant notes and ideas into a temporary collection. Connect the islands. Let a structure emerge organically before you start drafting. This lowers activation energy dramatically.</p>
+  <div class="method-card"><div class="tag">Habit</div><h4>Reviews and Project Checklists</h4>
+    <ul>
+      <li>A regular short review: empty inboxes, update project statuses, move finished items to Archive</li>
+      <li>A start-of-project and end-of-project checklist so material is gathered and retired deliberately</li>
+      <li>Organise just in time for the project in front of you, not just in case</li>
+    </ul>
   </div>
 
-  <div class="method-card">
-    <div class="tag">Technique</div>
-    <h4>Hemingway Bridge</h4>
-    <p>End every creative work session by writing a few sentences: "Where am I? What's the next step? What's the open question?" This means future-you can pick up exactly where you left off — no warm-up time lost.</p>
+  <div class="toolkit-list" style="margin-top:12px;">
+    <div class="toolkit-item"><div>🎯</div><div><strong>Resonance Filter</strong>: save only what surprises, moves or helps</div></div>
+    <div class="toolkit-item"><div>📂</div><div><strong>Four-Folder Setup</strong>: Projects, Areas, Resources, Archive</div></div>
+    <div class="toolkit-item"><div>✏️</div><div><strong>Layered Highlighting</strong>: revisit before you add another layer</div></div>
+    <div class="toolkit-item"><div>🧩</div><div><strong>Packet Library</strong>: keep reusable pieces where you can find them</div></div>
+    <div class="toolkit-item"><div>🌉</div><div><strong>Bridge Note</strong>: last thing every session</div></div>
+    <div class="toolkit-item"><div>🗓️</div><div><strong>Weekly Review</strong>: keeps it from becoming a junk drawer</div></div>
+  </div>
+
+  <div class="section-header" style="margin-top:30px;"><h2>A 30-Day Practice Plan</h2><div class="section-line"></div></div>
+  <div class="note-box">This plan is my own suggestion for putting the book to work, not something drawn from it.</div>
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div>🗓️</div><div><strong>Week 1:</strong> Create the four PARA folders in your existing notes app and file only your current live projects. Capture nothing new yet.</div></div>
+    <div class="toolkit-item"><div>📥</div><div><strong>Week 2:</strong> Capture with the resonance filter, no more than a few items a day, each filed straight into a project or area.</div></div>
+    <div class="toolkit-item"><div>✏️</div><div><strong>Week 3:</strong> Distill one project's notes with a bold pass and a short summary. Write a bridge note at the end of each work session.</div></div>
+    <div class="toolkit-item"><div>🚀</div><div><strong>Week 4:</strong> Make one packet and share it unfinished. Run a review, move one finished project to Archive, and note what you actually used.</div></div>
   </div>
 </div>
 
-<!-- VERDICT -->
+<!-- ═══════════════ KEY PHRASES ═══════════════ -->
+<div id="quotes" class="panel">
+  <div class="section-header"><h2>Key Phrases &amp; Ideas</h2><div class="section-line"></div></div>
+  <div class="note-box">These are the book's signature terms with short paraphrases of the arguments behind them. I have not reproduced passages from the text. An earlier version of this page showed three quotation-style lines attributed to Forte and David Allen; I could not verify them, so they have been removed. Add your own favourite lines from your copy here.</div>
+
+  <div class="quote-block"><p>Second Brain.</p><div class="attr">— An external digital system for the ideas and information that matter to you</div></div>
+  <div class="quote-block"><p>CODE.</p><div class="attr">— Capture, Organize, Distill, Express: the lifecycle of information</div></div>
+  <div class="quote-block"><p>PARA.</p><div class="attr">— Projects, Areas, Resources, Archive: filing by actionability</div></div>
+  <div class="quote-block"><p>Progressive Summarization.</p><div class="attr">— Layered highlighting that happens only when you revisit a note</div></div>
+  <div class="quote-block"><p>Intermediate Packets.</p><div class="attr">— Small reusable units of work you can combine and reuse</div></div>
+  <div class="quote-block"><p>Archipelago of ideas.</p><div class="attr">— Gathering related notes as linked "islands" before you draft</div></div>
+  <div class="quote-block"><p>Hemingway bridge.</p><div class="attr">— A short note to yourself so the next session starts fast</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
+  <p class="lead">Paraphrases, not direct quotes.</p>
+  <div class="quote-block"><p>Your memory is a poor warehouse and a good workshop.</p><div class="attr">— Paraphrase of the Second Brain premise</div></div>
+  <div class="quote-block"><p>Save what moves you, not everything that might matter.</p><div class="attr">— Paraphrase of the Capture chapter</div></div>
+  <div class="quote-block"><p>Ask where a note will be used, not what it is about.</p><div class="attr">— Paraphrase of the Organize chapter</div></div>
+  <div class="quote-block"><p>Do not distil everything; distil what you keep reopening.</p><div class="attr">— Paraphrase of the Distill chapter</div></div>
+  <div class="quote-block"><p>A system that never produces anything is just storage.</p><div class="attr">— Paraphrase of the Express chapter</div></div>
+</div>
+
+<!-- ═══════════════ VERDICT ═══════════════ -->
 <div id="verdict" class="panel">
-  <div class="verdict-banner">
-    <h3>⭐ 4.2 / 5</h3>
-    <p>A landmark book in the PKM space — accessible, inspiring, and practical</p>
-    <div class="rating-row">
-      <div class="rating-item">
-        <div class="r-score">4.5</div>
-        <div class="r-label">Accessibility</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.0</div>
-        <div class="r-label">Depth</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">4.5</div>
-        <div class="r-label">Practicality</div>
-      </div>
-      <div class="rating-item">
-        <div class="r-score">3.8</div>
-        <div class="r-label">Originality</div>
-      </div>
-    </div>
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">3.5<small> / 5</small></div><div class="cmp-sub">Dan's own rating. His category average is 4.00, so his overall is 0.5 below it.</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Reader consensus</div><div class="cmp-score">4.02<small> / 5</small></div><div class="cmp-sub">Goodreads, 22,778 ratings (checked 11 Nov 2026). 72% gave 4 or 5 stars; 6% gave 1 or 2.</div></div>
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.5<small> / 5</small></div><div class="cmp-sub">Category average 3.5. About half a point under the crowd, mainly on evidence and padding.</div></div>
   </div>
+  <div class="note-box">Claude's scores are a judgment, not Dan's opinion and not reader data. Claude has not read the book itself: they rest on its contents and themes, reader reviews and the critiques linked below. The three views are kept separate on purpose. An earlier version of this page showed a 4.2 / 5 banner and four sub-scores; there is no record they came from Dan, so they have been removed rather than carried over.</div>
 
-  <div class="section-header">
-    <h2>Strengths &amp; Limitations</h2>
-    <div class="section-line"></div>
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <div class="cat-wrap"><table class="cat-table">
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">3.5</td><td class="num">4.5</td><td>PARA's actionability test and Progressive Summarization are neat and memorable, but the underlying ideas (capture inbox, project lists, reviews) will feel familiar to anyone who has read about GTD or other PKM systems.</td></tr>
+    <tr><td>Readability</td><td class="num">3.5</td><td class="num">4.0</td><td>Friendly and well structured, with a clear four-letter spine. Several readers find it wordy and repetitive, and Claude agrees the core method could be told in far fewer pages.</td></tr>
+    <tr><td>Actionability</td><td class="num">4.5</td><td class="num">4.5</td><td>The strongest category. Four folders and four steps can be set up in an afternoon in any notes app, and the weekly review and packet habits are easy to try.</td></tr>
+    <tr><td>Evidence</td><td class="num">2.5</td><td class="num">3.0</td><td>Claims rest mainly on the author's own experience and anecdotes from his course. I did not find rigorous support that this method beats simpler approaches.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.5</td><td class="num">4.00</td><td>Claude's overall 3.5 is 0.52 below the Goodreads 4.02, just over the usual 0.5 margin. Goodreads raters are largely people who chose and finished a book they were already keen on, and many score for practical usefulness. Claude weights the thin evidence, the novelty relative to older methods and the length-for-content more heavily than a typical reader satisfied with a working system. Dan's overall of 3.5 sits 0.5 below his own category average of 4.00; the biggest gaps between Dan and Claude are Ideas (4.5 vs 3.5) and Evidence (3.0 vs 2.5), both with Dan higher.</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence. Dan's column holds his own scores.</p>
+
+  <div class="section-header"><h2>What Other Readers Say</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">Goodreads (<em>Building a Second Brain</em>, Tiago Forte, 2022 edition entry; editions are merged): 4.02 average, 22,778 ratings, 2,339 reviews, checked 11 Nov 2026. I verified this is the right book: the author page lists the same title with the same rating, and an earlier lookup of a different edition URL returned an unrelated book, so I discarded it.</p>
+  <div class="dist">
+    <div class="dist-row"><span class="st">5★</span><span class="bar"><i style="width:36.8%"></i></span><span class="ct">8,384 (36%)</span></div>
+    <div class="dist-row"><span class="st">4★</span><span class="bar"><i style="width:36.8%"></i></span><span class="ct">8,393 (36%)</span></div>
+    <div class="dist-row"><span class="st">3★</span><span class="bar"><i style="width:19.4%"></i></span><span class="ct">4,429 (19%)</span></div>
+    <div class="dist-row"><span class="st">2★</span><span class="bar"><i style="width:5.1%"></i></span><span class="ct">1,159 (5%)</span></div>
+    <div class="dist-row"><span class="st">1★</span><span class="bar"><i style="width:1.8%"></i></span><span class="ct">413 (1%)</span></div>
   </div>
-
   <div class="pro-con-grid">
-    <div class="pro-list">
-      <h4>Strengths</h4>
-      <div class="list-item"><div class="dot"></div><div>Warm, personal writing style — motivating without being preachy</div></div>
-      <div class="list-item"><div class="dot"></div><div>CODE and PARA are genuinely elegant, memorable frameworks</div></div>
-      <div class="list-item"><div class="dot"></div><div>Progressive Summarization is an original, powerful technique</div></div>
-      <div class="list-item"><div class="dot"></div><div>Tool-agnostic — works with Notion, Obsidian, Evernote, Bear, or any notes app</div></div>
-      <div class="list-item"><div class="dot"></div><div>Addresses psychology of creativity, not just logistics</div></div>
-      <div class="list-item"><div class="dot"></div><div>Excellent accessible entry point for PKM beginners</div></div>
+    <div class="pro-list"><h4>What readers praise</h4>
+      <div class="list-item"><div class="dot"></div><div>A practical, easy-to-adopt structure: reviewers describe CODE and PARA as working for turning gathered material into finished work</div></div>
+      <div class="list-item"><div class="dot"></div><div>Less decision fatigue about where things go, because the folder rule is simple and works across tools</div></div>
+      <div class="list-item"><div class="dot"></div><div>The Express step helps with blank-page paralysis by letting you assemble existing material</div></div>
     </div>
-    <div class="con-list">
-      <h4>Limitations</h4>
-      <div class="list-item"><div class="dot"></div><div>Experienced PKM practitioners may find limited novelty</div></div>
-      <div class="list-item"><div class="dot"></div><div>PARA can feel oversimplified for complex knowledge domains</div></div>
-      <div class="list-item"><div class="dot"></div><div>Light on actual tool setup and practical workflows</div></div>
-      <div class="list-item"><div class="dot"></div><div>Some repetition across chapters — concepts restated multiple times</div></div>
-      <div class="list-item"><div class="dot"></div><div>Doesn't address networked/linked thinking (Zettelkasten) deeply</div></div>
+    <div class="con-list"><h4>What readers criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>Wordy and repetitive: reviewers on several sites say it is padded, and one blogger calls much of it filler</div></div>
+      <div class="list-item"><div class="dot"></div><div>Progressive Summarization can become busywork if it is not tied to a live project</div></div>
+      <div class="list-item"><div class="dot"></div><div>Projects and Areas blur in practice, so the system needs steady upkeep</div></div>
     </div>
-  </div>
-
-  <div class="section-header">
-    <h2>Who Should Read This</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="who-card"><div class="ic">✅</div><div><strong>Knowledge workers and professionals</strong> who feel overwhelmed by information and need a system to manage it</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Writers, researchers, and content creators</strong> who want to build a rich repository to draw from</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>Students</strong> who want their notes to actually be useful beyond exam time</div></div>
-  <div class="who-card"><div class="ic">✅</div><div><strong>PKM beginners</strong> looking for a clear, accessible entry point</div></div>
-  <div class="who-card"><div class="ic">⚠️</div><div><strong>Advanced PKM practitioners</strong> (Roam/Obsidian power users) may want to skip to specific chapters</div></div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>Memorable Quotes</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="quote-block">
-    <p>Your mind is for having ideas, not holding them.</p>
-    <div class="attr">— David Allen (cited by Forte as a foundational influence)</div>
-  </div>
-
-  <div class="quote-block">
-    <p>Every time you take a note, you are investing in your future self.</p>
-    <div class="attr">— Tiago Forte</div>
-  </div>
-
-  <div class="quote-block">
-    <p>Information is food for thought — and like food, it needs to be consumed, not just collected.</p>
-    <div class="attr">— Tiago Forte</div>
-  </div>
-
-  <div class="section-header" style="margin-top:28px;">
-    <h2>The Single Most Important Insight</h2>
-    <div class="section-line"></div>
   </div>
   <div class="summary-block">
-    <p>The single most transformative idea in the book is the shift from <strong>organizing by topic</strong> to <strong>organizing by actionability</strong>. Most people build digital filing systems that mirror how a library works — categories, subjects, tags. Forte's PARA system instead asks: "What am I working on right now, and how does this serve that?" It's the difference between a reference archive and a working cockpit. That reframe alone is worth the read.</p>
+    <p><strong>What you may have missed:</strong> two criticisms go beyond "too long". Blogger Curtis McHale argues that making capture so easy feeds the collector's fallacy, and that the book never says how much to throw away or how much collecting is enough before you start creating. A PKM review on pkm-insights adds that PARA's top-down folders fit awkwardly with link-based tools like Obsidian, where structure is meant to emerge bottom-up.</p>
+    <p>Neither says the method does not work. The shared point is that the book sells capture and organising more convincingly than it explains when to stop and write. Both are individual opinions, not a survey, and the Goodreads review text itself could not be summarised from the page I read.</p>
+  </div>
+  <div class="src-list"><strong>Sources (read 11 Nov 2026):</strong>
+    <a href="https://www.goodreads.com/en/book/show/59616977-building-a-second-brain">Goodreads, <em>Building a Second Brain</em></a> (ratings and distribution) &middot;
+    <a href="https://www.goodreads.com/author/show/17177938.Tiago_Forte">Goodreads, Tiago Forte author page</a> (edition check) &middot;
+    <a href="https://curtismchale.ca/2022/07/30/building-a-second-brain-gives-you-permission-to-fall-into-collectors-fallacy">Curtis McHale, collector's fallacy critique</a> &middot;
+    <a href="https://pkm-insights.pages.dev/posts/tiago-forte-building-a-second-brain-review/">PKM Insights review</a> &middot;
+    <a href="https://www.sloww.co/building-a-second-brain-book/">Sloww summary</a> (structure of the method, praise only).
+    Summarised from page text. The "wordy and repetitive" point also appears in reader reviews on StoryGraph and BookWyrm that came up in search; I did not open those pages. Simon &amp; Schuster, a Medium contents post, a library catalogue and SuperSummary returned errors, and Amazon was not used: not available.</div>
+
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Dan rates <em>Building a Second Brain</em> 3.5 out of 5. He thinks it has really good ideas and puts them at 4.5. It is readable and nicely structured (4), and he finds it very actionable (4.5), but he has trouble carrying that readability over into action.</p>
+    <p>That is his biggest struggle with the book: everything seems easy and the concepts seem good, but building them into his life, so that his second brain information is actually available to him, is where he gets stuck. He keeps trying to build a second brain so he can get things out of his head, and finds it hard to get everything in his life into one easy-to-reach place, or into PARA, where it sits where he would think to look for it.</p>
+    <p>On evidence he is lower: strictly it is about a 2, because it is one person's system. He gives it a 3 because so many people have adopted it and it has become a guide for many in the productivity world. His verdict: really good potential.</p>
+    <p style="font-size:12px;color:var(--muted);">Written up from Dan's own words (11 Nov 2026). His view stands apart from the Claude and reader views above.</p></div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>CODE and PARA are simple enough to remember and set up quickly</div></div>
+      <div class="list-item"><div class="dot"></div><div>Filing by actionability is a genuinely useful reframe</div></div>
+      <div class="list-item"><div class="dot"></div><div>Tool-agnostic: works in almost any notes app</div></div>
+      <div class="list-item"><div class="dot"></div><div>Keeps pointing back at output, not just collection</div></div>
+      <div class="list-item"><div class="dot"></div><div>A warm, low-guilt tone that suits people overwhelmed by information</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Evidence is mostly the author's experience and anecdotes, not independent testing</div></div>
+      <div class="list-item"><div class="dot"></div><div>Much of the core will feel familiar to readers of earlier productivity and note-taking books</div></div>
+      <div class="list-item"><div class="dot"></div><div>Repetitive and padded for the amount of method it contains</div></div>
+      <div class="list-item"><div class="dot"></div><div>Little guidance on when to stop capturing, and a weaker fit with link-based tools</div></div>
+      <div class="list-item"><div class="dot"></div><div>Light on step-by-step tool setup despite being tool-agnostic</div></div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Knowledge workers</strong> who read and save far more than they ever use.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Writers, researchers and consultants</strong> who want material ready when a project starts.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Students</strong> who want notes that survive past the exam.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>PKM beginners</strong> who want one clear, tool-agnostic starting point.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Experienced note-takers</strong> (Zettelkasten, Obsidian users) may learn more from skimming Parts Two and Three than from reading start to finish.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p>Organise by <strong>where something will be used</strong>, not by what it is about. A library sorts by subject; a workshop sorts by the job in front of you. PARA applies that to digital notes, and it is the one idea in the book that changes what you do on the very next note you save.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>Building a Second Brain</strong> is best read as a practical starter kit rather than a deep theory of knowledge work. Its two frameworks are easy to adopt, and the reader consensus (about 4.0 on Goodreads) reflects how usable they are. Claude rates it lower because the evidence is thin, the ideas are less new than the marketing suggests, and the book is longer than its method needs.</p>
+    <p>A sensible way in is to skim the foundation, read the four method chapters properly, and then run one live project through CODE. Whether it earns a higher place in the library is Dan's call once he has rated it.</p>
   </div>
 </div>
 
@@ -728,11 +876,72 @@
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     el.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 1 });
+  }
+  function toggleChapter(card) { card.classList.toggle('open'); }
+
+  function jumpM(id) {
+    const tab = Array.from(document.querySelectorAll('.tab')).find(t => t.textContent.includes('CODE'));
+    if (!document.getElementById('method').classList.contains('active')) { showTab('method', tab); }
+    setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
   }
 
-  function toggleChapter(card) {
-    card.classList.toggle('open');
+  /* CODE check-up sliders */
+  const steps = [
+    { n: 'Capture', s: 'I save things that resonate, without hoarding', tip: 'Try a one-week cap: only save what you can name a project or area for.' },
+    { n: 'Organize', s: 'My notes sit where I will use them first', tip: 'Create folders only for live projects and areas, and file new notes straight into them.' },
+    { n: 'Distill', s: 'My saved notes are quick to skim and reuse', tip: 'Pick one project and add a bold pass plus a short summary to its three most useful notes.' },
+    { n: 'Express', s: 'What I save turns into things I make or share', tip: 'Make one small packet (an outline or one-page summary) from existing notes this week and share it unfinished.' }
+  ];
+  const mapWrap = document.getElementById('map-sliders');
+  steps.forEach((d, i) => {
+    const row = document.createElement('div'); row.className = 'slider-row';
+    row.innerHTML = '<label><span>' + d.n + '</span><span class="lean" id="lean-' + i + '">Okay</span></label><div class="sub">' + d.s + '</div><input type="range" class="map-in" id="dom-' + i + '" min="0" max="100" value="50"><div class="scale-cap"><span>Rarely</span><span>Always</span></div>';
+    mapWrap.appendChild(row);
+  });
+  function leanWord(v) { return v < 25 ? 'Weak' : v < 45 ? 'Patchy' : v <= 65 ? 'Okay' : v <= 85 ? 'Solid' : 'Strong'; }
+  function updateMap() {
+    const ins = Array.from(document.querySelectorAll('.map-in'));
+    let sum = 0, lowest = 0;
+    ins.forEach((el, i) => { const v = +el.value; sum += v; document.getElementById('lean-' + i).textContent = leanWord(v) + ' · ' + v; if (v < +ins[lowest].value) lowest = i; });
+    const avg = Math.round(sum / ins.length);
+    const allEqual = ins.every(el => el.value === ins[0].value);
+    document.getElementById('map-title').textContent = allEqual ? 'Even across the loop (' + avg + ' / 100)' : 'Weakest step: ' + steps[lowest].n + ' (' + avg + ' / 100 overall)';
+    document.getElementById('map-text').textContent = allEqual ? 'Nothing stands out yet. Move the sliders to match your habits and the weakest step will show up here.' : steps[lowest].tip;
   }
+  document.querySelectorAll('.map-in').forEach(el => el.addEventListener('input', updateMap));
+  updateMap();
+
+  /* PARA sorting quiz */
+  const quizData = [
+    { q: 'A checklist for the conference talk you give on 14 March.', a: 'Projects', why: 'It has a goal and a date. When the talk is over, the folder moves to Archive.' },
+    { q: 'Your latest blood-test results and notes from the doctor.', a: 'Areas', why: 'Health is an ongoing responsibility with no end date. It is an area, not a project.' },
+    { q: 'A saved article on colour theory you find interesting but have no plan for.', a: 'Resources', why: 'A topic of interest with nobody waiting on it fits Resources. If a project needs it later, it moves.' },
+    { q: 'The final slides and notes from last year\'s product launch, now finished.', a: 'Archive', why: 'The project is over. Archive keeps it findable without crowding your active folders.' },
+    { q: 'Meeting notes from the quarterly budget you are presenting next week.', a: 'Projects', why: 'It supports a concrete deliverable with a deadline, so it belongs with that project.' },
+    { q: 'Running costs and tax paperwork you must keep in order every year.', a: 'Areas', why: 'A standard you maintain indefinitely is an area. A one-off tax return would be a project.' }
+  ];
+  const names = ['Projects', 'Areas', 'Resources', 'Archive'];
+  const quiz = document.getElementById('quiz');
+  let answered = 0, correct = 0;
+  quizData.forEach((d, i) => {
+    const card = document.createElement('div'); card.className = 'quiz-card';
+    card.innerHTML = '<div class="q"><span class="n">' + (i + 1) + '.</span>' + d.q + '</div><div class="quiz-opts"></div><div class="quiz-exp"></div>';
+    const opts = card.querySelector('.quiz-opts'), exp = card.querySelector('.quiz-exp');
+    names.forEach(k => {
+      const b = document.createElement('button'); b.textContent = k;
+      b.onclick = () => {
+        opts.querySelectorAll('button').forEach(x => { x.disabled = true; if (x.textContent === d.a) x.classList.add('right'); });
+        if (k !== d.a) b.classList.add('wrong'); else correct++;
+        answered++;
+        exp.textContent = (k === d.a ? 'Correct. ' : 'Not quite: it fits ' + d.a + '. ') + d.why;
+        exp.classList.add('show');
+        if (answered === quizData.length) document.getElementById('quiz-score').textContent = 'Score: ' + correct + ' / ' + quizData.length;
+      };
+      opts.appendChild(b);
+    });
+    quiz.appendChild(card);
+  });
 </script>
 </body>
 </html>
