@@ -323,6 +323,20 @@
   .gr-row { display:grid; grid-template-columns:58px 1fr 84px; gap:10px; align-items:center; font-size:12px; color:var(--gray-dark); margin-bottom:6px; }
   .gr-track { background:var(--ink-dim); border-radius:4px; height:12px; overflow:hidden; }
   .gr-fill { background:var(--blue); height:100%; }
+
+  /* ── Framework tab additions ── */
+  .fw-lede { font-size:13px; line-height:1.65; color:var(--gray-dark); margin:0 0 14px; }
+  .conf { display:inline-block; font-size:9.5px; letter-spacing:0.8px; text-transform:uppercase; font-weight:700; padding:2px 8px; border-radius:10px; margin-left:8px; vertical-align:middle; white-space:nowrap; }
+  .conf-high { background:rgba(60,100,40,0.14); color:#3b5a22; }
+  .conf-single { background:rgba(138,74,28,0.16); color:var(--rust-dark); }
+  .conf-own { background:var(--ink-dim); color:var(--ink); margin-left:0; }
+  .conf-own-box { border-left-color:var(--rust); }
+  .chapter-header .conf { margin-left:6px; }
+  .pick-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+  .pick-btn { font:inherit; font-size:12.5px; line-height:1.4; text-align:left; padding:10px 12px; background:var(--cream); border:1.5px solid var(--border); border-radius:8px; color:var(--ink); cursor:pointer; }
+  .pick-btn:hover { border-color:var(--blue); }
+  .pick-btn.on { background:var(--blue-dim); border-color:var(--blue); font-weight:700; }
+  @media (max-width: 560px) { .pick-row { grid-template-columns:1fr; } .ch-title .conf { display:table; margin:6px 0 0; } }
   .aud-row { display:grid; grid-template-columns:1fr 120px 24px; gap:12px; align-items:center; font-size:13px; padding:8px 0; border-bottom:1px solid #eadcb2; }
   .aud-row input { width:100%; accent-color:var(--blue); }
   .aud-row output { font-weight:700; text-align:right; }
@@ -672,13 +686,119 @@
 
 <div id="framework" class="panel">
   <div class="section-header"><h2>The Advance and Conquer Framework</h2><div class="section-line"></div></div>
-  <div class="note-box">Verified from the table of contents: Chapter 1 sets out four responses to a downturn named the Cheerleader, Old School, Quitter and Advance and Conquer. The publisher description also names four key concepts: converting the unsold to sold, the Power Schedule, the Freedom Financial Plan and the unreasonable selling attitude. <strong>Everything else on this tab is my interpretation</strong> of those names, not a close reading.</div>
+  <div class="note-box"><strong>What this tab rests on.</strong> The four responses and the "unreasonable" instruction below are read from the <strong>full text of Chapter 1</strong>, which the publisher (Wiley) releases as an official excerpt PDF. The publisher's description names four key concepts: converting the unsold, the Power Schedule, the Freedom Financial Plan and the unreasonable selling attitude. <strong>Chapters 2 to 19 were not read</strong>, so those concepts are mapped to verified chapter titles only. One cross-check uses a 2009 article by Cardone. Items marked <span class="conf conf-own">Reviewer's own</span> are my commentary, not the author's. Paraphrased throughout; no long quotes. Sources and date checked are at the foot of this tab.</div>
 
-  <div class="part-header">The four responses to a downturn</div>
-  <div class="method-card"><span class="tag">Response 1</span><h4>The Cheerleader</h4><p>By name, the response of staying upbeat and hoping conditions improve. <em>My reading of the label, not checked against the text.</em></p></div>
-  <div class="method-card"><span class="tag">Response 2</span><h4>Old School</h4><p>By name, carrying on with the methods that worked in good times. <em>My reading of the label.</em></p></div>
-  <div class="method-card"><span class="tag">Response 3</span><h4>The Quitter</h4><p>By name, giving up or scaling down. <em>My reading of the label.</em></p></div>
-  <div class="method-card"><span class="tag" style="background:var(--blue-dark)">Response 4 (the book's pick)</span><h4>Advance and Conquer</h4><p>The aggressive response the rest of the book builds out: more contact, better service, disciplined price and time, and a deliberately ambitious attitude.</p></div>
+  <div class="part-header">The four responses to a downturn (Chapter 1, read in full)</div>
+  <p class="fw-lede">Chapter 1 opens by saying people have four basic responses to an economic contraction and that only one counts. Tap each card for what Cardone says about it, how he illustrates it, and where I would push back.</p>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">1</div>
+      <div class="ch-title">The Cheerleader: "I refuse to participate"<span class="conf conf-high">Read in Ch. 1</span></div>
+      <div class="ch-arrow">&rsaquo;</div>
+    </div>
+    <div class="chapter-body">
+      <strong>What it is.</strong> Declining to join the gloom: keep positive, ignore the mass negativity and assume you will be fine.<br><br>
+      <strong>Cardone's verdict.</strong> He says he likes the attitude and shares the optimism, and that a positive mental state is critical to success. He splits it into two versions. Not buying into mass negativity is workable. A totally positive, somewhat unrealistic attitude is, in his words, at best a state of temporary denial, because credit has tightened, spending is down and people are losing jobs, and cheering does not change those facts. His line is that you actually have to do something.<br><br>
+      <strong>How he illustrates it.</strong> An earthquake comparison: when the ground moves you cannot talk yourself out of it, and the people who know how to respond move forward while the rest retreat. He adds that after long good times people forget the muscle, discipline and energy it takes to dominate, so they react instead of act.
+      <div class="ch-takeaway">Optimism is not the problem. Optimism in place of action is.</div>
+      <div class="ch-tool conf-own-box"><strong>Reviewer's own:</strong> his own text concedes the useful half of this response, so the target is narrower than the label suggests. Steady confidence can be what lets people keep making the calls he wants them to make.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">2</div>
+      <div class="ch-title">Old School: "Nothing has changed; get back to basics"<span class="conf conf-high">Read in Ch. 1</span></div>
+      <div class="ch-arrow">&rsaquo;</div>
+    </div>
+    <div class="chapter-body">
+      <strong>What it is.</strong> The view that the market has not really changed and the answer is to return to the fundamentals that used to work.<br><br>
+      <strong>Cardone's verdict.</strong> He supports the basics in principle and agrees they are vital, but says you cannot rely on routine blocking and tackling when you are far behind with little time left. The goal in this book is to be first, and going back to basics may only return you to where you were. He says the only way to flourish is to take a lot of "unreasonable" actions.<br><br>
+      <strong>His reasons.</strong> What counts as basic differs by era and experience (his example compares a seller from the 1970s oil crisis with one who only sold between 1998 and 2008). The basics of an expansion differ from those of a contraction, because you cannot afford to miss even one opportunity. Most staff have never sold in a hard economy, so telling them to get back to basics will not prompt the actions needed.<br><br>
+      <strong>His example.</strong> An automotive-company executive who said nothing had changed. Cardone cites new car sales falling from 16 million a year to 9 million and dealers losing their floor-plan lending. <span class="conf conf-single">Author's figures, not checked</span> He also says he built his first company by knocking on thousands of cold doors during a severe recession. <span class="conf conf-single">Self-reported</span>
+      <div class="ch-takeaway">The basics are not wrong; they are the floor, not the plan.</div>
+      <div class="ch-tool conf-own-box"><strong>Reviewer's own:</strong> for some sellers the gap really is basic execution, such as follow-up discipline. The chapter argues against that case without testing it.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num">3</div>
+      <div class="ch-title">The Quitter: "There is nothing I can do, I'll wait it out"<span class="conf conf-high">Read in Ch. 1</span></div>
+      <div class="ch-arrow">&rsaquo;</div>
+    </div>
+    <div class="chapter-body">
+      <strong>What it is.</strong> Waiting passively for the economy to return to normal, then going back to work.<br><br>
+      <strong>Cardone's verdict.</strong> The harshest of the four. He says quitters will burn through their cash and then find that contractions can last much longer than expected, in some cases 18 months or more. He predicts emotional damage from being out of the workforce and more difficulty getting hired afterwards, because they stopped participating. He calls them scavengers who depend on good economies, work wherever business is easy and never really advance and conquer for themselves.<br><br>
+      <strong>Tone to note.</strong> He says he would never have one of these people work for him and that they contaminate an organization. That is the author's rhetoric, not an argument.
+      <div class="ch-takeaway">Waiting is a decision, and its cost compounds.</div>
+      <div class="ch-tool conf-own-box"><strong>Reviewer's own:</strong> the 18-month figure is the author's and I did not check it. The chapter also treats this as a character flaw, when some people simply have few options.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num" style="background:var(--blue-dark)">4</div>
+      <div class="ch-title">Advance and Conquer: "Every resource goes to advancing"<span class="conf conf-high">Read in Ch. 1</span></div>
+      <div class="ch-arrow">&rsaquo;</div>
+    </div>
+    <div class="chapter-body">
+      <strong>What it is.</strong> The response the book promotes as the only correct one. Its first step is to accept that the market has changed and will be harder, but not impossible, to sell into. It then asks for a different level of energy, work ethic, mindset and action.<br><br>
+      <strong>The argument.</strong> A downturn is an obstacle, and also an opportunity to win new clients, lift sales, stand apart and take market share. Because everyone's finances and confidence are hit, you are not uniquely disadvantaged, and fewer active competitors makes it easier to stand out. He likens it to starting a company from scratch with little money. Those willing to learn new skills and execute them with massive actions are, he says, rewarded in ways good times would not allow.<br><br>
+      <strong>Mindset moves he adds.</strong> Stop comparing today with yesterday and wishing it back. Do not measure yourself against rivals who are doing badly, because the goal is to dominate, not to compare. Treat problems as opportunities; his motto is that conquered opportunities equal money earned.<br><br>
+      <strong>Evidence offered.</strong> His own career across several recessions and a client anecdote (see the next card). The chapter gives no comparison data. <span class="conf conf-single">Anecdotal</span>
+      <div class="ch-takeaway">Treat the downturn as a change in the game, not a pause in it.</div>
+      <div class="ch-tool conf-own-box"><strong>Reviewer's own:</strong> the strongest part is the first step, acknowledging that the market has changed. The weakest is the claim that massive action beats the alternatives, which rests on the author's say-so.</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Side by Side</h2><div class="section-line"></div></div>
+  <div class="cmp-wrap"><table class="cat-table" style="min-width:620px;">
+    <tr><th>Response</th><th>Core belief</th><th>Cardone's objection</th><th>Reviewer's counterpoint (my view)</th></tr>
+    <tr><td><strong>Cheerleader</strong></td><td>Refuse to join the gloom; stay positive</td><td>Pure positivity is temporary denial; you must act</td><td>Confidence can fuel action. The target is optimism instead of action</td></tr>
+    <tr><td><strong>Old School</strong></td><td>Nothing changed; return to basics</td><td>Basics differ by era, staff lack downturn experience, and basics only restore the old position</td><td>Sometimes the basics really are the gap; the chapter does not test that</td></tr>
+    <tr><td><strong>Quitter</strong></td><td>Nothing to be done; wait it out</td><td>Cash runs out, downturns can outlast the wait, and rehiring gets harder</td><td>Some people have few options; the tone is more contempt than analysis</td></tr>
+    <tr><td><strong>Advance and Conquer</strong></td><td>Market changed; take share through massive action</td><td>This is his pick, so no objection is offered</td><td>The case rests on anecdote and the author's confidence, not data</td></tr>
+  </table></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The "Unreasonable" Instruction</h2><div class="section-line"></div></div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">!</div>
+      <div class="ch-title">Use the techniques exactly as stated<span class="conf conf-high">Read in Ch. 1</span></div>
+      <div class="ch-arrow">&rsaquo;</div>
+    </div>
+    <div class="chapter-body">
+      <strong>What it says.</strong> Near the end of Chapter 1 Cardone tells readers to use the tactics in the book exactly as written and to avoid being "reasonable" about them. He defines being unreasonable as not letting reason govern the action: do not reason with the actions, do not apply common sense, and do not alter them to fit your personality or mindset, because that only produces a watered-down version. This is the seed of the book's later chapter, <em>The Unreasonable Attitude</em> (Ch. 19).<br><br>
+      <strong>His example.</strong> He says that while working with a company he suggested following up with customers as soon as they left, and even following them home. After management objected, he says they tried it, and within 24 hours reported that it worked and that customers loved it, and that the company later posted its highest customer-satisfaction scores. <span class="conf conf-single">Single anecdote, unnamed company, self-reported</span><br><br>
+      <strong>Why it matters.</strong> The instruction treats the reader's own judgment as the obstacle. That is likely what makes the book motivating to some readers and grating to others (my inference; Goodreads readers also describe the tone, see the Ratings &amp; Verdict tab).
+      <div class="ch-takeaway">The method asks for obedience first and evidence later.</div>
+      <div class="ch-tool conf-own-box"><strong>Reviewer's own caution:</strong> I would not copy the follow-them-home example literally. Contacting people after they leave is one thing; following them can cross privacy and safety lines, and the chapter does not address that.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header">
+      <div class="ch-num intro">&#9998;</div>
+      <div class="ch-title">The chapter's own exercise<span class="conf conf-high">Read in Ch. 1</span></div>
+      <div class="ch-arrow">&rsaquo;</div>
+    </div>
+    <div class="chapter-body">
+      Chapter 1 ends with a short written exercise. It asks the reader to: write down the four responses; name people they know who fit each one; write down a time they responded each way and the result; say which response they will commit to and why; and list six ways they will be affected during a contraction. The prompts are the book's; the answers are left blank for the reader.
+      <div class="ch-tool"><strong>Try it:</strong> the picker below is my own lighter version of the second and third prompts.</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Four Key Concepts, Mapped to Chapters</h2><div class="section-line"></div></div>
+  <div class="note-box">The publisher's description names these four concepts. I have matched each to the chapter whose verified title fits it. <strong>Only the unreasonable attitude has any text behind it here</strong> (the Chapter 1 instruction above). The other three rest on the title and the publisher blurb, so I have not described how Cardone develops them.</div>
+  <div class="cmp-wrap"><table class="cat-table" style="min-width:520px;">
+    <tr><th>Concept (publisher's term)</th><th>Chapter by title</th><th>What is verified</th></tr>
+    <tr><td><strong>Converting the unsold to sold</strong></td><td>5, Converting the Unsold</td><td>Title and publisher blurb only</td></tr>
+    <tr><td><strong>The Power Schedule</strong></td><td>15, The Power Schedule to Advance and Conquer</td><td>Title and publisher blurb only</td></tr>
+    <tr><td><strong>The Freedom Financial Plan</strong></td><td>17, Your Freedom Financial Plan</td><td>Title and publisher blurb only</td></tr>
+    <tr><td><strong>The unreasonable selling attitude</strong></td><td>19, The Unreasonable Attitude</td><td>The Chapter 1 instruction (above); Chapter 19 itself not read</td></tr>
+  </table></div>
 
   <div class="section-header" style="margin-top:28px;"><h2>How the Chapters Fit Together</h2><div class="section-line"></div></div>
   <div class="note-box">This grouping is <strong>my own</strong>, made to help navigation. The book's contents list chapters in one run with no parts.</div>
@@ -701,6 +821,25 @@
     <div class="aud-row"><label for="a6">Protect selling time on my calendar (Ch. 15)</label><input type="range" id="a6" min="1" max="5" value="3" data-ch="Chapter 15, The Power Schedule"><output>3</output></div>
     <div class="ch-takeaway" id="audit-out" aria-live="polite">Move the sliders to see your weakest area.</div>
   </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Try It: Which Response Sounds Like You?</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>Reviewer's own tool, not from the book.</strong> It is a lighter take on the chapter's exercise. Pick the thought you have had most often lately and see what the book says about it, plus one question to ask yourself. Nothing is saved or sent.</div>
+  <div class="method-card" id="picker">
+    <div class="pick-row" role="group" aria-label="Choose the response closest to your recent thinking">
+      <button type="button" class="pick-btn" data-r="0">"I'm just staying positive."</button>
+      <button type="button" class="pick-btn" data-r="1">"We just need to get back to basics."</button>
+      <button type="button" class="pick-btn" data-r="2">"Nothing I can do until it picks up."</button>
+      <button type="button" class="pick-btn" data-r="3">"Things have changed, so I will change what I do."</button>
+    </div>
+    <div class="ch-takeaway" id="picker-out" aria-live="polite">Choose a statement to see the book's view.</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Handle With Care</h2><div class="section-line"></div></div>
+  <div class="key-idea"><div class="icon">🕰️</div><div><strong>Dated figures.</strong> The statistics in Chapter 1 (unemployment, car sales, retail lows) belong to the 2009 to 2010 downturn. They are the author's, and I did not check them. Treat them as period colour, not current data.</div></div>
+  <div class="key-idea"><div class="icon">🏷️</div><div><strong>The label has moved.</strong> In a March 2009 article promoting his earlier book <em>Sell to Survive</em>, Cardone lists the same four responses but calls the fourth "Adapt and Act" rather than "Advance and Conquer". That points to the framework being older than this book and relabelled. <span class="conf conf-single">One article</span></div></div>
+  <div class="key-idea"><div class="icon">📏</div><div><strong>Evidence type.</strong> Every claim of results in the chapter is the author's own experience or a single unnamed client. That is a limitation to weigh, not a refutation.</div></div>
+
+  <div class="note-box" style="margin-top:18px;"><strong>Sources, checked 23 Nov 2026.</strong> Chapter 1 full text: <a href="https://catalogimages.wiley.com/images/db/pdf/9780470624357.excerpt.pdf" target="_blank" rel="noopener">Wiley official excerpt (PDF)</a>. Cross-check: <a href="https://www.huffpost.com/entry/how-to-advance-and-conque_b_169513" target="_blank" rel="noopener">Cardone, "How to Advance and Conquer in Any Economy", HuffPost, 27 Mar 2009</a>. Chapters 2 to 19 and the Afterword: <strong>not read</strong>; the publisher's four key concepts come from the retailer and publisher descriptions cited on the Overview tab.</div>
 </div>
 
 <div id="toolkit" class="panel">
@@ -856,6 +995,25 @@ function toggleChapter(card) { card.classList.toggle('open'); }
   }
   rows.forEach(function (r) { r.addEventListener('input', update); });
   update();
+})();
+
+(function () {
+  var data = [
+    {n:'The Cheerleader', t:'Cardone likes the attitude but calls pure positivity temporary denial: the facts stay the same, so you have to do something.', q:'What is one concrete action I could take this week, besides feeling positive?'},
+    {n:'Old School', t:'He agrees the basics matter but says they only get you back to where you were, and that the basics of a downturn differ from the basics of good times.', q:'Which basic am I assuming still works, and when did I last check?'},
+    {n:'The Quitter', t:'He says waiting costs cash and confidence, that downturns can run longer than expected, and that it gets harder to be hired afterwards.', q:'What is waiting actually costing me each month, and what could I do instead?'},
+    {n:'Advance and Conquer', t:'This is the book\'s pick: accept the market has changed, then act with energy and new skills to win share while others retreat.', q:'What am I doing that my competitors will not, and is it something I would stand behind?'}
+  ];
+  var btns = document.querySelectorAll('#picker .pick-btn');
+  var out = document.getElementById('picker-out');
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      btns.forEach(function (x) { x.classList.remove('on'); });
+      b.classList.add('on');
+      var d = data[+b.getAttribute('data-r')];
+      out.textContent = d.n + '. ' + d.t + ' Ask yourself: ' + d.q;
+    });
+  });
 })();
 </script>
 </body>

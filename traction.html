@@ -457,6 +457,14 @@
   .src-list a { color: #b24d08; }
   .summary-block a { color: #b24d08; }
   @media (max-width: 560px) { .cmp-grid, .toolkit-list, .tool-grid { grid-template-columns: 1fr; } .map-box { padding: 16px; } .hero-inner { flex-wrap: wrap; } .ag-row .nm { width: 110px; } .chapter-body { padding: 14px 16px 18px 16px; } }
+  .cd-label { font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: var(--rust); margin: 12px 0 4px; }
+  .cd-label:first-child { margin-top: 0; }
+  .cd-mine { background: rgba(23,23,23,0.04); border-left: 3px solid var(--muted); padding: 8px 12px; border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.6; margin: 8px 0 4px; }
+  .cd-mine strong { font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .badge { display: inline-block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; border-radius: 9px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; background: rgba(240,112,18,0.12); color: #8a3a05; }
+  .badge.warn { background: rgba(23,23,23,0.08); color: #3a3a36; }
+  .tool-table td:first-child { font-weight: 700; white-space: nowrap; }
+  .tool-table { min-width: 640px; }
 </style>
 </head>
 <body>
@@ -625,7 +633,7 @@
 <!-- ═══════════════ SIX COMPONENTS ═══════════════ -->
 <div id="framework" class="panel">
   <div class="section-header"><h2>The Six Components of EOS</h2><div class="section-line"></div></div>
-  <div class="note-box">Descriptions are my summary of the model as widely described in EOS material and listings of the book, not a close reading. Examples labelled "my illustration" are my own.</div>
+  <div class="note-box"><strong>What this tab rests on (checked 23 Nov 2026):</strong> I have not read the book line by line. This tab was rebuilt against EOS Worldwide's own public pages for each component and tool (listed at the bottom of this tab). Those pages describe EOS as it is taught today; the book (2007) may word or size some tools differently, so check your copy. Anything labelled "my read" or "my illustration" is mine, not the book's or EOS's. All of the sources are from EOS itself; see "Reading this critically" at the end.</div>
 
   <div class="component-wheel">
     <div class="wheel-card"><div class="wheel-num">1</div><h4>Vision</h4><p>Everyone shares the same picture of where the company is going. Tool: the V/TO.</p></div>
@@ -636,8 +644,140 @@
     <div class="wheel-card"><div class="wheel-num">6</div><h4>Traction</h4><p>Discipline and accountability. Tools: Rocks and the Meeting Pulse.</p></div>
   </div>
 
+  <div class="section-header" style="margin-top:28px;"><h2>The Six Components in Depth</h2><div class="section-line"></div></div>
+  <p class="lead">Tap a component to open it. Each card gives what the component is meant to do, how its tool works, what EOS says a weak version looks like, and a short "my read" that is clearly my own opinion.</p>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">Vision<small>Tool: Vision/Traction Organizer (V/TO) &middot; source: EOS Worldwide</small></div><div class="ch-arrow">&rsaquo;</div></div>
+    <div class="chapter-body">
+      <div class="cd-label">What it answers</div>
+      <p>Is the whole leadership team on the same page about where the company is going and how it will get there?</p>
+      <div class="cd-label">How it works</div>
+      <ul>
+        <li>The V/TO is a two-page tool built by answering eight questions.</li>
+        <li>The first four set the long view: Core Values, Core Focus, 10-Year Target and Marketing Strategy.</li>
+        <li>The next four make it practical: 3-Year Picture, 1-Year Plan, Quarterly Rocks and the Issues List.</li>
+        <li>EOS says you do not need to solve the issues while building it. The point is to get them out of people's heads so they can be dealt with openly.</li>
+      </ul>
+      <div class="cd-label">When it is weak (per EOS)</div>
+      <p>The picture of the company stays in the founder's head, and the people around them may each see something different.</p>
+      <div class="cd-mine"><strong>My read</strong><br>The two-page limit is the useful constraint, because it forces choices. A V/TO that is written once and never revisited would defeat its purpose, but that worry is mine and not from the sources.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">2</div><div class="ch-title">People<small>Tools: Accountability Chart, People Analyzer, GWC &middot; source: EOS Worldwide</small></div><div class="ch-arrow">&rsaquo;</div></div>
+    <div class="chapter-body">
+      <div class="cd-label">What it answers</div>
+      <p>Do we have the Right People (who share our Core Values) in the Right Seats (where they can succeed)?</p>
+      <div class="cd-label">How it works</div>
+      <ul>
+        <li><strong>Seat first.</strong> The Accountability Chart starts from the structure the company needs over the next six to 12 months, not the people it has today. At leadership level it begins with the Visionary and Integrator seats, then three major functions: Sales and Marketing, Operations, and Finance and Administration. Each seat has one person ultimately accountable and a short list of major roles.</li>
+        <li><strong>Company fit.</strong> The People Analyzer rates each person on each Core Value as + (consistently lives it), +/- (sometimes) or - (does not), against a "Bar" the leadership team sets first. For a company with five Core Values EOS recommends a Bar of three pluses, two plus/minuses and no minuses, and calls that a recommended standard, not a rule.</li>
+        <li><strong>Seat fit.</strong> GWC asks three yes/no questions: does the person Get it, Want it, and have the Capacity to do it? There is no averaging. All three must be yes.</li>
+        <li>A "no" is a diagnosis, not a verdict: a missing Get it, Want it or Capacity calls for a different conversation each time. EOS adds that some capacity gaps can be closed in specific situations, but not that every one can be trained away.</li>
+        <li>EOS suggests using the People Analyzer quarterly, or whenever a people issue needs clarity, starting with the leadership team.</li>
+      </ul>
+      <div class="cd-label">When it is weak (per EOS)</div>
+      <p>People conversations stay vague. Someone may deliver results while acting against the Core Values, or may fit the culture but struggle with the seat. Those are different problems and need different conversations.</p>
+      <div class="cd-mine"><strong>My read</strong><br>Separating "right person" from "right seat" is the most useful move in the component. The yes/no and plus/minus scoring is also where judgment creeps in, and I found no independent evaluation of how consistently people apply it.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">3</div><div class="ch-title">Data<small>Tool: Scorecard &middot; source: EOS Worldwide</small></div><div class="ch-arrow">&rsaquo;</div></div>
+    <div class="chapter-body">
+      <div class="cd-label">What it answers</div>
+      <p>Are we running the business on facts or on feelings and opinions?</p>
+      <div class="cd-label">How it works</div>
+      <ul>
+        <li>Five to 15 weekly Measurables, each with one owner and one weekly goal, with 13 weeks of history visible.</li>
+        <li>Reviewed every week in the Level 10 Meeting. An off-track number that reveals a real problem goes onto the Issues List.</li>
+        <li>EOS suggests starting with activity-based Measurables, early signals such as Sales Appointments, Qualified Leads or Proposals Sent, and optionally adding current-state ones such as Cash on Hand, Weekly Revenue or Customer Complaints.</li>
+      </ul>
+      <div class="cd-label">When it is weak (per EOS)</div>
+      <p>The team leans on delayed reports, incomplete information and gut feel, so issues surface late and accountability is unclear.</p>
+      <div class="cd-mine"><strong>My read</strong><br>The tool is simple. The real work is choosing the handful of numbers that would tell you first that something is going wrong, and that choice is specific to each business.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">4</div><div class="ch-title">Issues<small>Tool: IDS (Issues Solving Track) &middot; source: EOS Worldwide</small></div><div class="ch-arrow">&rsaquo;</div></div>
+    <div class="chapter-body">
+      <div class="cd-label">What it answers</div>
+      <p>When a problem comes up, do we solve it at the root so it stays solved?</p>
+      <div class="cd-label">How it works</div>
+      <ul>
+        <li>In EOS an "Issue" can be a problem, challenge, obstacle, opportunity or new idea.</li>
+        <li><strong>Identify:</strong> the issue first stated is often a symptom, so keep digging to the root cause. Asking "why?" repeatedly is one way, and you need not stop at five.</li>
+        <li><strong>Discuss:</strong> share relevant facts and views, stay on the issue, and stop once everything useful has been said.</li>
+        <li><strong>Solve:</strong> agree a decision or action for the long-term good of the company. If action is needed, make it a To-Do with one owner, then clear the issue from the list.</li>
+        <li>Prioritise the top three issues and take them one at a time. IDS gets 60 of the 90 minutes of the weekly Level 10 Meeting.</li>
+      </ul>
+      <div class="cd-label">When it is weak (per EOS)</div>
+      <p>The same problems keep coming back because the team is treating symptoms.</p>
+      <div class="cd-mine"><strong>My read</strong><br>The method is easy to state and hard to hold. Staying on one issue until it is decided is the part that takes discipline.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">Process<small>Tool: Three-Step Process Documenter &middot; source: EOS Worldwide</small></div><div class="ch-arrow">&rsaquo;</div></div>
+    <div class="chapter-body">
+      <div class="cd-label">What it answers</div>
+      <p>Are our core processes identified, documented, simplified and followed by everyone?</p>
+      <div class="cd-label">How it works</div>
+      <ul>
+        <li>Name the handful of core processes, then work each through three steps: identify the steps, simplify to the roughly 20% that drives 80% of the results, and package it so it can be Followed By All.</li>
+        <li>EOS stresses the last part: documentation that nobody follows has no value.</li>
+        <li>For a full treatment, EOS points to the Process component book in its Mastery Series, <em>Process!</em> by Mike Paton and Lisa Gonz&aacute;lez (2022). See the companion <a href="process.html" style="color:#b24d08;">Process!</a> review.</li>
+      </ul>
+      <div class="cd-label">When it is weak (per EOS)</div>
+      <p>Quality is inconsistent, training is hard, and the business depends on particular people who hold the know-how in their heads.</p>
+      <div class="cd-mine"><strong>My read</strong><br>"Followed By All" is the real test. A short document people use beats a thorough one they do not.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Traction<small>Tools: Rocks, Level 10 Meeting, Meeting Pulse &middot; source: EOS Worldwide</small></div><div class="ch-arrow">&rsaquo;</div></div>
+    <div class="chapter-body">
+      <div class="cd-label">What it answers</div>
+      <p>Do we have the discipline and accountability to carry out the Vision, week after week and quarter after quarter?</p>
+      <div class="cd-label">How it works</div>
+      <ul>
+        <li><strong>Rocks:</strong> the three to seven most important priorities for the next 90 days. EOS sets six steps: look at the V/TO, annual goals and current issues; list everything that could matter; narrow to three to seven; define exactly what "done" means; give each Rock one owner; review it every week.</li>
+        <li>Departments and individuals set their own Rocks that support the company's. Sources differ on how many an individual should carry, so I have not stated a figure.</li>
+        <li><strong>Level 10 Meeting:</strong> same day, same time, same agenda, start and end on time (agenda in the next section).</li>
+        <li><strong>Meeting Pulse:</strong> the rhythm of a weekly Level 10, a quarterly session and an annual planning session.</li>
+      </ul>
+      <div class="cd-label">When it is weak (per EOS)</div>
+      <p>Good intentions but poor follow-through: meetings are unproductive, priorities keep shifting and the same issues recur quarter after quarter.</p>
+      <div class="cd-mine"><strong>My read</strong><br>Rocks are only as good as the plan they come from. If the V/TO is vague, a tidy 90-day list will not fix it.</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Tools Side by Side</h2><div class="section-line"></div></div>
+  <p class="lead">One row per tool, taken from EOS Worldwide's tool pages. A dash means I did not find the point stated.</p>
+  <div class="cat-wrap"><table class="cat-table tool-table">
+    <tr><th>Tool</th><th>Component</th><th>What it does</th><th>Rhythm</th><th>Size / limit</th></tr>
+    <tr><td>V/TO</td><td>Vision</td><td>Puts the company's direction and plan on two pages</td><td>&mdash;</td><td>8 questions, 2 pages</td></tr>
+    <tr><td>Accountability Chart</td><td>People</td><td>Defines seats and the major roles each owns</td><td>&mdash;</td><td>One accountable person per seat</td></tr>
+    <tr><td>People Analyzer</td><td>People</td><td>Rates Core Values fit against a Bar, plus GWC for the seat</td><td>Quarterly, or when a people issue needs clarity</td><td>+, +/-, - per value; GWC is yes/no with three yeses needed</td></tr>
+    <tr><td>Scorecard</td><td>Data</td><td>Weekly pulse on the business through Measurables</td><td>Weekly</td><td>5 to 15 Measurables, one owner and one goal each, 13 weeks shown</td></tr>
+    <tr><td>IDS</td><td>Issues</td><td>Identify, Discuss, Solve to the root cause</td><td>Weekly, inside the Level 10</td><td>60 of 90 minutes; top three issues, one at a time</td></tr>
+    <tr><td>Three-Step Process Documenter</td><td>Process</td><td>Identify, simplify and package each core process</td><td>&mdash;</td><td>Simplify to the 20% that drives 80% of results</td></tr>
+    <tr><td>Rocks</td><td>Traction</td><td>Sets the priorities for the next 90 days</td><td>Set quarterly, reviewed weekly</td><td>3 to 7 company Rocks, one owner each</td></tr>
+    <tr><td>Level 10 Meeting</td><td>Traction</td><td>Weekly leadership meeting with a fixed agenda</td><td>Weekly</td><td>90 minutes, seven parts</td></tr>
+    <tr><td>Meeting Pulse</td><td>Traction</td><td>Keeps the whole company on the same meeting rhythm</td><td>Weekly, quarterly, annual</td><td>&mdash;</td></tr>
+  </table></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>How the Six Connect</h2><div class="section-line"></div></div>
+  <div class="key-idea"><div class="icon">&#9878;&#65039;</div><div><strong>Weakness spreads.</strong> EOS says that when even one of the six is weak, problems show up across the organization. That is the reason the book treats them as one model rather than six separate fixes.</div></div>
+  <div class="key-idea"><div class="icon">&#128260;</div><div><strong>The Level 10 is where they meet.</strong> EOS describes the weekly meeting as bringing the Scorecard, Rocks, Accountability Chart, Issues List with IDS, and V/TO into one regular review.</div></div>
+  <div class="key-idea"><div class="icon">&#127919;</div><div><strong>Rocks link back to the V/TO.</strong> Rocks come from the V/TO and annual goals, and the Accountability Chart makes sure each Rock has an owner.</div></div>
+  <div class="key-idea"><div class="icon">&#9888;&#65039;</div><div><strong>Framing differs by source <span class="badge warn">Single source</span>.</strong> EOS Worldwide's current site summarises the whole system as three things, Vision, Traction and Healthy. I could not confirm that "Healthy" framing appears in the 2007 book, so treat it as the company's present-day wording.</div></div>
+
   <div class="section-header"><h2>The Level 10 Meeting Agenda</h2><div class="section-line"></div></div>
-  <p class="lead">The weekly leadership meeting is 90 minutes with a fixed order. The minutes below are the commonly published EOS agenda; I could not check them against the book text.</p>
+  <p class="lead">The weekly leadership meeting is 90 minutes with a fixed order. The seven parts and minutes below match EOS Worldwide's Level 10 Meeting page (checked 23 Nov 2026). I could not check them against the book text. Segue is a personal check-in; Scorecard and Rock Review are status checks where off-track items drop to the Issues List; Conclude recaps new To-Dos, confirms messages to share, and rates the meeting.</p>
   <div class="agenda" id="agenda"></div>
 
   <div class="section-header" style="margin-top:28px;"><h2>The V/TO at a Glance</h2><div class="section-line"></div></div>
@@ -652,6 +792,7 @@
     <span class="keyword">Quarterly Rocks</span>→ <span class="value">this quarter's few priorities</span><br>
     <span class="keyword">Issues List</span>&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="value">obstacles and opportunities to work through</span>
   </div>
+  <p class="lead" style="margin-top:10px;">The eight questions and their order were checked against EOS Worldwide's V/TO page on 23 Nov 2026. EOS groups the first four as the Vision side and the last four as the Traction side.</p>
 
   <div class="section-header" style="margin-top:28px;"><h2>Try It: Self-Check</h2><div class="section-line"></div></div>
   <p class="lead">Two short interactive tools. Both are my own illustrations of the framework, not a test from the book, and nothing you enter is saved or sent.</p>
@@ -678,7 +819,25 @@
     <div class="q-card"><h5>Visionary</h5><ul><li>Originates ideas and direction</li><li>Builds relationships</li><li>Tends to see ahead of the business</li></ul></div>
     <div class="q-card"><h5>Integrator</h5><ul><li>Runs the business day to day</li><li>Holds the leadership team accountable</li><li>Turns ideas into operating reality</li></ul></div>
   </div>
+  <p class="lead"><span class="badge warn">Partly verified</span> EOS Worldwide's Accountability Chart page confirms that the Visionary and Integrator are the two top seats on the leadership chart. I did not find the role descriptions above stated on the EOS pages I read, so they follow how the roles are widely described and the earlier chapter summary.</p>
   <p class="lead">How this page differs from <a href="what-the-heck-is-eos.html" style="color:#b24d08;">What the Heck Is EOS?</a>: that companion looks at the system as an employee meets it, with a manager's-questions list. This one stays with the leader's tools and how they fit together.</p>
+  <div class="section-header" style="margin-top:28px;"><h2>Reading This Critically</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>All of the sources above come from EOS itself.</strong> They are written by the company that teaches and sells the system, so they explain how EOS is meant to work, not whether it works. In my searches I did not find an independent evaluation of the tools, such as research on whether the People Analyzer is applied consistently or whether companies that adopt EOS perform better. I have left out EOS's own performance claims for that reason. Treat the "when it is weak" lines as EOS's description of the problems it aims to solve.</div>
+
+  <div class="section-header" style="margin-top:20px;"><h2>Sources for This Tab</h2><div class="section-line"></div></div>
+  <div class="src-list">All checked 23 Nov 2026, all from EOS Worldwide:<br>
+    <a href="https://www.eosworldwide.com/blog/how-the-eos-system-works-understanding-the-eos-model-and-six-key-components" target="_blank" rel="noopener">How the EOS System Works: the EOS Model and Six Key Components</a><br>
+    <a href="https://www.eosworldwide.com/vto" target="_blank" rel="noopener">Vision/Traction Organizer (V/TO)</a><br>
+    <a href="https://www.eosworldwide.com/accountability-chart" target="_blank" rel="noopener">Accountability Chart</a><br>
+    <a href="https://www.eosworldwide.com/people-analyzer" target="_blank" rel="noopener">People Analyzer</a><br>
+    <a href="https://www.eosworldwide.com/gwc" target="_blank" rel="noopener">GWC</a><br>
+    <a href="https://www.eosworldwide.com/scorecard" target="_blank" rel="noopener">Scorecard</a><br>
+    <a href="https://www.eosworldwide.com/ids" target="_blank" rel="noopener">IDS: the Issues Solving Track</a><br>
+    <a href="https://www.eosworldwide.com/process-component" target="_blank" rel="noopener">The Process Component</a><br>
+    <a href="https://www.eosworldwide.com/traction-component" target="_blank" rel="noopener">The Traction Component</a><br>
+    <a href="https://www.eosworldwide.com/rocks" target="_blank" rel="noopener">Rocks</a><br>
+    <a href="https://www.eosworldwide.com/level-10-meeting" target="_blank" rel="noopener">Level 10 Meeting</a>
+  </div>
 </div>
 
 <!-- ═══════════════ TOOLKIT ═══════════════ -->
@@ -856,6 +1015,14 @@
     Process: 'Name your core processes and document the one that causes the most confusion.',
     Traction: 'Choose up to three company Rocks and hold a weekly meeting with a fixed agenda.'
   };
+  const weakSigns = {
+    Vision: 'the picture of the company stays in the founder\u2019s head and people may each see something different.',
+    People: 'people conversations stay vague, and company fit and seat fit get mixed together.',
+    Data: 'the team leans on delayed reports, incomplete information and gut feel.',
+    Issues: 'the same problems keep coming back because symptoms are treated instead of root causes.',
+    Process: 'quality is inconsistent, training is hard and the business depends on particular people.',
+    Traction: 'good intentions but poor follow-through, shifting priorities and unproductive meetings.'
+  };
   const mapWrap = document.getElementById('map-sliders');
   comps.forEach((d, i) => {
     const row = document.createElement('div'); row.className = 'slider-row';
@@ -869,7 +1036,7 @@
     ins.forEach((el, i) => { const v = +el.value; sum += v; document.getElementById('lean-' + i).textContent = leanWord(v); if (v < +ins[lowest].value) lowest = i; });
     const avg = sum / ins.length;
     document.getElementById('map-title').textContent = avg < 40 ? 'Mostly weak, at the moment' : avg > 60 ? 'Mostly strong, at the moment' : 'A mixed picture';
-    document.getElementById('map-text').textContent = 'Weakest: ' + comps[lowest] + '. A first step: ' + steps[comps[lowest]];
+    document.getElementById('map-text').textContent = 'Weakest: ' + comps[lowest] + '. EOS describes a weak ' + comps[lowest] + ' component like this: ' + weakSigns[comps[lowest]] + ' A first step (my suggestion): ' + steps[comps[lowest]];
   }
   document.querySelectorAll('.map-in').forEach(el => el.addEventListener('input', updateMap));
   updateMap();
