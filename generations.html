@@ -132,6 +132,29 @@
   .term-card h4 { font-family:'Poppins',sans-serif; font-size:14px; margin-bottom:4px; }
   .term-card p { font-size:13px; line-height:1.6; color:#33333f; }
 
+  /* badges, generation cards, flow, checklist */
+  .badge { display:inline-block; font-family:'Poppins',sans-serif; font-size:9.5px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; padding:2px 8px; border-radius:10px; margin-left:6px; vertical-align:middle; white-space:nowrap; }
+  .badge.rep { background:#e3f5ed; color:var(--green-d); } .badge.low { background:#fff1d6; color:var(--yellow-d); } .badge.mine { background:#eceaf6; color:var(--slate-d); }
+  .flow { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin-bottom:18px; }
+  .flow-step { background:var(--card); border:1px solid var(--line); border-top:5px solid var(--slate); border-radius:10px; padding:13px 14px; }
+  .flow-step .n { font-family:'Poppins',sans-serif; font-size:10px; letter-spacing:1.6px; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .flow-step h4 { font-family:'Poppins',sans-serif; font-size:15px; margin:3px 0 4px; }
+  .flow-step p { font-size:12.5px; line-height:1.55; color:#33333f; }
+  .gen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:14px; margin-bottom:20px; }
+  .gen-card { background:var(--card); border:1px solid var(--line); border-top:6px solid var(--slate); border-radius:10px; padding:16px; min-width:0; }
+  .gen-card h3 { font-family:'Poppins',sans-serif; font-size:16px; line-height:1.3; }
+  .gen-card .yrs { font-size:12px; color:var(--muted); margin:2px 0 6px; }
+  .gen-card h4 { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); margin:11px 0 4px; }
+  .gen-card p, .gen-card li { font-size:13px; line-height:1.6; color:#33333f; }
+  .gen-card ul { padding-left:18px; } .gen-card li { margin-bottom:4px; }
+  .by-row select { font-family:'DM Sans',sans-serif; font-size:16px; padding:9px 12px; border:2px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); max-width:100%; }
+  .cmp-row { display:grid; grid-template-columns:110px 1fr 1fr; gap:8px; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px; line-height:1.5; }
+  .cmp-row:last-child { border-bottom:0; } .cmp-row .k { font-family:'Poppins',sans-serif; font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--muted); font-weight:700; padding-top:2px; }
+  .cmp-row.hd { font-family:'Poppins',sans-serif; font-weight:700; }
+  @media (max-width:500px){ .cmp-row{grid-template-columns:1fr} }
+  .chk-item { display:flex; gap:10px; align-items:flex-start; padding:9px 12px; border:1px solid var(--line); border-radius:8px; margin-bottom:8px; background:#fff; font-size:13.5px; line-height:1.55; cursor:pointer; }
+  .chk-item input { margin-top:4px; flex-shrink:0; width:16px; height:16px; }
+
   /* ratings */
   .cmp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:22px; }
   .cmp-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 16px; text-align:center; }
@@ -182,7 +205,7 @@
   <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
   <div class="tab hot" onclick="showTab('cohorts', this)">Reading Generations</div>
   <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
-  <div class="tab" onclick="showTab('terms', this)">Key Phrases</div>
+  <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
   <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
@@ -196,7 +219,7 @@
     <div class="stat-card"><div class="stat-label">Shape</div><div class="stat-value">8 chapters + 4 interludes</div><div class="stat-desc">One scene-setting chapter, six generation profiles, one forward-looking chapter, and short interludes on major events. About 560 pages per retailer listings.</div></div>
   </div>
 
-  <div class="note-box"><strong>How these summaries were made.</strong> Chapter titles come from the author's own site and the generation boundaries are hers. Everything else in the chapter summaries is reconstructed from that verified table of contents, the author's description of the book, and published reviews. It is not a close reading, and Claude has not read the book itself. Examples labelled "reviewer's illustration" are mine, not Twenge's.</div>
+  <div class="note-box"><strong>How these summaries were made.</strong> Chapter titles come from the author's own site and the generation boundaries are hers. Everything else in the chapter summaries is reconstructed from that verified table of contents, the author's description of the book, free previews of a study guide (SuperSummary) and published reviews. It is not a close reading, and Claude has not read the book itself. Examples labelled "reviewer's illustration" are mine, not Twenge's.</div>
 
   <div class="section-header"><h2>The Thesis in Plain English</h2><div class="section-line"></div></div>
   <div class="summary-block">
@@ -212,12 +235,12 @@
 <!-- ═══ CHAPTERS ═══ -->
 <div id="chapters" class="panel">
   <div class="section-header"><h2>All Chapters</h2><div class="section-line"></div></div>
-  <div class="note-box">Chapter titles are verified from the <a href="https://www.jeantwenge.com/generations-book-by-dr-jean-twenge/">author's site</a>. Summaries are reconstructed from that list, the book's stated themes and published reviews, not a close reading. The author's site also lists four event interludes (the AIDS epidemic, 9/11 and the new war, the Great Recession and its aftermath, COVID-19); I could not verify where they sit between chapters, so they have their own card at the end.</div>
+  <div class="note-box">Chapter titles are verified from the <a href="https://www.jeantwenge.com/generations-book-by-dr-jean-twenge/">author's site</a>. Summaries are reconstructed from that list, the book's stated themes, free previews of a study guide (SuperSummary, checked 23 Nov 2026) and published reviews, not a close reading. The author's site also lists four event interludes (the AIDS epidemic, 9/11 and the new war, the Great Recession and its aftermath, COVID-19); I could not verify where they sit between chapters, so they have their own card at the end.</div>
 
   <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--ink)">1</div><div class="ch-title"><h3>The How and Why of Generations</h3><span>Method, definitions, the case for technology</span></div><div class="ch-arrow">›</div></div>
     <div class="ch-body">
       <p>The set-up chapter. It explains why Twenge thinks generations are worth studying, how birth cohorts are defined, and what the surveys can and cannot show. This is where her main argument is introduced: that technology, more than discrete events, shapes a generation.</p>
-      <p>Her stated approach is to compare generations at the same age, across decades of survey waves. A reviewer notes she also admits generations can be too broad, since people born ten years apart in one group may have lived through different cultures.</p>
+      <p>Per the study guide's summary, this is where she introduces the "Technology Model of Generations": linear technological change, rather than the cyclical types of Strauss and Howe, drives generational differences, working through individualism and a slower life pace. She contrasts the isolated North Sentinelese, where little changes, with modern societies where people born years apart grow up in different worlds. Her stated approach is to compare generations at the same age, across decades of survey waves. A reviewer notes she also admits generations can be too broad, since people born ten years apart in one group may have lived through different cultures.</p>
       <div class="watch"><strong>Read critically:</strong> this chapter carries the weight of the whole book. If you are unconvinced here that cohort labels capture something real, the rest is a long catalogue of differences you may attribute to class, age or period.</div>
     </div></div>
 
@@ -229,31 +252,31 @@
 
   <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--orange)">3</div><div class="ch-title"><h3>Boomers (Born 1946–1964)</h3><span>The most-discussed cohort</span></div><div class="ch-arrow">›</div></div>
     <div class="ch-body">
-      <p>Profiles the postwar baby-boom cohort. One reviewer notes the book reports Boomers' higher alcohol and drug use persisting as they aged. The span is nearly two decades long, which is the usual target of boundary criticism.</p>
+      <p>Profiles the postwar baby-boom cohort. The study guide says 76 million Boomers were born in the US, a bulge that dominated culture at every life stage, and that Twenge credits them with mainstreaming individualism and 1960s counterculture ideals, helped by television and the birth control pill. They had fewer children, later, and divorce kept rising. One reviewer notes the book reports Boomers' higher alcohol and drug use persisting as they aged. The span is nearly two decades long, which is the usual target of boundary criticism.</p>
       <div class="watch"><strong>Read critically:</strong> economist John Quiggin argues the demographic baby boom (to the early 1960s) does not line up with a break in cultural and economic history, which came in the early 1970s. He suggests many people labelled Boomers have more in common with the cohort after them.</div>
     </div></div>
 
   <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--yellow);color:#3a3000">4</div><div class="ch-title"><h3>Generation X (Born 1965–1979)</h3><span>The shorter, in-between cohort</span></div><div class="ch-arrow">›</div></div>
     <div class="ch-body">
-      <p>The 15-year cohort between Boomers and Millennials. I could not verify specific findings from this chapter beyond its place in the structure and the survey topics the book covers overall, so I have not invented any.</p>
-      <div class="watch"><strong>What to look for:</strong> whether the data shows Gen X as a distinct group or as a bridge between its neighbours, and how many of the claims rest on cohort differences rather than age differences.</div>
+      <p>The 15-year cohort between Boomers and Millennials, which the book's summary calls the overlooked "middle child". Per the study guide's overall summary, it was the first to grow up entirely in the individualistic post-1960s culture, and Twenge associates it with self-reliance, materialism and distrust. It was also the last analog childhood and the first to enter adulthood in the internet era. A reviewer adds that it was a latchkey, divorce-marked childhood, that its divorce rate was lower than Boomers', and that it was politically apathetic. I could not read the chapter itself, so check those details.</p>
+      <div class="watch"><strong>What to look for:</strong> whether the data shows Gen X as a distinct group or as a bridge between its neighbours, and how many of the claims rest on cohort differences rather than age differences. Confidence: two secondary sources, no chapter text.</div>
     </div></div>
 
   <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--red)">5</div><div class="ch-title"><h3>Millennials (Born 1980–1994)</h3><span>Coming of age at the internet's rise</span></div><div class="ch-arrow">›</div></div>
     <div class="ch-body">
-      <p>The cohort that grew up as the internet became mainstream and reached adulthood during the Great Recession era. As with Gen X, I could not verify chapter-specific claims, so this is a pointer to what the structure implies, not a summary.</p>
-      <div class="watch"><strong>What to look for:</strong> how the technology argument is applied to a generation that met the web in adolescence, versus the next group who grew up with smartphones.</div>
+      <p>The study guide's Chapter 5 summary: raised mostly by Boomer parents in an optimistic, self-esteem-focused era, Millennials were the first "digital natives" and gained high self-confidence, then met the Great Recession. The book reports that their inflation-adjusted household incomes by 2019 exceeded those of earlier generations at the same age, yet many feel disadvantaged; the guide lists student debt, childcare costs, high expectations and social-media comparison as explanations. They fully adopted the slow-life strategy, delaying marriage and parenthood. I have not seen the chapter itself.</p>
+      <div class="watch"><strong>What to look for:</strong> how the technology argument is applied to a generation that met the web in adolescence, versus the next group who grew up with smartphones. Confidence: study-guide preview plus two reviews.</div>
     </div></div>
 
   <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--green-d)">6</div><div class="ch-title"><h3>Generation Z (Born 1995–2012)</h3><span>Smartphone adolescence</span></div><div class="ch-arrow">›</div></div>
     <div class="ch-body">
-      <p>Likely the chapter where the technology thesis is tested hardest, since this is the cohort that grew up with smartphones and social media. It builds on Twenge's earlier book on this age group (<em>iGen</em>, shown on the cover as "author of iGen"). A <em>Goodreads</em> reader quoted in search results felt the Gen Z coverage was incomplete; I have not verified that.</p>
+      <p>The chapter where the technology thesis is tested hardest, since this is the cohort that grew up with smartphones and social media. Per the study guide's overall summary, Gen Z ("iGen") is the first generation to have smartphones as a major part of adolescence, shows the strongest slow-life pattern, and is where Twenge argues smartphones and social media are a primary cause of a teen mental-health crisis beginning around 2012, using international data too. It builds on Twenge's earlier book on this age group (<em>iGen</em>, shown on the cover as "author of iGen"). A <em>Goodreads</em> reader quoted in search results felt the Gen Z coverage was incomplete; I have not verified that.</p>
       <div class="watch"><strong>Read critically:</strong> an earlier reviewer of <em>iGen</em> in the <em>American Journal of Psychology</em> warned that some described changes may be modest rather than robust. That review is about the earlier book, not this one, but it flags the same kind of claim to check.</div>
     </div></div>
 
   <div class="ch-card"><div class="ch-head" onclick="toggleCh(this)"><div class="ch-num" style="background:var(--ink)">7</div><div class="ch-title"><h3>Polars (Born 2013–2029)</h3><span>The youngest group, still growing up</span></div><div class="ch-arrow">›</div></div>
     <div class="ch-body">
-      <p>Twenge's name for the generation others call Alpha. Most of its members are children as I write, so any claims here are necessarily projections from early signals rather than adult outcomes.</p>
+      <p>Twenge's name for the generation others call Alpha. Per the study guide's Chapter 7 summary, the name nods to political polarization and melting polar ice, and the start year of 2013 is marked by smartphone ownership passing 50%, the founding of Black Lives Matter and COVID-19. They are projected to be the first majority non-White US generation. Most of its members are children as I write, so any claims here are necessarily projections from early signals rather than adult outcomes.</p>
       <div class="watch"><strong>Read critically:</strong> the group runs to 2029 per the author's site, so the book is describing a cohort that has not finished being born. Treat conclusions as provisional.</div>
     </div></div>
 
@@ -271,9 +294,70 @@
 
 <!-- ═══ CORE FRAMEWORK ═══ -->
 <div id="cohorts" class="panel">
+  <div class="section-header"><h2>The Technology Model of Generations</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>What this tab rests on.</strong> Claude has not read the book. The model and the generation profiles below come from free previews of a study guide (SuperSummary: the book-level summary and the Chapter 1, 3, 5 and 7 summaries) and two reviews that go into detail (Samuel James in <em>The Gospel Coalition</em>, Aug 2023, and Richard Blackaby's review on his own site). Every card carries a badge saying how well it is supported. Figures are repeated only where a reviewer quotes them, and I did not check them against the book. Sources checked 23 Nov 2026. The age/period/cohort material further down is my own framing, and every scenario in it is invented.</div>
+
+  <div class="summary-block">
+    <p>Twenge's central claim, which the study guide calls the "Technology Model of Generations", is that <strong>linear technological change, not recurring historical events, is the main driver of how generations differ.</strong> She sets it against cyclical theories such as Strauss and Howe's. Her illustration is the isolated North Sentinelese: with little technological change, there is little generational change. In modern societies, where change is fast, people born a few years apart grow up in very different cultural worlds.</p>
+    <p>The model has two links in the chain. Technology fuels <strong>individualism</strong> (a focus on the self, choice and equality), and technology plus longer lives and more schooling produces a <strong>slow-life strategy</strong> (adult milestones arrive later). Those two shifts then show up differently in each generation's family life, politics and mental health.</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step" style="border-top-color:var(--slate)"><div class="n">1 · Cause</div><h4>Technology</h4><p>TV and the birth control pill, then the internet, then smartphones and social media (the examples the sources name).</p></div>
+    <div class="flow-step" style="border-top-color:var(--orange)"><div class="n">2 · Shift</div><h4>Individualism</h4><p>Less duty and conformity, more personal choice and self-expression, linked to the rise of self-esteem culture.</p></div>
+    <div class="flow-step" style="border-top-color:var(--yellow)"><div class="n">2 · Shift</div><h4>Slow life</h4><p>Later marriage, children, careers and independence, as lifespans, schooling and parental investment per child rise.</p></div>
+    <div class="flow-step" style="border-top-color:var(--green)"><div class="n">3 · Result</div><h4>Generational gaps</h4><p>Different attitudes, family patterns, politics and mental health at the same age.</p></div>
+  </div>
+
+  <div class="section-header"><h2>Generation by Generation</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px;">The badge on each card shows what supports it: <span class="badge rep">Two or more sources</span> <span class="badge low">Single source or thin</span> <span class="badge mine">Reviewer's own</span></p>
+  <div class="gen-grid">
+    <div class="gen-card" style="border-top-color:var(--slate)"><h3>Silents <span class="badge rep">Two sources</span></h3><div class="yrs">Born 1925–1945 · Chapter 2</div>
+      <h4>Reported in the book</h4><ul><li>Silent activists were early leaders in the civil rights, feminist and gay rights movements, even though Boomers get the credit.</li><li>The "most marrying" of the six generations, and more divorced than the generation before them.</li><li>A smaller cohort that met less competition for jobs and houses, and came of age in a long economic expansion.</li><li>Described as less cynical than later generations, and today the oldest and most conservative-leaning.</li></ul>
+      <h4>Technology link</h4><p>Not found in the sources I read.</p>
+      <h4>Watch out</h4><p>One reviewer gives 1944 as the end year; the author's site says 1945. Use the author's.</p></div>
+    <div class="gen-card" style="border-top-color:var(--orange)"><h3>Boomers <span class="badge rep">Two sources</span></h3><div class="yrs">Born 1946–1964 · Chapter 3</div>
+      <h4>Reported in the book</h4><ul><li>A huge demographic bulge (76 million US births, per the study guide) that shaped culture at every stage of life.</li><li>Mainstreamed 1960s counterculture ideals and made individual choice the norm.</li><li>Fewer children, later, and rising divorce with fewer remarriages.</li><li>Higher alcohol and drug use than earlier cohorts. One reviewer reports worse mental health than Silents at the same age.</li></ul>
+      <h4>Technology link</h4><p>Television, which widened their view of the world, and the birth control pill, which gave women more choice over sex and childbearing.</p>
+      <h4>Watch out</h4><p>The nearly two-decade span is the usual target of boundary critics (see Quiggin on the Ratings tab).</p></div>
+    <div class="gen-card" style="border-top-color:var(--yellow)"><h3>Gen X <span class="badge rep">Two sources</span></h3><div class="yrs">Born 1965–1979 · Chapter 4</div>
+      <h4>Reported in the book</h4><ul><li>The "middle child": overlooked, sandwiched between two huge generations.</li><li>The first to grow up wholly inside the individualistic post-1960s culture. Twenge associates it with self-reliance, materialism and distrust.</li><li>The last analog childhood and the first adulthood on the internet. One reviewer adds the latchkey, divorce-marked childhood.</li><li>Divorced less than Boomers. A reviewer calls them the most politically apathetic.</li></ul>
+      <h4>Technology link</h4><p>TV advertising through childhood, then email and the early internet in young adulthood.</p>
+      <h4>Watch out</h4><p>The shortest of the big cohorts, so the label is thin on its own; check whether claims are cohort or age effects.</p></div>
+    <div class="gen-card" style="border-top-color:var(--red)"><h3>Millennials <span class="badge rep">Study guide + 2 reviews</span></h3><div class="yrs">Born 1980–1994 · Chapter 5</div>
+      <h4>Reported in the book</h4><ul><li>Raised mostly by Boomer parents in an optimistic, self-esteem-focused era, producing high self-confidence.</li><li>The first "digital natives", with the internet and early social media. Then the Great Recession shaped their economic outlook.</li><li>Data show higher household incomes than earlier generations had at the same age, yet many feel disadvantaged. The study guide lists student debt, childcare costs, high expectations and social-media comparison as explanations.</li><li>Fully adopted the slow-life strategy, delaying marriage and parenthood further.</li></ul>
+      <h4>Technology link</h4><p>The mainstream internet and early social media arrived in their adolescence and young adulthood.</p>
+      <h4>Watch out</h4><p>A reviewer quotes a rise in adult depression for the mid-2010s. I did not check the figure.</p></div>
+    <div class="gen-card" style="border-top-color:var(--green-d)"><h3>Gen Z <span class="badge rep">Two sources</span></h3><div class="yrs">Born 1995–2012 · Chapter 6</div>
+      <h4>Reported in the book</h4><ul><li>Twenge's "iGen": the first generation to have smartphones as a major part of adolescence.</li><li>The slow-life strategy is strongest here. Teens delay adult activities more than any earlier generation.</li><li>Her most contested claim: smartphones and social media are a primary cause of a teen mental-health crisis that began around 2012 and spread to young adults, supported with international data.</li><li>A reviewer notes lower drinking and drug use and fewer risky behaviours.</li></ul>
+      <h4>Technology link</h4><p>Smartphones and social media: the book's strongest test of the model.</p>
+      <h4>Watch out</h4><p>The causal link from smartphones to mental health is argued by Twenge and disputed by other researchers. That last part is general background, not from the sources above.</p></div>
+    <div class="gen-card" style="border-top-color:var(--ink)"><h3>Polars <span class="badge rep">Study guide</span></h3><div class="yrs">Born 2013–2029 · Chapter 7</div>
+      <h4>Reported in the book</h4><ul><li>Twenge's name for what marketers call Alphas. It nods to political polarization and melting polar ice.</li><li>The oldest were in kindergarten or first grade when COVID-19 moved school to Zoom. Those born after March 2020 have lived entirely in the pandemic era.</li><li>The start year of 2013 is marked by smartphone ownership passing 50%, the founding of Black Lives Matter, and COVID.</li><li>Projected to be the first majority non-White generation in the US, with the highest share of multiracial people.</li></ul>
+      <h4>Technology link</h4><p>Born into a world where smartphones and daily social media were already ordinary.</p>
+      <h4>Watch out</h4><p>Most are still children, so Twenge treats predictions cautiously. Do the same.</p></div>
+  </div>
+
+  <div class="section-header"><h2>Side by Side</h2><div class="section-line"></div></div>
+  <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px;">Built from the cards above. A dash means the sources I read did not cover it. Scroll sideways on a phone.</p>
+  <div class="tbl-wrap"><table id="cmp-table" style="min-width:780px"></table></div>
+
+  <div class="tool">
+    <h3>Compare two generations <span class="badge mine">Reviewer's own tool</span></h3>
+    <p class="help">Pick any two groups to see the same rows as the table, side by side. It only reshuffles what is on this page and adds no new data.</p>
+    <div class="by-row"><label for="ga" style="font-size:13px;font-weight:700;">A</label><select id="ga" aria-label="First generation"></select><label for="gb" style="font-size:13px;font-weight:700;">B</label><select id="gb" aria-label="Second generation"></select></div>
+    <div class="by-out" id="cmp-out" aria-live="polite"></div>
+  </div>
+
+  <div class="section-header"><h2>A Worked Case: Do Millennials Really Have It Worse?</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><span class="badge rep">Study guide + review</span> The study guide's Chapter 5 summary says the data do not support the "Millennials got the shaft" story: by 2019 their household incomes, adjusted for inflation, were higher than Silents, Boomers and Gen X had at the same age. A reviewer adds that Millennials were the first generation in which over a third held a four-year degree. Yet the book says many Millennials feel poor without being poor.</p>
+    <p>Twenge's offered reasons, per the guide, are student loans, childcare costs, high expectations, and comparison fuelled by social media and negative news. It is a good example of why the same-age comparison matters: the headline feeling and the data point in different directions. <em>I have not checked the income figures against the book; treat them as the study guide's reading.</em></p>
+  </div>
+
   <div class="section-header"><h2>Reading Generations: Age, Period, Cohort</h2><div class="section-line"></div></div>
   <div class="summary-block">
-    <p>Any claim that "generation X does this" must survive a three-way question: is the difference due to <strong>age</strong> (everyone does this at that stage of life), <strong>period</strong> (everyone in a given year changed, whatever their age), or <strong>cohort</strong> (people born in a given span differ and carry it forward)? Only the third supports a generational story. Twenge's method of comparing groups at the same age and across survey years aims to isolate it, and a reviewer credits her for attending to the distinction. This is my own framing of that idea, not a chapter from the book.</p>
+    <p>Any claim that "generation X does this" must survive a three-way question: is the difference due to <strong>age</strong> (everyone does this at that stage of life), <strong>period</strong> (everyone in a given year changed, whatever their age), or <strong>cohort</strong> (people born in a given span differ and carry it forward)? Only the third supports a generational story. Twenge's method of comparing groups at the same age and across survey years aims to isolate it, and a reviewer credits her for attending to the distinction. This is my own framing of that idea, not a chapter from the book. <span class="badge mine">Reviewer's own</span></p>
   </div>
   <div class="tbl-wrap"><table>
     <tr><th>Effect</th><th>Means</th><th>Reviewer's illustration (invented)</th></tr>
@@ -284,11 +368,12 @@
 
   <div class="section-header"><h2>Two Ways to Explain Generations</h2><div class="section-line"></div></div>
   <div class="tbl-wrap"><table>
-    <tr><th></th><th>Event-driven view</th><th>Twenge's technology view</th></tr>
-    <tr><td><strong>Main driver</strong></td><td>Shared events at impressionable ages</td><td>Technology of the childhood era</td></tr>
+    <tr><th></th><th>Event-driven / cyclical view</th><th>Twenge's technology view</th></tr>
+    <tr><td><strong>Main driver</strong></td><td>Shared events at impressionable ages, or a recurring cycle of generational types (Strauss and Howe)</td><td>Linear technological change, via individualism and slow life</td></tr>
+    <tr><td><strong>Shape of history</strong></td><td>Cyclical: types repeat</td><td>Linear: each generation meets a new technology</td></tr>
     <tr><td><strong>Reviewer pushback</strong></td><td>Strauss and Howe-style theories cover a whole era of youth, not one event, so Twenge's summary of them is questioned</td><td>Technology is built by earlier generations, so credit may circle back to them; and class is downplayed</td></tr>
   </table></div>
-  <p style="font-size:12px;color:var(--muted);margin-bottom:8px;">Based on reviews by <a href="https://insidestory.org.au/can-generational-analysis-be-saved/" style="color:var(--slate-d)">John Quiggin</a> and Matthew Ewer (read via a search summary only).</p>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:8px;">Pushback based on reviews by <a href="https://insidestory.org.au/can-generational-analysis-be-saved/" style="color:var(--slate-d)">John Quiggin</a> and Matthew Ewer (read via a search summary only). The cyclical-versus-linear contrast is from the study guide's Chapter 1 summary.</p>
 
   <div class="section-header"><h2>Try It: Where Do You Fall?</h2><div class="section-line"></div></div>
   <div class="tool">
@@ -309,24 +394,69 @@
 <!-- ═══ TOOLKIT ═══ -->
 <div id="toolkit" class="panel">
   <div class="section-header"><h2>Toolkit</h2><div class="section-line"></div></div>
-  <div class="note-box">These are the reviewer's own suggestions for using generational claims sensibly, not techniques from the book.</div>
+  <div class="note-box">Everything on this tab is the reviewer's own suggestion for using generational claims sensibly. None of it is a technique from the book. Twenge's book is for understanding, not a method, and Dan found few action items in it.</div>
+
+  <div class="section-header"><h2>Sort and Test Every Claim</h2><div class="section-line"></div></div>
   <div class="toolkit-item"><div class="ic">🔍</div><div><strong>Sort every claim: age, period, or cohort.</strong> Before repeating "Gen Z is X", ask whether older people were X at the same age.</div></div>
-  <div class="toolkit-item"><div class="ic">📏</div><div><strong>Treat labels near a boundary as soft.</strong> Someone born in 1979 or 1980 may have more in common with the neighbouring group.</div></div>
-  <div class="toolkit-item"><div class="ic">💼</div><div><strong>Use generation as a hypothesis, not a hiring filter.</strong> At work, ask individuals what they prefer rather than inferring from a birth year.</div></div>
+  <div class="toolkit-item"><div class="ic">📏</div><div><strong>Treat labels near a boundary as soft.</strong> Someone born in 1979 or 1980 may have more in common with the neighbouring group. The lookup on the previous tab flags this.</div></div>
   <div class="toolkit-item"><div class="ic">🧮</div><div><strong>Look for the class and background split.</strong> Reviewers say differences of class, race and gender can matter more than cohort. Check whether a comparison is broken out that way.</div></div>
   <div class="toolkit-item"><div class="ic">📱</div><div><strong>Test the technology claim on one example.</strong> Pick a habit the book attributes to a device and ask what else changed in the same years.</div></div>
+  <div class="toolkit-item"><div class="ic">📊</div><div><strong>Compare feeling with data.</strong> The Millennial income case shows a widely held feeling can differ from the numbers. When someone cites a generational grievance, ask what the same-age data would show.</div></div>
+
+  <div class="tool">
+    <h3>Claim check <span class="badge mine">Reviewer's own</span></h3>
+    <p class="help">Think of a generational claim you have heard or made. Tick each check it passes.</p>
+    <label class="chk-item"><input type="checkbox" class="chk"><span>It compares the groups <strong>at the same age</strong>, not today's old versus today's young.</span></label>
+    <label class="chk-item"><input type="checkbox" class="chk"><span>It holds <strong>across several years</strong>, so it is not just one period shock.</span></label>
+    <label class="chk-item"><input type="checkbox" class="chk"><span>It names a <strong>source or dataset</strong>, not a stereotype or anecdote.</span></label>
+    <label class="chk-item"><input type="checkbox" class="chk"><span>It says what <strong>class, race or gender</strong> breakdown shows, or admits it does not.</span></label>
+    <label class="chk-item"><input type="checkbox" class="chk"><span>It does not treat a <strong>birth year at the boundary</strong> as decisive.</span></label>
+    <label class="chk-item"><input type="checkbox" class="chk"><span>It <strong>applies to your country</strong>. The book's data are American.</span></label>
+    <div class="by-out" id="chk-out" aria-live="polite"></div>
+  </div>
+
+  <div class="section-header"><h2>At Work</h2><div class="section-line"></div></div>
+  <div class="toolkit-item"><div class="ic">💼</div><div><strong>Use generation as a hypothesis, not a hiring filter.</strong> At work, ask individuals what they prefer rather than inferring from a birth year.</div></div>
+  <div class="toolkit-item"><div class="ic">💬</div><div><strong>Ask before you adapt.</strong> A prompt of my own for a new team: "How do you like to get updates: a call, email, text or chat?" A reviewer quotes a line of Twenge's joking that each generation prefers a different way of being contacted. The question gets you the real answer, not the joke.</div></div>
+  <div class="toolkit-item"><div class="ic">🧭</div><div><strong>Check the assumption behind a policy.</strong> If a plan rests on "younger staff want flexibility" (a trend the study guide says Twenge forecasts), test it with a short survey of your own team first.</div></div>
+
+  <div class="section-header"><h2>At Home and in the Community</h2><div class="section-line"></div></div>
+  <div class="toolkit-item"><div class="ic">🏠</div><div><strong>Swap formative-tech stories across generations.</strong> Ask a parent or grandparent what technology arrived in their teens and how it changed their week. Then answer the same question yourself. It is the book's model turned into a dinner-table conversation.</div></div>
+  <div class="toolkit-item"><div class="ic">👪</div><div><strong>Use it to lower the temperature.</strong> A reviewer says the book helped them see that many differences are not virtues and vices but different experiences of a fast-changing culture. Try that framing before judging someone as "clueless" or "lazy".</div></div>
+  <div class="toolkit-item"><div class="ic">📵</div><div><strong>Treat the smartphone chapters as a discussion starter.</strong> If you parent teenagers, read what Twenge claims, then decide what you think the evidence supports. The causal question is contested.</div></div>
+
+  <div class="section-header"><h2>Discussion Questions</h2><div class="section-line"></div></div>
+  <div class="toolkit-item"><div class="ic">1</div><div>Which of the six generation labels fits you least well, and why?</div></div>
+  <div class="toolkit-item"><div class="ic">2</div><div>Twenge argues technology matters more than events. Which of your own beliefs came from an event, and which from a device or medium?</div></div>
+  <div class="toolkit-item"><div class="ic">3</div><div>Individualism and the slow-life strategy are presented as two shifts. Could they come apart: slow life without more individualism?</div></div>
+  <div class="toolkit-item"><div class="ic">4</div><div>If many Millennials feel poor while the data say otherwise, what other widely shared feelings might the data not support?</div></div>
+  <div class="toolkit-item"><div class="ic">5</div><div>Which claims about Gen Z would you accept only after seeing same-age comparisons with other generations?</div></div>
+  <div class="toolkit-item"><div class="ic">6</div><div>What would change if the book's boundaries were five years wide instead of fifteen to twenty (Quiggin's suggestion)?</div></div>
+  <div class="toolkit-item"><div class="ic">7</div><div>The data are American. Which findings would you expect to transfer to your country, and which not?</div></div>
+  <div class="toolkit-item"><div class="ic">8</div><div>Twenge forecasts politics, work and birth rates from cohort data. What has to stay true for those forecasts to hold?</div></div>
+
+  <div class="section-header"><h2>Limits to Keep in Mind</h2><div class="section-line"></div></div>
+  <div class="toolkit-item"><div class="ic">⚠️</div><div><strong>US-only data.</strong> Dan notes the data are strictly American and that the book says so itself. I could not check that statement in the book; treat it as his reading.</div></div>
+  <div class="toolkit-item"><div class="ic">⚠️</div><div><strong>Secondhand summaries.</strong> The generation profiles on this page come from a study guide and reviews. A detail attributed to the book may be a reviewer's paraphrase.</div></div>
   <div class="toolkit-item"><div class="ic">📖</div><div><strong>Read it chapter-first, not cover-to-cover.</strong> Chapter 1 and your own generation's chapter, then the future chapter, give most of the value for a reader short on time.</div></div>
 </div>
 
 <!-- ═══ KEY PHRASES ═══ -->
-<div id="terms" class="panel">
+<div id="quotes" class="panel">
   <div class="section-header"><h2>Key Phrases</h2><div class="section-line"></div></div>
-  <div class="note-box">Paraphrased terms and ideas, not direct quotes from the book.</div>
+  <div class="note-box">Paraphrased terms and ideas, not direct quotes from the book. Where a short phrase is the author's own coinage it appears in quotation marks. Terms come from the study guide's summaries and the reviews cited on the Reading Generations tab, unless marked otherwise.</div>
+  <div class="term-card"><h4>"Technology Model of Generations"</h4><p>Twenge's central model: technology is the root cause of generational differences, acting through individualism and slow life. It replaces explanations that rely on cyclical types or on single events.</p></div>
+  <div class="term-card"><h4>Social generation</h4><p>A group born around the same time who grow up in a shared cultural world. In Twenge's view you belong to one whether you like it or not. The six groups are defined by birth year, using her boundaries.</p></div>
+  <div class="term-card"><h4>Individualism</h4><p>The growing emphasis on self, personal choice and equality over group duty and conformity, which she links to technology and to self-esteem culture. A critic says this overlooks the decline of admiration for "rugged individualism" in the US.</p></div>
+  <div class="term-card"><h4>Slow life</h4><p>Twenge's label for the trend toward later marriage, children and independence as schooling and lifespans lengthen and parents invest more in fewer children.</p></div>
   <div class="term-card"><h4>Cohort effect</h4><p>A difference tied to when a group was born, which stays with that group as it ages.</p></div>
-  <div class="term-card"><h4>Slow life</h4><p>Twenge's label for the trend toward later marriage, children and independence as schooling and lifespans lengthen.</p></div>
-  <div class="term-card"><h4>Individualism</h4><p>The growing emphasis on self over group that she links to technology and the slow-life shift. A critic says this overlooks the decline of admiration for "rugged individualism" in the US.</p></div>
-  <div class="term-card"><h4>Polars</h4><p>Her term for the generation born 2013 to 2029, otherwise called Generation Alpha.</p></div>
   <div class="term-card"><h4>Same-age comparison</h4><p>Comparing generations when they were the same age, using repeated surveys, to separate cohort effects from age.</p></div>
+  <div class="term-card"><h4>Middle-child generation</h4><p>A reviewer's report of how Twenge describes Gen X: overlooked between two very large generations, and the last to have an analog childhood.</p></div>
+  <div class="term-card"><h4>Digital natives</h4><p>The study guide's label for Millennials, the first generation to come of age with the internet and early social media.</p></div>
+  <div class="term-card"><h4>iGen</h4><p>Her earlier name for Gen Z, from her previous book. The first generation for whom smartphones were a major part of adolescence.</p></div>
+  <div class="term-card"><h4>Polars</h4><p>Her term for the generation born 2013 to 2029, otherwise called Generation Alpha. The name nods to political polarization and polar ice.</p></div>
+  <div class="term-card"><h4>Deaths of despair</h4><p>A reviewer reports the book uses this idea in its Boomer and Millennial chapters, for deaths linked to drugs, alcohol and suicide. I did not verify how the book defines or measures it.</p></div>
+  <div class="term-card"><h4>Feeling poor without being poor</h4><p>A reviewer's paraphrase of the Millennial finding: the group felt economically disadvantaged even though same-age data showed higher incomes.</p></div>
   <div class="term-card"><h4>Generation Jones</h4><p>Not from the book. A label Quiggin uses for people born 1954 to 1963, whom he argues are poorly served by the Boomer label.</p></div>
 </div>
 
@@ -419,6 +549,38 @@
   }
   function toggleCh(head) { head.parentElement.classList.toggle('open'); }
 
+  /* Per-generation data for the side-by-side table and compare tool. Every cell is drawn from the generation cards (study guide + reviews); '-' means the sources read did not cover it. */
+  const GD = [
+    { n:'Silents', yrs:'1925–1945', sketch:'Early activists; the most-marrying group; less cynical', tech:'-', pace:'Married early and often; more divorce than the generation before', self:'Described as less cynical than later groups', mh:'-', conf:'Two sources' },
+    { n:'Boomers', yrs:'1946–1964', sketch:'A huge cohort that made individual choice the norm', tech:'Television; the birth control pill', pace:'Fewer, later children; divorce kept rising, fewer remarried', self:'Individualism mainstreamed; counterculture ideals', mh:'Reported as worse than Silents at the same age', conf:'Two sources' },
+    { n:'Gen X', yrs:'1965–1979', sketch:'The overlooked middle child', tech:'TV advertising in childhood; email and early internet in young adulthood', pace:'A slower start to marriage; divorced less than Boomers', self:'Self-reliance, materialism, distrust', mh:'Reported as somewhat stable', conf:'Two sources' },
+    { n:'Millennials', yrs:'1980–1994', sketch:'Confident digital natives who met the Great Recession', tech:'The mainstream internet and early social media', pace:'Delayed marriage and parenthood further', self:'High self-confidence from self-esteem-focused parenting', mh:'A reviewer quotes a mid-2010s rise in adult depression (unchecked)', conf:'Study guide + 2 reviews' },
+    { n:'Gen Z', yrs:'1995–2012', sketch:'The smartphone generation ("iGen")', tech:'Smartphones and social media in adolescence', pace:'Delays adult activities more than any earlier group', self:'-', mh:'Twenge ties a teen crisis from about 2012 to smartphones; disputed by others', conf:'Two sources' },
+    { n:'Polars', yrs:'2013–2029', sketch:'Born into smartphones and then the pandemic', tech:'Smartphones already ordinary at birth; Zoom schooling', pace:'Too young to tell', self:'Too young to tell', mh:'Too young to tell', conf:'Study guide' }
+  ];
+  const ROWS = [['Born','yrs'],['Sketch','sketch'],['Technology','tech'],['Life pace','pace'],['Self-image','self'],['Mental health','mh'],['Support','conf']];
+  const cmpTable = document.getElementById('cmp-table');
+  cmpTable.innerHTML = '<tr><th></th>' + GD.map(g => '<th>' + g.n + '</th>').join('') + '</tr>' + ROWS.map(r => '<tr><td><strong>' + r[0] + '</strong></td>' + GD.map(g => '<td>' + (g[r[1]] === '-' ? '–' : g[r[1]]) + '</td>').join('') + '</tr>').join('');
+  const ga = document.getElementById('ga'), gb = document.getElementById('gb');
+  GD.forEach((g, i) => { ga.add(new Option(g.n + ' (' + g.yrs + ')', i)); gb.add(new Option(g.n + ' (' + g.yrs + ')', i)); });
+  ga.value = 2; gb.value = 4;
+  function compareGens() {
+    const A = GD[+ga.value], B = GD[+gb.value], out = document.getElementById('cmp-out');
+    if (A === B) { out.innerHTML = 'Pick two different groups to compare.'; return; }
+    out.innerHTML = '<div class="cmp-row hd"><div></div><div>' + A.n + '</div><div>' + B.n + '</div></div>' + ROWS.map(r => '<div class="cmp-row"><div class="k">' + r[0] + '</div><div>' + (A[r[1]] === '-' ? '–' : A[r[1]]) + '</div><div>' + (B[r[1]] === '-' ? '–' : B[r[1]]) + '</div></div>').join('') + '<div style="font-size:12px;color:var(--muted);margin-top:8px;">A dash means the sources I read did not cover it. These are reviewers\' and a study guide\'s readings, not figures I checked.</div>';
+  }
+  ga.addEventListener('change', compareGens); gb.addEventListener('change', compareGens);
+  compareGens();
+
+  /* Claim check (reviewer's own) */
+  const chks = document.querySelectorAll('.chk');
+  function chkUpdate() {
+    const n = [...chks].filter(c => c.checked).length, out = document.getElementById('chk-out');
+    out.style.borderLeftColor = n >= 5 ? 'var(--green)' : n >= 3 ? 'var(--yellow)' : 'var(--red)';
+    out.textContent = n + ' of ' + chks.length + ' checks passed. ' + (n >= 5 ? 'The claim is reasonably well supported. Still hold it loosely.' : n >= 3 ? 'Partly supported. Find what is missing before repeating it.' : 'Treat this as a hunch, not a finding.');
+  }
+  chks.forEach(c => c.addEventListener('change', chkUpdate)); chkUpdate();
+
   /* Birth-year lookup (boundaries from the author's site) */
   const GENS = [
     { n:'Silents', a:1925, b:1945, c:'var(--slate)' }, { n:'Boomers', a:1946, b:1964, c:'var(--orange)' },
@@ -433,7 +595,8 @@
     if (!g) { out.style.borderLeftColor = 'var(--line)'; out.textContent = y < 1925 ? 'Before 1925: older than the six groups in the book.' : 'After 2029: beyond the book\'s Polars range.'; return; }
     const edge = (y - g.a <= 1) ? 'You are within a year of the start of this group, so your neighbours\' label may fit you equally well.' : (g.b - y <= 1) ? 'You are within a year of the end of this group, so the next label may fit you equally well.' : 'You sit well inside this group\'s boundaries, though a span of ' + (g.b - g.a + 1) + ' years is still a long time to share one label.';
     out.style.borderLeftColor = g.c;
-    out.innerHTML = '<strong>' + g.n + '</strong> (' + g.a + '–' + g.b + '). ' + edge;
+    const d = GD.find(x => x.n === g.n);
+    out.innerHTML = '<strong>' + g.n + '</strong> (' + g.a + '–' + g.b + '). ' + (d ? d.sketch + '. ' : '') + edge;
   }
   document.getElementById('by').addEventListener('input', lookup);
   lookup();
