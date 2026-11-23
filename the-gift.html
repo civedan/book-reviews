@@ -331,6 +331,26 @@
   .src-list a { color:var(--blue-dark); }
   .stars-bar { display:flex; height:10px; border-radius:5px; overflow:hidden; margin:10px 0 6px; }
   @media (max-width: 560px) { .cmp-grid { grid-template-columns:1fr; } }
+
+  /* ── Added for six-tab retrofit ── */
+  .tab.hot { color: var(--blue-dark); }
+  .ch-conf { margin-top: 8px; font-size: 11.5px; color: var(--gray-dark); font-style: italic; }
+  .sorter { margin-bottom: 8px; }
+  .sort-card { background: #fffaf3; border: 1px solid #ecd2cf; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+  .sort-q { font-size: 13.5px; line-height: 1.55; color: var(--ink-deep); margin-bottom: 10px; }
+  .sort-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sort-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 7px 16px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--cream); color: var(--gray-dark); cursor: pointer; transition: all .2s; }
+  .sort-btn:hover { border-color: var(--blue); color: var(--ink); }
+  .sort-btn.picked { background: var(--ink-deep); color: #fff; border-color: var(--ink-deep); }
+  .sort-reveal { display: none; margin-top: 10px; background: var(--blue-dim); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0; padding: 9px 12px; font-size: 12.5px; line-height: 1.55; color: var(--blue-dark); }
+  .sort-card.answered .sort-reveal { display: block; }
+  .sort-score { background: var(--ink-dim); border: 1px dashed var(--gray); border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: var(--gray-dark); line-height: 1.55; }
+  .checklist { display: grid; gap: 8px; margin-bottom: 8px; }
+  .check-item { display: flex; gap: 10px; align-items: flex-start; background: #fffaf3; border: 1px solid #ecd2cf; border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.5; cursor: pointer; }
+  .check-item input { margin-top: 3px; flex-shrink: 0; accent-color: var(--blue-dark); }
+  .check-score { font-size: 12px; color: var(--gray-dark); letter-spacing: 1px; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+  .panel table { max-width: 100%; }
+  .cat-table td { overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -351,7 +371,7 @@
     </div>
     <div class="hero-text">
       <div class="book-label">Book Review &amp; Reading Guide</div>
-      <h1>The Gift<em>How the Creative Spirit Transforms the World</em></h1>
+      <h1>The Gift<em>Creativity and the Artist in the Modern World</em></h1>
       <div class="author">by <span>Lewis Hyde</span> &nbsp;·&nbsp; Vintage Books &nbsp;·&nbsp; First published 1983</div>
       <div class="hero-meta">
         <div class="meta-pill">Creativity</div>
@@ -374,8 +394,9 @@
 <div class="tabs">
   <div class="tab active" onclick="showTab('overview', this)">Overview</div>
   <div class="tab" onclick="showTab('chapters', this)">All Chapters</div>
-  <div class="tab" onclick="showTab('concepts', this)">Gift vs. Commodity</div>
-  <div class="tab" onclick="showTab('quotes', this)">Notable Ideas</div>
+  <div class="tab hot" onclick="showTab('concepts', this)">Gift vs. Commodity</div>
+  <div class="tab" onclick="showTab('toolkit', this)">Toolkit</div>
+  <div class="tab" onclick="showTab('quotes', this)">Key Phrases</div>
   <div class="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</div>
 </div>
 
@@ -391,7 +412,7 @@
 
   <div class="summary-block">
     <p><strong>The Gift</strong> is Lewis Hyde's long meditation on a deceptively simple question: why does making art feel so different from making a living? His answer is that a work of art belongs to a gift economy, in which things are received, passed on and kept alive by movement, while the culture around it increasingly treats everything as a commodity to be bought, sold and settled.</p>
-    <p>The book is built in two halves. Part One is a theory of gifts, assembled from anthropology (the Kula ring, the Maori <em>hau</em>, first-salmon rites), folktales, Alcoholics Anonymous and the history of usury. Part Two applies the theory to two poets: Walt Whitman, who tried to live as a giver, and Ezra Pound, whose sharp insight into money turned into something far darker.</p>
+    <p>The book is built in two halves. Part One is a theory of gifts, assembled from anthropology (the Kula ring, the Maori <em>hau</em>, the potlatch, first-salmon rites), folktales, the scientific community and the history of usury. Part Two applies the theory to two poets: Walt Whitman, who tried to live as a giver, and Ezra Pound, whose sharp insight into money turned into something far darker.</p>
     <p>It is part anthropology, part literary criticism, part moral philosophy, and it is written with a poet's care for language. It does not offer a business model for artists. It gives them, and the rest of us, a vocabulary for understanding why some work feels like an offering and why it suffers when treated as only a product.</p>
   </div>
 
@@ -405,212 +426,302 @@
 </div>
 
 <div id="chapters" class="panel">
-  <div class="note-box">Chapter titles follow the book's table of contents. The summaries are written from the book's themes and section headings rather than a line-by-line reading, so check specifics against your own copy before relying on them. If something I've described does not match your memory of the text, trust the book.</div>
+  <div class="note-box"><strong>What these summaries rest on.</strong> The table of contents, section headings and chapter order were checked against the full text of the third edition (2019), which includes Margaret Atwood's Foreword, Hyde's Preface to the Third Edition and the 2007 Afterword "On Being Good Ancestors", as published by The Anarchist Library. For each chapter I read the opening and several passages from the middle and end, plus a keyword search across the text. I did <strong>not</strong> read every page, so each card carries a confidence label: <em>Higher</em> means the opening and most of the argument were read, <em>Medium</em> means sampled passages only (the long Ch. 7, 9 and 10 especially). Page numbers differ between the 1983, 2007 and 2019 printings, so none are given. An earlier version of this page described several chapters from memory of the book's themes. Details the text does not support were rewritten or removed, for example Alcoholics Anonymous as the main example in Chapter 5 (the text mentions AA only once, in Chapter 3), Dante in Chapter 7, Melanesian status economies in Chapter 6, and a loose description of the Afterword. If a summary here disagrees with your copy, trust your copy.</div>
+
   <div class="part-header">Front Matter</div>
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num intro">I</div>
-      <div class="ch-title">Introduction</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num intro">F</div><div class="ch-title">Foreword, by Margaret Atwood</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Hyde opens with the problem that drives the whole book: a work of art is a gift, yet the artist has to live in a market economy that treats everything as a commodity. He separates the two ideas early. A gift, in his sense, is something we receive rather than earn, and the creative talent an artist carries is the clearest example. The introduction promises a book that moves between anthropology, economic history and literary biography to show how gifts behave, and what happens to creative work when the gift side is starved.
-      <div class="ch-takeaway">Art lives in two economies at once, and the trouble starts when the market is the only one we can see.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Talent and inspiration arrive as gifts, not purchases</div>
-    </div>
-  </div>
-  <div class="part-header">Part I — A Theory of Gifts (Ch. 1–7)</div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">1</div>
-      <div class="ch-title">Some Food We Could Not Eat</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      The chapter sets out the basic grammar of gift exchange in two movements. <strong>The Motion</strong> introduces the central rule: a gift must keep moving. Drawing on Marcel Mauss and the Maori account of the <em>hau</em>, the spirit that travels with a gift, Hyde argues that a gift is not truly alive if it is hoarded or sold. <strong>The Circle</strong> follows the Kula ring of the Trobriand Islands, where valuables circulate in opposite directions around a ring of islands and are never kept. The point is that the gift binds a community through ongoing passage, not through a single payback.
-      <div class="ch-takeaway">A gift stays a gift only while it continues to move.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> The gift must always move</div>
+      Atwood describes the book as one she recommends without fail to aspiring writers, painters and musicians. She says it is not a how-to book but a book about the core nature of what artists do, and about how that activity relates to a commercial society. She also notes that it has never been out of print and that it travels largely by word of mouth among artists.
+      <div class="ch-takeaway">The book's most famous champion frames it as a book for makers, not a manual.</div>
+      <div class="ch-conf">Confidence: Higher (opening read)</div>
     </div>
   </div>
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">2</div>
-      <div class="ch-title">The Bones of the Dead</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num intro">P</div><div class="ch-title">Preface to the Third Edition: The Gift at Present</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      Hyde turns to the gifts of nature and the ethics that grow up around them. Hunting and fishing peoples treat the animals they take as gifts that must be honoured and, in some rites, returned. The first-salmon ceremonies of the Pacific Northwest are the best known example: the bones go back to the water so the gift can come round again. The chapter widens the idea from objects passed between people to the larger cycle of giving that sustains a living community.
-      <div class="ch-takeaway">Treating the world as a gift creates obligations of restraint and return.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Gratitude expressed as return and ritual</div>
+      Hyde opens with a Tlingit elder who liked the book but wished he had not written about her people in the past tense. He then describes <em>Gift</em>, a documentary inspired by the book, which follows living cases of gift exchange, including a potlatch of the 'Namgis Nation in Alert Bay, British Columbia. He says he has revised his earlier account of the potlatch in light of the film. This preface applies only to the third edition, so a 1983 or 2007 copy will not have it.
+      <div class="ch-takeaway">The author himself corrects the book's habit of describing gift economies as things of the past.</div>
+      <div class="ch-conf">Confidence: Higher (opening read)</div>
     </div>
   </div>
   <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">3</div>
-      <div class="ch-title">The Labor of Gratitude</div>
-      <div class="ch-arrow">›</div>
-    </div>
+    <div class="chapter-header"><div class="ch-num intro">I</div><div class="ch-title">Introduction</div><div class="ch-arrow">›</div></div>
     <div class="chapter-body">
-      A gift does something to the person who receives it, and the receiver has work to do. Hyde draws on folktales and on the anthropology of gift-giving to show that the proper response to a gift is rarely an immediate repayment. It is to be changed by it and to pass something on. The labour of gratitude is the effort of becoming worthy of what was given, and it explains why gifts often feel like a burden as well as a blessing.
-      <div class="ch-takeaway">A gift obliges us to change, not just to reciprocate.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Receiving as work</div>
-    </div>
-  </div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">4</div>
-      <div class="ch-title">The Bond</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      This is the chapter where the contrast with commerce is drawn most sharply. A commodity transaction aims at a clean break: you pay, you take, and you owe each other nothing. A gift aims at the opposite. It creates a feeling-bond between giver and receiver, and the lingering obligation is the point. Hyde frames this as two different principles of exchange, one built on connection and one on detachment, and he asks what is lost when too much of life is organised on the second.
-      <div class="ch-takeaway">Commodities settle accounts; gifts open them.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Gift as a bond, commodity as a clean break</div>
-    </div>
-  </div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">5</div>
-      <div class="ch-title">The Gift Community</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      Gift economies tend to define groups. Hyde looks at what it takes for a gift to circulate among many people rather than between two, and he uses Alcoholics Anonymous as a modern example. Sobriety is received as a gift that cannot be kept unless it is given away, and the fellowship runs on that principle. The chapter also introduces the idea that a gift often passes to a third party rather than back to the giver, and that this is what lets a group hold together without bookkeeping.
-      <div class="ch-takeaway">Gifts that pass to a third party build communities that do not keep accounts.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Gift circulation as the structure of a community</div>
-    </div>
-  </div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">6</div>
-      <div class="ch-title">A Female Property</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      Hyde examines how women have been treated as items of exchange in the anthropology of kinship, with a section on the woman given in marriage and another on Big Men and the status economies of Melanesia. He shows how a theory of gifts can illuminate marriage exchange and also how easily it can slide into treating people as property. It is the most dated chapter in tone and best read as a critical look at how gift theory has been applied.
-      <div class="ch-takeaway">Gift logic can bind a community, and it can also be used to treat people as objects.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> The limits and dangers of gift exchange</div>
-    </div>
-  </div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">7</div>
-      <div class="ch-title">Usury: A History of Gift Exchange</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      A long historical chapter on lending at interest. It starts from the biblical rule that one may lend at interest to a stranger but not to a brother, the "law of the gate", and follows the argument through Aristotle, medieval Christianity and Dante. Hyde reads the old prohibitions against usury as a defence of the gift sphere inside the community, and he traces how the line between brother and stranger gradually dissolves as everyone becomes a stranger to commerce.
-      <div class="ch-takeaway">Old objections to usury were really arguments about which relationships should sit outside the market.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> The brother/stranger boundary and the gift sphere</div>
-    </div>
-  </div>
-  <div class="part-header">Part II — Two Experiments in Gift Aesthetics (Ch. 8–10)</div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">8</div>
-      <div class="ch-title">The Commerce of the Creative Spirit</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      The hinge of the book. Hyde argues that a work of art is a gift and not a commodity, and that the artist's inner gift (talent, inspiration, the sense of being handed something) is what the work carries into the world. The market can pay for the work, but it cannot produce the gift. Hyde does not tell artists to refuse money. He asks them to protect the gift sphere, find ways to be paid without being owned, and keep passing the gift on to the next generation.
-      <div class="ch-takeaway">Make the work as a gift; get paid for it by the market, but do not let the market make it.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> The work as a gift, the artist as a steward</div>
-    </div>
-  </div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">9</div>
-      <div class="ch-title">A Draft of Whitman</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      In three parts (<em>The Grass Over Graves</em>, <em>Adhesive Riches</em>, <em>Saplings</em>) Hyde reads Walt Whitman as a poet who staked his career on the gift. <em>Leaves of Grass</em> is offered to the reader as a gift and a bond, an attempt to make a democratic community through poetry. Hyde also follows Whitman's struggle with the book trade and the reception of his work. It is an experiment in applying gift theory to a single career.
-      <div class="ch-takeaway">Whitman is the case study of an artist who tried to live the gift openly.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Poetry as an offering that builds community</div>
-    </div>
-  </div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num">10</div>
-      <div class="ch-title">Ezra Pound and the Fate of Vegetable Money</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      The second experiment is a cautionary one. Pound saw clearly that money and usury corrupt art, and he spent decades on monetary reform ideas. Hyde follows how the insight went wrong, with Pound's economics sliding into conspiracy and antisemitism, and into his support for Mussolini. The five sections trace that arc and the damage done. Hyde uses Pound to show how a true perception about gift and commerce can be bent by fear and resentment into something ugly.
-      <div class="ch-takeaway">A sound critique of money can curdle when it needs a scapegoat.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Vegetable money and a warning about misusing the gift critique</div>
-    </div>
-  </div>
-  <div class="part-header">Closing</div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num intro">C</div>
-      <div class="ch-title">Conclusion</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      Hyde gathers the threads: gifts must move, art is a gift, and a culture that wants art has to protect the conditions under which gifts can be made and passed on. He leaves the reader with a practical question rather than a formula, namely how to keep gift life and market life in a workable relationship.
-      <div class="ch-takeaway">A healthy culture keeps a gift economy alongside its market.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Keeping the two economies in balance</div>
-    </div>
-  </div>
-  <div class="chapter-card" onclick="toggleChapter(this)">
-    <div class="chapter-header">
-      <div class="ch-num intro">A</div>
-      <div class="ch-title">On Being Good Ancestors</div>
-      <div class="ch-arrow">›</div>
-    </div>
-    <div class="chapter-body">
-      A newer closing essay in the later editions that looks at what we pass on to those who come after us. It extends the gift idea into inheritance and the commons: what one generation hands to the next, and what it takes away.
-      <div class="ch-takeaway">We are all receiving, and eventually giving, from a long line of gifts.</div>
-      <div class="ch-tool"><strong>Key idea:</strong> Inheritance and the commons as gifts</div>
+      Hyde starts with a line of romance novels written to market-research specifications and asks why we suspect they will not become enduring art. His answer is the thesis of the book: a work of art is a gift, not a commodity, and art lives in two economies at once, a market economy and a gift economy. Only one is essential. Art can survive without the market, but where there is no gift there is no art. A gift, in his usage, is something we do not get by our own effort: talent and inspiration arrive that way, and art that matters to us is received as a gift too.
+      <div class="ch-takeaway">Art needs the gift economy to exist and the market only to survive.</div>
+      <div class="ch-conf">Confidence: Higher (first part read in full)</div>
     </div>
   </div>
 
+  <div class="part-header">Part I — A Theory of Gifts (Ch. 1–7)</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">Some Food We Could Not Eat</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      In two sections, <em>The Motion</em> and <em>The Circle</em>. It begins with the phrase "Indian giver" and a story of a pipe that was meant to be passed on, not kept, then builds the central rule: the gift must always move, and it is often passed to a third party instead of back to the giver. Hyde draws on the Maori idea of the <em>hau</em>, the Kula ring of the Trobriand Islands, first-fruits offerings and folk tales. A recurring point is that gifts travel toward emptiness and need, and that we are alive to the degree that we can let ourselves be moved.
+      <div class="ch-takeaway">A gift stays alive only while it keeps moving.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Movement, not return, is the gift's essential property</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled; Kula and hau confirmed by keyword search)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">2</div><div class="ch-title">The Bones of the Dead</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      Opens from the folk tale that closed Chapter 1 and asks why gifts seem to increase as they circulate. Hyde looks at Pacific Northwest potlatch gifts, including engraved copper plaques that are given away and answered with return gifts, and at first-salmon rites, which come up repeatedly. The Maori forest <em>hau</em> returns here too. His argument is that the increase belongs to the gift in motion, not to any single object. The chapter ends warning that a society with no institutions of positive reciprocity loses community and the shared treasures we call culture.
+      <div class="ch-takeaway">What grows in a gift economy is the circulation itself.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The increase of gifts</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled; salmon and potlatch confirmed by keyword search)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">3</div><div class="ch-title">The Labor of Gratitude</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      Begins with Welsh funeral gifts passed over the coffin as an example of "threshold gifts", gifts that mark a passage from one state to another. Hyde moves to gifts that transform the receiver and to art as an agent of transformation. Through a tale of a shoemaker and helping elves, he argues that the labor of gratitude is the work of becoming like the gift or its giver, and that a return gift can complete the change. He brings in the old idea of a personal spirit (the Roman genius, the Greek daemon) and the mystic Meister Eckhart, who comes up repeatedly. Alcoholics Anonymous appears here once, as an example of a group organised around transformation.
+      <div class="ch-takeaway">Receiving a gift creates work: the work of being changed by it.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Threshold gifts and the labor of gratitude</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">4</div><div class="ch-title">The Bond</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      The chapter sets the bonding power of gifts against the detached nature of commodity exchange. Examples include a Buddhist story of extreme generosity and a Ford Pinto cost-benefit decision, which Hyde uses to show commodity logic extended into the human body. Marx and Freud are touched on. A late example, a mother and daughter, shows that a gift stops being a gift the moment it is turned into a debt to be balanced. He notes that gifts have come to be associated with community and with being obliged to others.
+      <div class="ch-takeaway">Gifts bind people; commodity exchange lets them walk away.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Bond versus detachment</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">The Gift Community</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      Looks at what kinds of groups run on gift exchange. Hyde uses the scientific community as a main example: credit and ideas circulate there, and fees or royalties feel extractive to the degree that a community is felt. He contrasts this with industrial research, where patents put a fee barrier at the company gate. Drawing on Marcel Mauss, he asks whether gift exchange is an early form of the legal contract. He states a limitation openly near the end: gift exchange is an economy of small groups, because emotional ties cannot hold a very large one together.
+      <div class="ch-takeaway">Gift logic holds small communities together, and it does not scale easily.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Gift exchange as an economy of small groups</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">A Female Property</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      In two sections, <em>The Woman Given in Marriage</em> and <em>Big Men and Little Women</em>. Hyde examines the way women have been exchanged as gifts in kinship systems, citing anthropological reports (Margaret Mead's on the Arapesh among them) and a Hawaiian myth. He then uses a modern etiquette handbook, Emily Post's, as a kind of "domestic ethnography" to show the same logic in the American wedding, shower and gift customs. He ties gender to forms of exchange and closes with Ann Douglas's account of the feminisation of nineteenth-century American culture. It is the chapter where the cost of gift logic for women is most plainly discussed.
+      <div class="ch-takeaway">Gift exchange can bind a community while treating people as the things exchanged.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Gender and the limits of the gift frame</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Usury: A History of Gift Exchange</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      A long historical chapter in three sections: <em>The Law of the Gate</em>, <em>A Scarcity of Grace</em> and <em>Relative Strangers</em>. It starts from the biblical rule against charging interest to a brother, a "double law" that allowed it with strangers. Hyde follows the argument through Aristotle, medieval Church disputes (including Christian pawnshops, the <em>monti di pietà</em>, and the distinction between usury and <em>interesse</em>), and the Reformation, where Calvin judged usury by equity rather than by a single scripture. He reads the history as a long argument about which relationships belong inside the gift sphere. The chapter closes on an image of money moving like blood around a body.
+      <div class="ch-takeaway">Old rules on usury were arguments about where the market should stop.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The double law of brother and stranger</div>
+      <div class="ch-conf">Confidence: Medium (the longest chapter of Part I; sampled)</div>
+    </div>
+  </div>
+
+  <div class="part-header">Part II — Two Experiments in Gift Aesthetics (Ch. 8–10)</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">The Commerce of the Creative Spirit</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      The hinge. Hyde says he will examine Whitman and Pound in the language of gift exchange, but first sets his terms for the arts. He argues that where exchange is treated as a commodity transaction, the increase of gifts is lost, and uses an English fairy tale of an inexhaustible barrel of ale to illustrate. He sets the plenitude of the imagination against the scarcity of logic, introducing the thread of Pound's complaint against usury and against abstract, over-analytic thought in art. He ends by warning that a civilisation of pure commercial arts will not yield the fruits that gifts bring.
+      <div class="ch-takeaway">Commodity logic drains the increase of gifts, and the arts suffer when they become pure commerce.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> The artist's gift and the market that surrounds it</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">9</div><div class="ch-title">A Draft of Whitman</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      In three sections: <em>The Grass Over Graves</em>, <em>Adhesive Riches</em> and <em>Saplings</em>. Hyde reads <em>Leaves of Grass</em> as a poem offered as a gift that is meant to pass through the reader and transform their sense of self, and he quotes Emerson's 1855 greeting to Whitman as a gift. He traces what he calls the Whitman tradition, naming later artists such as Hart Crane, Isadora Duncan, William Carlos Williams, Pablo Neruda and Henry Miller, and the chapter includes a passage on Whitman's relationship with soldiers.
+      <div class="ch-takeaway">Whitman is the case of an artist who tried to live the gift openly.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> Poetry as an offering that makes community</div>
+      <div class="ch-conf">Confidence: Medium (very long; four passages sampled)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num">10</div><div class="ch-title">Ezra Pound and the Fate of Vegetable Money</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      Five sections: <em>Scattered Light</em>, <em>Durable Treasure</em>, <em>The Jew in the Hedge</em>, <em>Imagist Money</em> and <em>Bathed in Alkali</em>. Hyde portrays Pound as a generous friend of other artists (quoting Hemingway's tribute) and discusses at length his anti-Semitism and his support for Mussolini, both of which recur throughout the chapter. Hyde ties the anti-Jewish myth to the Christian history of the double law in Chapter 7. The chapter closes with the poet Allen Ginsberg's meeting with the aged Pound.
+      <div class="ch-takeaway">A real insight about money can turn into scapegoating.</div>
+      <div class="ch-tool"><strong>Key idea:</strong> A warning about how the gift critique can go wrong</div>
+      <div class="ch-conf">Confidence: Medium (very long; five passages sampled)</div>
+    </div>
+  </div>
+
+  <div class="part-header">Closing</div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">C</div><div class="ch-title">Conclusion</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      Hyde revises his own starting assumption. He says much of the book implied an irreconcilable conflict between gift exchange and the market, then argues that patronage is one way across the gap: someone earns wealth in the market and a patron (he names Harriet Shaw Weaver, the Guggenheims and the National Endowment for the Arts) turns it into a gift that feeds the gifted. He also discusses artists who take secondary work. He notes that Whitman lost money on the first edition of <em>Leaves of Grass</em> and gives a figure of $1.85 for Pound's American royalties in a typical year (1915); that figure is Hyde's own.
+      <div class="ch-takeaway">The artist does not have to choose between the two economies, but must manage both.</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled)</div>
+    </div>
+  </div>
+  <div class="chapter-card" onclick="toggleChapter(this)">
+    <div class="chapter-header"><div class="ch-num intro">A</div><div class="ch-title">On Being Good Ancestors (Afterword, 2007)</div><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      The Afterword from the twenty-fifth anniversary edition. Hyde says the book was written between 1977 and 1982 with little topical detail, intended as a "prophetic essay". He then turns to how cultural patronage and property have changed: covert CIA-linked funding of cultural journals through the Congress for Cultural Freedom, the widening reach of copyright and patents and what that does to the public domain, a proposal to endow the arts and humanities from public auctions, and the long-lived endowments (such as Newton's Lucasian professorship) of earlier centuries. The practical theme is stewardship: what a generation leaves in common for the next.
+      <div class="ch-takeaway">Being a good ancestor means protecting what can be shared after you.</div>
+      <div class="ch-conf">Confidence: Medium (opening, middle and end sampled; this essay is in the 2007 and 2019 editions, not the 1983 original)</div>
+    </div>
+  </div>
 </div>
 
 <div id="concepts" class="panel">
   <div class="section-header"><h2>Gift vs. Commodity</h2><div class="section-line"></div></div>
-  <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">The book's central contrast, as I understand it, laid out side by side. This is my summary of Hyde's distinction and not a quotation from the text.</p>
+  <div class="note-box">This tab is my summary of Hyde's central distinction, with the chapter where each idea is developed. The concepts and their chapters were checked against the text of the third edition; the wording is mine, not his. The sorting exercise at the end uses my own everyday examples, not examples from the book.</div>
+
   <div class="vs-grid">
     <div class="vs-card gift"><h4>🎁 Gift exchange</h4>
       <div class="row">Creates a feeling-bond between giver and receiver</div>
-      <div class="row">Value rises as the gift circulates</div>
-      <div class="row">Obligation is open-ended and often passes to a third party</div>
-      <div class="row">Works through trust, gratitude and relationship</div>
-      <div class="row">Gives a community its shape</div>
+      <div class="row">Must keep moving, and is often passed to a third party instead of returned</div>
+      <div class="row">Is felt to increase as it circulates</div>
+      <div class="row">Works best in small groups held together by emotional ties</div>
+      <div class="row">Asks the receiver to be changed by it</div>
     </div>
     <div class="vs-card com"><h4>💵 Commodity exchange</h4>
       <div class="row">Aims at a clean break once the transaction is done</div>
-      <div class="row">Value is realised, then consumed or stored</div>
-      <div class="row">Accounts are settled on the spot</div>
-      <div class="row">Works through price, contract and equivalence</div>
-      <div class="row">Connects strangers efficiently</div>
+      <div class="row">Value is realised and settled at the point of sale</div>
+      <div class="row">Detached: price and contract replace felt obligation</div>
+      <div class="row">Connects strangers and scales to large groups</div>
+      <div class="row">Taken too far, it can price human harm: Hyde's example is the Ford Pinto cost-benefit decision (Ch. 4)</div>
     </div>
   </div>
 
-  <div class="section-header"><h2>What This Means for Creative Work</h2><div class="section-line"></div></div>
-  <div class="strategy-card"><div class="s-tag">Mindset</div><h4>Treat the talent as received</h4><p>Hyde's view is that the creative ability you carry was given to you. That does not excuse laziness, and it does ask for humility and gratitude, and for the willingness to serve the work.</p><div class="try">Try it: Next time an idea arrives unbidden, write down where it came from and who you owe it to.</div></div>
+  <div class="section-header" style="margin-top:28px;"><h2>The Side-by-Side Table</h2><div class="section-line"></div></div>
+  <table class="cat-table">
+    <tr><th>Question</th><th>Gift</th><th>Commodity</th><th>Where</th></tr>
+    <tr><td>What happens after?</td><td>A bond continues</td><td>A clean break</td><td>Ch. 4</td></tr>
+    <tr><td>Where does it go?</td><td>On, to someone new</td><td>To the buyer, who owns it</td><td>Ch. 1</td></tr>
+    <tr><td>What grows?</td><td>The circulation itself</td><td>Capital, if reinvested</td><td>Ch. 2</td></tr>
+    <tr><td>What does the receiver owe?</td><td>Change, and a gift passed on</td><td>Payment of the price</td><td>Ch. 3</td></tr>
+    <tr><td>How large a group?</td><td>Small; ties are emotional</td><td>Any size, strangers included</td><td>Ch. 5</td></tr>
+    <tr><td>Where is the line drawn?</td><td>Inside the community</td><td>With the stranger</td><td>Ch. 7</td></tr>
+    <tr><td>What does art need?</td><td>The gift, to exist at all</td><td>The market, to survive</td><td>Intro, Ch. 8</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--gray-dark);margin-bottom:24px;">"Capital, if reinvested" and "Payment of the price" are my shorthand for the commodity side, not phrases from the book.</p>
+
+  <div class="section-header"><h2>The Core Concepts, One by One</h2><div class="section-line"></div></div>
+  <div class="method-card"><span class="tag">Introduction</span><h4>Two economies, only one essential</h4><p>A work of art lives in a market economy and a gift economy together. Hyde's claim is asymmetrical: art can survive without the market, but without the gift there is no art. Talent and inspiration are the "inner" gifts, and art we treasure is received as a gift too. <strong>What Hyde himself says it costs:</strong> the market is not the enemy, but it cannot make the work.</p></div>
+  <div class="method-card"><span class="tag">Chapter 1</span><h4>The gift must keep moving</h4><p>The Kula ring and the Maori <em>hau</em> show a gift that is kept alive by passing it on, often to a third party instead of back to the giver. <strong>Limit:</strong> the examples are drawn from tribal societies, and the 2019 preface concedes that the original book spoke of them in the past tense.</p></div>
+  <div class="method-card"><span class="tag">Chapter 2</span><h4>The increase of gifts</h4><p>Potlatch copper plaques, first-salmon rites and folk tales are used to argue that gifts are felt to grow as they circulate. <strong>Warning from Hyde:</strong> a society without institutions of positive reciprocity loses community and its shared culture.</p></div>
+  <div class="method-card"><span class="tag">Chapter 3</span><h4>Threshold gifts and the labor of gratitude</h4><p>Some gifts mark a passage, such as the Welsh funeral gifts. Receiving one means work: the receiver has to become worthy of it, and the shoemaker-and-elves tale shows a return gift completing the change.</p></div>
+  <div class="method-card"><span class="tag">Chapters 4 and 5</span><h4>Bond versus detachment, and the small-group limit</h4><p>Gifts bind and commodities detach. Hyde is candid that gift exchange is an economy of small groups, because emotional ties cannot hold a very large one together. <strong>This is the book's own main limitation</strong> and it matters for readers wondering how the idea applies to a company or a city.</p></div>
+  <div class="method-card"><span class="tag">Chapter 7</span><h4>The double law of usury</h4><p>The old rule that you may not charge interest to a brother but may to a stranger is read as a way of defending the gift sphere inside a community. The chapter then follows how Christian Europe wrestled with it, up to Calvin's appeal to equity.</p></div>
+  <div class="method-card"><span class="tag">Chapter 8 and Conclusion</span><h4>Art, commerce and patronage</h4><p>Commodity logic drains the increase of gifts, and a culture of pure commercial arts will not yield what gifts bring. In the Conclusion Hyde softens his own earlier assumption of an irreconcilable conflict: patrons turn market-earned wealth into gifts for artists, and artists can take secondary work.</p></div>
+  <div class="method-card"><span class="tag">Chapters 6 and 10</span><h4>Where the frame fails</h4><p>Chapter 6 shows women treated as the objects of exchange. Chapter 10 shows Pound's critique of money turning into anti-Semitism. Read together, they are the book's own cautions about the gift frame.</p></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Try It: Sort the Exchange</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>Reviewer's own illustration.</strong> These everyday examples are mine, not Hyde's. For each one, decide whether it is mainly a gift exchange or a commodity exchange, then reveal my reading. Many real exchanges are mixed, which is partly the point.</div>
+  <div class="sorter" id="sorter">
+    <div class="sort-card" data-answer="gift">
+      <div class="sort-q">A colleague stays late to teach you a skill and asks for nothing back.</div>
+      <div class="sort-btns"><button type="button" class="sort-btn" onclick="sortPick(this,'gift')">Gift</button><button type="button" class="sort-btn" onclick="sortPick(this,'commodity')">Commodity</button></div>
+      <div class="sort-reveal">Mainly a gift: it creates a bond and invites you to pass the skill on (Ch. 1 and Ch. 4).</div>
+    </div>
+    <div class="sort-card" data-answer="commodity">
+      <div class="sort-q">You pay a flat fee for a stranger to fix your sink.</div>
+      <div class="sort-btns"><button type="button" class="sort-btn" onclick="sortPick(this,'gift')">Gift</button><button type="button" class="sort-btn" onclick="sortPick(this,'commodity')">Commodity</button></div>
+      <div class="sort-reveal">Mainly a commodity: a clean break once the price is paid, which is exactly what makes it efficient between strangers (Ch. 4 and Ch. 5).</div>
+    </div>
+    <div class="sort-card" data-answer="mixed">
+      <div class="sort-q">A friend lends you money, and you both write it down.</div>
+      <div class="sort-btns"><button type="button" class="sort-btn" onclick="sortPick(this,'gift')">Gift</button><button type="button" class="sort-btn" onclick="sortPick(this,'commodity')">Commodity</button></div>
+      <div class="sort-reveal">Mixed. The friendship is a bond, while the written record is a commodity habit. Hyde's usury chapter is about exactly this line between the brother and the stranger (Ch. 7).</div>
+    </div>
+    <div class="sort-card" data-answer="gift">
+      <div class="sort-q">A neighbour teaches your child to ride a bike, and your family later brings them dinner unasked.</div>
+      <div class="sort-btns"><button type="button" class="sort-btn" onclick="sortPick(this,'gift')">Gift</button><button type="button" class="sort-btn" onclick="sortPick(this,'commodity')">Commodity</button></div>
+      <div class="sort-reveal">A gift: the return is a different gift, at a different time, not a repayment. Hyde stresses that gifts often travel on instead of being repaid (Ch. 1).</div>
+    </div>
+    <div class="sort-card" data-answer="mixed">
+      <div class="sort-q">An artist sells a painting, then gives time to unpaid teaching.</div>
+      <div class="sort-btns"><button type="button" class="sort-btn" onclick="sortPick(this,'gift')">Gift</button><button type="button" class="sort-btn" onclick="sortPick(this,'commodity')">Commodity</button></div>
+      <div class="sort-reveal">Mixed, and that is the book's own situation for an artist: the market pays for the work, and the gift sphere keeps it alive (Intro, Ch. 8 and the Conclusion).</div>
+    </div>
+    <div class="sort-score" id="sort-score">Pick an answer for each card to see how your reading compares with mine. There is no pass mark.</div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>What This Means for Creative Work</h2><div class="section-line"></div></div>
+  <div class="note-box">These are my applications of Hyde's ideas, not advice that appears in the book. Dan found the book gave him little to use, and this section is my attempt to turn its ideas into something small and concrete.</div>
+  <div class="strategy-card"><div class="s-tag">Mindset</div><h4>Treat the talent as received</h4><p>Hyde's view is that the creative ability you carry was given to you. That does not excuse laziness, and it asks for humility and gratitude, and a willingness to serve the work.</p><div class="try">Try it: Next time an idea arrives unbidden, write down where it came from and who you owe it to.</div></div>
   <div class="strategy-card"><div class="s-tag">Practice</div><h4>Keep the gift moving</h4><p>The work and the knowledge behind it improve when passed on, through teaching, mentoring, sharing and publishing, and not just when kept as a private asset.</p><div class="try">Try it: Pick one thing you know well and give it away this month, with no invoice attached.</div></div>
-  <div class="strategy-card"><div class="s-tag">Livelihood</div><h4>Protect the gift sphere from the market</h4><p>Hyde accepts that artists have to eat. His suggestion is to find ways of being paid that do not distort the work, whether through patronage, side work or a separate income line, and keep the creative core insulated.</p><div class="try">Try it: Name the part of your work that must never be rushed or priced, and guard time for it.</div></div>
-  <div class="strategy-card"><div class="s-tag">Community</div><h4>Build circles, not ledgers</h4><p>AA's logic shows how a group can run on passing the gift forward rather than on tracking who owes whom. The healthiest creative communities work the same way.</p><div class="try">Try it: Replace one transactional favour with an open-ended gift and watch how the relationship changes.</div></div>
-  <div class="strategy-card"><div class="s-tag">Caution</div><h4>Be wary of scapegoats</h4><p>Pound's story is a reminder that anger at money and institutions needs to stay anchored in evidence and in compassion for real people.</p><div class="try">Try it: When you catch yourself blaming an entire group for a systemic problem, stop and name the actual mechanism.</div></div>
+  <div class="strategy-card"><div class="s-tag">Livelihood</div><h4>Protect the gift sphere from the market</h4><p>In the Conclusion Hyde points to patronage and secondary work as ways artists can be supported without having the work set by the market.</p><div class="try">Try it: Name the part of your work that must never be rushed or priced, and guard time for it.</div></div>
+  <div class="strategy-card"><div class="s-tag">Community</div><h4>Build circles, not ledgers</h4><p>Hyde's example is the scientific community, where credit and ideas circulate and fees feel extractive to the degree that a community is felt. Remember his own caveat: the gift economy suits small groups.</p><div class="try">Try it: Replace one transactional favour with an open-ended gift and watch how the relationship changes.</div></div>
+  <div class="strategy-card"><div class="s-tag">Caution</div><h4>Be wary of scapegoats</h4><p>Pound's story in Chapter 10 is a reminder that anger at money and institutions needs to stay anchored in evidence and in compassion for real people.</p><div class="try">Try it: When you catch yourself blaming an entire group for a systemic problem, stop and name the actual mechanism.</div></div>
+</div>
+
+<div id="toolkit" class="panel">
+  <div class="section-header"><h2>Toolkit</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>Read this first.</strong> The Gift is not a how-to book, and Margaret Atwood's own foreword says as much. Dan found it gave him little to use, and the Goodreads reviews I read repeat that complaint. Everything on this tab is <strong>my own</strong> attempt to turn the book's verified ideas into small actions; none of it is a method from Hyde. Use what helps and ignore the rest.</div>
+
+  <div class="section-header"><h2>If You Only Read One Part</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>My suggestion: the Introduction, Chapter 8 and the Conclusion.</strong> The Introduction states the thesis in a few pages. Chapter 8 is where Hyde applies it to art directly, and the Conclusion is where he revises his own starting assumption and discusses patronage. This is my reading route, based on what each part covers, not Hyde's. Several Goodreads reviewers call the first half long and repetitive, and one blogger says the final chapter is the strongest, so skipping the middle is a common way to approach the book.</p>
+  </div>
+  <table class="cat-table">
+    <tr><th>If you are…</th><th>Start with</th><th>Why</th></tr>
+    <tr><td>An artist or writer</td><td>Intro, Ch. 8, Conclusion, then Ch. 1</td><td>Closest to the book's own audience</td></tr>
+    <tr><td>Outside the arts</td><td>Intro, Ch. 4, Ch. 5, Conclusion</td><td>The bond-versus-detachment and small-group ideas travel best</td></tr>
+    <tr><td>Interested in money and history</td><td>Ch. 7 and Ch. 10</td><td>Usury, and the warning about where critiques of money can go</td></tr>
+    <tr><td>Short on time</td><td>Intro only</td><td>It gives the whole thesis</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--gray-dark);margin-bottom:24px;">Routes are my suggestions from the chapter contents, not from the book.</p>
+
+  <div class="section-header"><h2>Apply the Idea: A Checklist</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--gray-dark);margin-bottom:12px;line-height:1.6;">Reviewer's own checklist. Tick what you have done; it is not saved anywhere.</p>
+  <div class="checklist" id="giftchecklist">
+    <label class="check-item"><input type="checkbox" onchange="updateCheck()"><span><strong>Name what was received.</strong> Write down one talent or idea you did not earn, and who helped. <em>(Intro)</em></span></label>
+    <label class="check-item"><input type="checkbox" onchange="updateCheck()"><span><strong>Pass something on.</strong> Give away one piece of knowledge or work without expecting a return. <em>(Ch. 1)</em></span></label>
+    <label class="check-item"><input type="checkbox" onchange="updateCheck()"><span><strong>Let a gift change you.</strong> Think of a gift or lesson you received and name what it asks you to become. <em>(Ch. 3)</em></span></label>
+    <label class="check-item"><input type="checkbox" onchange="updateCheck()"><span><strong>Protect a bond.</strong> Pick one relationship you do not want to run on invoices and keep it that way. <em>(Ch. 4)</em></span></label>
+    <label class="check-item"><input type="checkbox" onchange="updateCheck()"><span><strong>Respect the scale.</strong> Notice where gift logic works for your group and where it is too big for it. <em>(Ch. 5)</em></span></label>
+    <label class="check-item"><input type="checkbox" onchange="updateCheck()"><span><strong>Separate the two spheres.</strong> Write down which work you do for pay and which you do as an offering. <em>(Ch. 8, Conclusion)</em></span></label>
+    <label class="check-item"><input type="checkbox" onchange="updateCheck()"><span><strong>Check for a scapegoat.</strong> When angry at money or institutions, name the mechanism, not the group. <em>(Ch. 10)</em></span></label>
+  </div>
+  <div class="check-score" id="check-score">0 of 7 ticked</div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Reflection Prompts</h2><div class="section-line"></div></div>
+  <div class="toolkit-list">
+    <div class="toolkit-item"><div class="t-ic">❓</div><div>Which of my talents did I receive rather than earn, and what do I owe for it?</div></div>
+    <div class="toolkit-item"><div class="t-ic">❓</div><div>What have I been hoarding that would grow if I passed it on?</div></div>
+    <div class="toolkit-item"><div class="t-ic">❓</div><div>Which relationships would change if I turned them into a transaction?</div></div>
+    <div class="toolkit-item"><div class="t-ic">❓</div><div>Where do I want a clean break, and where do I want a bond?</div></div>
+    <div class="toolkit-item"><div class="t-ic">❓</div><div>Who has acted as a patron for my work, formally or not?</div></div>
+    <div class="toolkit-item"><div class="t-ic">❓</div><div>If the gift idea does not apply to my work, what does that tell me about my work?</div></div>
+  </div>
 </div>
 
 <div id="quotes" class="panel">
-  <div class="section-header"><h2>Notable Ideas &amp; Phrases</h2><div class="section-line"></div></div>
-  <div class="note-box">These are the book's signature phrases, chapter titles and the praise printed on its cover. Add your own favourite passages from your copy to this tab. I have deliberately not invented word-for-word quotations from the text.</div>
-  <div class="quote-block"><p>No one who is invested in any kind of art can read <em>The Gift</em> and remain unchanged.</p><div class="attr">— David Foster Wallace, as printed on the 25th anniversary edition cover</div></div>
-  <div class="quote-block"><p>The best book I know of for talented but unacknowledged creators. A masterpiece.</p><div class="attr">— Margaret Atwood, <em>Los Angeles Times Book Review</em>, as printed on the cover</div></div>
-  <div class="quote-block"><p>The gift must always move.</p><div class="attr">— The book's best-known principle, from Part One</div></div>
-  <div class="quote-block"><p>The commerce of the creative spirit.</p><div class="attr">— Chapter Eight title, and the book's central pairing of art and exchange</div></div>
+  <div class="section-header"><h2>Key Phrases</h2><div class="section-line"></div></div>
+  <div class="note-box">Everything here is paraphrased or a short term from the book, with the part it comes from. The two cover blurbs were read from the 25th anniversary cover image; the rest was checked against the text of the third edition. I have not reproduced longer passages. Add your own favourite lines from your copy.</div>
+
+  <div class="section-header"><h2>What Others Say on the Cover</h2><div class="section-line"></div></div>
+  <div class="quote-block"><p>Anyone invested in art of any kind, says the novelist, will be changed by reading it.</p><div class="attr">— Paraphrase of the David Foster Wallace blurb on the 25th anniversary cover</div></div>
+  <div class="quote-block"><p>The novelist calls it the best book she knows for talented creators who go unacknowledged, and a masterpiece.</p><div class="attr">— Paraphrase of the Margaret Atwood blurb (credited to the <em>Los Angeles Times Book Review</em>) on the same cover</div></div>
+  <div class="quote-block"><p>It is the one book she recommends to aspiring writers, painters and musicians, because it is about what artists do and not a how-to.</p><div class="attr">— Paraphrase of Margaret Atwood's Foreword</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Book's Own Terms</h2><div class="section-line"></div></div>
+  <div class="note-box">Short terms and what I understand them to mean, with where they appear. These are my definitions, not Hyde's.</div>
+  <div class="quote-block"><p>"The gift must always move."</p><div class="attr">— Hyde's best-known principle (Chapter 1): a gift is kept alive by being passed on, often to a third party</div></div>
+  <div class="quote-block"><p>Gift sphere</p><div class="attr">— The part of life, and of an artist's work, that runs on gifts rather than sales (Intro, Conclusion)</div></div>
+  <div class="quote-block"><p>Hau</p><div class="attr">— A Maori idea of a spirit that travels with the gift, discussed in Chapters 1 and 2</div></div>
+  <div class="quote-block"><p>The Kula ring</p><div class="attr">— A circuit of valuables passed among Trobriand Islands communities, used to show gifts in motion (Chapter 1)</div></div>
+  <div class="quote-block"><p>Potlatch</p><div class="attr">— A gift-giving feast of Pacific Northwest peoples; the third-edition Preface notes it is a living practice (Chapter 2 and Preface)</div></div>
+  <div class="quote-block"><p>Threshold gifts</p><div class="attr">— Gifts that mark a passage from one state to another, such as funeral gifts (Chapter 3)</div></div>
+  <div class="quote-block"><p>The labor of gratitude</p><div class="attr">— The work of being changed by what you were given (Chapter 3)</div></div>
+  <div class="quote-block"><p>The double law</p><div class="attr">— The biblical rule that forbids interest on a loan to a brother but allows it with a stranger (Chapter 7)</div></div>
+  <div class="quote-block"><p>The Whitman tradition</p><div class="attr">— Hyde's name for the line of artists who followed Whitman's poetry-as-gift (Chapter 9)</div></div>
 
   <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
   <p style="font-size:13px; color:var(--gray-dark); margin-bottom:16px; line-height:1.6;">Paraphrases of the book's main arguments, not direct quotes.</p>
-  <div class="quote-block"><p>A gift is something we are handed, not something we can purchase or will into being.</p><div class="attr">— Paraphrase of the Introduction</div></div>
-  <div class="quote-block"><p>A purchase ends a relationship; a gift extends it.</p><div class="attr">— Paraphrase of Chapter Four</div></div>
-  <div class="quote-block"><p>Receiving a gift creates work: the labour of becoming worthy of it and passing something on.</p><div class="attr">— Paraphrase of Chapter Three</div></div>
-  <div class="quote-block"><p>An artist can sell the work but not the gift that made it, so the two economies have to be kept in balance.</p><div class="attr">— Paraphrase of Chapter Eight</div></div>
+  <div class="quote-block"><p>A gift is something we do not get by our own effort: we cannot buy it or will it into being.</p><div class="attr">— Paraphrase of the Introduction</div></div>
+  <div class="quote-block"><p>Art can survive without the market, but where there is no gift there is no art.</p><div class="attr">— Paraphrase of the Introduction</div></div>
+  <div class="quote-block"><p>Gifts are felt to grow as they circulate, and the growth belongs to the circulation.</p><div class="attr">— Paraphrase of Chapter 2</div></div>
+  <div class="quote-block"><p>Receiving a gift creates work: the work of being changed by it.</p><div class="attr">— Paraphrase of Chapter 3</div></div>
+  <div class="quote-block"><p>Gifts bind people together, while commodity exchange keeps them detached.</p><div class="attr">— Paraphrase of Chapter 4</div></div>
+  <div class="quote-block"><p>Gift exchange works best in small groups, because emotional ties cannot hold a very large one together.</p><div class="attr">— Paraphrase of Chapter 5</div></div>
+  <div class="quote-block"><p>Patrons, secondary work and other bridges can let an artist live in both economies.</p><div class="attr">— Paraphrase of the Conclusion</div></div>
 </div>
 
 <div id="verdict" class="panel">
@@ -701,6 +812,27 @@
     el.classList.add('active');
   }
   function toggleChapter(card) { card.classList.toggle('open'); }
+  function sortPick(btn, choice) {
+    var card = btn.closest('.sort-card');
+    card.querySelectorAll('.sort-btn').forEach(function (b) { b.classList.remove('picked'); });
+    btn.classList.add('picked');
+    card.dataset.pick = choice;
+    card.classList.add('answered');
+    var cards = document.querySelectorAll('#sorter .sort-card'), done = 0, match = 0, mixed = 0;
+    cards.forEach(function (c) {
+      if (!c.dataset.pick) return;
+      done++;
+      if (c.dataset.answer === 'mixed') { mixed++; match++; }
+      else if (c.dataset.answer === c.dataset.pick) match++;
+    });
+    document.getElementById('sort-score').textContent =
+      'Answered ' + done + ' of ' + cards.length + '. Your reading matched mine on ' + match + (mixed ? ' (mixed cases count either way)' : '') + '. There is no pass mark.';
+  }
+  function updateCheck() {
+    var boxes = document.querySelectorAll('#giftchecklist input');
+    var n = 0; boxes.forEach(function (b) { if (b.checked) n++; });
+    document.getElementById('check-score').textContent = n + ' of ' + boxes.length + ' ticked';
+  }
 </script>
 </body>
 </html>
