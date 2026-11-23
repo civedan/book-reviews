@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaolin Spirit — Book Review</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  /* Palette taken from the cover: near-black ground, cream lettering, charcoal robe, rust-orange bead, dark-brown mala */
+  :root {
+    --ink:        #0b0b0c;
+    --bg:         #111213;
+    --card:       #1a1b1d;
+    --card2:      #222427;
+    --robe:       #2b2d31;
+    --cream:      #f1e6bf;
+    --cream-soft: #e6dcb8;
+    --text:       #e9e0c4;
+    --muted:      #a9a088;
+    --rust:       #d9622b;
+    --rust-light: #ec8450;
+    --rust-dark:  #a8461a;
+    --rust-dim:   rgba(217,98,43,0.14);
+    --brown:      #5a2e1c;
+    --brown-light:#7b4630;
+    --border:     rgba(241,230,191,0.22);
+    --line:       rgba(241,230,191,0.12);
+    --good:       #8fbf7a;
+  }
+
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+  a { color: var(--rust-light); }
+
+  /* ───────── HERO ───────── */
+  .hero { background: var(--ink); position: relative; overflow: hidden; border-bottom: 3px solid var(--rust); }
+  .cover-bar { padding: 9px 40px; text-align: center; font-family: 'Playfair Display', serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--cream); border-bottom: 1px solid var(--line); position: relative; z-index: 2; }
+  .hero-inner { padding: 44px 40px 48px; position: relative; display: flex; align-items: center; gap: 40px; }
+  .hero-motif { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hero-motif svg { width: 100%; height: 100%; display: block; }
+  .hero-text { flex: 1; position: relative; z-index: 2; min-width: 0; }
+  .book-label { display: inline-block; background: var(--rust); color: var(--ink); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; padding: 5px 13px; border-radius: 3px; margin-bottom: 16px; font-weight: 700; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(44px, 9vw, 88px); line-height: 1; color: var(--cream); letter-spacing: 3px; text-transform: uppercase; }
+  .hero .tagline { margin-top: 14px; font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(16px, 2.6vw, 22px); color: var(--cream-soft); max-width: 480px; line-height: 1.4; }
+  .author { margin-top: 18px; font-family: 'Playfair Display', serif; font-size: 16px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; color: var(--rust-light); }
+  .author small { display: block; margin-top: 4px; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: .5px; font-weight: 400; text-transform: none; color: var(--muted); }
+  .hero-meta { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .meta-pill { background: var(--rust-dim); border: 1px solid rgba(217,98,43,.5); color: var(--cream); border-radius: 20px; padding: 5px 14px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+  .book-cover-wrap { flex-shrink: 0; position: relative; z-index: 2; }
+  .book-cover-wrap img { width: 150px; border-radius: 3px; border: 1px solid var(--border); transform: rotate(4deg); box-shadow: -8px 14px 32px rgba(0,0,0,.7); transition: transform .3s ease; display: block; }
+  .book-cover-wrap img:hover { transform: rotate(0deg) scale(1.04); }
+  @media (max-width: 500px) { .book-cover-wrap { display: none; } }
+
+  /* ── Back bar & tabs ── */
+  .back-bar { background: var(--card); padding: 10px 32px; border-bottom: 1px solid var(--line); }
+  .back-link { color: var(--muted); font-size: 12px; text-decoration: none; letter-spacing: .5px; transition: color .2s; }
+  .back-link:hover { color: var(--rust-light); }
+  .back-link span { margin-right: 6px; }
+  .tabs { display: flex; background: var(--card); border-bottom: 2px solid var(--border); overflow-x: auto; scrollbar-width: none; position: sticky; top: 0; z-index: 20; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { padding: 14px 20px; font-family: 'Playfair Display', serif; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; color: var(--muted); cursor: pointer; border: 0; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all .2s; background: none; }
+  .tab:hover { color: var(--cream); }
+  .tab:focus-visible, .chapter-header:focus-visible, .mini-m:focus-visible, .m-pill:focus-visible { outline: 2px solid var(--rust-light); outline-offset: -2px; }
+  .tab.active { color: var(--cream); border-bottom-color: var(--rust); }
+  .tab.hot { color: var(--rust-light); }
+  .tab.hot.active { color: var(--cream); }
+
+  .panel { display: none; padding: 32px 32px 56px; max-width: 1020px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 22px; color: var(--cream); letter-spacing: -.2px; }
+  .section-line { flex: 1; height: 2px; background: var(--border); min-width: 12px; }
+  .lead { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
+  .note-box { background: rgba(241,230,191,0.05); border: 1.5px dashed var(--muted); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; line-height: 1.65; color: var(--cream-soft); margin-bottom: 22px; }
+  .note-box strong { color: var(--cream); }
+
+  /* ── Overview ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+  .stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--rust-light); margin-bottom: 6px; font-weight: 700; }
+  .stat-value { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; color: var(--cream); line-height: 1.3; }
+  .stat-desc { font-size: 12.5px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+  .summary-block { background: var(--card); border-left: 4px solid var(--rust); border-radius: 0 8px 8px 0; padding: 20px 22px; margin-bottom: 20px; font-size: 14.5px; line-height: 1.75; color: var(--text); }
+  .summary-block p + p { margin-top: 12px; }
+  .summary-block strong { color: var(--cream); }
+  .key-idea { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; font-size: 13.5px; line-height: 1.65; }
+  .key-idea .icon { font-size: 18px; min-width: 24px; margin-top: 1px; }
+  .key-idea strong { color: var(--cream); }
+  .axis-cap { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .mini-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 4px 0 26px; }
+  .mini-m { border-radius: 10px; padding: 16px 18px; cursor: pointer; transition: transform .15s; }
+  .mini-m:hover { transform: translateY(-2px); }
+  .mini-m h4 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; margin-bottom: 4px; }
+  .mini-m p { font-size: 12.5px; line-height: 1.55; opacity: .95; }
+  .mini-m.ch { background: var(--robe); color: var(--cream); border: 1px solid var(--border); }
+  .mini-m.ch h4 { color: var(--cream); }
+  .mini-m.me { background: var(--rust); color: var(--ink); }
+  .mini-m.me h4 { color: var(--ink); }
+
+  /* ── Chapters ── */
+  .part-header { background: var(--brown); color: var(--cream); padding: 10px 18px; border-radius: 6px; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; margin: 26px 0 12px; font-weight: 700; }
+  .chapter-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px; overflow: hidden; transition: box-shadow .2s, border-color .2s; }
+  .chapter-card:hover { border-color: var(--border); box-shadow: 0 4px 18px rgba(0,0,0,.45); }
+  .chapter-header { display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; }
+  .ch-num { width: 34px; height: 34px; background: var(--rust); color: var(--ink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  .ch-num.intro { background: var(--brown); color: var(--cream); }
+  .ch-title { font-weight: 700; font-size: 15px; flex: 1; line-height: 1.35; min-width: 0; color: var(--cream); }
+  .ch-title .pg { display: block; margin-top: 2px; font-size: 11.5px; font-weight: 400; color: var(--muted); letter-spacing: .3px; }
+  .conf { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; border-radius: 10px; padding: 3px 9px; white-space: nowrap; flex-shrink: 0; }
+  .conf.med { background: rgba(143,191,122,.15); color: var(--good); border: 1px solid rgba(143,191,122,.45); }
+  .conf.low { background: var(--rust-dim); color: var(--rust-light); border: 1px solid rgba(217,98,43,.5); }
+  .ch-arrow { color: var(--rust-light); font-size: 20px; transition: transform .25s; flex-shrink: 0; }
+  .chapter-card.open .ch-arrow { transform: rotate(90deg); }
+  .chapter-body { display: none; padding: 14px 20px 20px 66px; font-size: 13.5px; line-height: 1.75; color: var(--text); border-top: 1px solid var(--line); }
+  .chapter-card.open .chapter-body { display: block; }
+  .chapter-body p + p { margin-top: 10px; }
+  .chapter-body ul { margin: 10px 0 0 18px; }
+  .chapter-body li { margin-bottom: 5px; }
+  .ch-takeaway { margin-top: 12px; background: var(--rust-dim); border-left: 4px solid var(--rust); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 13px; color: var(--cream); }
+  .ch-tool { margin-top: 8px; background: rgba(241,230,191,.06); border-left: 4px solid var(--brown-light); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 12.5px; color: var(--cream-soft); }
+  .ch-basis { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 8px; }
+  @media (max-width: 560px) { .chapter-body { padding-left: 20px; } .chapter-header { gap: 10px; padding: 14px; } .conf { font-size: 9.5px; padding: 3px 7px; } }
+
+  /* ───────── DEEP DIVE ───────── */
+  .m-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .m-pill { padding: 8px 16px; border-radius: 20px; font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; color: var(--cream); cursor: pointer; border: 1px solid var(--border); background: var(--robe); font-family: 'DM Sans', sans-serif; }
+  .m-pill:hover { background: var(--brown); }
+  .m-pill.try { background: var(--rust); color: var(--ink); border-color: var(--rust); }
+  .m-section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 26px; scroll-margin-top: 70px; }
+  .m-head { padding: 22px 26px 18px; position: relative; background: var(--robe); border-bottom: 3px solid var(--rust); }
+  .m-head .dials { letter-spacing: 2px; text-transform: uppercase; font-size: 11.5px; font-weight: 700; color: var(--rust-light); margin-bottom: 8px; }
+  .m-head h3 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(24px, 5vw, 34px); line-height: 1.1; color: var(--cream); }
+  .m-head .tag { margin-top: 10px; font-size: 14px; line-height: 1.6; max-width: 640px; color: var(--cream-soft); }
+  .m-body { padding: 22px 26px 26px; }
+  .m-body h4 { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--rust-light); margin: 22px 0 8px; font-weight: 700; }
+  .m-body h4:first-child { margin-top: 0; }
+  .m-body p { font-size: 14px; line-height: 1.75; color: var(--text); }
+  .m-body p + p { margin-top: 10px; }
+  .src-tag { display: inline-block; font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; border-radius: 10px; padding: 2px 9px; margin-left: 6px; vertical-align: middle; }
+  .src-tag.bg { background: rgba(241,230,191,.1); color: var(--cream-soft); border: 1px solid var(--border); }
+  .src-tag.me { background: var(--rust-dim); color: var(--rust-light); border: 1px solid rgba(217,98,43,.5); }
+  .src-tag.art { background: rgba(143,191,122,.15); color: var(--good); border: 1px solid rgba(143,191,122,.45); }
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 4px; }
+  @media (max-width: 700px) { .q-grid { grid-template-columns: 1fr; } }
+  .q-card { background: var(--card2); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; font-size: 13px; line-height: 1.65; }
+  .q-card h5 { font-size: 12px; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; color: var(--cream); }
+  .callout { background: var(--ink); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 14px 18px; font-size: 13.5px; line-height: 1.65; margin-top: 14px; }
+  .callout strong { color: var(--rust-light); }
+
+  .cmp-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 22px; -webkit-overflow-scrolling: touch; }
+  table.cmp { width: 100%; border-collapse: collapse; background: var(--card); min-width: 620px; font-size: 12.5px; line-height: 1.55; }
+  table.cmp th, table.cmp td { padding: 11px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+  table.cmp th { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--cream); background: var(--brown); }
+  table.cmp td.rowh { font-weight: 700; background: var(--card2); color: var(--cream); width: 130px; }
+  table.cmp td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  /* hindrance check-in */
+  .map-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; margin-bottom: 26px; }
+  .slider-row { margin-bottom: 16px; }
+  .slider-row label { display: flex; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 13.5px; margin-bottom: 4px; color: var(--cream); }
+  .slider-row label .lean { font-weight: 400; color: var(--muted); font-size: 12px; }
+  .slider-row input[type=range] { width: 100%; accent-color: var(--rust); }
+  .scale-cap { display: flex; justify-content: space-between; font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-top: -2px; }
+  .map-out { border-radius: 10px; padding: 14px 16px; background: var(--robe); border: 1px solid var(--border); color: var(--cream-soft); font-size: 13.5px; line-height: 1.65; margin-top: 16px; }
+  .map-out h5 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; margin-bottom: 4px; color: var(--cream); }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .bar-row .nm { width: 120px; flex-shrink: 0; }
+  .bar-row .bar { flex: 1; height: 8px; border-radius: 4px; background: rgba(241,230,191,.1); overflow: hidden; }
+  .bar-row .bar i { display: block; height: 100%; background: var(--brown-light); transition: width .25s; }
+  .bar-row.top .bar i { background: var(--rust); }
+  .bar-row.top .nm { color: var(--cream); font-weight: 700; }
+
+  /* ── Toolkit ── */
+  .method-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+  .method-card h4 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 17px; color: var(--cream); margin-bottom: 8px; }
+  .method-card p, .method-card li { font-size: 13.5px; line-height: 1.7; color: var(--text); }
+  .method-card ul { margin: 8px 0 0 18px; }
+  .method-card li { margin-bottom: 4px; }
+  .method-card .tag { display: inline-block; background: var(--rust); color: var(--ink); font-size: 10.5px; letter-spacing: 1.5px; padding: 3px 10px; border-radius: 10px; margin-bottom: 8px; text-transform: uppercase; font-weight: 700; }
+  .method-card .tag.me { background: transparent; color: var(--rust-light); border: 1px solid rgba(217,98,43,.6); }
+  .check-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 4px; }
+  .check-item { display: flex; gap: 10px; align-items: flex-start; background: var(--card2); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; line-height: 1.5; color: var(--text); cursor: pointer; }
+  .check-item input { margin-top: 3px; accent-color: var(--rust); flex-shrink: 0; }
+  .check-item.done { opacity: .6; text-decoration: line-through; }
+  .check-item small { display: block; color: var(--muted); text-decoration: none; }
+  .q-list { list-style: none; margin: 8px 0 0; padding: 0; }
+  .q-list li { position: relative; padding: 8px 0 8px 22px; border-bottom: 1px solid var(--line); font-size: 13.5px; line-height: 1.6; }
+  .q-list li::before { content: ''; position: absolute; left: 4px; top: 16px; width: 7px; height: 7px; border-radius: 50%; background: var(--rust); }
+  @media (max-width: 560px) { .check-list, .overview-grid, .mini-pair { grid-template-columns: 1fr; } }
+
+  /* ── Quotes ── */
+  .quote-block { background: var(--card); border-radius: 10px; padding: 18px 24px 14px; margin-bottom: 14px; border-left: 5px solid var(--rust); }
+  .quote-block p { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 18px; line-height: 1.45; color: var(--cream); }
+  .quote-block .attr { font-size: 11.5px; color: var(--muted); margin-top: 8px; text-align: right; }
+
+  /* ── Verdict / lists ── */
+  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .pro-list, .con-list { background: var(--card); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--line); }
+  .pro-list h4, .con-list h4 { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+  .pro-list h4 { color: var(--good); } .con-list h4 { color: var(--rust-light); }
+  .list-item { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.6; margin-bottom: 8px; color: var(--text); }
+  .list-item .dot { margin-top: 7px; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .pro-list .dot { background: var(--good); } .con-list .dot { background: var(--rust); }
+  .who-card { display: flex; gap: 12px; align-items: flex-start; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.65; transition: border-color .2s; }
+  .who-card:hover { border-color: var(--rust); }
+  .who-card .ic { font-size: 20px; flex-shrink: 0; }
+  .who-card strong { color: var(--cream); }
+
+  /* ── Three-way ratings ── */
+  .cmp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 22px; }
+  .cmp-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 16px; text-align: center; }
+  .cmp-card.you { border-top: 4px solid var(--rust); }
+  .cmp-card.crowd { border-top: 4px solid var(--cream); }
+  .cmp-card.me { border-top: 4px solid var(--brown-light); }
+  .cmp-label { font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 8px; }
+  .cmp-score { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 40px; color: var(--cream); line-height: 1; }
+  .cmp-score small { font-size: 15px; color: var(--muted); font-weight: 400; font-family: 'DM Sans', sans-serif; }
+  .cmp-sub { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.55; }
+  .cat-wrap { overflow-x: auto; margin-bottom: 8px; -webkit-overflow-scrolling: touch; }
+  .cat-table { width: 100%; min-width: 560px; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); font-size: 13px; line-height: 1.55; }
+  .cat-table th, .cat-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .cat-table th { font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); background: var(--card2); }
+  .cat-table td.num { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--cream); }
+  .cat-table tr.avg td { font-weight: 700; background: var(--card2); }
+  .src-list { font-size: 12px; color: var(--muted); line-height: 1.75; margin-bottom: 22px; }
+  .src-list a { color: var(--rust-light); }
+  @media (max-width: 560px) {
+    .cmp-grid, .pro-con-grid { grid-template-columns: 1fr; }
+    .panel { padding: 20px 16px 44px; }
+    .hero-inner { padding: 28px 20px; }
+    .cover-bar { padding: 8px 20px; letter-spacing: 2px; font-size: 11px; }
+    .back-bar { padding: 10px 16px; }
+    .m-head, .m-body { padding-left: 18px; padding-right: 18px; }
+    .map-box { padding: 16px; }
+    .bar-row .nm { width: 96px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="cover-bar">Book Review &amp; Field Guide</div>
+  <div class="hero-inner">
+    <div class="hero-motif" aria-hidden="true">
+      <svg viewBox="0 0 900 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- mala-bead arc and an open enso circle, echoing the beads on the cover -->
+        <g fill="#5a2e1c" opacity=".55">
+          <circle cx="560" cy="30" r="11"/><circle cx="598" cy="52" r="11"/><circle cx="632" cy="82" r="11"/>
+          <circle cx="660" cy="118" r="11"/><circle cx="680" cy="158" r="11"/><circle cx="690" cy="202" r="11"/>
+          <circle cx="690" cy="246" r="11"/><circle cx="680" cy="290" r="11"/>
+        </g>
+        <circle cx="660" cy="118" r="11" fill="#d9622b" opacity=".75"/>
+        <path d="M 790 90 A 70 70 0 1 1 744 128" fill="none" stroke="#f1e6bf" stroke-width="3" stroke-linecap="round" opacity=".14"/>
+        <circle cx="70" cy="320" r="4" fill="#d9622b" opacity=".35"/><circle cx="108" cy="334" r="6" fill="#5a2e1c" opacity=".7"/>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <div class="book-label">Book Review</div>
+      <h1>Shaolin Spirit</h1>
+      <div class="tagline">The Way to Self-Mastery</div>
+      <div class="author">Shi Heng Yi <small>with Stefanie Koch · translated by Caroline Waight</small></div>
+      <div class="hero-meta">
+        <div class="meta-pill">Self-Development</div>
+        <div class="meta-pill">Buddhism &amp; Philosophy</div>
+        <div class="meta-pill">Martial Arts</div>
+      </div>
+    </div>
+    <div class="book-cover-wrap">
+      <img src="images/shaolin-spirit-cover.jpg" alt="Shaolin Spirit: The Way to Self-Mastery by Shi Heng Yi, book cover">
+    </div>
+  </div>
+</div>
+
+<div class="back-bar"><a href="index.html" class="back-link"><span>←</span> Back to Library</a></div>
+
+<div class="tabs" role="tablist">
+  <button class="tab active" role="tab" onclick="showTab('overview', this)">Overview</button>
+  <button class="tab" role="tab" onclick="showTab('chapters', this)">All Chapters</button>
+  <button class="tab hot" role="tab" onclick="showTab('hindrances', this)">The Five Hindrances</button>
+  <button class="tab" role="tab" onclick="showTab('toolkit', this)">Toolkit</button>
+  <button class="tab" role="tab" onclick="showTab('quotes', this)">Key Phrases</button>
+  <button class="tab" role="tab" onclick="showTab('verdict', this)">Ratings &amp; Verdict</button>
+</div>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<div id="overview" class="panel active">
+  <div class="note-box"><strong>What this review is based on:</strong> the book's real contents page, foreword, acknowledgements and the opening pages of Chapter 1 (all from Penguin's official sample), plus publisher pages and Goodreads reader reviews. I have <strong>not</strong> read Chapters 2 to 13 or any of the twelve methods, so those are described by title only and marked low confidence. Where I add general background about Shaolin or Buddhist ideas, it is labelled as background, not as the book's text.</div>
+
+  <div class="section-header"><h2>What This Book Is About</h2><div class="section-line"></div></div>
+
+  <div class="overview-grid">
+    <div class="stat-card"><div class="stat-label">Core Focus</div><div class="stat-value">Body and Mind, Reunited</div><div class="stat-desc">The foreword frames "Shaolin spirit" as reuniting body and mind and looking inward to see who you are</div></div>
+    <div class="stat-card"><div class="stat-label">Central Promise</div><div class="stat-value">None, on Purpose</div><div class="stat-desc">The introduction declines to make promises: a teacher shows the path, but the reader has to walk it</div></div>
+    <div class="stat-card"><div class="stat-label">Built Around</div><div class="stat-value">13 Chapters, 12 Methods</div><div class="stat-desc">Each of chapters 1 to 12 ends with a practical method; Chapter 13 closes the book</div></div>
+    <div class="stat-card"><div class="stat-label">Best For</div><div class="stat-value">Curious Beginners</div><div class="stat-desc">Readers new to Shaolin, Buddhism-inspired practice or internal martial arts, per the author's framing and reader reviews</div></div>
+  </div>
+
+  <div class="summary-block">
+    <p><strong>Shaolin Spirit</strong> is Shi Heng Yi's introduction to the Shaolin way of life, written with Stefanie Koch and translated into English by Caroline Waight. He is the founder of Shaolin Temple Europe, a Buddhist community in Germany, and a lay disciple of the Songshan Shaolin Temple in China, according to Penguin. The book was first published in Germany as <em>Shaolin Spirit: Meistere dein Leben</em>.</p>
+    <p>The foreword describes the tradition as more than 1,500 years old and as a combination of internal and external practice, where physical movement matters but is only one component. The aim, in the author's words as I read them, is to build character through the body: willpower, discipline and perseverance, and a reuniting of body and mind that does not depend on your situation in life.</p>
+    <p>Structurally, each chapter covers a topic and then ends with a method, one of twelve "practical tools" the author says are used at the temple. Publisher copy says the book is rooted in Zen Buddhism and Tao philosophy and touches on sleep, relationships and decision-making. The Introduction opens with a set of reflective questions about where you are in life, and it is candid that it is a starting point, not a complete course: there are links at the back for further practice and courses.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:30px;"><h2>The Whole Book on One Grid</h2><div class="section-line"></div></div>
+  <div class="axis-cap"><span>How each chapter is built</span><span>Tap to explore →</span></div>
+  <div class="mini-pair">
+    <div class="mini-m ch" role="button" tabindex="0" onclick="goTab('chapters')"><h4>The Chapter</h4><p>A topic and the author's perspective on it: the Shaolin tradition, Buddhism, his own path, mindset, virtue, the Five Hindrances, and more.</p></div>
+    <div class="mini-m me" role="button" tabindex="0" onclick="goTab('toolkit')"><h4>The Method</h4><p>A hands-on practice to close the chapter: breathing, standing, stretching, qi exercises and more. Twelve in all.</p></div>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Core Ideas at a Glance</h2><div class="section-line"></div></div>
+  <p class="lead">Drawn only from the foreword and the opening of Chapter 1, the parts I could read.</p>
+  <div class="key-idea"><div class="icon">☯️</div><div><strong>Shaolin spirit means reuniting body and mind.</strong> Physical practice is a route to noticing your thoughts, emotions and the qualities already in you.</div></div>
+  <div class="key-idea"><div class="icon">🧎</div><div><strong>What matters is the Now.</strong> The Introduction ties change to the present moment, and notes that the Shaolin custom of opening an encounter with a respectful bow acknowledges the person in front of you.</div></div>
+  <div class="key-idea"><div class="icon">🌊</div><div><strong>Life moves in waves.</strong> Every ascent has a descent; the proposed answer is a stable inner balance that praise and insult do not shake.</div></div>
+  <div class="key-idea"><div class="icon">🛡️</div><div><strong>Virtues are practised, not just known.</strong> Loyalty, discipline, trust and strength of will are meant to be thought about and trained daily.</div></div>
+  <div class="key-idea"><div class="icon">👂</div><div><strong>Listen to the body, then listen with it.</strong> Step-by-step exercises first, greater sensitivity later.</div></div>
+  <div class="key-idea"><div class="icon">🎓</div><div><strong>Stay a student.</strong> Repetition paired with insight is presented as the route to any skill, whatever you have done before.</div></div>
+  <div class="key-idea"><div class="icon">🚪</div><div><strong>This is a doorway, not the whole house.</strong> The foreword calls the book a foundation for discovering the Shaolin way or starting on it, and points to more material at the end.</div></div>
+</div>
+
+<!-- ═══════════════ CHAPTERS ═══════════════ -->
+<div id="chapters" class="panel">
+  <div class="note-box"><strong>How to read this tab:</strong> the titles and page numbers are the book's own contents page (Penguin's official sample, print edition). Only the foreword, acknowledgements and the first few pages of Chapter 1 were readable, so those cards carry a <span class="conf med">Medium</span> badge. Every other card is a <span class="conf low">Low</span> badge: <strong>based on the chapter title and the book's stated structure; chapter text not read.</strong> I have not invented summaries, stories or instructions for those chapters. Section lengths are simple page arithmetic from the contents page and may include illustrations.</div>
+
+  <div class="part-header">Front Matter</div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num intro">F</div><div class="ch-title">Foreword <span class="pg">p. ix</span></div><span class="conf med">Medium</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the foreword text in Penguin's sample.</div>
+      <p>The foreword says the Shaolin tradition began more than 1,500 years ago at the Songshan Shaolin Temple in China and that Shaolin Temple Europe aims to make the teachings accessible and relatable for everyday life. It describes the tradition as a mix of internal and external practice, with martial arts and meditation at the front and the body and mind involved in equal measure.</p>
+      <p>The "Shaolin spirit" of the title is explained as reuniting body and mind and looking inward at who you really are, independent of your circumstances. The author says the book's thirteen chapters explain important topics and offer practices, including zhan zhuang ("standing like a post") paired with mindfulness exercises, and that each chapter closes with one of twelve methods. He cites more than thirty-six years of personal experience.</p>
+      <div class="ch-takeaway">The author positions the book as a solid foundation, and a way to begin, rather than a complete training.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num intro">A</div><div class="ch-title">Acknowledgements <span class="pg">p. xv</span></div><span class="conf med">Medium</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the acknowledgements text in Penguin's sample.</div>
+      <p>The author thanks his martial-arts teachers and master brothers by name, his family, his co-author Stefanie Koch, photographer Christine Sommerfeldt and illustrator Marius Boenisch (for the Luohan illustrations). He also thanks members of the Shaolin community who wrote down their own experiences for the book, offered as evidence that people of any age and physical condition can benefit from the practices.</p>
+      <div class="ch-tool"><strong>Worth noting:</strong> the experience accounts mentioned here are community testimonials, which is a different kind of support from controlled evidence.</div>
+    </div>
+  </div>
+
+  <div class="part-header">Chapters and Methods</div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">1</div><div class="ch-title">Introduction to the Shaolin Spirit <span class="pg">p. 3 · Method: Regulating the Breath, p. 13</span></div><span class="conf med">Medium</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on roughly the first seven pages of the chapter in Penguin's sample (the rest of the chapter and the breathing method were not readable).</div>
+      <p>The author admits his students sometimes want him to "get to the point", then explains that his aim is to guide them to a view of life they cannot reach alone. He opens with a run of questions: where you are in life, how you sleep, your appetite and mood, your relationship, your job, whether you feel abundance or lack, whether you are living by your own picture of life or by unspoken expectations, whether you act or react, and whether you are on autopilot or in the driver's seat.</p>
+      <p>Next comes "What Matters Is the Now": the respectful bow as a way of being present, and the idea that thoughts and feelings can only be perceived now. He pictures life as waves, with every rise followed by a fall, and proposes inner equanimity as the stable ground beneath them. He then previews the virtues (loyalty is his worked example), says they have to be trained daily, and explains that he makes no promises because readers start from different places.</p>
+      <p>The last pages I could read describe what to expect: the path is not easy or entertaining but is meant to be enriching, honest self-assessment comes first, you learn to listen to the body and later to listen with it, and you must be willing to be a student again. The breathing and standing practices are described as buildable, beginner-friendly exercises.</p>
+      <div class="ch-takeaway">The chapter sets the book's terms: self-honesty, the present moment, daily practice of virtues, and no shortcuts.</div>
+      <div class="ch-tool"><strong>1st Method:</strong> Regulating the Breath (p. 13, about 6 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">2</div><div class="ch-title">History of the Shaolin Martial Art <span class="pg">p. 19 · Method: Developing the Skills of the Mind, p. 26</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>The title points to a historical chapter on Shaolin martial arts. The foreword, which I did read, gives the frame: a tradition more than 1,500 years old that began at the Songshan Shaolin Temple.</p>
+      <div class="ch-tool"><strong>2nd Method:</strong> Developing the Skills of the Mind (p. 26, about 5 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">3</div><div class="ch-title">Buddhism and the Shaolin Tradition <span class="pg">p. 31 · Method: Sensitivity Training, p. 47</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>The title says this chapter links the tradition to Buddhism. Publisher copy describes the book as rooted in Zen Buddhism and Tao philosophy, and one Goodreads reviewer says it also ties the practices to Daoism and Confucianism. That is a reader's description, not something I verified. By the contents page it runs about 16 pages before its method.</p>
+      <div class="ch-tool"><strong>3rd Method:</strong> Sensitivity Training (p. 47, about 6 pages). Title only; method text not read. The Introduction (which I read) mentions learning to listen to and later with the body, which may relate, but I cannot confirm it.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">4</div><div class="ch-title">My Path <span class="pg">p. 53 · Method: Willpower through the Practice of Standing, p. 72</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>The title suggests the author's personal story. The foreword cites more than thirty-six years on the path, and the acknowledgements name his teachers. One Goodreads reviewer says the chapters often draw on the author's life before ending with a method.</p>
+      <div class="ch-tool"><strong>4th Method:</strong> Willpower through the Practice of Standing (p. 72, about 5 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">5</div><div class="ch-title">Zhan Zhuang – Standing Like a Tree <span class="pg">p. 77 · Method: Establishing Inner Balance, p. 90</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>The foreword confirms that the book teaches zhan zhuang, standing in particular poses and paired with mindfulness exercises, and the Introduction says the standing and breathing practices build on one another. <em>General background, not the book's text:</em> standing practices like this are common in Chinese martial arts and qi gong training.</p>
+      <div class="ch-tool"><strong>5th Method:</strong> Establishing Inner Balance (p. 90, about 5 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">6</div><div class="ch-title">Mindset <span class="pg">p. 95 · Method: Opening the Channels of Qi, p. 110</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>Title only. I cannot say how the author defines or uses "mindset" here, so I have not guessed. The method's title brings in qi, a concept from traditional Chinese practice; its effects are traditional claims rather than scientifically established findings.</p>
+      <div class="ch-tool"><strong>6th Method:</strong> Opening the Channels of Qi (p. 110, about 5 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">7</div><div class="ch-title">Wu De – Combat and Morality <span class="pg">p. 115 · Method: Stretching the Body, p. 130</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>The Introduction, which I read, promises a separate chapter on the virtues of the martial arts, naming loyalty, discipline, trust and strength of will as examples. This title is probably that chapter, though I cannot confirm it. <em>General background, not the book's text:</em> "Wu De" is commonly translated as martial virtue or martial morality.</p>
+      <div class="ch-tool"><strong>7th Method:</strong> Stretching the Body (p. 130, about 7 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">8</div><div class="ch-title">Two Mistakes: Not Beginning, and Not Following the Whole Path <span class="pg">p. 137 · Method: Strengthening the Centre, p. 156</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>The title names two failures: never starting, and not walking the whole path. That echoes the Introduction's line that the master shows the way but you must walk it yourself, though I cannot say how the chapter develops it.</p>
+      <div class="ch-tool"><strong>8th Method:</strong> Strengthening the Centre (p. 156, about 7 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">9</div><div class="ch-title">The Five Hindrances <span class="pg">p. 163 · Method: Flexibility of the Torso, p. 190</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>Chapter 9 is one of the longest before its method (about 27 pages). The author's CNBC Make It article (17 June 2020, not the book) names the five hindrances as sensual desire, ill will, sloth and torpor, restlessness and skeptical doubt. I have assumed, but not confirmed, that the book's list matches. See the <strong>Five Hindrances</strong> tab for the framework deep dive, with each element labelled by source.</p>
+      <div class="ch-tool"><strong>9th Method:</strong> Flexibility of the Torso (p. 190, about 5 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">10</div><div class="ch-title">Harmonizing Body, Mind and Qi <span class="pg">p. 195 · Method: Yang Qi San Shi – Three Ways to Nourish Qi, p. 197</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>The shortest chapter by page arithmetic: its text runs about two pages before the method begins. It follows the foreword's body-mind theme, and, like Chapter 6, uses the traditional concept of qi.</p>
+      <div class="ch-tool"><strong>10th Method:</strong> Yang Qi San Shi – Three Ways to Nourish Qi (p. 197, about 14 pages). The longest method by page count. Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">11</div><div class="ch-title">Understanding Your Own Nature <span class="pg">p. 211 · Method: Stimulating the Channels of Energy, p. 231</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>Title only. It echoes the foreword's theme of looking inward to realise who you truly are, but I cannot say how the chapter approaches it.</p>
+      <div class="ch-tool"><strong>11th Method:</strong> Stimulating the Channels of Energy (p. 231, about 6 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">12</div><div class="ch-title">The Middle Way <span class="pg">p. 237 · Method: The Microcosmic Orbit, p. 249</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>Title only. <em>General background, not the book's text:</em> "the middle way" is a well-known Buddhist idea about avoiding extremes. The Introduction's talk of balance between opposing forces may connect, but I cannot confirm it.</p>
+      <div class="ch-tool"><strong>12th Method:</strong> The Microcosmic Orbit (p. 249, about 10 pages). Title only; method text not read.</div>
+    </div>
+  </div>
+
+  <div class="chapter-card">
+    <div class="chapter-header"><div class="ch-num">13</div><div class="ch-title">The Way of Tea <span class="pg">p. 259 · no method listed</span></div><span class="conf low">Low</span><div class="ch-arrow">›</div></div>
+    <div class="chapter-body">
+      <div class="ch-basis">Based on the chapter title and the book's stated structure; chapter text not read.</div>
+      <p>The closing chapter, about six pages by the contents page, and the only one with no method listed after it. Title only; I have no information on its content. The contents page then lists "Additional Links and Courses" (p. 265), which Goodreads reviewers also mention.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ THE FIVE HINDRANCES (FRAMEWORK DEEP DIVE) ═══════════════ -->
+<div id="hindrances" class="panel">
+  <div class="section-header"><h2>The Five Hindrances, In Depth</h2><div class="section-line"></div></div>
+  <p class="lead">Chapter 9 is titled "The Five Hindrances". I could not read it, so this tab is built from three clearly separated layers, each tagged where it appears: the <span class="src-tag art">Article</span> names (from the author's CNBC piece), <span class="src-tag bg">Background</span> general Buddhist context, and <span class="src-tag me">My illustration</span> examples I made up to make the ideas concrete. None of it is a summary of the book's chapter.</p>
+
+  <div class="note-box"><strong>Source check:</strong> CNBC Make It, 17 June 2020, with Shi Heng Yi as contributor, names "the five hindrances of self-mastery": sensual desire, ill will, sloth and torpor, restlessness, and skeptical doubt. The article does not mention the book. I could not confirm that the book's Chapter 9 uses the same list or the same advice, so treat the link as likely, not verified.</div>
+
+  <div class="m-nav">
+    <button class="m-pill" onclick="jumpM('m-elements')">The Five</button>
+    <button class="m-pill" onclick="jumpM('m-cmp')">Side-by-Side</button>
+    <button class="m-pill" onclick="jumpM('m-structure')">How the Book Is Built</button>
+    <button class="m-pill try" onclick="jumpM('m-try')">Try It</button>
+  </div>
+
+  <div class="m-section" id="m-elements">
+    <div class="m-head">
+      <div class="dials">Five elements</div>
+      <h3>What gets in the way</h3>
+      <div class="tag">Mental states that cloud clear seeing and good decisions, in the CNBC article's framing. Each is described below in plain language, with a question you can ask yourself.</div>
+    </div>
+    <div class="m-body">
+      <h4>1. Sensual desire <span class="src-tag art">Article name</span></h4>
+      <p><span class="src-tag bg">Background</span> Craving for pleasant experience, the pull to want something other than what is here now.</p>
+      <div class="q-grid" style="margin-top:10px;">
+        <div class="q-card"><h5>How it can show up <span class="src-tag me">My illustration</span></h5>Reaching for a snack, a scroll or a purchase right when a difficult task is due.</div>
+        <div class="q-card"><h5>A question to ask <span class="src-tag me">My illustration</span></h5>What am I reaching for, and what is here if I do not reach?</div>
+      </div>
+
+      <h4>2. Ill will <span class="src-tag art">Article name</span></h4>
+      <p><span class="src-tag bg">Background</span> Aversion or resentment: the urge to push away a person, situation or feeling.</p>
+      <div class="q-grid" style="margin-top:10px;">
+        <div class="q-card"><h5>How it can show up <span class="src-tag me">My illustration</span></h5>Replaying an irritating meeting in your head for the rest of the evening.</div>
+        <div class="q-card"><h5>A question to ask <span class="src-tag me">My illustration</span></h5>What am I pushing away, and what is holding it in my attention?</div>
+      </div>
+
+      <h4>3. Sloth and torpor <span class="src-tag art">Article name</span></h4>
+      <p><span class="src-tag bg">Background</span> Heaviness and dullness, low energy for practice or effort. (The article reportedly suggests reconnecting with your original goals; I have not read the detail.)</p>
+      <div class="q-grid" style="margin-top:10px;">
+        <div class="q-card"><h5>How it can show up <span class="src-tag me">My illustration</span></h5>Putting off planning the week because everything feels heavy.</div>
+        <div class="q-card"><h5>A question to ask <span class="src-tag me">My illustration</span></h5>Is this tiredness asking for rest, or am I avoiding one specific thing?</div>
+      </div>
+
+      <h4>4. Restlessness <span class="src-tag art">Article name</span></h4>
+      <p><span class="src-tag bg">Background</span> An agitated mind that cannot settle on one thing.</p>
+      <div class="q-grid" style="margin-top:10px;">
+        <div class="q-card"><h5>How it can show up <span class="src-tag me">My illustration</span></h5>Checking messages mid-sentence and moving between tabs without finishing any.</div>
+        <div class="q-card"><h5>A question to ask <span class="src-tag me">My illustration</span></h5>What is the smallest thing I could finish before moving on?</div>
+      </div>
+
+      <h4>5. Skeptical doubt <span class="src-tag art">Article name</span></h4>
+      <p><span class="src-tag bg">Background</span> Doubt that stalls action: uncertainty about the path, the method or yourself.</p>
+      <div class="q-grid" style="margin-top:10px;">
+        <div class="q-card"><h5>How it can show up <span class="src-tag me">My illustration</span></h5>Starting a new practice and quitting after a week because "will this even work?"</div>
+        <div class="q-card"><h5>A question to ask <span class="src-tag me">My illustration</span></h5>What is one small thing I could try to test this doubt rather than just carry it?</div>
+      </div>
+
+      <div class="callout"><strong>Reviewer's caution:</strong> I am describing the names and ordinary meanings of the five hindrances. How the book teaches you to work with them, and whether its method for Chapter 9 (Flexibility of the Torso) is connected, is something I could not read.</div>
+    </div>
+  </div>
+
+  <div class="section-header" id="m-cmp" style="scroll-margin-top:70px;"><h2>Side-by-Side</h2><div class="section-line"></div></div>
+  <div class="cmp-wrap"><table class="cmp">
+    <tr><th>Hindrance</th><th>Plain-language meaning <span class="src-tag bg">Background</span></th><th>How it can look in a work week <span class="src-tag me">My illustration</span></th><th>Question to try <span class="src-tag me">My illustration</span></th></tr>
+    <tr><td class="rowh">Sensual desire</td><td>Craving pleasant experience; wanting something other than what is here</td><td>Snacking or scrolling to avoid the hard task</td><td>What am I reaching for?</td></tr>
+    <tr><td class="rowh">Ill will</td><td>Aversion, resentment, pushing away</td><td>Replaying an irritating meeting</td><td>What am I pushing away?</td></tr>
+    <tr><td class="rowh">Sloth and torpor</td><td>Heaviness, dullness, low energy</td><td>Putting off planning because everything feels heavy</td><td>Rest, or avoidance?</td></tr>
+    <tr><td class="rowh">Restlessness</td><td>An agitated, unsettled mind</td><td>Checking messages mid-sentence</td><td>What could I finish first?</td></tr>
+    <tr><td class="rowh">Skeptical doubt</td><td>Doubt that stalls action</td><td>Quitting a new practice after a week</td><td>What small test could I run?</td></tr>
+  </table></div>
+
+  <div class="m-section" id="m-structure">
+    <div class="m-head">
+      <div class="dials">The book's own structure</div>
+      <h3>13 chapters, 12 methods</h3>
+      <div class="tag">From the printed contents page (Penguin's sample, print edition). Method length is the page number of the next chapter minus the method's start page, so it is an approximation.</div>
+    </div>
+    <div class="m-body">
+      <div class="cmp-wrap" style="margin-bottom:0;"><table class="cmp" style="min-width:560px;">
+        <tr><th>#</th><th>Chapter (page)</th><th>Method (page)</th><th>Method length</th></tr>
+        <tr><td class="num">1</td><td>Introduction to the Shaolin Spirit (3)</td><td>Regulating the Breath (13)</td><td class="num">~6 pp</td></tr>
+        <tr><td class="num">2</td><td>History of the Shaolin Martial Art (19)</td><td>Developing the Skills of the Mind (26)</td><td class="num">~5 pp</td></tr>
+        <tr><td class="num">3</td><td>Buddhism and the Shaolin Tradition (31)</td><td>Sensitivity Training (47)</td><td class="num">~6 pp</td></tr>
+        <tr><td class="num">4</td><td>My Path (53)</td><td>Willpower through the Practice of Standing (72)</td><td class="num">~5 pp</td></tr>
+        <tr><td class="num">5</td><td>Zhan Zhuang – Standing Like a Tree (77)</td><td>Establishing Inner Balance (90)</td><td class="num">~5 pp</td></tr>
+        <tr><td class="num">6</td><td>Mindset (95)</td><td>Opening the Channels of Qi (110)</td><td class="num">~5 pp</td></tr>
+        <tr><td class="num">7</td><td>Wu De – Combat and Morality (115)</td><td>Stretching the Body (130)</td><td class="num">~7 pp</td></tr>
+        <tr><td class="num">8</td><td>Two Mistakes: Not Beginning, and Not Following the Whole Path (137)</td><td>Strengthening the Centre (156)</td><td class="num">~7 pp</td></tr>
+        <tr><td class="num">9</td><td>The Five Hindrances (163)</td><td>Flexibility of the Torso (190)</td><td class="num">~5 pp</td></tr>
+        <tr><td class="num">10</td><td>Harmonizing Body, Mind and Qi (195)</td><td>Yang Qi San Shi – Three Ways to Nourish Qi (197)</td><td class="num">~14 pp</td></tr>
+        <tr><td class="num">11</td><td>Understanding Your Own Nature (211)</td><td>Stimulating the Channels of Energy (231)</td><td class="num">~6 pp</td></tr>
+        <tr><td class="num">12</td><td>The Middle Way (237)</td><td>The Microcosmic Orbit (249)</td><td class="num">~10 pp</td></tr>
+        <tr><td class="num">13</td><td>The Way of Tea (259)</td><td>None listed</td><td class="num">n/a</td></tr>
+      </table></div>
+      <p style="margin-top:14px;">Most methods are about five to seven pages, with two longer ones (Chapter 10's and Chapter 12's). That is a fact about page counts, not a verdict on the quality of the instructions; one Goodreads reviewer does call the method descriptions basic, and another says they would rather watch the author's videos.</p>
+    </div>
+  </div>
+
+  <div class="m-section" id="m-try">
+    <div class="m-head">
+      <div class="dials">Interactive</div>
+      <h3>Which hindrance is loudest today?</h3>
+      <div class="tag">A reflection tool of my own, not from the book. Rate how present each of the five is for you today. It is not a test, a diagnosis or a measure from the author.</div>
+    </div>
+    <div class="m-body">
+      <div class="map-box" style="margin-bottom:0;">
+        <div id="hind-sliders"></div>
+        <div class="map-out" id="hind-out" aria-live="polite">
+          <h5 id="hind-title">Nothing loud right now</h5>
+          <div id="hind-text"></div>
+          <div id="hind-bars"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOOLKIT ═══════════════ -->
+<div id="toolkit" class="panel">
+  <div class="section-header"><h2>Toolkit</h2><div class="section-line"></div></div>
+  <div class="note-box"><strong>Heads up:</strong> the instructions for each method are in the book and I did not read them, so I only list the titles. Anything labelled <em>my addition</em> is the reviewer's own suggestion, not from the book.</div>
+
+  <div class="method-card">
+    <span class="tag">From the book (titles only)</span>
+    <h4>The twelve methods checklist</h4>
+    <p>Tick off each method as you work through it. Ticks are not saved if you reload the page.</p>
+    <div class="check-list" id="method-list"></div>
+  </div>
+
+  <div class="method-card">
+    <span class="tag">Paraphrased from the Introduction</span>
+    <h4>The opening self-check</h4>
+    <p>The Introduction begins with questions like these. Answer them in a notebook before you start, and again after a few weeks.</p>
+    <ul class="q-list">
+      <li>Where are you in life right now?</li>
+      <li>How are you sleeping, and how is your appetite?</li>
+      <li>How has your mood been over the past few days or weeks?</li>
+      <li>How do you feel about your relationship with your partner?</li>
+      <li>Do you feel worried about your job, and do you feel a sense of abundance or lack?</li>
+      <li>Are you living life the way you imagined it, or by unspoken expectations?</li>
+      <li>Is your time going to something meaningful and fulfilling?</li>
+      <li>At work, with family and friends: do you act, or react?</li>
+      <li>Are you on autopilot or in the driver's seat?</li>
+    </ul>
+  </div>
+
+  <div class="method-card">
+    <span class="tag me">My addition</span>
+    <h4>One method a week</h4>
+    <p>Dan has suggested that reviewing the book further and redoing it might help him get more out of it. A way to try that: choose one chapter and its method each week, read the chapter, do the method for a few short sessions, and write down two lines on what you noticed. Treat it as an experiment you can drop if it does nothing for you.</p>
+  </div>
+
+  <div class="method-card">
+    <span class="tag me">My addition</span>
+    <h4>Pair the book with a second source</h4>
+    <p>Several Goodreads reviewers say the physical methods are easier to follow from video or a teacher than from the page, and the book itself lists further links and courses on its last pages (p. 265). If a method matters to you, look for a demonstration alongside the text. For anything physical, go gently and stop if something hurts.</p>
+  </div>
+</div>
+
+<!-- ═══════════════ KEY PHRASES ═══════════════ -->
+<div id="quotes" class="panel">
+  <div class="section-header"><h2>Key Phrases &amp; Ideas</h2><div class="section-line"></div></div>
+  <div class="note-box">These are signature terms and short paraphrases from the foreword and the opening of Chapter 1, the only text I could read. I have not reproduced passages. Add your own favourite lines from your copy.</div>
+
+  <div class="quote-block"><p>Shaolin spirit.</p><div class="attr">— Reuniting body and mind and recognising who you truly are (Foreword)</div></div>
+  <div class="quote-block"><p>Standing like a post.</p><div class="attr">— The zhan zhuang practice, paired with mindfulness exercises (Foreword)</div></div>
+  <div class="quote-block"><p>What matters is the Now.</p><div class="attr">— Change can only happen in the present moment (Introduction)</div></div>
+  <div class="quote-block"><p>Inner equanimity.</p><div class="attr">— A stable footing beneath life's ups and downs (Introduction)</div></div>
+  <div class="quote-block"><p>The twelve methods.</p><div class="attr">— The practical tool closing each of chapters 1 to 12 (Foreword)</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Ideas in Short Form</h2><div class="section-line"></div></div>
+  <p class="lead">Paraphrases, not direct quotes.</p>
+  <div class="quote-block"><p>A teacher can point out the path; the walking is yours.</p><div class="attr">— Paraphrase of the Introduction</div></div>
+  <div class="quote-block"><p>Knowing the virtues is not enough; they have to be trained every day.</p><div class="attr">— Paraphrase of the Introduction</div></div>
+  <div class="quote-block"><p>Ups and downs are part of every life; balance is what lets you ride them.</p><div class="attr">— Paraphrase of the Introduction</div></div>
+  <div class="quote-block"><p>Repetition with insight builds any skill.</p><div class="attr">— Paraphrase of the Introduction</div></div>
+  <div class="quote-block"><p>Be honest about where you are before deciding where you can go.</p><div class="attr">— Paraphrase of the Introduction</div></div>
+</div>
+
+<!-- ═══════════════ VERDICT ═══════════════ -->
+<div id="verdict" class="panel">
+  <div class="section-header"><h2>Three Views of the Same Book</h2><div class="section-line"></div></div>
+  <div class="cmp-grid">
+    <div class="cmp-card you"><div class="cmp-label">Dan's rating</div><div class="cmp-score">3.0<small> / 5</small></div><div class="cmp-sub">Dan's own rating. His category average is 3.0, so his overall matches it (gap 0.0).</div></div>
+    <div class="cmp-card crowd"><div class="cmp-label">Reader consensus</div><div class="cmp-score">3.79<small> / 5</small></div><div class="cmp-sub">Goodreads, 1,061 ratings (checked 23 Nov 2026). 62% gave 4 or 5 stars; 9% gave 1 or 2.</div></div>
+    <div class="cmp-card me"><div class="cmp-label">Claude's take</div><div class="cmp-score">3.5<small> / 5</small></div><div class="cmp-sub">Category average 3.1. Slightly below the crowd, with Evidence the weakest category.</div></div>
+  </div>
+  <div class="note-box">Claude's scores are a judgment, not Dan's opinion and not reader data. Claude has not read the whole book: they rest on the contents page, the foreword, the opening of Chapter 1, publisher pages and reader reviews. The three views are kept separate on purpose.</div>
+
+  <div class="section-header"><h2>Scores by Category</h2><div class="section-line"></div></div>
+  <div class="cat-wrap"><table class="cat-table">
+    <tr><th>Category</th><th>Claude</th><th>Dan</th><th>Why Claude scored it that way</th></tr>
+    <tr><td>Ideas</td><td class="num">3.5</td><td class="num">4.0</td><td>A coherent frame (body-mind practice, daily virtue, equanimity) drawn from long traditions, but reviewers say it covers a lot and can feel simplistic, so I held it below a 4.</td></tr>
+    <tr><td>Readability</td><td class="num">3.5</td><td class="num">3.0</td><td>A clear chapter-then-method structure and an inviting, question-led introduction; readers call the style accessible, while some find it repetitive or heavy on empty words.</td></tr>
+    <tr><td>Actionability</td><td class="num">3.0</td><td class="num">2.0</td><td>Twelve concrete methods is a real strength on paper, but most run only five to seven pages and some reviewers call them too basic to follow without video or a teacher.</td></tr>
+    <tr><td>Evidence</td><td class="num">2.5</td><td class="num">3.0</td><td>This is a tradition-and-experience teaching, not research. Claims about qi and energy channels are traditional, not scientifically established, and support comes from the author's experience and community testimonials.</td></tr>
+    <tr class="avg"><td>Category average</td><td class="num">3.13</td><td class="num">3.00</td><td>Claude's overall 3.5 is 0.4 above its own category average, because I weighted Evidence less for a practice-based book; it sits 0.3 below the Goodreads 3.79. Dan's overall (3.0) matches his category average exactly. The widest gap between Dan and Claude is Actionability (2.0 vs 3.0).</td></tr>
+  </table></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:24px;">Categories are the same four used for every review: Ideas, Readability, Actionability, Evidence.</p>
+
+  <div class="section-header"><h2>What Other Readers Say</h2><div class="section-line"></div></div>
+  <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:12px;">Goodreads (<em>Shaolin Spirit: The Way to Self-Mastery</em> by Shi Heng Yi, English edition page; title and author confirmed on the page): 1,061 ratings, 118 reviews, average 3.79. Star split: 5&#9733; 27% (290), 4&#9733; 35% (377), 3&#9733; 27% (292), 2&#9733; 7% (80), 1&#9733; 2% (22). I read the first 30 reviews shown on the page, mostly the opening of each, plus one in full. Several are in German or Portuguese; I read them as written. This is a small slice of 118, not a representative sample.</p>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>What readers praise</h4>
+      <div class="list-item"><div class="dot"></div><div>A good starting point or refresher for people new to Shaolin, Buddhism-inspired practice or the mind-body connection</div></div>
+      <div class="list-item"><div class="dot"></div><div>Accessible, easy-to-follow writing and a personal, honest tone</div></div>
+      <div class="list-item"><div class="dot"></div><div>Calming or reflective: some readers say they will re-read it and dip into the exercises non-linearly</div></div>
+    </div>
+    <div class="con-list"><h4>What readers criticise</h4>
+      <div class="list-item"><div class="dot"></div><div>Shallow or vague on the practical side: methods too basic to follow from the page, with some readers wanting video or a teacher</div></div>
+      <div class="list-item"><div class="dot"></div><div>Repetition and "empty words" in places, and generic self-help feel to some</div></div>
+      <div class="list-item"><div class="dot"></div><div>Reads partly as promotion for the author's temple and courses (three of the thirty I read said so)</div></div>
+    </div>
+  </div>
+  <div class="summary-block">
+    <p><strong>What you may have missed:</strong> one reader (Dec 2023, 1 star) disputes the author's "35th-generation Shaolin master" credentials and his training lineage and says the advice resembles generic self-help. That is a single, contested claim that I could not verify, and Penguin's author note describes him as founder of Shaolin Temple Europe and a lay disciple of the Songshan Shaolin Temple. I report it as one reader's view, not as fact.</p>
+    <p>A different reader (Portuguese, 2.5 stars) argues the book treats self-mastery as pure individual effort, with little room for historical, social or physical constraints. That is close to Dan's own feeling that the concepts were not a route to self-mastery, though it is one reader's view.</p>
+  </div>
+  <div class="src-list"><strong>Sources (read 23 Nov 2026):</strong>
+    <a href="https://www.goodreads.com/book/show/217482330-shaolin-spirit">Goodreads, <em>Shaolin Spirit</em></a> (ratings and review themes; direct fetch was blocked, so it was read in a browser) &middot;
+    <a href="https://cdn.penguin.co.uk/dam-assets/books/9781802067101/9781802067101-sample.pdf">Penguin official sample PDF</a> (contents page, foreword, acknowledgements, opening of Chapter 1) &middot;
+    <a href="https://www.penguin.co.uk/books/464095/shaolin-spirit-by-yi-shi-heng/9781802067101">Penguin UK book page</a> (page count, translator, blurb, author note) &middot;
+    <a href="https://www.cnbc.com/2020/06/17/shaolin-kung-fu-master-shares-5-hindrances-destroying-happiness-success-how-to-fight-them.html">CNBC Make It, 17 June 2020</a> (names of the five hindrances; an article by the author, not the book).
+    Amazon and Blinkist: not available (Blinkist returned 403; Amazon was not read). Goodreads lists the Kindle edition at 230 pages; Penguin lists the print edition at 288.</div>
+
+  <div class="section-header"><h2>Dan's Take</h2><div class="section-line"></div></div>
+  <div class="summary-block"><p>Dan rates <em>Shaolin Spirit</em> about 3 out of 5. He really wanted to like it, but he found the author's monotone nature hard to get past.</p>
+    <p>He felt that many of the concepts were not a way to self-mastery, as he had hoped. The book talked a lot about certain ideas, but he did not feel there was much to take away that he would actually use. He scored Ideas 4, Readability 3, Actionability 2 and Evidence 3.</p>
+    <p>The idea of the Shaolin spirit does interest him: Buddhism and inner peace as a way of working out who he is and where he wants to go, and putting those ideas to use, matter to him. He is not sure this book is the way to find that. It may be a way of getting started on the journey, but he needs to research more than this one book. He suggests that reviewing the book further and redoing it might help him get more out of it.</p>
+    <p style="font-size:12px;color:var(--muted);">Written up from Dan's own words (23 Nov 2026). His view stands apart from the Claude and reader views above.</p></div>
+
+  <div class="section-header"><h2>Strengths &amp; Limitations</h2><div class="section-line"></div></div>
+  <div class="pro-con-grid">
+    <div class="pro-list"><h4>Strengths</h4>
+      <div class="list-item"><div class="dot"></div><div>A clear, repeatable structure: a topic chapter followed by a hands-on method</div></div>
+      <div class="list-item"><div class="dot"></div><div>An introduction that starts with honest self-check questions rather than hype</div></div>
+      <div class="list-item"><div class="dot"></div><div>No inflated promises: it says up front that the reader must walk the path</div></div>
+      <div class="list-item"><div class="dot"></div><div>Pointers to further links and courses at the back</div></div>
+      <div class="list-item"><div class="dot"></div><div>Many readers find it a gentle entry point to Shaolin-style practice</div></div>
+    </div>
+    <div class="con-list"><h4>Limitations</h4>
+      <div class="list-item"><div class="dot"></div><div>Dan found little he could use, and rated Actionability 2 out of 5</div></div>
+      <div class="list-item"><div class="dot"></div><div>Methods are short (mostly five to seven pages), and readers say physical practice is hard to learn from text alone</div></div>
+      <div class="list-item"><div class="dot"></div><div>Support is tradition and personal experience, not research; claims about qi are traditional rather than established</div></div>
+      <div class="list-item"><div class="dot"></div><div>Some readers feel it promotes the author's temple and courses, and one disputes his credentials (unverified)</div></div>
+      <div class="list-item"><div class="dot"></div><div>This review rests on a partial read: Chapters 2 to 13 and all methods are title-only</div></div>
+    </div>
+  </div>
+
+  <div class="section-header"><h2>Who Should Read This</h2><div class="section-line"></div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Curious beginners</strong> who want a first look at Shaolin, Buddhism-inspired practice and the body-mind connection.</div></div>
+  <div class="who-card"><div class="ic">✅</div><div><strong>Readers who plan to go further</strong>: use it as a starter, then follow the links to courses, videos or a teacher.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers who want depth or detailed technique</strong> may find the methods too brief; some reviewers prefer demonstrations.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers who want practical, usable takeaways</strong> should note Dan's experience: strong interest in the ideas, little he could put to work.</div></div>
+  <div class="who-card"><div class="ic">⚠️</div><div><strong>Readers who want evidence-based self-development</strong> should treat this as a tradition's teaching, not research.</div></div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>The Single Most Important Insight</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p>From the part I could read: the book argues that practice, not knowledge, is the point. Virtues and exercises have to be repeated and brought into daily life, and a book can only point at the path. That cuts both ways, since it is the book's best idea and also why a reader like Dan, wanting something to use immediately, may find a short written introduction hard to act on.</p>
+  </div>
+
+  <div class="section-header" style="margin-top:28px;"><h2>Overall Summary</h2><div class="section-line"></div></div>
+  <div class="summary-block">
+    <p><strong>Shaolin Spirit</strong> is a structured, modest introduction to the Shaolin way, with thirteen chapters and twelve methods, written to be a starting point. Readers on Goodreads rate it a respectable 3.79, praising its accessibility and criticising its thin practical detail and promotional streak. Dan rates it 3 out of 5: the ideas interest him, but he did not find a route to self-mastery or much to use.</p>
+    <p>If the subject draws you, read it as a first step and plan to look beyond it. Dan's own suggestion of reviewing the book further and redoing it is a reasonable way to test whether more is there. Remember that this review is based on a partial read, so the chapters beyond the opening deserve your own judgement.</p>
+  </div>
+</div>
+
+<script>
+  function showTab(id, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+    window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 1 });
+  }
+  function goTab(id) {
+    const map = { overview: 0, chapters: 1, hindrances: 2, toolkit: 3, quotes: 4, verdict: 5 };
+    showTab(id, document.querySelectorAll('.tab')[map[id]]);
+  }
+  function jumpM(id) {
+    setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }), 30);
+  }
+  function toggleChapter(card) {
+    const open = card.classList.toggle('open');
+    card.querySelector('.chapter-header').setAttribute('aria-expanded', open);
+  }
+
+  /* Chapter cards: keyboard-accessible, click on header toggles */
+  document.querySelectorAll('.chapter-card').forEach(card => {
+    const h = card.querySelector('.chapter-header');
+    h.tabIndex = 0; h.setAttribute('role', 'button'); h.setAttribute('aria-expanded', 'false');
+    h.addEventListener('click', () => toggleChapter(card));
+    h.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleChapter(card); } });
+  });
+  document.querySelectorAll('.mini-m').forEach(el => el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } }));
+
+  /* Twelve-methods checklist (titles from the contents page) */
+  const methods = [
+    ['1st Method', 'Regulating the Breath', 13], ['2nd Method', 'Developing the Skills of the Mind', 26],
+    ['3rd Method', 'Sensitivity Training', 47], ['4th Method', 'Willpower through the Practice of Standing', 72],
+    ['5th Method', 'Establishing Inner Balance', 90], ['6th Method', 'Opening the Channels of Qi', 110],
+    ['7th Method', 'Stretching the Body', 130], ['8th Method', 'Strengthening the Centre', 156],
+    ['9th Method', 'Flexibility of the Torso', 190], ['10th Method', 'Yang Qi San Shi – Three Ways to Nourish Qi', 197],
+    ['11th Method', 'Stimulating the Channels of Energy', 231], ['12th Method', 'The Microcosmic Orbit', 249]
+  ];
+  const mList = document.getElementById('method-list');
+  methods.forEach(m => {
+    const lab = document.createElement('label'); lab.className = 'check-item';
+    lab.innerHTML = '<input type="checkbox"><span>' + m[1] + '<small>' + m[0] + ' · p. ' + m[2] + '</small></span>';
+    lab.querySelector('input').addEventListener('change', e => lab.classList.toggle('done', e.target.checked));
+    mList.appendChild(lab);
+  });
+
+  /* Five Hindrances reflection tool (reviewer's own illustration) */
+  const hind = [
+    { n: 'Sensual desire', q: 'What am I reaching for right now, and what is here if I do not reach?' },
+    { n: 'Ill will', q: 'What am I pushing away, and what is it costing my attention?' },
+    { n: 'Sloth and torpor', q: 'Is this tiredness asking for rest, or am I avoiding one specific thing?' },
+    { n: 'Restlessness', q: 'What is the smallest thing I could finish before I move on?' },
+    { n: 'Skeptical doubt', q: 'What is one small thing I could try to test this doubt, rather than just carry it?' }
+  ];
+  const levelWord = v => ['', 'Barely there', 'Quiet', 'Noticeable', 'Loud', 'Very loud'][v];
+  const hs = document.getElementById('hind-sliders');
+  hind.forEach((h, i) => {
+    const row = document.createElement('div'); row.className = 'slider-row';
+    row.innerHTML = '<label for="h-' + i + '"><span>' + h.n + '</span><span class="lean" id="hl-' + i + '">Barely there</span></label><input type="range" class="h-in" id="h-' + i + '" min="1" max="5" step="1" value="1"><div class="scale-cap"><span>Barely there</span><span>Very loud</span></div>';
+    hs.appendChild(row);
+  });
+  function updateHind() {
+    const ins = Array.from(document.querySelectorAll('.h-in'));
+    const vals = ins.map(el => +el.value);
+    const max = Math.max.apply(null, vals);
+    vals.forEach((v, i) => { document.getElementById('hl-' + i).textContent = levelWord(v); });
+    const tops = hind.filter((h, i) => vals[i] === max);
+    const title = document.getElementById('hind-title'), text = document.getElementById('hind-text');
+    if (max === 1) {
+      title.textContent = 'Nothing loud right now';
+      text.textContent = 'All five are barely there today. Slide any of them up to see a reflection question.';
+    } else if (tops.length === 1) {
+      title.textContent = 'Loudest today: ' + tops[0].n;
+      text.textContent = 'A question to sit with: ' + tops[0].q;
+    } else {
+      title.textContent = 'Tied for loudest: ' + tops.map(t => t.n).join(', ');
+      text.textContent = 'Pick the one that feels most true and try its question. ' + tops.map(t => t.n + ': ' + t.q).join(' ');
+    }
+    text.textContent += ' (A reflection prompt of my own, not a test and not from the book.)';
+    document.getElementById('hind-bars').innerHTML = hind.map((h, i) =>
+      '<div class="bar-row' + (max > 1 && vals[i] === max ? ' top' : '') + '"><span class="nm">' + h.n + '</span><span class="bar"><i style="width:' + (vals[i] * 20) + '%"></i></span></div>').join('');
+  }
+  document.querySelectorAll('.h-in').forEach(el => el.addEventListener('input', updateHind));
+  updateHind();
+</script>
+</body>
+</html>
